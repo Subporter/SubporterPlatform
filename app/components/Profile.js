@@ -9,22 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var platform_browser_1 = require("@angular/platform-browser");
-var forms_1 = require("@angular/forms");
-var Subscribe_1 = require("../components/Subscribe");
-var Login_1 = require("../components/Login");
-var AppModule = (function () {
-    function AppModule() {
+var router_1 = require("@angular/router");
+var Profile = (function () {
+    function Profile(router) {
+        this.router = router;
     }
-    return AppModule;
+    return Profile;
 }());
-AppModule = __decorate([
-    core_1.NgModule({
-        imports: [platform_browser_1.BrowserModule, forms_1.FormsModule],
-        declarations: [Subscribe_1.SubscribeNewsLetter, Login_1.Login],
-        bootstrap: [Subscribe_1.SubscribeNewsLetter, Login_1.Login]
+Profile = __decorate([
+    core_1.Component({
+        selector: 'profile',
+        template: ""
     }),
-    __metadata("design:paramtypes", [])
-], AppModule);
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.js.map
+    __metadata("design:paramtypes", [router_1.Router])
+], Profile);
+exports.Profile = Profile;
+//# sourceMappingURL=Profile.js.map

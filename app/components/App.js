@@ -10,27 +10,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-var http_1 = require("@angular/http");
-var Login = (function () {
-    function Login(router, http) {
+var App = (function () {
+    function App(router) {
         this.router = router;
-        this.http = http;
     }
-    Login.prototype.login = function (event, username, password) {
-        event.preventDefault();
-    };
-    Login.prototype.register = function (event) {
-        event.preventDefault();
-        this.router.navigate(['register']);
-    };
-    return Login;
+    return App;
 }());
-Login = __decorate([
+App = __decorate([
     core_1.Component({
-        selector: 'login',
-        template: "\n\n\t"
+        selector: 'subporter',
+        template: "\n\t\t<div class=\"container\">\n\t\t\t<router-outlet></router-outlet>\n\t\t</div>\n\t"
     }),
-    __metadata("design:paramtypes", [router_1.Router, http_1.Http])
-], Login);
-exports.Login = Login;
-//# sourceMappingURL=Login.js.map
+    __metadata("design:paramtypes", [router_1.Router])
+], App);
+exports.App = App;
+//# sourceMappingURL=App.js.map

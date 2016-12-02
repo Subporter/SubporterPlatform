@@ -11,26 +11,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
-var Login = (function () {
-    function Login(router, http) {
+var Register = (function () {
+    function Register(router, http) {
         this.router = router;
         this.http = http;
     }
-    Login.prototype.login = function (event, username, password) {
+    Register.prototype.register = function (event, username, password) {
         event.preventDefault();
     };
-    Login.prototype.register = function (event) {
+    Register.prototype.login = function (event) {
         event.preventDefault();
-        this.router.navigate(['register']);
+        this.router.navigate(['login']);
     };
-    return Login;
+    return Register;
 }());
-Login = __decorate([
+Register = __decorate([
     core_1.Component({
-        selector: 'login',
-        template: "\n\n\t"
+        selector: 'register',
+        template: ""
     }),
     __metadata("design:paramtypes", [router_1.Router, http_1.Http])
-], Login);
-exports.Login = Login;
-//# sourceMappingURL=Login.js.map
+], Register);
+exports.Register = Register;
+//# sourceMappingURL=Register.js.map

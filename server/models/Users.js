@@ -9,10 +9,24 @@ var userSchema = new mongoose.Schema({
 		unique: true,
 		required: true
 	},
-	name: {
+	username: {
 		type: String,
+		unique: true,
 		required: true
 	},
+	name: String,
+	firstname: String,
+	date_of_birth: String,
+	street: String,
+	city: String,
+	postal: String,
+	phone: String,
+	national_registry_number: {
+		type: String,
+		unique: true
+	},
+	sports_id: Number,
+	team_id: Number,
 	hash: String,
 	salt: String
 });
@@ -27,7 +41,7 @@ userSchema.methods.validPassword = function (password) {
 	return this.hash === hash;
 };
 
-userSchema.methods.generateJwt = function () {
+userSchema.methods.generateJWT = function () {
 	let expiry = new Date();
 	expiry.setDate(expiry.getDate() + 7);
 
@@ -39,4 +53,4 @@ userSchema.methods.generateJwt = function () {
 	}, config.jwt.secret);
 };
 
-mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema);

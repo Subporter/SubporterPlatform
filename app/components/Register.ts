@@ -3,22 +3,20 @@ import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 
 @Component({
-	selector: 'login',
-	template: `
-
-	`
+	selector: 'register',
+	template: ``
 })
 
-export class Login {
+export class Register {
 	constructor(public router: Router, public http: Http) {
 	}
 
-	login(event, username, password) {
+	register(event, username, password) {
 		event.preventDefault();
 	}
 
-	register(event) {
+	login(event) {
 		event.preventDefault();
-		this.router.navigate(['register']);
+		this.router.navigate(['login']);
 	}
 }
