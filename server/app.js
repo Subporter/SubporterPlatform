@@ -1,7 +1,7 @@
 const express = require('express'),
 	path = require('path'),
 	favicon = require('serve-favicon'),
-	logger = require('morgan'),
+	logger = require('../config/logger'),
 	cookieParser = require('cookie-parser'),
 	bodyParser = require('body-parser'),
 	passport = require('passport');
@@ -11,7 +11,8 @@ require("../config/db");
 require("../config/passport");
 
 /* Routes */
-let routes = require("./server/routes/index");
+let routes = require("./routes/index");
+let api = require("./api/index");
 
 /* Initialize app */
 let app = express();
@@ -22,7 +23,7 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 /* Middleware */
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: false
@@ -47,6 +48,7 @@ app.use(passport.initialize());
 
 /* Routes */
 app.use('/', routes);
+app.use('/api', api);
 
 /* Error handlers */
 /* 404 error handler */
@@ -84,6 +86,16 @@ app.use(function (err, req, res, next) {
 		message: err.message,
 		error: {}
 	});
+});
+
+/* UncaughtException */
+
+process.on("uncaughtException", function (err) {
+	if (app.get('env') !== 'development') {
+		logger.errorLog.error("Error: ", err);
+	} else {
+		throw err;
+	}
 });
 
 module.exports = app;

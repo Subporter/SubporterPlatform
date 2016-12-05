@@ -1,9 +1,9 @@
 const express = require('express'),
 	router = express.Router(),
 	jwt = require('express-jwt'),
-	config = require('../config/subporter'),
+	config = require('../../config/subporter.config'),
 	auth = jwt({
-		secret: config.jwt.secret,
+		secret: config.jwt_secret,
 		userProperty: 'payload'
 	});
 

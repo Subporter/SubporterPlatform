@@ -1,9 +1,9 @@
 const mongoose = require('mongoose'),
 	crypto = require('crypto'),
 	jwt = require('jsonwebtoken'),
-	config = require('../config/subporter.js');
+	config = require('../../config/subporter.config');
 
-var userSchema = new mongoose.Schema({
+let userSchema = new mongoose.Schema({
 	email: {
 		type: String,
 		unique: true,
@@ -50,7 +50,7 @@ userSchema.methods.generateJWT = function () {
 		email: this.email,
 		name: this.name,
 		exp: parseInt(expiry.getTime() / 1000),
-	}, config.jwt.secret);
+	}, config.jwt_secret);
 };
 
 module.exports = mongoose.model('User', userSchema);

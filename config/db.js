@@ -1,10 +1,11 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"),
+	config = require("./subporter.config");
 
 let gracefulShutdown,
-	db = process.env.DB_DEVELOPMENT;
+	db = config.db_dev;
 
 if (process.env.NODE_ENV === 'production') {
-	db = process.env.DB_PRODUCTION;
+	db = config.db_prod;
 }
 
 mongoose.connect(db);
@@ -45,5 +46,5 @@ process.on("SIGINT", function () {
 	});
 });
 
-/* Schemas anb models */
+/* Schemas and models */
 require("../server/models/Users");
