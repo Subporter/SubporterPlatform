@@ -8,6 +8,7 @@ if (process.env.NODE_ENV === 'production') {
 	db = config.db_prod;
 }
 
+mongoose.Promise = global.Promise;
 mongoose.connect(db);
 
 /* Connection events */
@@ -48,3 +49,4 @@ process.on("SIGINT", function () {
 
 /* Schemas and models */
 require("../server/models/Users");
+require("../server/models/Sports");

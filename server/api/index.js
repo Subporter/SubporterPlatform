@@ -1,6 +1,9 @@
-const express = require('express'),
-	router = express.Router();
+const sports = require("./sports");
+const users = require("./users");
 
-require("./users.js");
+let apiController = function (app) {
+    app.use("/api", sports);
+    app.use("/api", users);
+};
 
-module.exports = router;
+module.exports.api = apiController;

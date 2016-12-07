@@ -1,18 +1,14 @@
 const express = require('express'),
-	path = require('path'),
-	favicon = require('serve-favicon'),
-	logger = require('../config/logger'),
-	cookieParser = require('cookie-parser'),
-	bodyParser = require('body-parser'),
-	passport = require('passport');
+    path = require('path'),
+    favicon = require('serve-favicon'),
+    logger = require('../config/logger'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    passport = require('passport');
 
 /* Initialize DB & authentication */
 require("../config/db");
-require("../config/passport");
-
-/* Routes */
-let routes = require("./routes/index");
-let api = require("./api/index");
+require("../config/passport")(passport);
 
 /* Initialize app */
 let app = express();
@@ -46,9 +42,11 @@ app.use('/config', express.static(path.join(__dirname, '../config')));
 /* Passport */
 app.use(passport.initialize());
 
-/* Routes */
-app.use('/', routes);
-app.use('/api', api);
+/* Initialize routes */
+require("./routes/index").routes(app);
+
+/* Initialize api */
+require("./api/index").api(app);
 
 /* Error handlers */
 /* 404 error handler */
@@ -94,7 +92,7 @@ process.on("uncaughtException", function (err) {
 	if (app.get('env') !== 'development') {
 		logger.errorLog.error("Error: ", err);
 	} else {
-		throw err;
+        throw err;
 	}
 });
 
