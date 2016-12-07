@@ -11,13 +11,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
+var headers_1 = require("../../../common/headers");
 var Register = (function () {
     function Register(router, http) {
         this.router = router;
         this.http = http;
     }
-    Register.prototype.register = function (event, username, password) {
+    Register.prototype.register = function (event) {
+        var _this = this;
         event.preventDefault();
+        if (this.password === this.confirmPassword) {
+            var providedUsername = this.username, providedEmail = this.email, providedPassword = this.password;
+            var body = JSON.stringify({
+                providedUsername: providedUsername,
+                providedEmail: providedEmail,
+                providedPassword: providedPassword
+            });
+            this.http.post('/register', body, {
+                headers: headers_1.contentHeaders
+            })
+                .subscribe(function (response) {
+                console.log(response.json());
+                localStorage.setItem("subporter_token", response.json().token);
+                _this.router.navigate(['home']);
+            }, function (error) {
+                alert(error.text());
+                console.error(error.text());
+            });
+        }
+        else {
+            console.log("Passwords don't match");
+        }
     };
     Register.prototype.login = function (event) {
         event.preventDefault();
@@ -28,7 +52,7 @@ var Register = (function () {
 Register = __decorate([
     core_1.Component({
         selector: 'register',
-        template: ""
+        template: "\n\t\t<div>\n\t\t\t<h1>Register</h1>\n\t\t\t<form (submit)=\"register($event)\">\n\t\t\t\t<div class=\"form-group\">\n     \t\t\t\t<label for=\"username\">Username</label>\n     \t\t\t\t<input [(ngModel)]=\"username\" type=\"text\" class=\"form-control\" id=\"username\" placeholder=\"Username\">\n   \t\t\t\t</div>\n\t\t\t\t<div class=\"form-group\">\n     \t\t\t\t<label for=\"email\">Email</label>\n     \t\t\t\t<input [(ngModel)]=\"email\" type=\"email\" class=\"form-control\" id=\"email\" placeholder=\"email\">\n   \t\t\t\t</div>\n   \t\t\t\t<div class=\"form-group\">\n     \t\t\t\t<label for=\"password\">Password</label>\n     \t\t\t\t<input [(ngModel)]=\"password\" type=\"password\" class=\"form-control\" id=\"password\" placeholder=\"Password\">\n   \t\t\t\t</div>\n\t\t\t\t<div class=\"form-group\">\n     \t\t\t\t<label for=\"confirmPassword\">Confirm password</label>\n     \t\t\t\t<input [(ngModel)]=\"confirmPassword\" type=\"password\" class=\"form-control\" id=\"confirmPassword\" placeholder=\"Confirm password\">\n   \t\t\t\t</div>\n   \t\t\t\t<button type=\"submit\" class=\"btn btn-default\">Submit</button>\n     \t\t\t<a [routerLink]=\"['/login']\">Click here to login</a>\n\t\t\t</form>\n\t\t</div>\n\t"
     }),
     __metadata("design:paramtypes", [router_1.Router, http_1.Http])
 ], Register);

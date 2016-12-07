@@ -51,7 +51,8 @@ export class Login {
 				this.router.navigate(['home']);
 			},
 			error => {
-				console.error(error.text);
+				alert(error.text());
+				console.error(error.text());
 			}
 		)
 	}
