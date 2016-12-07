@@ -1,25 +1,31 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
-import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { HttpModule } from "@angular/http";
+import { FormsModule } from "@angular/forms";
+import { RouterModule } from "@angular/router";
 
-import { AUTH_PROVIDERS } from 'angular2-jwt';
+import { AUTH_PROVIDERS } from "angular2-jwt";
 
-//import { AuthGuard } from './services/AuthService';
-//import { Home } from './components/Home';
-import { Register } from './components/Register';
-import { Login } from './components/Login';
-import { Profile } from './components/Profile';
-import { App } from './components/App';
+import { AuthGuard } from "./common/AuthGuard";
+import { App } from "./components/App";
+import { Home } from "./components/home/Home";
+import { Register } from "./components/auth/register/Register";
+import { Login } from "./components/auth/login/Login";
 
-import { SubporterRoutes } from './modules/Routes';
+import { SubporterRoutes } from "./modules/Routes";
 
 @NgModule({
-  imports: [ BrowserModule, HttpModule, FormsModule, RouterModule.forRoot(SubporterRoutes, {useHash: true}) ],
-  declarations: [ Register, Login, App ],
-  bootstrap: [ App ],
-  //providers: [ AuthGuard, ...AUTH_PROVIDERS ]
+	bootstrap: [ App ],
+	declarations: [ App, Home, Register, Login ],
+	imports: [
+		BrowserModule,
+		HttpModule,
+		FormsModule,
+		RouterModule.forRoot(SubporterRoutes, { useHash: true })
+	],
+	providers: [
+		AuthGuard, ...AUTH_PROVIDERS
+	]
 })
 
-export class Subporter { }
+export class Subporter {}

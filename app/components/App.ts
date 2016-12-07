@@ -10,6 +10,4 @@ import { Router } from '@angular/router';
 	`
 })
 
-export class App {
-	constructor(public router: Router) { }
-}
+export class App {};

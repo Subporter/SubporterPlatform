@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
-import { contentHeaders } from '../common/headers'
+import { contentHeaders } from '../../../common/headers'
 
 @Component({
 	selector: 'register',
@@ -64,7 +64,8 @@ export class Register {
 					this.router.navigate(['home']);
 				},
 				error => {
-					console.error(error.text);
+					alert(error.text())
+					console.error(error.text());
 				}
 			)
 		} else {
