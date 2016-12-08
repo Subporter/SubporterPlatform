@@ -12,7 +12,6 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var http_1 = require("@angular/http");
 var forms_1 = require("@angular/forms");
-var router_1 = require("@angular/router");
 var angular2_jwt_1 = require("angular2-jwt");
 var AuthGuard_1 = require("./common/AuthGuard");
 var App_1 = require("./components/App");
@@ -27,13 +26,13 @@ var Subporter = (function () {
 }());
 Subporter = __decorate([
     core_1.NgModule({
-        bootstrap: [App_1.App, Home_1.Home, Register_1.Register, Login_1.Login],
+        bootstrap: [App_1.App],
         declarations: [App_1.App, Home_1.Home, Register_1.Register, Login_1.Login],
         imports: [
             platform_browser_1.BrowserModule,
             http_1.HttpModule,
             forms_1.FormsModule,
-            router_1.RouterModule.forRoot(Routes_1.SubporterRoutes, { useHash: true })
+            Routes_1.Routing
         ],
         providers: [
             AuthGuard_1.AuthGuard

@@ -20,10 +20,10 @@ var Login = (function () {
     Login.prototype.login = function () {
         var _this = this;
         event.preventDefault();
-        var providedUsername = this.username, providedPassword = this.password;
+        var email = this.email, password = this.password;
         var body = JSON.stringify({
-            providedUsername: providedUsername,
-            providedPassword: providedPassword
+            email: email,
+            password: password
         });
         this.http.post('/login', body, {
             headers: headers_1.contentHeaders
@@ -46,7 +46,7 @@ var Login = (function () {
 Login = __decorate([
     core_1.Component({
         selector: 'login',
-        template: "\n\t\t<div>\n\t\t\t<h1>Login</h1>\n\t\t\t<form (submit)=\"login($event)\">\n\t\t\t\t<div class=\"form-group\">\n     \t\t\t\t<label for=\"username\">Username</label>\n     \t\t\t\t<input [(ngModel)]=\"username\" type=\"text\" class=\"form-control\" id=\"username\" placeholder=\"Username\">\n   \t\t\t\t</div>\n   \t\t\t\t<div class=\"form-group\">\n     \t\t\t\t<label for=\"password\">Password</label>\n     \t\t\t\t<input [(ngModel)]=\"password\" type=\"password\" class=\"form-control\" id=\"password\" placeholder=\"Password\">\n   \t\t\t\t</div>\n   \t\t\t\t<button type=\"submit\" class=\"btn btn-default\">Submit</button>\n     \t\t\t<a [routerLink]=\"['/register']\">Click here to register</a>\n\t\t\t</form>\n\t\t</div>\n\t"
+        template: "\n\t\t<div>\n\t\t\t<h1>Login</h1>\n\t\t\t<form (submit)=\"login($event)\">\n\t\t\t\t<div class=\"form-group\">\n     \t\t\t\t<label for=\"email\">Email</label>\n     \t\t\t\t<input [(ngModel)]=\"email\" type=\"email\" class=\"form-control\" name=\"email\" id=\"email\" placeholder=\"Email\">\n   \t\t\t\t</div>\n   \t\t\t\t<div class=\"form-group\">\n     \t\t\t\t<label for=\"password\">Password</label>\n     \t\t\t\t<input [(ngModel)]=\"password\" type=\"password\" class=\"form-control\" name=\"password\" id=\"password\" placeholder=\"Password\">\n   \t\t\t\t</div>\n   \t\t\t\t<button type=\"submit\" class=\"btn btn-default\">Submit</button>\n     \t\t\t<a [routerLink]=\"['/register']\">Click here to register</a>\n\t\t\t</form>\n\t\t</div>\n\t"
     }),
     __metadata("design:paramtypes", [router_1.Router, http_1.Http])
 ], Login);

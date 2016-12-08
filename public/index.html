@@ -5,7 +5,8 @@
     <title>Subporter</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/main.min.css">
+    <base href="/">
+    <link rel="stylesheet" href="/vendor/materialize/css/materialize.min.css">
     <!-- Polyfill(s) for older browsers -->
     <script src="/lib/core-js/client/shim.min.js"></script>
     <script src="/lib/zone.js/dist/zone.js"></script>
@@ -18,8 +19,21 @@
 </head>
 
 <body>
-    <subporter>Loading ...</subporter>
-    <login></login>
+    <subporter>
+        <div class="preloader-wrapper active">
+            <div class="spinner-layer spinner-red-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    </subporter>
 </body>
 
 </html>

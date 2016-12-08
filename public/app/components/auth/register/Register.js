@@ -21,11 +21,11 @@ var Register = (function () {
         var _this = this;
         event.preventDefault();
         if (this.password === this.confirmPassword) {
-            var providedUsername = this.username, providedEmail = this.email, providedPassword = this.password;
+            var username = this.username, email = this.email, password = this.password;
             var body = JSON.stringify({
-                providedUsername: providedUsername,
-                providedEmail: providedEmail,
-                providedPassword: providedPassword
+                username: username,
+                email: email,
+                password: password
             });
             this.http.post('/register', body, {
                 headers: headers_1.contentHeaders
@@ -52,7 +52,7 @@ var Register = (function () {
 Register = __decorate([
     core_1.Component({
         selector: 'register',
-        template: "\n\t\t<div>\n\t\t\t<h1>Register</h1>\n\t\t\t<form (submit)=\"register($event)\">\n\t\t\t\t<div class=\"form-group\">\n     \t\t\t\t<label for=\"username\">Username</label>\n     \t\t\t\t<input [(ngModel)]=\"username\" type=\"text\" class=\"form-control\" id=\"username\" placeholder=\"Username\">\n   \t\t\t\t</div>\n\t\t\t\t<div class=\"form-group\">\n     \t\t\t\t<label for=\"email\">Email</label>\n     \t\t\t\t<input [(ngModel)]=\"email\" type=\"email\" class=\"form-control\" id=\"email\" placeholder=\"email\">\n   \t\t\t\t</div>\n   \t\t\t\t<div class=\"form-group\">\n     \t\t\t\t<label for=\"password\">Password</label>\n     \t\t\t\t<input [(ngModel)]=\"password\" type=\"password\" class=\"form-control\" id=\"password\" placeholder=\"Password\">\n   \t\t\t\t</div>\n\t\t\t\t<div class=\"form-group\">\n     \t\t\t\t<label for=\"confirmPassword\">Confirm password</label>\n     \t\t\t\t<input [(ngModel)]=\"confirmPassword\" type=\"password\" class=\"form-control\" id=\"confirmPassword\" placeholder=\"Confirm password\">\n   \t\t\t\t</div>\n   \t\t\t\t<button type=\"submit\" class=\"btn btn-default\">Submit</button>\n     \t\t\t<a [routerLink]=\"['/login']\">Click here to login</a>\n\t\t\t</form>\n\t\t</div>\n\t"
+        template: "\n\t\t<div>\n\t\t\t<h1>Register</h1>\n\t\t\t<form (submit)=\"register($event)\">\n\t\t\t\t<div class=\"form-group\">\n     \t\t\t\t<label for=\"username\">Username</label>\n     \t\t\t\t<input [(ngModel)]=\"username\" type=\"text\" class=\"form-control\" name=\"username\" id=\"username\" placeholder=\"Username\">\n   \t\t\t\t</div>\n\t\t\t\t<div class=\"form-group\">\n     \t\t\t\t<label for=\"email\">Email</label>\n     \t\t\t\t<input [(ngModel)]=\"email\" type=\"email\" class=\"form-control\" name=\"email\" id=\"email\" placeholder=\"Email\">\n   \t\t\t\t</div>\n   \t\t\t\t<div class=\"form-group\">\n     \t\t\t\t<label for=\"password\">Password</label>\n     \t\t\t\t<input [(ngModel)]=\"password\" type=\"password\" class=\"form-control\" name=\"password\" id=\"password\" placeholder=\"Password\">\n   \t\t\t\t</div>\n\t\t\t\t<div class=\"form-group\">\n     \t\t\t\t<label for=\"confirmPassword\">Confirm password</label>\n     \t\t\t\t<input [(ngModel)]=\"confirmPassword\" type=\"password\" class=\"form-control\" name=\"confirmPassword\" id=\"confirmPassword\" placeholder=\"Confirm password\">\n   \t\t\t\t</div>\n   \t\t\t\t<button type=\"submit\" class=\"btn btn-default\">Submit</button>\n     \t\t\t<a [routerLink]=\"['/login']\">Click here to login</a>\n\t\t\t</form>\n\t\t</div>\n\t"
     }),
     __metadata("design:paramtypes", [router_1.Router, http_1.Http])
 ], Register);

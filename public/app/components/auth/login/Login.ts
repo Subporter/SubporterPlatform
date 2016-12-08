@@ -10,12 +10,12 @@ import { contentHeaders } from '../../../common/headers'
 			<h1>Login</h1>
 			<form (submit)="login($event)">
 				<div class="form-group">
-     				<label for="username">Username</label>
-     				<input [(ngModel)]="username" type="text" class="form-control" id="username" placeholder="Username">
+     				<label for="email">Email</label>
+     				<input [(ngModel)]="email" type="email" class="form-control" name="email" id="email" placeholder="Email">
    				</div>
    				<div class="form-group">
      				<label for="password">Password</label>
-     				<input [(ngModel)]="password" type="password" class="form-control" id="password" placeholder="Password">
+     				<input [(ngModel)]="password" type="password" class="form-control" name="password" id="password" placeholder="Password">
    				</div>
    				<button type="submit" class="btn btn-default">Submit</button>
      			<a [routerLink]="['/register']">Click here to register</a>
@@ -25,7 +25,7 @@ import { contentHeaders } from '../../../common/headers'
 })
 
 export class Login {
-	username: String;
+	email: String;
 	password: String;
 
 	constructor(public router: Router, public http: Http) {
@@ -33,12 +33,12 @@ export class Login {
 
 	login() {
 		event.preventDefault();
-		let providedUsername = this.username,
-			providedPassword = this.password;
+		let email = this.email,
+			password = this.password;
 
 		let body = JSON.stringify({
-			providedUsername,
-			providedPassword
+			email,
+			password
 		});
 
 		this.http.post('/login', body, {

@@ -11,19 +11,19 @@ import { contentHeaders } from '../../../common/headers'
 			<form (submit)="register($event)">
 				<div class="form-group">
      				<label for="username">Username</label>
-     				<input [(ngModel)]="username" type="text" class="form-control" id="username" placeholder="Username">
+     				<input [(ngModel)]="username" type="text" class="form-control" name="username" id="username" placeholder="Username">
    				</div>
 				<div class="form-group">
      				<label for="email">Email</label>
-     				<input [(ngModel)]="email" type="email" class="form-control" id="email" placeholder="email">
+     				<input [(ngModel)]="email" type="email" class="form-control" name="email" id="email" placeholder="Email">
    				</div>
    				<div class="form-group">
      				<label for="password">Password</label>
-     				<input [(ngModel)]="password" type="password" class="form-control" id="password" placeholder="Password">
+     				<input [(ngModel)]="password" type="password" class="form-control" name="password" id="password" placeholder="Password">
    				</div>
 				<div class="form-group">
      				<label for="confirmPassword">Confirm password</label>
-     				<input [(ngModel)]="confirmPassword" type="password" class="form-control" id="confirmPassword" placeholder="Confirm password">
+     				<input [(ngModel)]="confirmPassword" type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Confirm password">
    				</div>
    				<button type="submit" class="btn btn-default">Submit</button>
      			<a [routerLink]="['/login']">Click here to login</a>
@@ -44,14 +44,14 @@ export class Register {
 	register(event) {
 		event.preventDefault();
 		if (this.password === this.confirmPassword) {
-			let providedUsername = this.username,
-				providedEmail = this.email,
-				providedPassword = this.password;
+			let username = this.username,
+				email = this.email,
+				password = this.password;
 
 			let body = JSON.stringify({
-				providedUsername,
-				providedEmail,
-				providedPassword
+				username,
+				email,
+				password
 			});
 
 			this.http.post('/register', body, {

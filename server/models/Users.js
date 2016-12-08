@@ -28,8 +28,7 @@ let userSchema = new mongoose.Schema({
 	team_id: Number,
 	password: {
 		type: String,
-		required: true,
-		select: false
+		required: true
 	}
 });
 

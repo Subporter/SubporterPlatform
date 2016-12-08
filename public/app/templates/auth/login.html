@@ -1,0 +1,15 @@
+<div>
+	<h1>Login</h1>
+	<form (submit)="login($event)">
+		<div class="form-group">
+			<label for="email">Email</label>
+			<input [(ngModel)]="email" type="email" class="form-control" name="email" id="email" placeholder="Email">
+		</div>
+		<div class="form-group">
+			<label for="password">Password</label>
+			<input [(ngModel)]="password" type="password" class="form-control" name="password" id="password" placeholder="Password">
+		</div>
+		<button type="submit" class="btn btn-default">Submit</button>
+		<a [routerLink]="['/register']">Click here to register</a>
+	</form>
+</div>

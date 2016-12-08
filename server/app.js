@@ -31,11 +31,13 @@ app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 /* Static */
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.static(path.join(__dirname, '../public/app')));
+
 app.use('/lib', express.static(path.join(__dirname, '../node_modules')));
-app.use('/app', express.static(path.join(__dirname, '../app')));
+app.use('/public', express.static(path.join(__dirname, '../public')));
+app.use('/app', express.static(path.join(__dirname, '../public/app')));
+app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 app.use('/css', express.static(path.join(__dirname, '../public/css')));
 app.use('/js', express.static(path.join(__dirname, '../public/js')));
-app.use('/public', express.static(path.join(__dirname, '../public')));
 app.use('/vendor', express.static(path.join(__dirname, '../public/vendor')));
 app.use('/config', express.static(path.join(__dirname, '../config')));
 
