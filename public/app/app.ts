@@ -15,7 +15,7 @@ import { Login } from "./components/auth/login/Login";
 import { SubporterRoutes } from "./modules/Routes";
 
 @NgModule({
-	bootstrap: [ App ],
+	bootstrap: [ App, Home, Register, Login ],
 	declarations: [ App, Home, Register, Login ],
 	imports: [
 		BrowserModule,

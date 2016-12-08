@@ -27,7 +27,7 @@ var Subporter = (function () {
 }());
 Subporter = __decorate([
     core_1.NgModule({
-        bootstrap: [App_1.App],
+        bootstrap: [App_1.App, Home_1.Home, Register_1.Register, Login_1.Login],
         declarations: [App_1.App, Home_1.Home, Register_1.Register, Login_1.Login],
         imports: [
             platform_browser_1.BrowserModule,
