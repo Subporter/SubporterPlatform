@@ -13,6 +13,7 @@ var platform_browser_1 = require("@angular/platform-browser");
 var http_1 = require("@angular/http");
 var forms_1 = require("@angular/forms");
 var angular2_jwt_1 = require("angular2-jwt");
+var Auth_1 = require("./services/Auth");
 var AuthGuard_1 = require("./common/AuthGuard");
 var App_1 = require("./components/App");
 var Home_1 = require("./components/home/Home");
@@ -35,8 +36,10 @@ Subporter = __decorate([
             Routes_1.Routing
         ],
         providers: [
-            AuthGuard_1.AuthGuard
-        ].concat(angular2_jwt_1.AUTH_PROVIDERS)
+            Auth_1.Auth,
+            AuthGuard_1.AuthGuard,
+            angular2_jwt_1.AUTH_PROVIDERS
+        ]
     }),
     __metadata("design:paramtypes", [])
 ], Subporter);

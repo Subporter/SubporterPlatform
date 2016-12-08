@@ -60,7 +60,7 @@ export class Register {
 				.subscribe(
 				response => {
 					console.log(response.json());
-					localStorage.setItem("subporter_token", response.json().token);
+					localStorage.setItem("id_token", response.json().token);
 					this.router.navigate(['home']);
 				},
 				error => {

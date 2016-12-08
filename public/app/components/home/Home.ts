@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
+import { JwtHelper } from 'angular2-jwt';
+import { contentHeaders } from '../../common/headers'
 
 @Component({
 	selector: 'home',
@@ -27,14 +29,24 @@ export class Home {
 	decodedJwt: String;
 	response: String;
 	api: String;
+	jwtHelper: JwtHelper = new JwtHelper();
 
 	constructor(public router: Router, public http: Http, public authHttp: AuthHttp) {
-		this.jwt = localStorage.getItem("subporter_token");
-		//this.decodedJwt = this.jwt && window.jwt_decode(this.jwt);
+	}
+
+	useJwtHelper() {
+		let token = localStorage.getItem("id_token");
+		console.log("Token:", token);
+
+		console.log(
+			this.jwtHelper.decodeToken(token),
+			this.jwtHelper.getTokenExpirationDate(token),
+			this.jwtHelper.isTokenExpired(token)
+		)
 	}
 
 	logout() {
-		localStorage.removeItem("subporter_token");
+		localStorage.removeItem("id_token");
 		this.router.navigate(["login"]);
 	}
 
@@ -47,19 +59,23 @@ export class Home {
 	}
 
 	_callApi(type, url) {
+		this.useJwtHelper();
 		this.response = null;
 		if (type === "Anonymous") {
 			this.http.get(url)
 				.subscribe(
 				response => this.response = response.text(),
-				error => this.response = error.text()
+				error => this.response = error.text
 				);
 		}
 		if (type === "Secured") {
-			this.authHttp.get(url)
+			contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+			this.authHttp.get(url, {
+				headers: contentHeaders
+			})
 				.subscribe(
 				response => this.response = response.text(),
-				error => this.response = error.text()
+				error => this.response = error.text
 				);
 		}
 	}

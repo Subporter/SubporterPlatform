@@ -14,8 +14,8 @@ router.post("/register", function (req, res) {
 			success: false
 		});
 	} else {
-		let newUser = new User(req.body);
-		newUser.save(function (err) {
+		let user = new User(req.body);
+		user.save(function (err) {
 			if (err) {
 				res.json({
 					info: "Error during creating user, e-mail or username may be in use already",
@@ -56,7 +56,7 @@ router.post("/login", function (req, res) {
 					res.json({
 						info: "Logged in successfully",
 						success: true,
-						token: "JWT " + token
+						token: token
 					});
 				}
 			});

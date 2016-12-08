@@ -12,10 +12,13 @@ let router = express.Router();
 router.get("/user", passport.authenticate("jwt", { session: false }), function (req, res) {
 	let token = auth.getToken(req.headers);
 	if (token) {
-		let decoded = jwt.decode(token, config.jwt_secret);
+		let jwtUser = jwt.decode(token, config.jwt_secret);
 		User.findOne({
-			email: decoded.email
-		}, function (err, user) {
+			email: jwtUser.email
+		}, {
+			password: 0
+		},
+			function (err, user) {
 			if (err) {
 				throw err;
 			} else if (!user) {

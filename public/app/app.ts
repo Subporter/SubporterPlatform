@@ -3,9 +3,10 @@ import { BrowserModule } from "@angular/platform-browser";
 import { HttpModule } from "@angular/http";
 import { FormsModule } from "@angular/forms";
 
-import { AUTH_PROVIDERS } from "angular2-jwt";
-
+import { AUTH_PROVIDERS } from 'angular2-jwt';
+import { Auth } from './services/Auth';
 import { AuthGuard } from "./common/AuthGuard";
+
 import { App } from "./components/App";
 import { Home } from "./components/home/Home";
 import { Register } from "./components/auth/register/Register";
@@ -23,7 +24,9 @@ import { Routing } from "./modules/Routes";
 		Routing
 	],
 	providers: [
-		AuthGuard, ...AUTH_PROVIDERS
+		Auth,
+		AuthGuard,
+		AUTH_PROVIDERS
 	]
 })
 

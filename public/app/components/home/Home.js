@@ -12,16 +12,22 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
 var angular2_jwt_1 = require("angular2-jwt");
+var angular2_jwt_2 = require("angular2-jwt");
+var headers_1 = require("../../common/headers");
 var Home = (function () {
     function Home(router, http, authHttp) {
         this.router = router;
         this.http = http;
         this.authHttp = authHttp;
-        this.jwt = localStorage.getItem("subporter_token");
-        //this.decodedJwt = this.jwt && window.jwt_decode(this.jwt);
+        this.jwtHelper = new angular2_jwt_2.JwtHelper();
     }
+    Home.prototype.useJwtHelper = function () {
+        var token = localStorage.getItem("id_token");
+        console.log("Token:", token);
+        console.log(this.jwtHelper.decodeToken(token), this.jwtHelper.getTokenExpirationDate(token), this.jwtHelper.isTokenExpired(token));
+    };
     Home.prototype.logout = function () {
-        localStorage.removeItem("subporter_token");
+        localStorage.removeItem("id_token");
         this.router.navigate(["login"]);
     };
     Home.prototype.callAnonymousApi = function () {
@@ -32,14 +38,18 @@ var Home = (function () {
     };
     Home.prototype._callApi = function (type, url) {
         var _this = this;
+        this.useJwtHelper();
         this.response = null;
         if (type === "Anonymous") {
             this.http.get(url)
-                .subscribe(function (response) { return _this.response = response.text(); }, function (error) { return _this.response = error.text(); });
+                .subscribe(function (response) { return _this.response = response.text(); }, function (error) { return _this.response = error.text; });
         }
         if (type === "Secured") {
-            this.authHttp.get(url)
-                .subscribe(function (response) { return _this.response = response.text(); }, function (error) { return _this.response = error.text(); });
+            headers_1.contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+            this.authHttp.get(url, {
+                headers: headers_1.contentHeaders
+            })
+                .subscribe(function (response) { return _this.response = response.text(); }, function (error) { return _this.response = error.text; });
         }
     };
     return Home;

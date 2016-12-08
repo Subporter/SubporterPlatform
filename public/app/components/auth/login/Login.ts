@@ -19,6 +19,7 @@ import { contentHeaders } from '../../../common/headers'
    				</div>
    				<button type="submit" class="btn btn-default">Submit</button>
      			<a [routerLink]="['/register']">Click here to register</a>
+     			<a [routerLink]="['/home']">Click here to go home</a>
 			</form>
 		</div>
 	`
@@ -47,8 +48,10 @@ export class Login {
 			.subscribe(
 			response => {
 				console.log(response.json());
-				localStorage.setItem("subporter_token", response.json().token);
-				this.router.navigate(['home']);
+				if (response.json().success = true) {
+					localStorage.setItem("id_token", response.json().token);
+					this.router.navigate(['home']);
+				}
 			},
 			error => {
 				alert(error.text());

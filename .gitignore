@@ -1,6 +1,5 @@
 ### Custom ###
 *.config.js
-*.view.html
 *.js.map
 typings/
 

@@ -32,7 +32,7 @@ var Register = (function () {
             })
                 .subscribe(function (response) {
                 console.log(response.json());
-                localStorage.setItem("subporter_token", response.json().token);
+                localStorage.setItem("id_token", response.json().token);
                 _this.router.navigate(['home']);
             }, function (error) {
                 alert(error.text());
