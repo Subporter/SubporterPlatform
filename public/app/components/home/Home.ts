@@ -17,6 +17,7 @@ import { contentHeaders } from '../../common/headers'
 				<p><a class="btn btn-primary btn-lg" role="button" (click)="callAnonymousApi()">Call Anonymous API</a></p>
     			<p><a class="btn btn-primary btn-lg" role="button" (click)="callSecuredApi()">Call Secure API</a></p>
     			<p><a class="btn btn-primary btn-lg" role="button" (click)="logout()">Logout</a></p>
+    			<p><a class="btn btn-primary btn-lg" role="button" (click)="updateUser()">Update user</a></p>
     			<h2 *ngIf="response">The response of calling the <span class="red">{{ api }}</span> API is:</h2>
     			<h3 *ngIf="response">{{ response }}</h3>
 			</div>
@@ -48,6 +49,23 @@ export class Home {
 	logout() {
 		localStorage.removeItem("id_token");
 		this.router.navigate(["login"]);
+	}
+
+	updateUser() {
+		let name = "Niels";
+
+		let body = JSON.stringify({
+			name
+		});
+
+		contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+		this.authHttp.put("http://localhost:1337/api/user", body, {
+			headers: contentHeaders
+		})
+			.subscribe(
+			response => this.response = response.text(),
+			error => this.response = error.text
+			);
 	}
 
 	callAnonymousApi() {

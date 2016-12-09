@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
+import { JwtHelper } from 'angular2-jwt';
 import { contentHeaders } from '../../../common/headers'
 
 @Component({
@@ -32,6 +33,19 @@ export class Login {
 	constructor(public router: Router, public http: Http) {
 	}
 
+	jwtHelper: JwtHelper = new JwtHelper();
+	
+	useJwtHelper() {
+		let token = localStorage.getItem("id_token");
+		console.log("Token:", token);
+
+		console.log(
+			this.jwtHelper.decodeToken(token),
+			this.jwtHelper.getTokenExpirationDate(token),
+			this.jwtHelper.isTokenExpired(token)
+		)
+	}
+
 	login() {
 		event.preventDefault();
 		let email = this.email,
@@ -48,8 +62,9 @@ export class Login {
 			.subscribe(
 			response => {
 				console.log(response.json());
-				if (response.json().success = true) {
+				if (response.json().success == true) {
 					localStorage.setItem("id_token", response.json().token);
+					this.useJwtHelper();
 					this.router.navigate(['home']);
 				}
 			},

@@ -1,5 +1,6 @@
 const express = require("express"),
 	_ = require("lodash"),
+	moment = require("moment"),
 	jwt = require("jwt-simple"),
 	config = require("../../config/subporter.config"),
 	User = require("../models/Users");
@@ -23,9 +24,16 @@ router.post("/register", function (req, res) {
 					error: err
 				});
 			} else {
+				let expires = moment().add(1, "minutes").unix();
+				let token = jwt.encode({
+					user: user.email,
+					exp: expires
+				}, config.jwt_secret);
 				res.json({
 					info: "User created successfully",
-					success: true
+					success: true,
+					token: token,
+					expires: moment().add(1, "minutes").format("dddd, MMMM Do YYYY, h:mm:ss a")
 				});
 			}
 		});
@@ -52,11 +60,16 @@ router.post("/login", function (req, res) {
 						success: false
 					});
 				} else {
-					let token = jwt.encode(user, config.jwt_secret);
+					let expires = moment().add(1, "minutes").unix();
+					let token = jwt.encode({
+						user: user.email,
+						exp: expires
+					}, config.jwt_secret);
 					res.json({
 						info: "Logged in successfully",
 						success: true,
-						token: token
+						token: token,
+						expires: moment().add(1, "minutes").format("dddd, MMMM Do YYYY, h:mm:ss a")
 					});
 				}
 			});
