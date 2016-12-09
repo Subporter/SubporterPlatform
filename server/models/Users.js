@@ -1,42 +1,69 @@
 const mongoose = require('mongoose'),
-	crypto = require('crypto'),
-	jwt = require('jsonwebtoken'),
-	config = require('../config/subporter.js');
+	mongooseHidden = require('mongoose-hidden')(),
+	bcrypt = require('bcrypt-nodejs');
 
-var userSchema = new mongoose.Schema({
+let userSchema = new mongoose.Schema({
 	email: {
 		type: String,
 		unique: true,
 		required: true
 	},
-	name: {
+	username: {
 		type: String,
+		unique: true,
 		required: true
 	},
-	hash: String,
-	salt: String
+	name: String,
+	firstname: String,
+	date_of_birth: String,
+	street: String,
+	city: String,
+	postal: String,
+	phone: String,
+	national_registry_number: {
+		type: String,
+		unique: true
+	},
+	sports_id: Number,
+	team_id: Number,
+	password: {
+		type: String,
+		required: true
+	}
 });
 
-userSchema.methods.setPassword = function (password) {
-	this.salt = crypto.randomBytes(16).toString('hex');
-	this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+userSchema.pre("save", function (next) {
+	let user = this;
+	if (this.isModified("password") || this.isNew) {
+		bcrypt.genSalt(10, function (err, salt) {
+			if (err) {
+				return next(err);
+			} else {
+				bcrypt.hash(user.password, salt, null, function (err, hash) {
+					if (err) {
+						return next(err);
+					} else {
+						user.password = hash;
+						return next();
+					}
+				});
+			}
+		});
+	} else {
+		return next();
+	}
+});
+
+userSchema.methods.comparePassword = function (providedPassword, cb) {
+	bcrypt.compare(providedPassword, this.password, function (err, isMatch) {
+		if (err) {
+			return cb(err);
+		} else {
+			cb(null, isMatch);
+		}
+	});
 };
 
-userSchema.methods.validPassword = function (password) {
-	let hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
-	return this.hash === hash;
-};
+userSchema.plugin(mongooseHidden);
 
-userSchema.methods.generateJwt = function () {
-	let expiry = new Date();
-	expiry.setDate(expiry.getDate() + 7);
-
-	return jwt.sign({
-		_id: this._id,
-		email: this.email,
-		name: this.name,
-		exp: parseInt(expiry.getTime() / 1000),
-	}, config.jwt.secret);
-};
-
-mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema);

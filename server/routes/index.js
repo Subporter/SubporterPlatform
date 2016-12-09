@@ -1,20 +1,7 @@
-const express = require('express'),
-	router = express.Router(),
-	jwt = require('express-jwt'),
-	config = require('../config/subporter'),
-	auth = jwt({
-		secret: config.jwt.secret,
-		userProperty: 'payload'
-	});
+const auth = require("./auth");
 
-let profileController = require('../controllers/profile');
-let authenticationController = require('../controllers/authentication');
+let routesController = function (app) {
+	app.use("/", auth);
+};
 
-// profile
-router.get('/profile', profileController.profileRead);
-
-// authentication
-router.post('/register', authenticationController.register);
-router.post('/login', authenticationController.login);
-
-module.exports = router;
+module.exports.routes = routesController;

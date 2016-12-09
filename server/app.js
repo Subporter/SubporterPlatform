@@ -1,17 +1,14 @@
 const express = require('express'),
-	path = require('path'),
-	favicon = require('serve-favicon'),
-	logger = require('morgan'),
-	cookieParser = require('cookie-parser'),
-	bodyParser = require('body-parser'),
-	passport = require('passport');
+    path = require('path'),
+    favicon = require('serve-favicon'),
+    logger = require('../config/logger'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    passport = require('passport');
 
 /* Initialize DB & authentication */
 require("../config/db");
-require("../config/passport");
-
-/* Routes */
-let routes = require("./server/routes/index");
+require("../config/passport")(passport);
 
 /* Initialize app */
 let app = express();
@@ -22,7 +19,6 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 /* Middleware */
-app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: false
@@ -34,9 +30,12 @@ app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 
 /* Static */
 app.use(express.static(path.join(__dirname, '../public')));
-app.use(express.static(path.join(__dirname, '../app')));
+app.use(express.static(path.join(__dirname, '../public/app')));
+
 app.use('/lib', express.static(path.join(__dirname, '../node_modules')));
-app.use('/app', express.static(path.join(__dirname, '../app')));
+app.use('/public', express.static(path.join(__dirname, '../public')));
+app.use('/app', express.static(path.join(__dirname, '../public/app')));
+app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 app.use('/css', express.static(path.join(__dirname, '../public/css')));
 app.use('/js', express.static(path.join(__dirname, '../public/js')));
 app.use('/vendor', express.static(path.join(__dirname, '../public/vendor')));
@@ -45,8 +44,11 @@ app.use('/config', express.static(path.join(__dirname, '../config')));
 /* Passport */
 app.use(passport.initialize());
 
-/* Routes */
-app.use('/', routes);
+/* Initialize routes */
+require("./routes/index").routes(app);
+
+/* Initialize api */
+require("./api/index").api(app);
 
 /* Error handlers */
 /* 404 error handler */
@@ -84,6 +86,16 @@ app.use(function (err, req, res, next) {
 		message: err.message,
 		error: {}
 	});
+});
+
+/* UncaughtException */
+
+process.on("uncaughtException", function (err) {
+	if (app.get('env') !== 'development') {
+		logger.errorLog.error("Error: ", err);
+	} else {
+        throw err;
+	}
 });
 
 module.exports = app;

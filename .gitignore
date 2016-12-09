@@ -1,7 +1,5 @@
 ### Custom ###
-*.env
-./config/subporter.env
-*.view.html
+subporter.config.js
 *.js.map
 typings/
 
