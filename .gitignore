@@ -1,5 +1,5 @@
 ### Custom ###
-*.config.js
+subporter.config.js
 *.js.map
 typings/
 
