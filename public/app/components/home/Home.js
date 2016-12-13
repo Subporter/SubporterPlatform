@@ -30,6 +30,18 @@ var Home = (function () {
         localStorage.removeItem("id_token");
         this.router.navigate(["login"]);
     };
+    Home.prototype.updateUser = function () {
+        var _this = this;
+        var name = "Niels";
+        var body = JSON.stringify({
+            name: name
+        });
+        headers_1.contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+        this.authHttp.put("http://localhost:1337/api/user", body, {
+            headers: headers_1.contentHeaders
+        })
+            .subscribe(function (response) { return _this.response = response.text(); }, function (error) { return _this.response = error.text; });
+    };
     Home.prototype.callAnonymousApi = function () {
         this._callApi("Anonymous", "http://localhost:1337/api/sports");
     };
@@ -57,7 +69,7 @@ var Home = (function () {
 Home = __decorate([
     core_1.Component({
         selector: 'home',
-        template: "\n\t\t<div>\n\t\t\t<div class=\"home jumbotron centered\">\n\t\t\t\t<h1>Welcome to Angular2 through Auth</h1>\n\t\t\t\t<h2 *ngIf=\"jwt\">Your JWT is:</h2>\n\t\t\t\t<pre *ngIf=\"jwt\" class=\"jwt\"><code>{{ jwt }}</code></pre>\n\t\t\t\t<p>Click any of the buttons to call an API and get a response</p>\n\t\t\t\t<p><a class=\"btn btn-primary btn-lg\" role=\"button\" (click)=\"callAnonymousApi()\">Call Anonymous API</a></p>\n    \t\t\t<p><a class=\"btn btn-primary btn-lg\" role=\"button\" (click)=\"callSecuredApi()\">Call Secure API</a></p>\n    \t\t\t<p><a class=\"btn btn-primary btn-lg\" role=\"button\" (click)=\"logout()\">Logout</a></p>\n    \t\t\t<h2 *ngIf=\"response\">The response of calling the <span class=\"red\">{{ api }}</span> API is:</h2>\n    \t\t\t<h3 *ngIf=\"response\">{{ response }}</h3>\n\t\t\t</div>\n\t\t</div>\n\t"
+        template: "\n\t\t<div>\n\t\t\t<div class=\"home jumbotron centered\">\n\t\t\t\t<h1>Welcome to Angular2 through Auth</h1>\n\t\t\t\t<h2 *ngIf=\"jwt\">Your JWT is:</h2>\n\t\t\t\t<pre *ngIf=\"jwt\" class=\"jwt\"><code>{{ jwt }}</code></pre>\n\t\t\t\t<p>Click any of the buttons to call an API and get a response</p>\n\t\t\t\t<p><a class=\"btn btn-primary btn-lg\" role=\"button\" (click)=\"callAnonymousApi()\">Call Anonymous API</a></p>\n    \t\t\t<p><a class=\"btn btn-primary btn-lg\" role=\"button\" (click)=\"callSecuredApi()\">Call Secure API</a></p>\n    \t\t\t<p><a class=\"btn btn-primary btn-lg\" role=\"button\" (click)=\"logout()\">Logout</a></p>\n    \t\t\t<p><a class=\"btn btn-primary btn-lg\" role=\"button\" (click)=\"updateUser()\">Update user</a></p>\n    \t\t\t<h2 *ngIf=\"response\">The response of calling the <span class=\"red\">{{ api }}</span> API is:</h2>\n    \t\t\t<h3 *ngIf=\"response\">{{ response }}</h3>\n\t\t\t</div>\n\t\t</div>\n\t"
     }),
     __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp])
 ], Home);

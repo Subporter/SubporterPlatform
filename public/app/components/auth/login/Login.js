@@ -11,12 +11,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
+var angular2_jwt_1 = require("angular2-jwt");
 var headers_1 = require("../../../common/headers");
 var Login = (function () {
     function Login(router, http) {
         this.router = router;
         this.http = http;
+        this.jwtHelper = new angular2_jwt_1.JwtHelper();
     }
+    Login.prototype.useJwtHelper = function () {
+        var token = localStorage.getItem("id_token");
+        console.log("Token:", token);
+        console.log(this.jwtHelper.decodeToken(token), this.jwtHelper.getTokenExpirationDate(token), this.jwtHelper.isTokenExpired(token));
+    };
     Login.prototype.login = function () {
         var _this = this;
         event.preventDefault();
@@ -30,8 +37,9 @@ var Login = (function () {
         })
             .subscribe(function (response) {
             console.log(response.json());
-            if (response.json().success = true) {
+            if (response.json().success == true) {
                 localStorage.setItem("id_token", response.json().token);
+                _this.useJwtHelper();
                 _this.router.navigate(['home']);
             }
         }, function (error) {
