@@ -24,16 +24,16 @@ router.post("/register", function (req, res) {
 					error: err
 				});
 			} else {
-				let expires = moment().add(1, "minutes").unix();
+				let expires = moment().add(7, "days").unix();
 				let token = jwt.encode({
-					user: user.email,
+					email: user.email,
 					exp: expires
 				}, config.jwt_secret);
 				res.json({
 					info: "User created successfully",
 					success: true,
 					token: token,
-					expires: moment().add(1, "minutes").format("dddd, MMMM Do YYYY, h:mm:ss a")
+					expires: moment().add(7, "days").format("dddd, MMMM Do YYYY, h:mm:ss a")
 				});
 			}
 		});
@@ -60,16 +60,16 @@ router.post("/login", function (req, res) {
 						success: false
 					});
 				} else {
-					let expires = moment().add(1, "minutes").unix();
+					let expires = moment().add(7, "days").unix();
 					let token = jwt.encode({
-						user: user.email,
+						email: user.email,
 						exp: expires
 					}, config.jwt_secret);
 					res.json({
 						info: "Logged in successfully",
 						success: true,
 						token: token,
-						expires: moment().add(1, "minutes").format("dddd, MMMM Do YYYY, h:mm:ss a")
+						expires: moment().add(7, "days").format("dddd, MMMM Do YYYY, h:mm:ss a")
 					});
 				}
 			});

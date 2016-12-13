@@ -1,7 +1,7 @@
-const auth = require("./auth");
+const authenticate  = require("./authenticate");
 
 let routesController = function (app) {
-	app.use("/", auth);
+	app.use("/", authenticate);
 };
 
 module.exports.routes = routesController;
