@@ -2,24 +2,24 @@ const express = require("express"),
 	_ = require("lodash"),
 	authenticate = require("../middleware/authenticate"),
 	admin = require("../middleware/admin"),
-	Sport = require("../models/Sports");
+	Team = require("../models/Teams");
 
 let router = express.Router();
 
 /* Create */
-router.post("/sports", authenticate, admin, function (req, res) {
+router.post("/teams", authenticate, admin, function (req, res) {
 	if (req.granted) {
-		let newSport = new Sport(req.body);
-		newSport.save(function (err) {
+		let newTeam = new Team(req.body);
+		newTeam.save(function (err) {
 			if (err) {
 				res.json({
-					info: "Error during creating sport",
+					info: "Error during creating team",
 					success: false,
 					error: err
 				});
 			} else {
 				res.json({
-					info: "Sport created succesfully",
+					info: "Team created succesfully",
 					success: true
 				});
 			}
@@ -33,73 +33,73 @@ router.post("/sports", authenticate, admin, function (req, res) {
 	}
 });
 
-/* Read (all sports) */
-router.get("/sports", function (req, res) {
-	Sport.find(function (err, sports) {
+/* Read (all teams) */
+router.get("/teams", function (req, res) {
+	Team.find(function (err, teams) {
 		if (err) {
 			res.json({
-				info: "Error during reading sports",
+				info: "Error during reading teams",
 				success: false,
 				error: err
 			});
 		} else {
 			res.json({
-				info: "Sports found succesfully",
+				info: "Teams found succesfully",
 				success: true,
-				data: sports
+				data: teams
 			});
 		}
 	});
 });
 
-/* Read (one sport) */
-router.get("/sports/:id", function (req, res) {
-	Sport.findById(req.params.id, function (err, sport) {
+/* Read (one team) */
+router.get("/teams/:id", function (req, res) {
+	Team.findById(req.params.id, function (err, team) {
 		if (err) {
 			res.json({
-				info: "Error during reading sport",
+				info: "Error during reading team",
 				success: false,
 				error: err
 			});
 		} else {
 			res.json({
-				info: "Sport found succesfully",
+				info: "Team found succesfully",
 				success: true,
-				data: sport
+				data: team
 			});
 		}
 	});
 });
 
 /* Update */
-router.put("/sports/:id", authenticate, admin, function (req, res) {
+router.put("/teams/:id", authenticate, admin, function (req, res) {
 	if (req.granted) {
-		Sport.findById(req.params.id, function (err, sport) {
+		Team.findById(req.params.id, function (err, team) {
 			if (err) {
 				res.json({
-					info: "Error during updating sport",
+					info: "Error during updating team",
 					success: false,
 					error: err
 				});
-			} else if (sport) {
-				_.merge(sport, req.body);
-				sport.save(function (err) {
+			} else if (team) {
+				_.merge(team, req.body);
+				team.save(function (err) {
 					if (err) {
 						res.json({
-							info: "Error during updating sport",
+							info: "Error during updating team",
 							success: false,
 							error: err
 						});
 					} else {
 						res.json({
-							info: "Sport updated succesfully",
+							info: "Team updated succesfully",
 							success: true
 						});
 					}
 				});
 			} else {
 				res.json({
-					info: "Sport not found",
+					info: "Team not found",
 					success: false,
 				});
 			}
@@ -114,18 +114,18 @@ router.put("/sports/:id", authenticate, admin, function (req, res) {
 });
 
 /* Delete */
-router.delete("/sports/:id", authenticate, admin, function (req, res) {
+router.delete("/teams/:id", authenticate, admin, function (req, res) {
 	if (req.granted) {
-		Sport.findByIdAndRemove(req.params.id, function (err) {
+		Team.findByIdAndRemove(req.params.id, function (err) {
 			if (err) {
 				res.json({
-					info: "Error during deleting sport",
+					info: "Error during deleting team",
 					success: false,
 					error: err
 				});
 			} else {
 				res.json({
-					info: "Sport deleted succesfully",
+					info: "Team deleted succesfully",
 					success: true
 				});
 			}

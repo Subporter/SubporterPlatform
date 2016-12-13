@@ -40,6 +40,66 @@ router.post("/register", function (req, res) {
 	}
 });
 
+/* Check email */
+router.get("/check/email", function (req, res) {
+	if (!req.body.email) {
+		res.json({
+			info: "Please supply an email",
+			success: false
+		});
+	} else {
+		User.findOne({
+			email: req.body.email
+		}, function (err, user) {
+			if (err) {
+				throw err;
+			}
+
+			if (user) {
+				res.json({
+					info: "User with this email already exists",
+					found: true
+				});
+			} else {
+				res.json({
+					info: "User with this email doesn't exist",
+					found: false
+				});
+			}
+		});
+	}
+});
+
+/* Check username */
+router.get("/check/username", function (req, res) {
+	if (!req.body.username) {
+		res.json({
+			info: "Please supply a username",
+			success: false
+		});
+	} else {
+		User.findOne({
+			username: req.body.username
+		}, function (err, user) {
+			if (err) {
+				throw err;
+			}
+
+			if (user) {
+				res.json({
+					info: "User with this username already exists",
+					found: true
+				});
+			} else {
+				res.json({
+					info: "User with this username doesn't exist",
+					found: false
+				});
+			}
+		});
+	}
+});
+
 /* Login */
 router.post("/login", function (req, res) {
 	User.findOne({

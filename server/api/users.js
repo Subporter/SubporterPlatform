@@ -13,8 +13,7 @@ router.get("/user", authenticate, function (req, res) {
 			}, {
 				admin: 0,
 				password: 0
-			},
-			function (err, user) {
+			}, function (err, user) {
 				if (err) {
 					throw err;
 				} else if (!user) {
@@ -44,9 +43,8 @@ router.get("/user", authenticate, function (req, res) {
 router.put("/user", authenticate, function (req, res) {
 	if (req.granted) {
 		User.findOne({
-				email: req.jwtUser.user
-			},
-			function (err, user) {
+				email: req.jwtUser.email
+			}, function (err, user) {
 				if (err) {
 					res.json({
 						info: "Error during updating user",

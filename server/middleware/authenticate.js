@@ -6,8 +6,15 @@ let authenticate = function (req, res, next) {
 	if (passport.authenticate("jwt", { session: false })) {
 		let token = getToken(req.headers);
 		if (token) {
-			req.granted = true;
-			req.jwtUser = jwt.decode(token, config.jwt_secret);
+			let user = jwt.decode(token, config.jwt_secret);
+			if (user) {
+				req.jwtUser = user;
+				req.granted = true;
+			} else {
+				req.granted = false;
+			}
+		} else {
+			req.granted = false;
 		}
 	}
 	next();
@@ -15,12 +22,7 @@ let authenticate = function (req, res, next) {
 
 let getToken = function (headers) {
 	if (headers && headers.authorization) {
-		let parted = headers.authorization.split(" ");
-		if (parted.length === 2) {
-			return parted[1];
-		} else {
-			return null;
-		}
+		return headers.authorization;
 	} else {
 		return null;
 	}

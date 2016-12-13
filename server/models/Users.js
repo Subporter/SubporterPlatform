@@ -23,9 +23,11 @@ let userSchema = new mongoose.Schema({
 	street: String,
 	city: String,
 	postal: String,
+	country: String,
 	phone: String,
 	national_registry_number: String,
 	sports_id: Number,
+	competitions_id: Number,
 	team_id: Number,
 	password: {
 		type: String,
