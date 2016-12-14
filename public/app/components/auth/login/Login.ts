@@ -20,6 +20,7 @@ import { contentHeaders } from '../../../common/headers'
    				<button type="submit" class="btn btn-default">Submit</button>
      			<a [routerLink]="['/register']">Click here to register</a>
      			<a [routerLink]="['/home']">Click here to go home</a>
+				 <a [routerLink]="['/landing']">Click here to go landing</a>
 			</form>
 		</div>
 	`
