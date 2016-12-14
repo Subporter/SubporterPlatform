@@ -1,4 +1,4 @@
-const authenticate  = require("./authenticate");
+const authenticate = require("./authenticate");
 
 let routesController = function (app) {
 	app.use("/", authenticate);

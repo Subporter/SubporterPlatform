@@ -1,10 +1,10 @@
 const express = require('express'),
-    path = require('path'),
-    favicon = require('serve-favicon'),
-    logger = require('../config/logger'),
-    cookieParser = require('cookie-parser'),
-    bodyParser = require('body-parser'),
-    passport = require('passport');
+	path = require('path'),
+	favicon = require('serve-favicon'),
+	logger = require('../config/logger'),
+	cookieParser = require('cookie-parser'),
+	bodyParser = require('body-parser'),
+	passport = require('passport');
 
 /* Initialize DB & authentication */
 require("../config/db");
@@ -14,7 +14,6 @@ require("../config/passport")(passport);
 let app = express();
 
 /* View enginge */
-app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
@@ -30,12 +29,11 @@ app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 
 /* Static */
 app.use(express.static(path.join(__dirname, '../public')));
-app.use(express.static(path.join(__dirname, '../public/app')));
 
 app.use('/app', express.static(path.join(__dirname, '../public/app')));
-app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 app.use('/config', express.static(path.join(__dirname, '../config')));
 app.use('/css', express.static(path.join(__dirname, '../public/css')));
+app.use('/images', express.static(path.join(__dirname, '../public/images')));
 app.use('/js', express.static(path.join(__dirname, '../public/js')));
 app.use('/lib', express.static(path.join(__dirname, '../node_modules')));
 app.use('/public', express.static(path.join(__dirname, '../public')));
@@ -44,11 +42,17 @@ app.use('/vendor', express.static(path.join(__dirname, '../public/vendor')));
 /* Passport */
 app.use(passport.initialize());
 
+/* Initialize api */
+require("./api/index").api(app);
+
 /* Initialize routes */
 require("./routes/index").routes(app);
 
-/* Initialize api */
-require("./api/index").api(app);
+/* Angular2 routes */
+app.get('*', function(req, res) {
+	let index = path.resolve(__dirname, "../public/index.html");
+	res.sendFile(index);
+});
 
 /* Error handlers */
 /* 404 error handler */
@@ -94,7 +98,7 @@ process.on("uncaughtException", function (err) {
 	if (app.get('env') !== 'development') {
 		logger.errorLog.error("Error: ", err);
 	} else {
-        throw err;
+		throw err;
 	}
 });
 
