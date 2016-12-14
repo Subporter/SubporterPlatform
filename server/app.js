@@ -48,12 +48,6 @@ require("./api/index").api(app);
 /* Initialize routes */
 require("./routes/index").routes(app);
 
-/* Angular2 routes */
-app.get('*', function(req, res) {
-	let index = path.resolve(__dirname, "../public/index.html");
-	res.sendFile(index);
-});
-
 /* Error handlers */
 /* 404 error handler */
 app.use((req, res, next) => {

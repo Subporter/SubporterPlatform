@@ -36,7 +36,11 @@ let loanSchema = new mongoose.Schema({
 		required: true
 	},
 	lend_by: String,
-	lend_on: String
+	lend_on: String,
+	paid: {
+		type: Boolean,
+		default: false
+	}
 });
 
 loanSchema.plugin(autoIncrement, { inc_field: "loans_id" });
