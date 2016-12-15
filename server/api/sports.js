@@ -34,7 +34,7 @@ router.post("/sports", authenticate, admin, function (req, res) {
 });
 
 /* Read (all sports) */
-router.get("/sports", function (req, res) {
+router.get("/sports", authenticate, function (req, res) {
 	Sport.find(function (err, sports) {
 		if (err) {
 			res.json({
@@ -53,7 +53,7 @@ router.get("/sports", function (req, res) {
 });
 
 /* Read (one sport) */
-router.get("/sports/:id", function (req, res) {
+router.get("/sports/:id", authenticate, function (req, res) {
 	Sport.findById(req.params.id, function (err, sport) {
 		if (err) {
 			res.json({

@@ -34,7 +34,7 @@ router.post("/competitions", authenticate, admin, function (req, res) {
 });
 
 /* Read (all competitions) */
-router.get("/competitions", function (req, res) {
+router.get("/competitions", authenticate, function (req, res) {
 	Competition.find(function (err, competitions) {
 		if (err) {
 			res.json({
@@ -53,7 +53,7 @@ router.get("/competitions", function (req, res) {
 });
 
 /* Read (one competition) */
-router.get("/competitions/:id", function (req, res) {
+router.get("/competitions/:id", authenticate, function (req, res) {
 	Competition.findById(req.params.id, function (err, competition) {
 		if (err) {
 			res.json({

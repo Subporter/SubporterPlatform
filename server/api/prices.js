@@ -2,24 +2,24 @@ const express = require("express"),
 	_ = require("lodash"),
 	authenticate = require("../middleware/authenticate"),
 	admin = require("../middleware/admin"),
-	Team = require("../models/Teams");
+	Price = require("../models/Prices");
 
 let router = express.Router();
 
 /* Create */
-router.post("/teams", authenticate, admin, function (req, res) {
+router.post("/prices", authenticate, admin, function (req, res) {
 	if (req.granted) {
-		let newTeam = new Team(req.body);
-		newTeam.save(function (err) {
+		let newPrice = new Price(req.body);
+		newPrice.save(function (err) {
 			if (err) {
 				res.json({
-					info: "Error during creating team",
+					info: "Error during creating price",
 					success: false,
 					error: err
 				});
 			} else {
 				res.json({
-					info: "Team created succesfully",
+					info: "Price created succesfully",
 					success: true
 				});
 			}
@@ -33,73 +33,77 @@ router.post("/teams", authenticate, admin, function (req, res) {
 	}
 });
 
-/* Read (all teams) */
-router.get("/teams", authenticate, function (req, res) {
-	Team.find(function (err, teams) {
+/* Read (all prices) */
+router.get("/prices", authenticate, function (req, res) {
+	Price.find(function (err, prices) {
 		if (err) {
 			res.json({
-				info: "Error during reading teams",
+				info: "Error during reading prices",
 				success: false,
 				error: err
 			});
 		} else {
 			res.json({
-				info: "Teams found succesfully",
+				info: "Prices found succesfully",
 				success: true,
-				data: teams
+				data: prices
 			});
 		}
 	});
 });
 
-/* Read (one team) */
-router.get("/teams/:id", authenticate, function (req, res) {
-	Team.findById(req.params.id, function (err, team) {
+/* Read (one prices) */
+router.get("/prices/:team_id", function (req, res) {
+	Price.findOne({
+        team_id: req.params.team_id
+    }, function (err, price) {
 		if (err) {
 			res.json({
-				info: "Error during reading team",
+				info: "Error during reading price",
 				success: false,
 				error: err
 			});
 		} else {
 			res.json({
-				info: "Team found succesfully",
+				info: "Price found succesfully",
 				success: true,
-				data: team
+				data: price
 			});
 		}
 	});
 });
 
 /* Update */
-router.put("/teams/:id", authenticate, admin, function (req, res) {
+router.put("/prices/:team_id", authenticate, admin, function (req, res) {
 	if (req.granted) {
-		Team.findById(req.params.id, function (err, team) {
+		Price.findOne({
+            team_id: req.params.team_id
+        }, function (err, price) {
 			if (err) {
 				res.json({
-					info: "Error during updating team",
+					info: "Error during updating price",
 					success: false,
 					error: err
 				});
-			} else if (team) {
-				_.merge(team, req.body);
-				team.save(function (err) {
+			} else if (price) {
+				_.merge(price, req.body);
+				price.save(function (err) {
 					if (err) {
 						res.json({
-							info: "Error during updating team",
+							info: "Error during updating price",
 							success: false,
 							error: err
 						});
 					} else {
 						res.json({
-							info: "Team updated succesfully",
+							info: "Price updated succesfully",
 							success: true
 						});
 					}
 				});
 			} else {
 				res.json({
-					info: "Team not found",
+					info: "Price not found",
 					success: false,
 				});
 			}
@@ -114,18 +118,20 @@ router.put("/teams/:id", authenticate, admin, function (req, res) {
 });
 
 /* Delete */
-router.delete("/teams/:id", authenticate, admin, function (req, res) {
+router.delete("/prices/:team_id", authenticate, admin, function (req, res) {
 	if (req.granted) {
-		Team.findByIdAndRemove(req.params.id, function (err) {
+		Price.findOneAndRemove({
+            team_id: req.params.team_id
+        }, function (err) {
 			if (err) {
 				res.json({
-					info: "Error during deleting team",
+					info: "Error during deleting price",
 					success: false,
 					error: err
 				});
 			} else {
 				res.json({
-					info: "Team deleted succesfully",
+					info: "Price deleted succesfully",
 					success: true
 				});
 			}
