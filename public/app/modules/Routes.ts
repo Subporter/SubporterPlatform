@@ -5,6 +5,7 @@ import { Home } from "../components/home/Home";
 import { Register } from "../components/auth/register/Register";
 import { Login } from "../components/auth/login/Login";
 import { AuthGuard } from "../common/AuthGuard";
+import { AdminGuard } from "../common/AdminGuard";
 
 export const SubporterRoutes: Routes = [
 	{
@@ -17,7 +18,7 @@ export const SubporterRoutes: Routes = [
 		path: 'register', component: Register
 	},
 	{
-		path: 'home', component: Home, canActivate: [ AuthGuard ]
+		path: 'home', component: Home, canActivate: [ AdminGuard ]
 	}, 
 	{
 		path: '**', component: Login

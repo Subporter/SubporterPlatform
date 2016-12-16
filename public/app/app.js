@@ -15,6 +15,8 @@ var forms_1 = require("@angular/forms");
 var angular2_jwt_1 = require("angular2-jwt");
 var Auth_1 = require("./services/Auth");
 var AuthGuard_1 = require("./common/AuthGuard");
+var AdminGuard_1 = require("./common/AdminGuard");
+var ApiService_1 = require("./services/ApiService");
 var App_1 = require("./components/App");
 var Home_1 = require("./components/home/Home");
 var Register_1 = require("./components/auth/register/Register");
@@ -38,7 +40,9 @@ Subporter = __decorate([
         providers: [
             Auth_1.Auth,
             AuthGuard_1.AuthGuard,
-            angular2_jwt_1.AUTH_PROVIDERS
+            AdminGuard_1.AdminGuard,
+            angular2_jwt_1.AUTH_PROVIDERS,
+            ApiService_1.ApiService
         ]
     }),
     __metadata("design:paramtypes", [])

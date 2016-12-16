@@ -6,6 +6,8 @@ import { FormsModule } from "@angular/forms";
 import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { Auth } from './services/Auth';
 import { AuthGuard } from "./common/AuthGuard";
+import { AdminGuard } from "./common/AdminGuard";
+import { ApiService } from "./services/ApiService";
 
 import { App } from "./components/App";
 import { Home } from "./components/home/Home";
@@ -26,7 +28,9 @@ import { Routing } from "./modules/Routes";
 	providers: [
 		Auth,
 		AuthGuard,
-		AUTH_PROVIDERS
+		AdminGuard,
+		AUTH_PROVIDERS,
+		ApiService
 	]
 })
 
