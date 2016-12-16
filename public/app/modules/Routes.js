@@ -16,6 +16,9 @@ exports.SubporterRoutes = [
     },
     {
         path: 'home', component: Home_1.Home, canActivate: [AuthGuard_1.AuthGuard]
+    },
+    {
+        path: '**', component: Login_1.Login
     }
 ];
 exports.Routing = router_1.RouterModule.forRoot(exports.SubporterRoutes);
