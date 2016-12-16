@@ -4,4 +4,8 @@ export class Auth {
 	isLoggedIn() {
 		return tokenNotExpired();
 	}
+
+	isAdmin() {
+		
+	}
 }

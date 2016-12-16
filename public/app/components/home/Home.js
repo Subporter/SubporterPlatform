@@ -12,14 +12,13 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
 var angular2_jwt_1 = require("angular2-jwt");
-var angular2_jwt_2 = require("angular2-jwt");
 var headers_1 = require("../../common/headers");
 var Home = (function () {
     function Home(router, http, authHttp) {
         this.router = router;
         this.http = http;
         this.authHttp = authHttp;
-        this.jwtHelper = new angular2_jwt_2.JwtHelper();
+        this.jwtHelper = new angular2_jwt_1.JwtHelper();
     }
     Home.prototype.useJwtHelper = function () {
         var token = localStorage.getItem("id_token");

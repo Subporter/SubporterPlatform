@@ -6,6 +6,8 @@ var Auth = (function () {
     Auth.prototype.isLoggedIn = function () {
         return angular2_jwt_1.tokenNotExpired();
     };
+    Auth.prototype.isAdmin = function () {
+    };
     return Auth;
 }());
 exports.Auth = Auth;

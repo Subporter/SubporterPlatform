@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
-import { AuthHttp } from 'angular2-jwt';
-import { JwtHelper } from 'angular2-jwt';
+import { AuthHttp, JwtHelper } from 'angular2-jwt';
 import { contentHeaders } from '../../common/headers'
 
 @Component({
