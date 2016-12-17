@@ -3,6 +3,10 @@ const mongoose = require('mongoose'),
 	bcrypt = require('bcrypt-nodejs');
 
 let userSchema = new mongoose.Schema({
+	admin: {
+		type: Boolean,
+		default: false
+	},
 	email: {
 		type: String,
 		unique: true,
@@ -19,12 +23,11 @@ let userSchema = new mongoose.Schema({
 	street: String,
 	city: String,
 	postal: String,
+	country: String,
 	phone: String,
-	national_registry_number: {
-		type: String,
-		unique: true
-	},
+	national_registry_number: String,
 	sports_id: Number,
+	competitions_id: Number,
 	team_id: Number,
 	password: {
 		type: String,

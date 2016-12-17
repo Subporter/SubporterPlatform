@@ -1,29 +1,55 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
+import { JwtHelper } from 'angular2-jwt';
 import { contentHeaders } from '../../../common/headers'
 
 @Component({
 	selector: 'login',
 	template: `
-		<div>
-			<h1>Login</h1>
-			<form (submit)="login($event)">
-				<div class="form-group">
-     				<label for="email">Email</label>
-     				<input [(ngModel)]="email" type="email" class="form-control" name="email" id="email" placeholder="Email">
-   				</div>
-   				<div class="form-group">
-     				<label for="password">Password</label>
-     				<input [(ngModel)]="password" type="password" class="form-control" name="password" id="password" placeholder="Password">
-   				</div>
-   				<button type="submit" class="btn btn-default">Submit</button>
-     			<a [routerLink]="['/register']">Click here to register</a>
-     			<a [routerLink]="['/home']">Click here to go home</a>
-				 <a [routerLink]="['/landing']">Click here to go landing</a>
-			</form>
-		</div>
-	`
+		<div class="login container">
+	<div class="login-section">
+		<h1>Login</h1>
+		<form (submit)="login($event)">
+			<div class="form-group">
+				<div class="input-field">
+					<input [(ngModel)]="email" type="email" class="form-control validate" name="email" id="email">
+					<label for="email">Email</label>
+
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-field">
+
+					<input [(ngModel)]="password" type="password" class="form-control validate" name="password" id="password">
+					<label for="password">Password</label>
+
+				</div>
+			</div>
+			<button type="submit" class="btn btn-default">Submit</button>
+			<a [routerLink]="['/landing']">Click here to go landing</a>
+		</form>
+	</div>
+	<div class="register-section">
+		<h1>Not a member?</h1>
+		<p>If you're not yet registered, please register now to obtain full access.</p>
+		<br/>
+
+		<button class="btn" [routerLink]="['/register']"> Register now </button>
+
+
+	</div>
+</div>
+
+
+
+
+
+
+
+	`,
+	  styleUrls: ['../../../css/login.css']
+
 })
 
 export class Login {
@@ -31,6 +57,19 @@ export class Login {
 	password: String;
 
 	constructor(public router: Router, public http: Http) {
+	}
+
+	jwtHelper: JwtHelper = new JwtHelper();
+	
+	useJwtHelper() {
+		let token = localStorage.getItem("id_token");
+		console.log("Token:", token);
+
+		console.log(
+			this.jwtHelper.decodeToken(token),
+			this.jwtHelper.getTokenExpirationDate(token),
+			this.jwtHelper.isTokenExpired(token)
+		)
 	}
 
 	login() {
@@ -49,8 +88,9 @@ export class Login {
 			.subscribe(
 			response => {
 				console.log(response.json());
-				if (response.json().success = true) {
+				if (response.json().success == true) {
 					localStorage.setItem("id_token", response.json().token);
+					this.useJwtHelper();
 					this.router.navigate(['home']);
 				}
 			},

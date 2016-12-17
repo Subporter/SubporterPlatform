@@ -20,6 +20,9 @@ exports.SubporterRoutes = [
     },
     {
         path: 'landing', component: Landing_1.Landing
+    },
+    {
+        path: '**', component: Login_1.Login
     }
 ];
 exports.Routing = router_1.RouterModule.forRoot(exports.SubporterRoutes);

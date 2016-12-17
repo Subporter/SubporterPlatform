@@ -2,24 +2,24 @@ const express = require("express"),
 	_ = require("lodash"),
 	authenticate = require("../middleware/authenticate"),
 	admin = require("../middleware/admin"),
-	Sport = require("../models/Sports");
+	Price = require("../models/Prices");
 
 let router = express.Router();
 
 /* Create */
-router.post("/sports", authenticate, admin, function (req, res) {
+router.post("/prices", authenticate, admin, function (req, res) {
 	if (req.granted) {
-		let newSport = new Sport(req.body);
-		newSport.save(function (err) {
+		let newPrice = new Price(req.body);
+		newPrice.save(function (err) {
 			if (err) {
 				res.json({
-					info: "Error during creating sport",
+					info: "Error during creating price",
 					success: false,
 					error: err
 				});
 			} else {
 				res.json({
-					info: "Sport created succesfully",
+					info: "Price created succesfully",
 					success: true
 				});
 			}
@@ -33,73 +33,77 @@ router.post("/sports", authenticate, admin, function (req, res) {
 	}
 });
 
-/* Read (all sports) */
-router.get("/sports", authenticate, function (req, res) {
-	Sport.find(function (err, sports) {
+/* Read (all prices) */
+router.get("/prices", authenticate, function (req, res) {
+	Price.find(function (err, prices) {
 		if (err) {
 			res.json({
-				info: "Error during reading sports",
+				info: "Error during reading prices",
 				success: false,
 				error: err
 			});
 		} else {
 			res.json({
-				info: "Sports found succesfully",
+				info: "Prices found succesfully",
 				success: true,
-				data: sports
+				data: prices
 			});
 		}
 	});
 });
 
-/* Read (one sport) */
-router.get("/sports/:id", authenticate, function (req, res) {
-	Sport.findById(req.params.id, function (err, sport) {
+/* Read (one prices) */
+router.get("/prices/:team_id", function (req, res) {
+	Price.findOne({
+        team_id: req.params.team_id
+    }, function (err, price) {
 		if (err) {
 			res.json({
-				info: "Error during reading sport",
+				info: "Error during reading price",
 				success: false,
 				error: err
 			});
 		} else {
 			res.json({
-				info: "Sport found succesfully",
+				info: "Price found succesfully",
 				success: true,
-				data: sport
+				data: price
 			});
 		}
 	});
 });
 
 /* Update */
-router.put("/sports/:id", authenticate, admin, function (req, res) {
+router.put("/prices/:team_id", authenticate, admin, function (req, res) {
 	if (req.granted) {
-		Sport.findById(req.params.id, function (err, sport) {
+		Price.findOne({
+            team_id: req.params.team_id
+        }, function (err, price) {
 			if (err) {
 				res.json({
-					info: "Error during updating sport",
+					info: "Error during updating price",
 					success: false,
 					error: err
 				});
-			} else if (sport) {
-				_.merge(sport, req.body);
-				sport.save(function (err) {
+			} else if (price) {
+				_.merge(price, req.body);
+				price.save(function (err) {
 					if (err) {
 						res.json({
-							info: "Error during updating sport",
+							info: "Error during updating price",
 							success: false,
 							error: err
 						});
 					} else {
 						res.json({
-							info: "Sport updated succesfully",
+							info: "Price updated succesfully",
 							success: true
 						});
 					}
 				});
 			} else {
 				res.json({
-					info: "Sport not found",
+					info: "Price not found",
 					success: false,
 				});
 			}
@@ -114,18 +118,20 @@ router.put("/sports/:id", authenticate, admin, function (req, res) {
 });
 
 /* Delete */
-router.delete("/sports/:id", authenticate, admin, function (req, res) {
+router.delete("/prices/:team_id", authenticate, admin, function (req, res) {
 	if (req.granted) {
-		Sport.findByIdAndRemove(req.params.id, function (err) {
+		Price.findOneAndRemove({
+            team_id: req.params.team_id
+        }, function (err) {
 			if (err) {
 				res.json({
-					info: "Error during deleting sport",
+					info: "Error during deleting price",
 					success: false,
 					error: err
 				});
 			} else {
 				res.json({
-					info: "Sport deleted succesfully",
+					info: "Price deleted succesfully",
 					success: true
 				});
 			}

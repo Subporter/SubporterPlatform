@@ -7,17 +7,15 @@ import { MnFullpageService} from "ng2-fullpage/ng2-fullpage";
 
 
 @Component({
-	selector: 'fullpageTest',
+	selector: 'landing',
 	template: `
 		 <div mnFullpage
-            [mnFullpageNavigation]="true" 
+            [mnFullpageNavigation]="false" 
             [mnFullpageKeyboardScrolling]="true"
             [mnFullpageControlArrows]="false"
-            [mnFullpageVerticalCentered]="false">
+            [mnFullpageVerticalCentered]="false"
+            [mnFullpageAutoScrolling]="false">
             <div class="section " id="section0">  
-
-
-           
 
     <nav>
     <div class="nav-wrapper">
@@ -226,7 +224,8 @@ import { MnFullpageService} from "ng2-fullpage/ng2-fullpage";
             </div>
         </div>
 
-	`
+	`,
+	  styleUrls: ['../../css/landing.css']
 })
 
 export class Landing {

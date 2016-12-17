@@ -9,9 +9,9 @@ let passportConfig = function (passport) {
 	options.jwtFromRequest = ExtractJwt.fromAuthHeader();
 	options.secretOrKey = config.jwt_secret;
 
-	passport.use(new JwtStrategy(options, function (jwt_payload, done) {
+	passport.use(new JwtStrategy(options, function (jwt, done) {
 		User.findOne({
-			id: jwt_payload.id
+			id: jwt.id
 		}, function (err, user) {
 			if (err) {
 				return done(err, false);

@@ -21,6 +21,9 @@ export const SubporterRoutes: Routes = [
 	},
 	{
 		path: 'landing', component: Landing
+	}, 
+	{
+		path: '**', component: Login
 	}
 ]
 
