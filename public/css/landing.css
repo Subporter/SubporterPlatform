@@ -1,6 +1,7 @@
 .section{
     		background-size: cover;
 			padding-top: 0;
+			padding-bottom:0;
 }
 
 
@@ -119,3 +120,49 @@ nav{
 	font-weight: bold;
 }
 
+#section1, #section4{
+	padding-top: 50px;
+	padding-bottom: 50px;
+
+}
+
+.title{
+	font-weight: bold;
+}
+
+.collection-item p{
+	display: inline-block;
+}
+
+.collection-item:hover{
+	background:#F4F4F4;
+	cursor: pointer;
+}
+
+#section4{
+	background-color: #F4F4F4;
+}
+
+#section4 .collection{
+	border:none;
+	background: none;
+}
+
+
+#section4 .collection .collection-item{
+		background: none;
+
+}
+
+#section3{
+	padding-bottom: 50px;
+
+}
+
+footer.page-footer{
+	margin-top:0;
+}
+
+.collection-item .title{
+	display: block;
+}

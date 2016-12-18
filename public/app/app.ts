@@ -19,6 +19,7 @@ import { MnFullpageDirective, MnFullpageService} from "ng2-fullpage/ng2-fullpage
 
 
 
+
 @NgModule({
 	bootstrap: [ App ],
 	declarations: [ App, Home, Register, Login, Landing,  MnFullpageDirective ],
