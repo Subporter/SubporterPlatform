@@ -19,7 +19,9 @@ var App_1 = require("./components/App");
 var Home_1 = require("./components/home/Home");
 var Register_1 = require("./components/auth/register/Register");
 var Login_1 = require("./components/auth/login/Login");
+var Landing_1 = require("./components/index/Landing");
 var Routes_1 = require("./modules/Routes");
+var ng2_fullpage_1 = require("ng2-fullpage/ng2-fullpage");
 var Subporter = (function () {
     function Subporter() {
     }
@@ -28,7 +30,7 @@ var Subporter = (function () {
 Subporter = __decorate([
     core_1.NgModule({
         bootstrap: [App_1.App],
-        declarations: [App_1.App, Home_1.Home, Register_1.Register, Login_1.Login],
+        declarations: [App_1.App, Home_1.Home, Register_1.Register, Login_1.Login, Landing_1.Landing, ng2_fullpage_1.MnFullpageDirective],
         imports: [
             platform_browser_1.BrowserModule,
             http_1.HttpModule,
@@ -38,7 +40,8 @@ Subporter = __decorate([
         providers: [
             Auth_1.Auth,
             AuthGuard_1.AuthGuard,
-            angular2_jwt_1.AUTH_PROVIDERS
+            angular2_jwt_1.AUTH_PROVIDERS,
+            ng2_fullpage_1.MnFullpageService
         ]
     }),
     __metadata("design:paramtypes", [])

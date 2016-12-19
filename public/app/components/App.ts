@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
 	selector: 'subporter',
 	template: `
-		<div class="container">
+		<div>
 			<router-outlet></router-outlet>
 		</div>
 	`
