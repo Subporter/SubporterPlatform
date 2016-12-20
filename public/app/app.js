@@ -23,7 +23,7 @@ var Register_1 = require("./components/auth/register/Register");
 var Login_1 = require("./components/auth/login/Login");
 var Landing_1 = require("./components/index/Landing");
 var Routes_1 = require("./modules/Routes");
-var ng2_fullpage_1 = require("ng2-fullpage/ng2-fullpage");
+var ng2_fullpage_1 = require("ng2-fullpage");
 var Subporter = (function () {
     function Subporter() {
     }

@@ -3,7 +3,7 @@
 		paths: {
 			// paths serve as alias
 			'npm:': '/lib/',
-			"bower": '../bower_components/'
+			"bower": '/bower/'
 		},
 		// map tells the System loader where to look for things
 		map: {
@@ -27,7 +27,7 @@
       'rxjs': 'npm:rxjs',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
       'angular2-jwt': 'npm:angular2-jwt/angular2-jwt.js',
-      'ng2-fullpage': 'npm:ng2-fullpage',
+      'ng2-fullpage': 'npm:ng2-fullpage/ng2-fullpage.js',
       'jquery': 'npm:jquery/dist/jquery.js',
       'fullpage.js': 'npm:fullpage.js/dist/jquery.fullpage.js',
 			'slick' : 'bower:slick-carousel/slick/slick.js',
@@ -43,6 +43,6 @@
         defaultExtension: 'js'
       }
     }
-			
+
 	});
 })(this);

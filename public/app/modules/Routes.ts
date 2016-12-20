@@ -9,7 +9,7 @@ import { AdminGuard } from "../common/AdminGuard";
 
 export const SubporterRoutes: Routes = [
 	{
-		path: '', component: Login
+		path: '', component: Landing
 	},
 	{
 		path: 'login', component: Login
@@ -19,9 +19,6 @@ export const SubporterRoutes: Routes = [
 	},
 	{
 		path: 'home', component: Home, canActivate: [ AuthGuard ]
-	},
-	{
-		path: 'landing', component: Landing
 	},
 	{
 		path: '**', component: Login
