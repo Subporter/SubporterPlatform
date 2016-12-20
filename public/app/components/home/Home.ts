@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { AuthHttp, JwtHelper } from 'angular2-jwt';
-import { contentHeaders } from '../../common/headers'
+import { ApiService } from '../../services/ApiService';
 
 @Component({
 	selector: 'home',
@@ -31,7 +31,7 @@ export class Home {
 	api: String;
 	jwtHelper: JwtHelper = new JwtHelper();
 
-	constructor(public router: Router, public http: Http, public authHttp: AuthHttp) {
+	constructor(public router: Router, public http: Http, public authHttp: AuthHttp, public apiService: ApiService) {
 	}
 
 	useJwtHelper() {
@@ -57,26 +57,30 @@ export class Home {
 			name
 		});
 
-		contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+		/*contentHeaders.append("Authorization", localStorage.getItem("id_token"));
 		this.authHttp.put("http://localhost:1337/api/user", body, {
 			headers: contentHeaders
 		})
 			.subscribe(
 			response => this.response = response.text(),
 			error => this.response = error.text
-			);
+			);*/
 	}
 
 	callAnonymousApi() {
-		this._callApi("Anonymous", "http://localhost:1337/api/sports");
+		this._callApi("Anonymous", "api/sports");
 	}
 
 	callSecuredApi() {
-		this._callApi("Secured", "http://localhost:1337/api/user");
+		this._callApi("Secured", "api/user");
 	}
 
 	_callApi(type, url) {
-		this.useJwtHelper();
+		this.apiService.call(url).subscribe(
+			response => this.response = response.text(),
+			error => this.response = error.text
+		);
+		/*this.useJwtHelper();
 		this.response = null;
 		if (type === "Anonymous") {
 			this.http.get(url)
@@ -87,14 +91,14 @@ export class Home {
 		}
 		if (type === "Secured") {
 			contentHeaders.append("Authorization", localStorage.getItem("id_token"));
-			this.authHttp.get(url, {
+			this.http.get(url, {
 				headers: contentHeaders
 			})
 				.subscribe(
 				response => this.response = response.text(),
 				error => this.response = error.text
 				);
-		}
+		}*/
 	}
 
 }
