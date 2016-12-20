@@ -16,11 +16,9 @@ let admin = function (req, res, next) {
 					req.granted = false;
 				}
 			}
-			next();
 		});
-	} else {
-		next();
 	}
+	next();
 };
 
 module.exports = admin;

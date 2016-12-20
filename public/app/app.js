@@ -16,7 +16,6 @@ var angular2_jwt_1 = require("angular2-jwt");
 var Auth_1 = require("./services/Auth");
 var AuthGuard_1 = require("./common/AuthGuard");
 var AdminGuard_1 = require("./common/AdminGuard");
-var ApiService_1 = require("./services/ApiService");
 var App_1 = require("./components/App");
 var Home_1 = require("./components/home/Home");
 var Register_1 = require("./components/auth/register/Register");
@@ -44,7 +43,6 @@ Subporter = __decorate([
             AuthGuard_1.AuthGuard,
             AdminGuard_1.AdminGuard,
             angular2_jwt_1.AUTH_PROVIDERS,
-            ApiService_1.ApiService,
             ng2_fullpage_1.MnFullpageService
         ]
     }),

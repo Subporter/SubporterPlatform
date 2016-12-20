@@ -3,8 +3,6 @@ const express = require("express"),
 	moment = require("moment"),
 	jwt = require("jwt-simple"),
 	config = require("../../config/subporter.config"),
-	authenticate = require("../middleware/authenticate"),
-	admin = require("../middleware/admin"),
 	User = require("../models/Users");
 
 let router = express.Router();
@@ -137,23 +135,6 @@ router.post("/login", function (req, res) {
 			});
 		}
 	});
-});
-
-/* Check username */
-router.get("/check/admin", authenticate, admin, function (req, res) {
-	if (req.granted) {
-		res.status(200);
-		res.json({
-			info: "Authorized",
-			success: true
-		});
-	} else {
-		res.status(403);
-		res.json({
-			info: "Unauthorized",
-			success: false
-		});
-	}
 });
 
 module.exports = router;

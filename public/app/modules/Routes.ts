@@ -5,7 +5,6 @@ import { Register } from "../components/auth/register/Register";
 import { Login } from "../components/auth/login/Login";
 import { Landing } from "../components/index/Landing";
 import { AuthGuard } from "../common/AuthGuard";
-import { AdminGuard } from "../common/AdminGuard";
 
 export const SubporterRoutes: Routes = [
 	{

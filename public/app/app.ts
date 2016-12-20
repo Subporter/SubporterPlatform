@@ -7,7 +7,6 @@ import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { Auth } from './services/Auth';
 import { AuthGuard } from "./common/AuthGuard";
 import { AdminGuard } from "./common/AdminGuard";
-import { ApiService } from "./services/ApiService";
 
 import { App } from "./components/App";
 import { Home } from "./components/home/Home";
@@ -33,7 +32,6 @@ import { MnFullpageDirective, MnFullpageService } from "ng2-fullpage";
 		AuthGuard,
 		AdminGuard,
 		AUTH_PROVIDERS,
-		ApiService,
 		MnFullpageService
 	]
 })
