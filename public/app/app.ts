@@ -13,15 +13,15 @@ import { App } from "./components/App";
 import { Home } from "./components/home/Home";
 import { Register } from "./components/auth/register/Register";
 import { Login } from "./components/auth/login/Login";
-import { Landing } from "./components/index/Landing";
+//import { Landing } from "./components/index/Landing";
 
 import { Routing } from "./modules/Routes";
 
-import { MnFullpageDirective, MnFullpageService } from "ng2-fullpage";
+import { MnFullpageDirective } from "ng2-fullpage";
 
 @NgModule({
 	bootstrap: [ App ],
-	declarations: [ App, Home, Register, Login, Landing, MnFullpageDirective ],
+	declarations: [ App, Home, Register, Login, MnFullpageDirective ],
 	imports: [
 		BrowserModule,
 		HttpModule,
@@ -33,8 +33,7 @@ import { MnFullpageDirective, MnFullpageService } from "ng2-fullpage";
 		AuthGuard,
 		AdminGuard,
 		AUTH_PROVIDERS,
-		ApiService,
-		MnFullpageService
+		ApiService
 	]
 })
 

@@ -3,7 +3,7 @@
         paths: {
             // paths serve as alias
             'npm:': '/lib/',
-            "bower": '/bower/'
+            'bower': '/bower/'
         },
         // map tells the System loader where to look for things
         map: {

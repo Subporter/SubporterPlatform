@@ -3,11 +3,11 @@ var router_1 = require("@angular/router");
 var Home_1 = require("../components/home/Home");
 var Register_1 = require("../components/auth/register/Register");
 var Login_1 = require("../components/auth/login/Login");
-var Landing_1 = require("../components/index/Landing");
+//import { Landing } from "../components/index/Landing";
 var AuthGuard_1 = require("../common/AuthGuard");
 exports.SubporterRoutes = [
     {
-        path: '', component: Landing_1.Landing
+        path: '', component: Login_1.Login
     },
     {
         path: 'login', component: Login_1.Login
