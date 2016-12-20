@@ -1,0 +1,168 @@
+.section{
+    		background-size: cover;
+			padding-top: 0;
+			padding-bottom:0;
+}
+
+
+#section0{
+		background-image: url('/img/bgLanding.jpg') ;
+	}
+
+/*.container{
+	width: 100%;
+	max-width: none;
+}	*/
+
+.landingContainer{
+	text-align: center;
+	margin: 180px auto;
+}
+
+.section .landingContainer h1{
+	color: #fff;
+	padding: 20px;
+	font-weight: bold;
+}
+
+.section .landingContainer input[type="search"]{
+	width: 82%;
+	background: #fff;
+	padding-left: 3rem;
+	height: 50px;
+	 vertical-align: top;
+    display:inline-block; 
+}
+
+.section .landingContainer button{
+		height: 50px;
+}
+
+#fp-nav ul li a span, .fp-slidesNav ul li a span {
+    background: #fff;
+}
+
+.section .landingContainer select{
+	vertical-align: top;
+	width: 100px;
+	z-index: 999;
+	display: inline-block;
+	position: absolute;
+	right:135px;
+	border: none;
+	height: 50px
+}
+
+.logo{
+	font-size: 2em;
+}
+
+.input-field input[type=search]+label{
+	left:1.4rem;
+}
+
+nav{
+	background: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+.brand-logo{
+	margin-left: 10px;
+}
+
+.fa-angle-down{
+	color: white;
+	text-align: center;
+	/*font-size: 5em;*/
+}
+
+.btn-none{
+	background: none;
+	border: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+
+}
+
+.btn-none:active{
+	background: none;
+	border: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+.btn-none:focus{
+	background: none;
+	border: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+.col{
+	text-align: center;
+}
+
+.container h3{
+	text-align: center;
+}
+
+.center{
+	width: 100%;
+	text-align: center;
+}
+
+.card-content h6{
+	font-weight: bold;
+}
+
+#section1, #section4{
+	padding-top: 50px;
+	padding-bottom: 50px;
+
+}
+
+.title{
+	font-weight: bold;
+}
+
+.collection-item p{
+	display: inline-block;
+}
+
+.collection-item:hover{
+	background:#F4F4F4;
+	cursor: pointer;
+}
+
+#section4{
+	background-color: #F4F4F4;
+}
+
+#section4 .collection{
+	border:none;
+	background: none;
+}
+
+
+#section4 .collection .collection-item{
+		background: none;
+
+}
+
+#section3{
+	padding-bottom: 50px;
+
+}
+
+footer.page-footer{
+	margin-top:0;
+}
+
+.collection-item .title{
+	display: block;
+}

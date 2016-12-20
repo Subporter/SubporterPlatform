@@ -14,4 +14,6 @@ gulp.task("copy-externals", function () {
 		.pipe(gulp.dest(PATHS.EXTERNALS.DEST + "/materialize"));
 	gulp.src(PATHS.EXTERNALS.SRC + "/jquery/dist/**")
 		.pipe(gulp.dest(PATHS.EXTERNALS.DEST + "/jquery"));
+	gulp.src(PATHS.EXTERNALS.SRC + "/fullPage/dist/**")
+		.pipe(gulp.dest(PATHS.EXTERNALS.DEST + "/fullPage"));
 });

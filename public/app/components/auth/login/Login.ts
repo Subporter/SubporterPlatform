@@ -7,23 +7,49 @@ import { contentHeaders } from '../../../common/headers'
 @Component({
 	selector: 'login',
 	template: `
-		<div>
-			<h1>Login</h1>
-			<form (submit)="login($event)">
-				<div class="form-group">
-     				<label for="email">Email</label>
-     				<input [(ngModel)]="email" type="email" class="form-control" name="email" id="email" placeholder="Email">
-   				</div>
-   				<div class="form-group">
-     				<label for="password">Password</label>
-     				<input [(ngModel)]="password" type="password" class="form-control" name="password" id="password" placeholder="Password">
-   				</div>
-   				<button type="submit" class="btn btn-default">Submit</button>
-     			<a [routerLink]="['/register']">Click here to register</a>
-     			<a [routerLink]="['/home']">Click here to go home</a>
-			</form>
-		</div>
-	`
+		<div class="login container">
+	<div class="login-section">
+		<h1>Login</h1>
+		<form (submit)="login($event)">
+			<div class="form-group">
+				<div class="input-field">
+					<input [(ngModel)]="email" type="email" class="form-control validate" name="email" id="email">
+					<label for="email">Email</label>
+
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-field">
+
+					<input [(ngModel)]="password" type="password" class="form-control validate" name="password" id="password">
+					<label for="password">Password</label>
+
+				</div>
+			</div>
+			<button type="submit" class="btn btn-default">Submit</button>
+			<a [routerLink]="['/landing']">Click here to go landing</a>
+		</form>
+	</div>
+	<div class="register-section">
+		<h1>Not a member?</h1>
+		<p>If you're not yet registered, please register now to obtain full access.</p>
+		<br/>
+
+		<button class="btn" [routerLink]="['/register']"> Register now </button>
+
+
+	</div>
+</div>
+
+
+
+
+
+
+
+	`,
+	  styleUrls: ['../../../css/login.css']
+
 })
 
 export class Login {

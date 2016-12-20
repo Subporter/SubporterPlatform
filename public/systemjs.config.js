@@ -2,7 +2,8 @@
 	System.config({
 		paths: {
 			// paths serve as alias
-			'npm:': '/lib/'
+			'npm:': '/lib/',
+			"bower": '../bower_components/'
 		},
 		// map tells the System loader where to look for things
 		map: {
@@ -22,20 +23,26 @@
 			'@angular/upgrade': 'npm:@angular/upgrade/bundles/upgrade.umd.js',
 			'@angular/upgrade/static': 'npm:@angular/upgrade/bundles/upgrade-static.umd.js',
 
-			// other libraries
-			'rxjs': 'npm:rxjs',
-			'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
-			'angular2-jwt': 'npm:angular2-jwt/angular2-jwt.js'
-		},
-		// packages tells the System loader how to load when no filename and/or no extension
-		packages: {
-			app: {
-				main: './main.js',
-				defaultExtension: 'js'
-			},
-			rxjs: {
-				defaultExtension: 'js'
-			}
-		}
+      // other libraries
+      'rxjs': 'npm:rxjs',
+      'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
+      'angular2-jwt': 'npm:angular2-jwt/angular2-jwt.js',
+      'ng2-fullpage': 'npm:ng2-fullpage',
+      'jquery': 'npm:jquery/dist/jquery.js',
+      'fullpage.js': 'npm:fullpage.js/dist/jquery.fullpage.js',
+			'slick' : 'bower:slick-carousel/slick/slick.js',
+			'angular-slick': 'bower:angular-slick/dist/slick.js'
+    },
+    // packages tells the System loader how to load when no filename and/or no extension
+    packages: {
+      app: {
+        main: './main.js',
+        defaultExtension: 'js'
+      },
+      rxjs: {
+        defaultExtension: 'js'
+      }
+    }
+			
 	});
 })(this);
