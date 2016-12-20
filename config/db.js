@@ -1,5 +1,5 @@
-const mongoose = require("mongoose"),
-    config = require("./subporter.config");
+const mongoose = require('mongoose'),
+    config = require('./subporter.config');
 
 let gracefulShutdown,
     db = config.db_dev;
@@ -12,45 +12,50 @@ mongoose.Promise = global.Promise;
 mongoose.connect(db);
 
 /* Connection events */
-mongoose.connection.on("connected", () => {
+
+mongoose.connection.on('connected', () => {
     console.log("Mongoose connected to " + db);
 });
 
-mongoose.connection.on("error", (err) => {
+mongoose.connection.on('error', (err) => {
     console.log("Mongoose connection error: " + err);
 });
 
-mongoose.connection.on("disconnected", () => {
+mongoose.connection.on('disconnected', () => {
     console.log("Mongoose disconnected");
 });
 
 /* Restart events */
 /* On restart/termination */
-gracefulShutdown = (msg, callback) => {
+
+gracefulShutdown = (message, callback) => {
     mongoose.connection.close(() => {
-        console.log("Mongoose disconnected through " + msg);
+        console.log("Mongoose disconnected through " + message);
         callback();
     });
 };
 
 /* Nodemon restart */
-process.once("SIGUSR2", () => {
+
+process.once('SIGUSR2', () => {
     gracefulShutdown("Nodemon restart", () => {
-        process.kill(process.pid, "SIGUSR2");
+        process.kill(process.pid, 'SIGUSR2');
     });
 });
 
 /* Termination */
-process.on("SIGINT", function() {
+
+process.on('SIGINT', function() {
     gracefulShutdown("App termination", () => {
         process.exit(0);
     });
 });
 
 /* Schemas and models */
-require("../server/models/Users");
-require("../server/models/Sports");
-require("../server/models/Teams");
-require("../server/models/Competitions");
-require("../server/models/Loans");
-require("../server/models/Prices");
+
+require('../server/models/Users');
+require('../server/models/Sports');
+require('../server/models/Teams');
+require('../server/models/Competitions');
+require('../server/models/Loans');
+require('../server/models/Prices');

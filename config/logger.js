@@ -1,5 +1,5 @@
-const winston = require("winston"),
-    winstonRotator = require("winston-daily-rotate-file");
+const winston = require('winston'),
+    winstonRotator = require('winston-daily-rotate-file');
 
 const consoleConfig = [
     new winston.transports.Console({

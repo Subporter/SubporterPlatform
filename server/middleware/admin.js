@@ -1,4 +1,4 @@
-const User = require("../models/Users");
+const User = require('../models/Users');
 
 let admin = function (req, res, next) {
 	if (req.granted) {
