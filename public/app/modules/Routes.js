@@ -7,7 +7,7 @@ var Landing_1 = require("../components/index/Landing");
 var AuthGuard_1 = require("../common/AuthGuard");
 exports.SubporterRoutes = [
     {
-        path: '', component: Login_1.Login
+        path: '', component: Landing_1.Landing
     },
     {
         path: 'login', component: Login_1.Login
@@ -17,9 +17,6 @@ exports.SubporterRoutes = [
     },
     {
         path: 'home', component: Home_1.Home, canActivate: [AuthGuard_1.AuthGuard]
-    },
-    {
-        path: 'landing', component: Landing_1.Landing
     },
     {
         path: '**', component: Login_1.Login

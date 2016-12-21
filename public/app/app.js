@@ -15,13 +15,15 @@ var forms_1 = require("@angular/forms");
 var angular2_jwt_1 = require("angular2-jwt");
 var Auth_1 = require("./services/Auth");
 var AuthGuard_1 = require("./common/AuthGuard");
+var AdminGuard_1 = require("./common/AdminGuard");
+var ApiService_1 = require("./services/ApiService");
 var App_1 = require("./components/App");
 var Home_1 = require("./components/home/Home");
 var Register_1 = require("./components/auth/register/Register");
 var Login_1 = require("./components/auth/login/Login");
 var Landing_1 = require("./components/index/Landing");
 var Routes_1 = require("./modules/Routes");
-var ng2_fullpage_1 = require("ng2-fullpage/ng2-fullpage");
+var ng2_fullpage_1 = require("ng2-fullpage");
 var Subporter = (function () {
     function Subporter() {
     }
@@ -40,7 +42,9 @@ Subporter = __decorate([
         providers: [
             Auth_1.Auth,
             AuthGuard_1.AuthGuard,
+            AdminGuard_1.AdminGuard,
             angular2_jwt_1.AUTH_PROVIDERS,
+            ApiService_1.ApiService,
             ng2_fullpage_1.MnFullpageService
         ]
     }),

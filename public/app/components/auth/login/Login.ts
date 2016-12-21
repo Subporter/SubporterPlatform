@@ -5,8 +5,8 @@ import { JwtHelper } from 'angular2-jwt';
 import { contentHeaders } from '../../../common/headers'
 
 @Component({
-	selector: 'login',
-	template: `
+    selector: 'login',
+    template: `
 		<div class="login container">
 	<div class="login-section">
 		<h1>Login</h1>
@@ -48,61 +48,61 @@ import { contentHeaders } from '../../../common/headers'
 
 
 	`,
-	  styleUrls: ['../../../css/login.css']
+    styleUrls: ['../../../css/login.css']
 
 })
 
 export class Login {
-	email: String;
-	password: String;
+    email: String;
+    password: String;
 
-	constructor(public router: Router, public http: Http) {
-	}
+    constructor(public router: Router, public http: Http) {
+    }
 
-	jwtHelper: JwtHelper = new JwtHelper();
-	
-	useJwtHelper() {
-		let token = localStorage.getItem("id_token");
-		console.log("Token:", token);
+    jwtHelper: JwtHelper = new JwtHelper();
 
-		console.log(
-			this.jwtHelper.decodeToken(token),
-			this.jwtHelper.getTokenExpirationDate(token),
-			this.jwtHelper.isTokenExpired(token)
-		)
-	}
+    useJwtHelper() {
+        let token = localStorage.getItem("id_token");
+        console.log("Token:", token);
 
-	login() {
-		event.preventDefault();
-		let email = this.email,
-			password = this.password;
+        console.log(
+            this.jwtHelper.decodeToken(token),
+            this.jwtHelper.getTokenExpirationDate(token),
+            this.jwtHelper.isTokenExpired(token)
+        )
+    }
 
-		let body = JSON.stringify({
-			email,
-			password
-		});
+    login() {
+        event.preventDefault();
+        let email = this.email,
+            password = this.password;
 
-		this.http.post('/login', body, {
-			headers: contentHeaders
-		})
-			.subscribe(
-			response => {
-				console.log(response.json());
-				if (response.json().success == true) {
-					localStorage.setItem("id_token", response.json().token);
-					this.useJwtHelper();
-					this.router.navigate(['home']);
-				}
-			},
-			error => {
-				alert(error.text());
-				console.error(error.text());
-			}
-		)
-	}
+        let body = JSON.stringify({
+            email,
+            password
+        });
 
-	register(event) {
-		event.preventDefault();
-		this.router.navigate(['register']);
-	}
+        this.http.post('/login', body, {
+            headers: contentHeaders
+        })
+            .subscribe(
+            response => {
+                console.log(response.json());
+                if (response.json().success == true) {
+                    localStorage.setItem("id_token", response.json().token);
+                    this.useJwtHelper();
+                    this.router.navigate(['home']);
+                }
+            },
+            error => {
+                alert(error.text());
+                console.error(error.text());
+            }
+            )
+    }
+
+    register(event) {
+        event.preventDefault();
+        this.router.navigate(['register']);
+    }
 }
