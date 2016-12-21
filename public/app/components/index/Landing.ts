@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { contentHeaders } from '../../common/headers'
-import { MnFullpageService} from "ng2-fullpage/ng2-fullpage";
+import { MnFullpageService} from "ng2-fullpage";
 import * as $ from 'jquery';
 import 'slick';
 

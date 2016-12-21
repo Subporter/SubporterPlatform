@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var ng2_fullpage_1 = require("ng2-fullpage/ng2-fullpage");
+var ng2_fullpage_1 = require("ng2-fullpage");
 var $ = require("jquery");
 require("slick");
 var Landing = (function () {
