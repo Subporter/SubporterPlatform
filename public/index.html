@@ -6,27 +6,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="/">
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="\fonts\font-awesome-4.7.0\css/font-awesome.min.css" rel="stylesheet">
-
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="/vendor/materialize/css/materialize.min.css">
-     <link rel="stylesheet" href="/vendor/fullPage/css/jquery.fullPage.css">
-     <link rel="stylesheet" href="\css\main.min.css">
-    <!-- Polyfill(s) for older browsers -->
+    <link rel="stylesheet" href="/vendor/material-icons/css/material-icons.min.css">
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/fullpage.js/css/jquery.fullpage.min.css">
+    <link rel="stylesheet" href="/css/main.min.css">
+    <!-- Scripts -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/materialize/js/materialize.min.js"></script>
+    <!-- Angular / Polyfill(s) for older browsers -->
     <script src="/lib/core-js/client/shim.min.js"></script>
     <script src="/lib/zone.js/dist/zone.js"></script>
     <script src="/lib/reflect-metadata/Reflect.js"></script>
     <script src="/lib/systemjs/dist/system.src.js"></script>
     <script src="/public/systemjs.config.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="\vendor\materialize\js\materialize.min.js"></script>
-
-
     <script>
         System.defaultJSExtensions = true;
-
-      System.import('app').catch(function(err){ console.error(err); });
+        System.import('app').catch(function (err) {
+            console.error(err);
+        });
     </script>
 </head>
 
@@ -46,7 +45,6 @@
             </div>
         </div>
     </subporter>
-
 </body>
 
 </html>
