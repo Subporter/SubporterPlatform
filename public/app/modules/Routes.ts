@@ -5,10 +5,11 @@ import { Register } from "../components/auth/register/Register";
 import { Login } from "../components/auth/login/Login";
 import { Landing } from "../components/index/Landing";
 import { AuthGuard } from "../common/AuthGuard";
+import { AdminGuard } from "../common/AdminGuard";
 
 export const SubporterRoutes: Routes = [
 	{
-		path: '', component: Login
+		path: '', component: Landing
 	},
 	{
 		path: 'login', component: Login
@@ -19,9 +20,6 @@ export const SubporterRoutes: Routes = [
 	{
 		path: 'home', component: Home, canActivate: [ AuthGuard ]
 	},
-	{
-		path: 'landing', component: Landing
-	}, 
 	{
 		path: '**', component: Login
 	}

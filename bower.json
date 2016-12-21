@@ -1,0 +1,41 @@
+{
+  "name": "subporterplatform",
+  "description": "Subporter is a platform to rent subscriptions to go see football matches",
+  "main": "./server/bin/www",
+  "authors": [
+    "Alexander Leplae",
+    "Arno Vande Cappelle",
+    "Niels Bril",
+    "Simon Gemmel"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "MEAN",
+    "MongoDB",
+    "ExpressJS",
+    "Angular2",
+    "NodeJS",
+    "Subporter",
+    "Platform",
+    "Subscriptions",
+    "Football",
+    "Sports",
+    "Renting"
+  ],
+  "homepage": "https://github.com/Subporter/SubporterPlatform",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "materialize": "^0.97.8",
+    "font-awesome": "fontawesome#^4.7.0",
+    "fullpage.js": "^2.9.2"
+  },
+  "resolutions": {
+    "slick-carousel": "^1.6.0"
+  }
+}

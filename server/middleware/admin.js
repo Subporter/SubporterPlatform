@@ -1,4 +1,4 @@
-const User = require("../models/Users");
+const User = require('../models/Users');
 
 let admin = function (req, res, next) {
 	if (req.granted) {
@@ -16,9 +16,11 @@ let admin = function (req, res, next) {
 					req.granted = false;
 				}
 			}
+			next();
 		});
+	} else {
+		next();
 	}
-	next();
 };
 
 module.exports = admin;
