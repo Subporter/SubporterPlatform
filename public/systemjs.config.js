@@ -29,7 +29,7 @@
             'angular2-jwt': 'npm:angular2-jwt/angular2-jwt.js',
             'ng2-fullpage': 'npm:ng2-fullpage/ng2-fullpage.js',
             'jquery': 'npm:jquery/dist/jquery.js',
-            'fullpage.js': 'npm:fullpage.js/dist/jquery.fullpage.js',
+            'fullpage.js': 'npm:fullpage.js/jquery.fullpage.js',
             'slick': 'bower:slick-carousel/slick/slick.js',
             'angular-slick': 'bower:angular-slick/dist/slick.js'
         },
