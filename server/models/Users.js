@@ -51,7 +51,7 @@ let userSchema = new mongoose.Schema({
 		match: registryRegExp
 	},
 	favorites: [
-		favoriteSchema
+		
 	],
 	password: {
 		type: String,
