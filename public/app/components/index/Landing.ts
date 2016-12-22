@@ -9,13 +9,7 @@ import 'slick';
 @Component({
 	selector: 'landing',
 	template: `
-		 <div mnFullpage
-            [mnFullpageNavigation]="false"
-            [mnFullpageKeyboardScrolling]="true"
-            [mnFullpageControlArrows]="false"
-            [mnFullpageVerticalCentered]="false"
-            [mnFullpageAutoScrolling]="false"
-            [mnFullpageFitToSection]="false">
+		 
             <div class="section " id="section0">
 
     <nav>
@@ -54,7 +48,7 @@ import 'slick';
 
     </form>
 
-      <button class="btn-none" (click)="fullpageService.moveSectionDown();"><i class="fa fa-angle-down fa-5x" aria-hidden="true"></i></button>
+      <button class="btn-none" (click)="scrollToDiv()"><i class="fa fa-angle-down fa-5x" aria-hidden="true"></i></button>
 
              </div>
 
@@ -381,11 +375,6 @@ import 'slick';
 
 </div>
 
-
-
-
-
-
             </div>
             <div class="section fp-auto-height" data-anchor="section5">
 
@@ -418,7 +407,7 @@ import 'slick';
 
 
             </div>
-        </div>
+
 
 	`,
 	  styleUrls: ['../../css/landing.css']
@@ -428,8 +417,7 @@ export class Landing {
 
 
 
-     constructor(private fullpageService: MnFullpageService) {
-     }
+ 
 
     ngOnInit() { $('.carousel-class').slick({ autoplay: false, dots: true, fade: true, arrows: false }); }
 
@@ -440,6 +428,16 @@ search(){
   test(){
     console.log("test");
   }
+
+
+scrollToDiv(){
+
+  $('html, body').animate({
+        scrollTop: $("#section1").offset().top
+    }, 1000);
+
+}
+
 
 
 
