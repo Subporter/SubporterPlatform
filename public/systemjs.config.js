@@ -3,7 +3,7 @@
         paths: {
             // paths serve as alias
             'npm:': '/lib/',
-            'bower': '/bower/'
+            "bower": '../bower_components/'
         },
         // map tells the System loader where to look for things
         map: {
@@ -27,11 +27,9 @@
             'rxjs': 'npm:rxjs',
             'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
             'angular2-jwt': 'npm:angular2-jwt/angular2-jwt.js',
-            'ng2-fullpage': 'npm:ng2-fullpage/ng2-fullpage.js',
             'jquery': 'npm:jquery/dist/jquery.js',
-            'fullpage.js': 'npm:fullpage.js/jquery.fullpage.js',
-            'slick': 'bower:slick-carousel/slick/slick.js',
-            'angular-slick': 'bower:angular-slick/dist/slick.js'
+            'slick': 'npm:slick-carousel/slick/slick.js',
+            'angular-slick': 'npm:angular-slick-carousel/dist/angular-slick.js'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -43,5 +41,6 @@
                 defaultExtension: 'js'
             }
         }
+
     });
 })(this);

@@ -17,11 +17,10 @@ import { Landing } from "./components/index/Landing";
 
 import { Routing } from "./modules/Routes";
 
-import { MnFullpageDirective, MnFullpageService } from "ng2-fullpage";
 
 @NgModule({
     bootstrap: [App],
-    declarations: [App, Home, Register, Login, Landing, MnFullpageDirective],
+    declarations: [App, Home, Register, Login, Landing],
     imports: [
         BrowserModule,
         HttpModule,
@@ -33,8 +32,7 @@ import { MnFullpageDirective, MnFullpageService } from "ng2-fullpage";
         AuthGuard,
         AdminGuard,
         AUTH_PROVIDERS,
-        ApiService,
-        MnFullpageService
+        ApiService
     ]
 })
 
