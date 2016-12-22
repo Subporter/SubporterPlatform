@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { JwtHelper } from 'angular2-jwt';
-import { contentHeaders } from '../../../common/headers'
+import { contentHeaders } from '../../../common/Headers'
 
 @Component({
     selector: 'login',

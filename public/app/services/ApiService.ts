@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { contentHeaders } from '../common/headers'
+import { contentHeaders } from '../common/Headers'
 
 @Injectable()
 export class ApiService {
@@ -16,5 +16,5 @@ export class ApiService {
 		return this.http.get(url, {
 			headers: contentHeaders
 		});
-	}	
+	}
 }
