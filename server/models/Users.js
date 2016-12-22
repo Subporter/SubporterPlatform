@@ -1,35 +1,58 @@
 const mongoose = require('mongoose'),
 	mongooseHidden = require('mongoose-hidden')(),
-	bcrypt = require('bcrypt-nodejs');
+	bcrypt = require('bcrypt-nodejs'),
+	favoriteSchema = require('./Favorites');
+
+let emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+let usernameRegExp = /^[a-zA-Z0-9_.-]{3,50}$/;
+let nameRegExp = /^[a-zA-Z]{2,50}$/;
+let firstnameRegExp = /^[a-zA-Z]{2,50}$/;
+let phoneRegExp;
+let registryRegExp = /^[0-9]{2}.[0-9]{2}.[0-9]{2}-[0-9]{3}.[0-9]{2}$/;
 
 let userSchema = new mongoose.Schema({
 	admin: {
 		type: Boolean,
+		required: true,
 		default: false
 	},
 	email: {
 		type: String,
 		unique: true,
-		required: true
+		required: true,
+		match: emailRegExp
 	},
 	username: {
 		type: String,
 		unique: true,
-		required: true
+		required: true,
+		match: usernameRegExp
 	},
-	name: String,
-	firstname: String,
-	date_of_birth: String,
+	name: {
+		type: String,
+		match: nameRegExp
+	},
+	firstname: {
+		type: String,
+		match: firstnameRegExp
+	},
+	date_of_birth: Date,
 	address: {
         type: mongoose.Schema.ObjectId,
         ref: 'Address',
         required: true
     },
-	phone: String,
-	national_registry_number: String,
-	sports_id: Number,
-	competitions_id: Number,
-	team_id: Number,
+	phone: {
+		type: String,
+		match: phoneRegExp,
+	},
+	national_registry_number: {
+		type: String,
+		match: registryRegExp
+	},
+	favorites: [
+		favoriteSchema
+	],
 	password: {
 		type: String,
 		required: true

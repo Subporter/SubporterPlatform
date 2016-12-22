@@ -59,3 +59,4 @@ require('../server/models/Teams');
 require('../server/models/Competitions');
 require('../server/models/Loans');
 require('../server/models/Addresses');
+require('../server/models/Favorites');
