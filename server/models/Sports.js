@@ -2,14 +2,19 @@ const mongoose = require('mongoose'),
 	mongooseHidden = require('mongoose-hidden')(),
 	autoIncrement = require('mongoose-sequence');
 
+let nameRegExp = /^[a-zA-Z]{1,100}$/;
+let descriptionRegExp = /^[a-zA-Z]{1,1000}$/;
+
 let sportSchema = new mongoose.Schema({
 	name: {
 		type: String,
-		required: true
+		required: true,
+		match: nameRegExp
 	},
 	description: {
 		type: String,
-		required: true
+		required: true,
+		match: descriptionRegExp
 	}
 });
 

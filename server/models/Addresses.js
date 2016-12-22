@@ -18,20 +18,27 @@ let addressSchema = new mongoose.Schema({
         min: 0,
         max: 999999
     },
-	postal: {
-		type: Number,
-		required: true,
-		min: 0,
-		max: 999999
-	},
-	city: {
-		type: String,
-		required: true,
-		match: cityRegExp
-	},
+    postal: {
+        type: Number,
+        required: true,
+        min: 0,
+        max: 999999
+    },
+    city: {
+        type: String,
+        required: true,
+        match: cityRegExp
+    },
     country: {
         type: String,
         required: true,
         match: countryRegExp
     }
 });
+
+addressSchema.plugin(autoIncrement, {
+    inc_field: 'addresses_id'
+});
+addressSchema.plugin(mongooseHidden);
+
+module.exports = mongoose.model('Address', addressSchema);

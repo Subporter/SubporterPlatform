@@ -20,10 +20,11 @@ let userSchema = new mongoose.Schema({
 	name: String,
 	firstname: String,
 	date_of_birth: String,
-	street: String,
-	city: String,
-	postal: String,
-	country: String,
+	address: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Address',
+        required: true
+    },
 	phone: String,
 	national_registry_number: String,
 	sports_id: Number,

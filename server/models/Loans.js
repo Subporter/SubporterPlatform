@@ -3,40 +3,52 @@ const mongoose = require('mongoose'),
 	autoIncrement = require('mongoose-sequence');
 
 let loanSchema = new mongoose.Schema({
-	username: {
-		type: String,
-		required: true
-	},
+	user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true
+    },
 	date: {
-		type: String,
-		required: true
-	},
-	price: {
-		type: Number,
+		type: Date,
 		required: true
 	},
 	place: {
 		type: String,
 		required: true
 	},
-	sports_id: {
-		type: Number,
-		required: true
+	sport: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Sport',
+        required: true
+    },
+	competition: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Competition',
+        required: true
+    },
+	hometeam: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Team',
+        required: true
+    },
+	awayteam: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Team',
+        required: true
+    },
+	placed_on: {
+		type: Date,
+		required: true,
+		default: Date.now
 	},
-	competitions_id: {
-		type: Number,
-		required: true
+	lent_by: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true
+    },
+	lend_on: {
+		type: Date
 	},
-	hometeam_id: {
-		type: Number,
-		required: true
-	},
-	awayteam_id: {
-		type: Number,
-		required: true
-	},
-	lend_by: String,
-	lend_on: String,
 	paid: {
 		type: Boolean,
 		default: false
