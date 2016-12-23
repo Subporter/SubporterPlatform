@@ -41,8 +41,7 @@ let userSchema = new mongoose.Schema({
     date_of_birth: Date,
     address: {
         type: mongoose.Schema.ObjectId,
-        ref: 'Address',
-        required: true
+        ref: 'Address'
     },
     phone: {
         type: String,

@@ -3,8 +3,4 @@ const mongoose = require('mongoose'),
 
 let User = mongoose.model('User', userSchema, 'Users');
 
-User.statics.getUser = () => {
-	
-};
-
 module.exports = User;
