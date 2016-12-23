@@ -1,3 +1,9 @@
+
+$white : #fff;
+$bg-color-second : #F4F4F4;
+$bg-footer : #121415;
+
+
 .section{
     		background-size: cover;
 			padding-top: 0;
@@ -21,14 +27,13 @@
 }
 
 .section .landingContainer h1{
-	color: #fff;
+	color: $white;
 	padding: 20px;
 	font-weight: bold;
 }
-
 .section .landingContainer input[type="search"]{
 	width: 82%;
-	background: #fff;
+	background: $white;
 	padding-left: 3rem;
 	height: 50px;
 	 vertical-align: top;
@@ -40,7 +45,7 @@
 }
 
 #fp-nav ul li a span, .fp-slidesNav ul li a span {
-    background: #fff;
+    background: $white;
 }
 
 .section .landingContainer select{
@@ -74,7 +79,7 @@ nav{
 }
 
 .fa-angle-down{
-	color: white;
+	color: $white;
 	text-align: center;
 	/*font-size: 5em;*/
 }
@@ -121,11 +126,18 @@ nav{
 	font-weight: bold;
 }
 
-#section1, #section4{
+ #section4{
 	padding-top: 50px;
 	padding-bottom: 50px;
 
 }
+
+.margintop{
+		padding-top: 20px;
+	padding-bottom: 50px;
+
+}
+
 
 .title{
 	font-weight: bold;
@@ -136,7 +148,7 @@ nav{
 }
 
 #section3 .collection-item:hover{
-	background:#F4F4F4;
+	background:$bg-color-second;
 		cursor: pointer;
 
 }
@@ -144,7 +156,7 @@ nav{
 
 
 #section4{
-	background-color: #F4F4F4;
+	background-color: $bg-color-second;
 }
 
 #section4 .collection{
@@ -171,3 +183,19 @@ footer.page-footer{
 	display: block;
 }
 
+
+
+.carousel-class{
+		padding-top: 20px;
+
+}
+
+.carousel-class img{
+	max-width: 100px;
+	max-height: 100px;
+}
+
+
+footer.page-footer{
+	background: $bg-footer;
+}

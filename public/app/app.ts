@@ -14,13 +14,14 @@ import { Home } from "./components/home/Home";
 import { Register } from "./components/auth/register/Register";
 import { Login } from "./components/auth/login/Login";
 import { Landing } from "./components/index/Landing";
+import { Footer } from "./components/common/footer/Footer";
 
 import { Routing } from "./modules/Routes";
 
 
 @NgModule({
     bootstrap: [App],
-    declarations: [App, Home, Register, Login, Landing],
+    declarations: [App, Home, Register, Login, Landing, Footer],
     imports: [
         BrowserModule,
         HttpModule,

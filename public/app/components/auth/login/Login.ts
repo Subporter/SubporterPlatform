@@ -27,7 +27,7 @@ import { contentHeaders } from '../../../common/headers'
 				</div>
 			</div>
 			<button type="submit" class="btn btn-default">Submit</button>
-			<a [routerLink]="['/landing']">Click here to go landing</a>
+			<a [routerLink]="['/']">Click here to go landing</a>
 		</form>
 	</div>
 	<div class="register-section">
@@ -48,7 +48,7 @@ import { contentHeaders } from '../../../common/headers'
 
 
 	`,
-    styleUrls: ['../../../css/login.css']
+    styleUrls: ['../../../css/css/login.css']
 
 })
 

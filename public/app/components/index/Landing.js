@@ -14,7 +14,11 @@ require("slick");
 var Landing = (function () {
     function Landing() {
     }
-    Landing.prototype.ngOnInit = function () { $('.carousel-class').slick({ autoplay: false, dots: true, fade: true, arrows: false }); };
+    Landing.prototype.ngOnInit = function () {
+        $('.carousel-class').slick({ infinite: true, autoplay: true, arrows: false,
+            slidesToShow: 12,
+            slidesToScroll: 1 });
+    };
     Landing.prototype.search = function () {
         console.log("test");
     };
@@ -32,7 +36,7 @@ Landing = __decorate([
     core_1.Component({
         selector: 'landing',
         templateUrl: './app/components/index/landing.view.html',
-        styleUrls: ['../../css/landing.css']
+        styleUrls: ['../../css/css/landing.css']
     }),
     __metadata("design:paramtypes", [])
 ], Landing);
