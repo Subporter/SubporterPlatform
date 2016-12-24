@@ -5,6 +5,7 @@ import { contentHeaders } from '../../common/Headers'
 import * as $ from 'jquery';
 import 'slick';
 
+
 @Component({
 	selector: 'landing',
 	 templateUrl: './app/components/index/landing.view.html',

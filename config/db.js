@@ -58,4 +58,6 @@ require('../server/models/Sports');
 require('../server/models/Teams');
 require('../server/models/Competitions');
 require('../server/models/Loans');
-require('../server/models/Prices');
+require('../server/models/Addresses');
+require('../server/models/Subscriptions');
+require('../server/models/Countries');

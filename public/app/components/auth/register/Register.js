@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
-var headers_1 = require("../../../common/headers");
+var Headers_1 = require("../../../common/Headers");
 var Register = (function () {
     function Register(router, http) {
         this.router = router;
@@ -28,7 +28,7 @@ var Register = (function () {
                 password: password
             });
             this.http.post('/register', body, {
-                headers: headers_1.contentHeaders
+                headers: Headers_1.contentHeaders
             })
                 .subscribe(function (response) {
                 console.log(response.json());

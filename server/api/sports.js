@@ -9,18 +9,17 @@ let router = express.Router();
 /* Create */
 router.post("/sports", authenticate, admin, function (req, res) {
 	if (req.granted) {
-		let newSport = new Sport(req.body);
-		newSport.save(function (err) {
+		Sport.addSport(req.body, function (err, success) {
 			if (err) {
 				res.json({
 					info: "Error during creating sport",
-					success: false,
+					success: success,
 					error: err
 				});
 			} else {
 				res.json({
 					info: "Sport created succesfully",
-					success: true
+					success: success
 				});
 			}
 		});
@@ -35,7 +34,7 @@ router.post("/sports", authenticate, admin, function (req, res) {
 
 /* Read (all sports) */
 router.get("/sports", authenticate, function (req, res) {
-	Sport.find(function (err, sports) {
+	Sport.getSports(function (err, sports) {
 		if (err) {
 			res.json({
 				info: "Error during reading sports",
