@@ -28,7 +28,7 @@ Sport.getSports = function(cb) {
 /* Read (one sport) */
 Sport.getSportById = function(id, cb) {
     Sport.findOne({
-        id: id
+        sports_id: id
     }).exec(function(err, docs) {
         if (err) {
             cb(err, null);
