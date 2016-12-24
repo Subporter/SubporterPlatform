@@ -1,72 +1,126 @@
 const mongoose = require('mongoose'),
-	mongooseHidden = require('mongoose-hidden')(),
-	bcrypt = require('bcrypt-nodejs');
+    _ = require("lodash"),
+    userSchema = require('../schemas/Users');
 
-let userSchema = new mongoose.Schema({
-	admin: {
-		type: Boolean,
-		default: false
-	},
-	email: {
-		type: String,
-		unique: true,
-		required: true
-	},
-	username: {
-		type: String,
-		unique: true,
-		required: true
-	},
-	name: String,
-	firstname: String,
-	date_of_birth: String,
-	street: String,
-	city: String,
-	postal: String,
-	country: String,
-	phone: String,
-	national_registry_number: String,
-	sports_id: Number,
-	competitions_id: Number,
-	team_id: Number,
-	password: {
-		type: String,
-		required: true
-	}
-});
+let User = mongoose.model('User', userSchema, 'Users');
 
-userSchema.pre("save", function (next) {
-	let user = this;
-	if (this.isModified("password") || this.isNew) {
-		bcrypt.genSalt(10, function (err, salt) {
-			if (err) {
-				return next(err);
-			} else {
-				bcrypt.hash(user.password, salt, null, function (err, hash) {
-					if (err) {
-						return next(err);
-					} else {
-						user.password = hash;
-						return next();
-					}
-				});
-			}
-		});
-	} else {
-		return next();
-	}
-});
-
-userSchema.methods.comparePassword = function (providedPassword, cb) {
-	bcrypt.compare(providedPassword, this.password, function (err, isMatch) {
-		if (err) {
-			return cb(err);
-		} else {
-			cb(null, isMatch);
-		}
-	});
+/* Create */
+User.addUser = function(body, cb) {
+    let user = new User(body);
+    user.save(function(err) {
+        if (err) {
+            cb(err, null, false);
+        }
+        cb(null, user, true);
+    });
 };
 
-userSchema.plugin(mongooseHidden);
+/* Read (all users) */
+User.getUsers = function(cb) {
+    User.find({}, {
+        admin: 0,
+        password: 0
+    }).sort('username').exec(function(err, docs) {
+        if (err) {
+            cb(err, null);
+        }
+        cb(null, docs);
+    });
+};
 
-module.exports = mongoose.model('User', userSchema);
+/* Read (one user) */
+User.getUserByEmail = function(email, cb) {
+    User.findOne({
+        email: email
+    }, {
+        admin: 0,
+        password: 0
+    }).exec(function(err, docs) {
+        if (err) {
+            cb(err, null);
+        }
+        cb(null, docs);
+    });
+};
+
+User.getUserByEmailForLogin = function(email, cb) {
+    User.findOne({
+        email: email
+    }, {
+        admin: 0
+    }).exec(function(err, docs) {
+        if (err) {
+            cb(err, null);
+        }
+        cb(null, docs);
+    });
+};
+
+User.getUserByEmailForAuth = function(email, cb) {
+    User.findOne({
+        email: email
+    }, {
+        password: 0
+    }).exec(function(err, docs) {
+        if (err) {
+            cb(err, null);
+        }
+        cb(null, docs);
+    });
+};
+
+User.getUserByUsername = function(username, cb) {
+    User.findOne({
+        username: username
+    }, {
+        admin: 0,
+        password: 0
+    }).exec(function(err, docs) {
+        if (err) {
+            cb(err, null);
+        }
+        cb(null, docs);
+    });
+};
+
+/* Update */
+User.updateUser = function(user, body, cb) {
+    body.email = user.email;
+    body.username = user.username;
+
+    _.merge(user, body);
+    user.admin = false;
+
+    user.save(function(err) {
+        if (err) {
+            cb(err);
+        }
+        cb(null);
+    });
+};
+
+User.updateCrucial = function(user, body, cb) {
+    _.merge(user, body);
+	user.admin = false;
+
+    user.save(function(err) {
+        if (err) {
+            cb(err);
+        }
+        cb(null);
+    });
+};
+
+/* Delete */
+User.deleteUser = function(username, cb) {
+    User.findOneAndRemove({
+        username: username
+    }, function(err) {
+        if (err) {
+            cb(err);
+        }
+        cb(null);
+    });
+};
+
+module.exports = User;

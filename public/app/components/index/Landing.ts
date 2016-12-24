@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
-import { contentHeaders } from '../../common/headers';
+import { contentHeaders } from '../../common/Headers'
 import * as $ from 'jquery';
 import 'slick';
 import { Footer } from "../common/footer/Footer";
+
 
 @Component({
 	selector: 'landing',

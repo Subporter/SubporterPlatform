@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
-var headers_1 = require("../common/headers");
+var Headers_1 = require("../common/Headers");
 var ApiService = (function () {
     function ApiService(http) {
         this.http = http;
@@ -18,9 +18,9 @@ var ApiService = (function () {
     }
     ApiService.prototype.call = function (url) {
         url = this.baseUrl + url;
-        headers_1.contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+        Headers_1.contentHeaders.append("Authorization", localStorage.getItem("id_token"));
         return this.http.get(url, {
-            headers: headers_1.contentHeaders
+            headers: Headers_1.contentHeaders
         });
     };
     return ApiService;

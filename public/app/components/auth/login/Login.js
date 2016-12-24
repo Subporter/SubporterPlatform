@@ -12,7 +12,7 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
 var angular2_jwt_1 = require("angular2-jwt");
-var headers_1 = require("../../../common/headers");
+var Headers_1 = require("../../../common/Headers");
 var Login = (function () {
     function Login(router, http) {
         this.router = router;
@@ -33,7 +33,7 @@ var Login = (function () {
             password: password
         });
         this.http.post('/login', body, {
-            headers: headers_1.contentHeaders
+            headers: Headers_1.contentHeaders
         })
             .subscribe(function (response) {
             console.log(response.json());

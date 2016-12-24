@@ -1,19 +1,62 @@
 const mongoose = require('mongoose'),
-	mongooseHidden = require('mongoose-hidden')(),
-	autoIncrement = require('mongoose-sequence');
+    _ = require("lodash"),
+    sportSchema = require('../schemas/Sports');
 
-let sportSchema = new mongoose.Schema({
-	name: {
-		type: String,
-		required: true
-	},
-	description: {
-		type: String,
-		required: true
-	}
-});
+let Sport = mongoose.model('Sport', sportSchema, 'Sports');
 
-sportSchema.plugin(autoIncrement, { inc_field: "sports_id" });
-sportSchema.plugin(mongooseHidden);
+/* Create */
+Sport.addSport = function(body, cb) {
+    let sport = new Sport(body);
+    sport.save(function(err) {
+        if (err) {
+            cb(err, false);
+        }
+        cb(null, true);
+    });
+};
 
-module.exports = mongoose.model('Sport', sportSchema);
+/* Read (all sports) */
+Sport.getSports = function(cb) {
+    Sport.find({}).sort('name').exec(function(err, docs) {
+        if (err) {
+            cb(err, null);
+        }
+        cb(null, docs);
+    });
+};
+
+/* Read (one sport) */
+Sport.getSportById = function(id, cb) {
+    Sport.findOne({
+        id: id
+    }).exec(function(err, docs) {
+        if (err) {
+            cb(err, null);
+        }
+        cb(null, docs);
+    });
+};
+
+/* Update */
+Sport.updateSport = function (sport, body, cb) {
+    _.merge(sport, body);
+
+    sport.save(function(err) {
+        if (err) {
+            cb(err);
+        }
+        cb(null);
+    });
+};
+
+/* Delete */
+Sport.deleteSport = function (id, cb) {
+    Sport.findByIdAndRemove(id, function (err) {
+        if (err) {
+            cb(err);
+        }
+        cb(null);
+    });
+};
+
+module.exports = Sport;
