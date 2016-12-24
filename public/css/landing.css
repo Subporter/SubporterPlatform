@@ -7,6 +7,7 @@
 
 #section0{
 		background-image: url('/img/bgLanding.jpg') ;
+		height:100vh;
 	}
 
 /*.container{
@@ -134,10 +135,13 @@ nav{
 	display: inline-block;
 }
 
-.collection-item:hover{
+#section3 .collection-item:hover{
 	background:#F4F4F4;
-	cursor: pointer;
+		cursor: pointer;
+
 }
+
+
 
 #section4{
 	background-color: #F4F4F4;
@@ -166,3 +170,4 @@ footer.page-footer{
 .collection-item .title{
 	display: block;
 }
+
