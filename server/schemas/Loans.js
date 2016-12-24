@@ -8,20 +8,16 @@ let loanSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    date: {
-        type: Date,
-        required: true
-    },
 	subscription: {
         type: mongoose.Schema.ObjectId,
         ref: 'Subscription',
         required: true
     },
-    opponent: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Team',
-        required: true
-    },
+	game: {
+		type: mongoose.Schema.ObjectId,
+		ref: 'Game',
+		required: true
+	},
     placed_on: {
         type: Date,
         required: true,

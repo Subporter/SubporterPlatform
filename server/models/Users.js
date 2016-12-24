@@ -101,6 +101,7 @@ User.updateUser = function(user, body, cb) {
 
 User.updateCrucial = function(user, body, cb) {
     _.merge(user, body);
+	user.admin = false;
 
     user.save(function(err) {
         if (err) {

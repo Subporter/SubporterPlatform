@@ -15,6 +15,10 @@ let teamSchema = new mongoose.Schema({
         required: true,
         match: regExp
     },
+	logo: {
+		type: String,
+		required: true
+	},
     price: {
         type: Number,
         required: true,
