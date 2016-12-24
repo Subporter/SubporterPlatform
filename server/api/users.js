@@ -1,6 +1,7 @@
 const express = require("express"),
     authenticate = require("../middleware/authenticate"),
     admin = require("../middleware/admin"),
+	bodyValidator = require("../helpers/bodyValidator"),
     User = require("../models/Users");
 
 let router = express.Router();
