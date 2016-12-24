@@ -11,7 +11,7 @@ let passportConfig = function(passport) {
 
     passport.use(new JwtStrategy(options, function(jwt, done) {
         User.findOne({
-            id: jwt.id
+            email: jwt.email
         }, function(err, user) {
             if (err) {
                 return done(err, false);

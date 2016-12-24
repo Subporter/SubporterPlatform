@@ -65,7 +65,7 @@ let userSchema = new mongoose.Schema({
 
 userSchema.pre("save", function(next) {
     let user = this;
-    if (this.isModified("password") || this.isNew) {
+    if (this.isModified('password') || this.isNew) {
         bcrypt.genSalt(10, function(err, salt) {
             if (err) {
                 return next(err);
@@ -85,8 +85,8 @@ userSchema.pre("save", function(next) {
     }
 });
 
-userSchema.methods.comparePassword = function(providedPassword, cb) {
-    bcrypt.compare(providedPassword, this.password, function(err, isMatch) {
+userSchema.methods.comparePassword = function(providedPassword, actualPassword, cb) {
+    bcrypt.compare(providedPassword, actualPassword, function(err, isMatch) {
         if (err) {
             return cb(err);
         } else {
