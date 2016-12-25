@@ -71,6 +71,26 @@ router.get("/teams/:id", authenticate, function (req, res) {
 	});
 });
 
+/* Read (teams by competition) */
+router.get("/teams/comp/:competition", authenticate, function (req, res) {
+	Team.find({"competition":req.params.competition}, function (err, team) {
+		if (err) {
+			res.json({
+				info: "Error during reading team",
+				success: false,
+				error: err
+			});
+		} else {
+			res.json({
+				info: "Teams found succesfully",
+				success: true,
+				data: team
+			});
+		}
+	});
+});
+
+
 /* Update */
 router.put("/teams/:id", authenticate, admin, function (req, res) {
 	if (req.granted) {

@@ -71,6 +71,29 @@ router.get("/competitions/:id", authenticate, function (req, res) {
 	});
 });
 
+
+/* Read (competitions by country) */
+router.get("/competitions/count/:country", authenticate, function (req, res) {
+	Competition.find({"country":req.params.country}, function (err, competition) {
+		if (err) {
+			res.json({
+				info: "Error during reading competitions",
+				success: false,
+				error: err
+			});
+		} else {
+			res.json({
+				info: "competitions found succesfully",
+				success: true,
+				data: competition
+			});
+		}
+	});
+});
+
+
+
+
 /* Update */
 router.put("/competitions/:id", authenticate, admin, function (req, res) {
 	if (req.granted) {
