@@ -6,12 +6,12 @@ let Sport = mongoose.model('Sport', sportSchema, 'Sports');
 
 /* Create */
 Sport.addSport = function(body, cb) {
-    let sport = new Sport(body);
+	let sport = new Sport(body);
     sport.save(function(err) {
         if (err) {
-            cb(err, false);
+            cb(err);
         }
-        cb(null, true);
+        cb(null);
     });
 };
 
@@ -27,9 +27,7 @@ Sport.getSports = function(cb) {
 
 /* Read (one sport) */
 Sport.getSportById = function(id, cb) {
-    Sport.findOne({
-        sports_id: id
-    }).exec(function(err, docs) {
+    Sport.findById(id, function(err, docs) {
         if (err) {
             cb(err, null);
         }

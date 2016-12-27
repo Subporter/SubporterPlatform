@@ -1,6 +1,10 @@
 const mongoose = require('mongoose'),
-    mongooseHidden = require('mongoose-hidden')(),
-    autoIncrement = require('mongoose-sequence');
+    mongooseHidden = require('mongoose-hidden')({
+        defaultHidden: {
+            __v: true
+        }
+    }),
+    autoIncrement = require('mongoose-increment');
 
 let regExp = /^[a-zA-Z]{1,100}$/;
 
@@ -26,24 +30,27 @@ let teamSchema = new mongoose.Schema({
         max: 99
     },
     address: {
-        type: mongoose.Schema.ObjectId,
+        type: Number,
         ref: 'Address',
         required: true
     },
     sport: {
-        type: mongoose.Schema.ObjectId,
+        type: Number,
         ref: 'Sport',
         required: true
     },
     competition: {
-        type: mongoose.Schema.ObjectId,
+        type: Number,
         ref: 'Competition',
         required: true
     }
+}, {
+    _id: false
 });
 
 teamSchema.plugin(autoIncrement, {
-    inc_field: "teams_id"
+	modelName: 'Team',
+	fieldName: '_id'
 });
 teamSchema.plugin(mongooseHidden);
 

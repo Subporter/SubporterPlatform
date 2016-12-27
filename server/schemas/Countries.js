@@ -1,6 +1,10 @@
 const mongoose = require('mongoose'),
-    mongooseHidden = require('mongoose-hidden')(),
-    autoIncrement = require('mongoose-sequence');
+    mongooseHidden = require('mongoose-hidden')({
+        defaultHidden: {
+            __v: true
+        }
+    }),
+    autoIncrement = require('mongoose-increment');
 
 let regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
 
@@ -11,10 +15,13 @@ let countrySchema = new mongoose.Schema({
 		unique: true,
         match: regExp
     }
+}, {
+    _id: false
 });
 
 countrySchema.plugin(autoIncrement, {
-    inc_field: "countries_id"
+    modelName: 'Country',
+    fieldName: '_id'
 });
 countrySchema.plugin(mongooseHidden);
 

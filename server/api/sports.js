@@ -15,17 +15,17 @@ router.post("/sports", authenticate, admin, function(req, res) {
                 success: false
             });
         } else {
-            Sport.addSport(req.body, function(err, success) {
+            Sport.addSport(req.body, function(err) {
                 if (err) {
                     res.json({
                         info: "Error during creating sport",
-                        success: success,
+                        success: false,
                         error: err
                     });
                 } else {
                     res.json({
                         info: "Sport created succesfully",
-                        success: success
+                        success: true
                     });
                 }
             });
@@ -49,11 +49,16 @@ router.get("/sports", authenticate, function(req, res) {
                     success: false,
                     error: err
                 });
-            } else {
+            } else if (sports) {
                 res.json({
                     info: "Sports found succesfully",
                     success: true,
                     data: sports
+                });
+            } else {
+                res.json({
+                    info: "Sports not found",
+                    success: false
                 });
             }
         });
@@ -76,11 +81,16 @@ router.get("/sports/:id", authenticate, function(req, res) {
                     success: false,
                     error: err
                 });
-            } else {
+            } else if (sport) {
                 res.json({
                     info: "Sport found succesfully",
                     success: true,
                     data: sport
+                });
+            } else {
+                res.json({
+                    info: "Sport not found",
+                    success: false
                 });
             }
         });

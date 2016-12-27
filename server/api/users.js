@@ -2,7 +2,8 @@ const express = require("express"),
     authenticate = require("../middleware/authenticate"),
     admin = require("../middleware/admin"),
 	bodyValidator = require("../helpers/bodyValidator"),
-    User = require("../models/Users");
+	User = require("../models/Users"),
+    Address = require("../models/Addresses");
 
 let router = express.Router();
 
@@ -24,7 +25,7 @@ router.get("/users/all", authenticate, admin, function(req, res) {
                 });
             } else {
                 res.json({
-                    info: "Error during reading users, users not found",
+                    info: "Users not found",
                     success: false
                 });
             }
@@ -56,7 +57,7 @@ router.get("/users", authenticate, function(req, res) {
                 });
             } else {
                 res.json({
-                    info: "Error during reading user, user not found",
+                    info: "User not found",
                     success: false
                 });
             }
@@ -87,7 +88,7 @@ router.get("/users/:username", authenticate, admin, function(req, res) {
                 });
             } else {
                 res.json({
-                    info: "Error during reading user, user not found",
+                    info: "User not found",
                     success: false
                 });
             }

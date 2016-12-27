@@ -1,12 +1,17 @@
 const mongoose = require('mongoose'),
-    mongooseHidden = require('mongoose-hidden')(),
+    mongooseHidden = require('mongoose-hidden')({
+        defaultHidden: {
+            __v: true
+        }
+    }),
+    autoIncrement = require('mongoose-increment'),
     bcrypt = require('bcrypt-nodejs'),
     teamSchema = require('./Teams'),
     subscriptionSchema = require('./Subscriptions');
 
 let regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
 let emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-let usernameRegExp = /^[A-zÀ-ÿ0-9-_]{3,20}$/;
+let usernameRegExp = /^[A-Za-z0-9]{3,20}$/;
 let phoneRegExp = /^((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
 let registryRegExp = /^[0-9]{2}.[0-9]{2}.[0-9]{2}-[0-9]{3}.[0-9]{2}$/;
 
@@ -15,6 +20,10 @@ let userSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    password: {
+        type: String,
+        required: true
     },
     email: {
         type: String,
@@ -38,29 +47,29 @@ let userSchema = new mongoose.Schema({
         required: true,
         match: regExp
     },
-    date_of_birth: Date,
-    address: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Address'
-    },
-    phone: {
-        type: String,
-        match: phoneRegExp,
-    },
+    date_of_birth: {
+		type: Date
+	},
     national_registry_number: {
         type: String,
         match: registryRegExp
+    },
+	phone: {
+		type: String,
+		match: phoneRegExp,
+	},
+    address: {
+        type: Number,
+        ref: 'Address'
     },
     subscriptions: [
         subscriptionSchema
     ],
     favorites: [
         teamSchema
-    ],
-    password: {
-        type: String,
-        required: true
-    }
+    ]
+}, {
+    _id: false
 });
 
 userSchema.pre("save", function(next) {
@@ -95,6 +104,10 @@ userSchema.methods.comparePassword = function(providedPassword, actualPassword, 
     });
 };
 
+userSchema.plugin(autoIncrement, {
+    modelName: 'User',
+    fieldName: '_id'
+});
 userSchema.plugin(mongooseHidden);
 
 module.exports = userSchema;

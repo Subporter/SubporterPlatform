@@ -1,6 +1,10 @@
 const mongoose = require('mongoose'),
-    mongooseHidden = require('mongoose-hidden')(),
-    autoIncrement = require('mongoose-sequence');
+    mongooseHidden = require('mongoose-hidden')({
+        defaultHidden: {
+            __v: true
+        }
+    }),
+    autoIncrement = require('mongoose-increment');
 
 let gameSchema = new mongoose.Schema({
     date: {
@@ -8,19 +12,22 @@ let gameSchema = new mongoose.Schema({
         required: true
     },
     home: {
-        type: mongoose.Schema.ObjectId,
+        type: Number,
         ref: 'Team',
         required: true
     },
 	away: {
-        type: mongoose.Schema.ObjectId,
+        type: Number,
         ref: 'Team',
         required: true
     }
+}, {
+    _id: false
 });
 
 gameSchema.plugin(autoIncrement, {
-    inc_field: "games_id"
+	modelName: 'Game',
+	fieldName: '_id'
 });
 gameSchema.plugin(mongooseHidden);
 

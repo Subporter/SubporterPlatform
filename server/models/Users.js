@@ -9,9 +9,9 @@ User.addUser = function(body, cb) {
     let user = new User(body);
     user.save(function(err) {
         if (err) {
-            cb(err, null, false);
+            cb(err, null);
         }
-        cb(null, user, true);
+        cb(null, user);
     });
 };
 
@@ -20,7 +20,7 @@ User.getUsers = function(cb) {
     User.find({}, {
         admin: 0,
         password: 0
-    }).sort('username').exec(function(err, docs) {
+    }).populate('address').sort('username').exec(function(err, docs) {
         if (err) {
             cb(err, null);
         }
@@ -101,7 +101,7 @@ User.updateUser = function(user, body, cb) {
 
 User.updateCrucial = function(user, body, cb) {
     _.merge(user, body);
-	user.admin = false;
+    user.admin = false;
 
     user.save(function(err) {
         if (err) {

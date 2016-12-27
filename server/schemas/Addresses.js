@@ -1,6 +1,10 @@
 const mongoose = require('mongoose'),
-    mongooseHidden = require('mongoose-hidden')(),
-    autoIncrement = require('mongoose-sequence');
+    mongooseHidden = require('mongoose-hidden')({
+        defaultHidden: {
+            __v: true
+        }
+    }),
+    autoIncrement = require('mongoose-increment');
 
 let regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
 
@@ -28,14 +32,17 @@ let addressSchema = new mongoose.Schema({
         match: regExp
     },
     country: {
-		type: mongoose.Schema.ObjectId,
+		type: Number,
         ref: 'Country',
         required: true
     }
+}, {
+    _id: false
 });
 
 addressSchema.plugin(autoIncrement, {
-    inc_field: 'addresses_id'
+    modelName: 'Address',
+    fieldName: '_id'
 });
 addressSchema.plugin(mongooseHidden);
 

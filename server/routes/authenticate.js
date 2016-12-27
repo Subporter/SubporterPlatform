@@ -18,11 +18,11 @@ router.post("/register", function(req, res) {
             success: false
         });
     } else {
-        User.addUser(req.body, function(err, user, success) {
+        User.addUser(req.body, function(err, user) {
             if (err) {
                 res.json({
-                    info: "Error during creating user, e-mail or username may be in use already or they may be some validation errors",
-                    success: success,
+                    info: "Error during creating user, e-mail or username may be already in use or they may be some validation errors",
+                    success: false,
                     error: err
                 });
             } else {
@@ -33,7 +33,7 @@ router.post("/register", function(req, res) {
                 }, config.jwt_secret);
                 res.json({
                     info: "User created successfully",
-                    success: success,
+                    success: true,
                     token: token,
                     expires: moment().add(7, "days").format("dddd, MMMM Do YYYY, h:mm:ss")
                 });
@@ -80,7 +80,7 @@ router.post("/login", function(req, res) {
                 });
             } else {
                 res.json({
-                    info: "Error during login, user not found",
+                    info: "User not found",
                     success: false
                 });
             }
@@ -272,7 +272,7 @@ router.post("/check/email", function(req, res) {
                 });
             } else {
                 res.json({
-                    info: "User with this email doesn't exist",
+                    info: "User not found",
                     success: true,
                     found: false
                 });
@@ -304,7 +304,7 @@ router.post("/check/username", function(req, res) {
                 });
             } else {
                 res.json({
-                    info: "User with this username doesn't exist",
+                    info: "User not found",
                     success: true,
                     found: false
                 });

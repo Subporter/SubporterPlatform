@@ -15,17 +15,17 @@ router.post("/countries", authenticate, admin, function(req, res) {
                 success: false
             });
         } else {
-            Country.addCountry(req.body, function(err, success) {
+            Country.addCountry(req.body, function(err) {
                 if (err) {
                     res.json({
                         info: "Error during creating country",
-                        success: success,
+                        success: false,
                         error: err
                     });
                 } else {
                     res.json({
                         info: "Country created succesfully",
-                        success: success
+                        success: true
                     });
                 }
             });
@@ -49,11 +49,16 @@ router.get("/countries", authenticate, function(req, res) {
                     success: false,
                     error: err
                 });
-            } else {
+            } else if (countries) {
                 res.json({
                     info: "Countries found succesfully",
                     success: true,
                     data: countries
+                });
+            } else {
+                res.json({
+                    info: "Countries not found",
+                    success: false
                 });
             }
         });
@@ -76,11 +81,16 @@ router.get("/countries/:id", authenticate, function(req, res) {
                     success: false,
                     error: err
                 });
-            } else {
+            } else if (country) {
                 res.json({
                     info: "Country found succesfully",
                     success: true,
                     data: country
+                });
+            } else {
+                res.json({
+                    info: "Country not found",
+                    success: false
                 });
             }
         });

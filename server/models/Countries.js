@@ -9,9 +9,9 @@ Country.addCountry = function(body, cb) {
     let country = new Country(body);
     country.save(function(err) {
         if (err) {
-            cb(err, false);
+            cb(err);
         }
-        cb(null, true);
+        cb(null);
     });
 };
 
@@ -27,9 +27,7 @@ Country.getCountries = function(cb) {
 
 /* Read (one sport) */
 Country.getCountryById = function(id, cb) {
-    Country.findOne({
-        id: id
-    }).exec(function(err, docs) {
+    Country.findById(id, function(err, docs) {
         if (err) {
             cb(err, null);
         }
