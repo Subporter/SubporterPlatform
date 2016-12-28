@@ -35,7 +35,7 @@ app.use('/app', express.static(path.join(__dirname, '../public/app')));
 app.use('/bower', express.static(path.join(__dirname, '../bower_components')));
 app.use('/config', express.static(path.join(__dirname, '../config')));
 app.use('/css', express.static(path.join(__dirname, '../public/css')));
-app.use('/images', express.static(path.join(__dirname, '../public/images')));
+app.use('/img', express.static(path.join(__dirname, '../public/img')));
 app.use('/js', express.static(path.join(__dirname, '../public/js')));
 app.use('/lib', express.static(path.join(__dirname, '../node_modules')));
 app.use('/public', express.static(path.join(__dirname, '../public')));

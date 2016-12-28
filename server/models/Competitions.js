@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'),
-    _ = require("lodash"),
+    _ = require('lodash'),
     competitionSchema = require('../schemas/Competitions');
 
 let Competition = mongoose.model('Competition', competitionSchema, 'Competitions');

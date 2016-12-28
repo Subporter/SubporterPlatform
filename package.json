@@ -67,6 +67,7 @@
     "mongoose-hidden": "^0.7.0",
     "mongoose-sequence": "^3.1.0",
     "morgan": "~1.7.0",
+    "multiparty": "^4.1.2",
     "passport": "^0.3.2",
     "passport-jwt": "^2.2.1",
     "passport-local": "^1.0.0",
@@ -77,6 +78,7 @@
     "systemjs": "^0.19.41",
     "typescript": "^2.1.1",
     "typings": "^2.0.0",
+    "uuid": "^3.0.1",
     "winston": "^2.3.0",
     "winston-daily-rotate-file": "^1.4.0",
     "zone.js": "^0.7.2"

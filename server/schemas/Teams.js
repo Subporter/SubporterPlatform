@@ -6,7 +6,7 @@ const mongoose = require('mongoose'),
     }),
     autoIncrement = require('mongoose-increment');
 
-let regExp = /^[a-zA-Z]{1,100}$/;
+let regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
 
 let teamSchema = new mongoose.Schema({
     name: {
@@ -32,11 +32,6 @@ let teamSchema = new mongoose.Schema({
     address: {
         type: Number,
         ref: 'Address',
-        required: true
-    },
-    sport: {
-        type: Number,
-        ref: 'Sport',
         required: true
     },
     competition: {
