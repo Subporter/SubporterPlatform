@@ -83,6 +83,31 @@ User.getUserByUsername = function(username, cb) {
     });
 };
 
+/* Add */
+User.addFavorite = function(user, favorite, cb) {
+	user.favorites.push(favorite);
+
+	user.save(function (err) {
+		if (err) {
+			cb(err);
+		}
+		cb (null);
+	});
+};
+
+User.addSubscription = function(user, subscription, cb) {
+    user.subscriptions.push(subscription);
+
+	user.save(function (err) {
+		if (err) {
+			cb(err);
+		}
+		cb (null);
+	});
+};
+
+/* Delete */
+
 /* Update */
 User.updateUser = function(user, body, cb) {
     body.email = user.email;

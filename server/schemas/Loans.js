@@ -17,18 +17,12 @@ let loanSchema = new mongoose.Schema({
         required: true,
         default: false
     },
-    lend_on: {
+    lent_on: {
         type: Date
     },
     lent_by: {
         type: Number,
-        ref: 'User',
-        required: true
-    },
-    user: {
-        type: Number,
-        ref: 'User',
-        required: true
+        ref: 'User'
     },
     subscription: {
         type: Number,

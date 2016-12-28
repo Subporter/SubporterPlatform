@@ -17,7 +17,16 @@ Team.addTeam = function(body, cb) {
 
 /* Read (all teams) */
 Team.getTeams = function(cb) {
-    Team.find({}).populate('address competition').sort({
+    Team.find({}).populate({
+        path: 'address competition',
+        populate: [{
+            path: 'country',
+            model: 'Country'
+        }, {
+            path: 'sport',
+            model: 'Sport'
+        }]
+    }).sort({
         name: 1
     }).exec(function(err, docs) {
         if (err) {
@@ -30,7 +39,16 @@ Team.getTeams = function(cb) {
 Team.getTeamsByCompetition = function(competition, cb) {
     Team.find({
         competition: competition
-    }).populate('address competition').sort({
+    }).populate({
+        path: 'address competition',
+        populate: [{
+            path: 'country',
+            model: 'Country'
+        }, {
+            path: 'sport',
+            model: 'Sport'
+        }]
+    }).sort({
         name: 1
     }).exec(function(err, docs) {
         if (err) {
@@ -42,7 +60,16 @@ Team.getTeamsByCompetition = function(competition, cb) {
 
 /* Read (one team) */
 Team.getTeamById = function(id, cb) {
-    Team.findById(id).populate('address competition').exec(function(err, docs) {
+    Team.findById(id).populate({
+        path: 'address competition',
+        populate: [{
+            path: 'country',
+            model: 'Country'
+        }, {
+            path: 'sport',
+            model: 'Sport'
+        }]
+    }).exec(function(err, docs) {
         if (err) {
             cb(err, null);
         }
@@ -54,7 +81,7 @@ Team.getTeamById = function(id, cb) {
 Team.updateTeam = function(team, body, cb) {
     _.merge(team, body);
 
-    team.save(function (err) {
+    team.save(function(err) {
         if (err) {
             cb(err);
         }

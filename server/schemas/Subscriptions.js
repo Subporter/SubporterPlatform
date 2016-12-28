@@ -17,6 +17,11 @@ let subscriptionSchema = new mongoose.Schema({
         type: Number,
         ref: 'Team',
         required: true
+    },
+    user: {
+        type: Number,
+        ref: 'User',
+        required: true
     }
 }, {
     _id: false

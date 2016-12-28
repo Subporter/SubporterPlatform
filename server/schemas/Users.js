@@ -5,9 +5,7 @@ const mongoose = require('mongoose'),
         }
     }),
     autoIncrement = require('mongoose-increment'),
-    bcrypt = require('bcrypt-nodejs'),
-    teamSchema = require('./Teams'),
-    subscriptionSchema = require('./Subscriptions');
+    bcrypt = require('bcrypt-nodejs');
 
 let regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
 let emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -58,16 +56,23 @@ let userSchema = new mongoose.Schema({
 		type: String,
 		match: phoneRegExp,
 	},
+	avatar: {
+		type: String,
+        required: true,
+		default: '/img/person.png'
+	},
     address: {
         type: Number,
         ref: 'Address'
     },
-    subscriptions: [
-        subscriptionSchema
-    ],
-    favorites: [
-        teamSchema
-    ]
+    subscriptions: [{
+        type: Number,
+        ref: 'Subscription'
+    }],
+    favorites: [{
+        type: Number,
+        ref: 'Team'
+    }]
 }, {
     _id: false
 });
