@@ -71,7 +71,7 @@ router.get("/addresses", authenticate, admin, function(req, res) {
     }
 });
 
-/* Read (one sport) */
+/* Read (one address) */
 router.get("/addresses/:id", authenticate, admin, function(req, res) {
     if (req.granted) {
         Address.getAddressById(req.params.id, function(err, address) {

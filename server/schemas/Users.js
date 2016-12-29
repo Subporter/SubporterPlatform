@@ -1,11 +1,14 @@
 const mongoose = require('mongoose'),
     mongooseHidden = require('mongoose-hidden')({
         defaultHidden: {
-            __v: true
+            __v: true,
+			created_at: true,
+            updated_at: true
         }
     }),
     autoIncrement = require('mongoose-increment'),
-    bcrypt = require('bcrypt-nodejs');
+    bcrypt = require('bcrypt-nodejs'),
+	Address = require('../models/Addresses');
 
 let regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
 let emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -74,10 +77,14 @@ let userSchema = new mongoose.Schema({
         ref: 'Team'
     }]
 }, {
-    _id: false
+    _id: false,
+    timestamps: {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
+    }
 });
 
-userSchema.pre("save", function(next) {
+userSchema.pre('save', function(next) {
     let user = this;
     if (this.isModified('password') || this.isNew) {
         bcrypt.genSalt(10, function(err, salt) {
@@ -97,6 +104,17 @@ userSchema.pre("save", function(next) {
     } else {
         return next();
     }
+});
+
+userSchema.pre('remove', function (next) {
+    let user = this;
+    Address.deleteAddress(user.address, function (err) {
+        if (err) {
+            return next(err);
+        } else {
+            return next(null);
+        }
+    });
 });
 
 userSchema.methods.comparePassword = function(providedPassword, actualPassword, cb) {

@@ -56,17 +56,11 @@ Sport.updateSport = function(sport, body, cb) {
 
 /* Delete */
 Sport.deleteSport = function(id, cb) {
-    Competition.deleteCompetitionsBySport(id, function(err) {
+	Sport.findById(id, function (err, docs) {
         if (err) {
             cb(err);
         } else {
-            Sport.findByIdAndRemove(id, function(err) {
-                if (err) {
-                    cb(err);
-                } else {
-                    cb(null);
-                }
-            });
+            docs.remove(cb);
         }
     });
 };

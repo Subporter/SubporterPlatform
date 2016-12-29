@@ -17,6 +17,11 @@ let loanSchema = new mongoose.Schema({
         required: true,
         default: false
     },
+	lent: {
+		type: Boolean,
+		required: true,
+		default: false
+	},
     lent_on: {
         type: Date
     },

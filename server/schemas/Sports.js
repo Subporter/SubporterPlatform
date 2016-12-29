@@ -6,7 +6,8 @@ const mongoose = require('mongoose'),
             updated_at: true
         }
     }),
-    autoIncrement = require('mongoose-increment');
+    autoIncrement = require('mongoose-increment'),
+	Competition = require('../models/Competitions');
 
 let regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
 
@@ -24,6 +25,17 @@ let sportSchema = new mongoose.Schema({
         createdAt: 'created_at',
         updatedAt: 'updated_at'
     }
+});
+
+sportSchema.pre('remove', function (next) {
+    let sport = this;
+    Competition.deleteCompetitionsBySport(sport._id, function (err) {
+        if (err) {
+            return next(err);
+        } else {
+            return next(null);
+        }
+    });
 });
 
 sportSchema.plugin(mongooseHidden);

@@ -57,4 +57,18 @@ Game.deleteGame = function(id, cb) {
     });
 };
 
+Game.deleteGamesByTeam = function(team, cb) {
+	Game.find({
+        team: team
+    }, function(err, docs) {
+        if (err) {
+            cb(err);
+        } else {
+            docs.forEach(function(doc) {
+                doc.remove(cb);
+            });
+        }
+    });
+};
+
 module.exports = Game;

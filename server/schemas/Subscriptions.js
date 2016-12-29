@@ -1,17 +1,18 @@
 const mongoose = require('mongoose'),
     mongooseHidden = require('mongoose-hidden')({
         defaultHidden: {
-            __v: true
+            __v: true,
+			created_at: true,
+            updated_at: true
         }
     }),
     autoIncrement = require('mongoose-increment');
 
-let regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
-
 let subscriptionSchema = new mongoose.Schema({
     place: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     team: {
         type: Number,
@@ -24,7 +25,11 @@ let subscriptionSchema = new mongoose.Schema({
         required: true
     }
 }, {
-    _id: false
+    _id: false,
+    timestamps: {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
+    }
 });
 
 subscriptionSchema.plugin(autoIncrement, {

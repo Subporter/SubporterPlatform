@@ -4,6 +4,10 @@ const mongoose = require('mongoose'),
 
 let Address = mongoose.model('Address', addressSchema, 'Addresses');
 
+let populateSchema = {
+    path: 'country'
+};
+
 /* Create */
 Address.addAddress = function(body, cb) {
     let address = new Address(body);
@@ -19,9 +23,7 @@ Address.addAddress = function(body, cb) {
 /* Read (all addresses) */
 Address.getAddresses = function(cb) {
     Address.find({})
-        .populate({
-            path: 'country'
-        })
+        .populate(populateSchema)
         .sort({
             country: 1,
             postal: 1,
@@ -41,9 +43,7 @@ Address.getAddresses = function(cb) {
 /* Read (one address) */
 Address.getAddressById = function(id, cb) {
     Address.findById(id)
-        .populate({
-            path: 'country'
-        })
+        .populate(populateSchema)
         .exec(function(err, docs) {
             if (err) {
                 cb(err, null);
@@ -68,11 +68,11 @@ Address.updateAddress = function(address, body, cb) {
 
 /* Delete */
 Address.deleteAddress = function(id, cb) {
-    Address.findByIdAndRemove(id, function(err) {
+    Address.findById(id, function(err, docs) {
         if (err) {
             cb(err);
         } else {
-            cb(null);
+            docs.remove(cb);
         }
     });
 };

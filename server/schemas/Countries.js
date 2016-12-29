@@ -6,7 +6,8 @@ const mongoose = require('mongoose'),
             updated_at: true
         }
     }),
-    autoIncrement = require('mongoose-increment');
+    autoIncrement = require('mongoose-increment'),
+    Competition = require('../models/Competitions');
 
 let regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
 
@@ -24,6 +25,17 @@ let countrySchema = new mongoose.Schema({
         createdAt: 'created_at',
         updatedAt: 'updated_at'
     }
+});
+
+countrySchema.pre('remove', function (next) {
+    let country = this;
+    Competition.deleteCompetitionsByCountry(country._id, function (err) {
+        if (err) {
+            return next(err);
+        } else {
+            return next(null);
+        }
+    });
 });
 
 countrySchema.plugin(mongooseHidden);

@@ -56,17 +56,11 @@ Country.updateCountry = function(country, body, cb) {
 
 /* Delete */
 Country.deleteCountry = function(id, cb) {
-    Competition.deleteCompetitionsByCountry(id, function(err) {
+    Country.findById(id, function (err, docs) {
         if (err) {
             cb(err);
         } else {
-            Country.findByIdAndRemove(id, function(err) {
-                if (err) {
-                    cb(err);
-                } else {
-                    cb(null);
-                }
-            });
+            docs.remove(cb);
         }
     });
 };

@@ -1,11 +1,11 @@
-const express = require("express"),
-	authenticate = require("../middleware/authenticate"),
-	admin = require("../middleware/admin"),
-	formParser = require("../middleware/formParser"),
-	imageSaver = require("../middleware/imageSaver"),
-	bodyValidator = require("../helpers/bodyValidator"),
-	Team = require("../models/Teams"),
-	Address = require("../models/Addresses");
+const express = require('express'),
+	authenticate = require('../middleware/authenticate'),
+	admin = require('../middleware/admin'),
+	formParser = require('../middleware/formParser'),
+	imageSaver = require('../middleware/imageSaver'),
+	bodyValidator = require('../helpers/bodyValidator'),
+	Team = require('../models/Teams'),
+	Address = require('../models/Addresses');
 
 let router = express.Router();
 

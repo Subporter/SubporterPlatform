@@ -1,13 +1,14 @@
-const express = require("express"),
-	authenticate = require("../middleware/authenticate"),
-	admin = require("../middleware/admin"),
-	bodyValidator = require("../helpers/bodyValidator"),
-	Subscription = require("../models/Subscriptions");
+const express = require('express'),
+	authenticate = require('../middleware/authenticate'),
+	admin = require('../middleware/admin'),
+	bodyValidator = require('../helpers/bodyValidator'),
+	loadUser = require('../middleware/loadUser'),
+	Subscription = require('../models/Subscriptions');
 
 let router = express.Router();
 
 /* Create */
-router.post("/subscriptions", authenticate, function (req, res) {
+router.post("/subscriptions", authenticate, loadUser, function (req, res) {
 	if (req.granted) {
 		if (Object.keys(req.body).length !== 2 || bodyValidator(req.body.place, req.body.team)) {
             res.json({
@@ -15,6 +16,7 @@ router.post("/subscriptions", authenticate, function (req, res) {
                 success: false
             });
         } else {
+			req.body.user = req.user._id;
 			Subscription.addSubscription(req.body, function (err) {
 				if (err) {
 					res.json({
@@ -40,7 +42,7 @@ router.post("/subscriptions", authenticate, function (req, res) {
 });
 
 /* Read (all subscriptions) */
-router.get("/subscriptions", authenticate, function (req, res) {
+router.get("/subscriptions", authenticate, admin, function (req, res) {
 	if (req.granted) {
 		Subscription.getSubscriptions(function(err, subscriptions) {
 			if (err) {
@@ -71,9 +73,40 @@ router.get("/subscriptions", authenticate, function (req, res) {
 	}
 });
 
-router.get("/subscriptions/team/:team", authenticate, function (req, res) {
+router.get("/subscriptions/team/:team", authenticate, admin, function (req, res) {
 	if (req.granted) {
         Subscription.getSubscriptionsByTeam(req.params.team, function(err, subscriptions) {
+            if (err) {
+                res.json({
+                    info: "Error during reading subscriptions",
+                    success: false,
+                    error: err
+                });
+            } else if (subscriptions) {
+				res.json({
+					info: "Subscriptions found succesfully",
+					success: true,
+					data: subscriptions
+				});
+			} else {
+                res.json({
+                    info: "Subscriptions not found",
+                    success: false
+                });
+            }
+        });
+    } else {
+        res.status(403);
+        res.json({
+            info: "Unauthorized",
+            success: false
+        });
+    }
+});
+
+router.get("/subscriptions/user/:user", authenticate, function (req, res) {
+	if (req.granted) {
+        Subscription.getSubscriptionsByUser(req.params.user, function(err, subscriptions) {
             if (err) {
                 res.json({
                     info: "Error during reading subscriptions",
@@ -135,7 +168,7 @@ router.get("/subscriptions/:id", authenticate, function (req, res) {
 });
 
 /* Update */
-router.put("/subscriptions/:id", authenticate, function (req, res) {
+router.put("/subscriptions/:id", authenticate, loadUser, function (req, res) {
 	if (req.granted) {
 		if (Object.keys(req.body).length !== 2 || bodyValidator(req.body.place, req.body.team)) {
             res.json({
@@ -144,7 +177,7 @@ router.put("/subscriptions/:id", authenticate, function (req, res) {
             });
         } else {
 			Subscription.getSubscriptionById(req.params.id, function (err, subscription) {
-				if (err) {
+				if (err || (req.user.admin === false && req.user._id !== subscription.user)) {
                     res.json({
                         info: "Error during reading subscription",
                         success: false,
@@ -183,9 +216,9 @@ router.put("/subscriptions/:id", authenticate, function (req, res) {
 });
 
 /* Delete */
-router.delete("/subscriptions/:id", authenticate, function (req, res) {
+router.delete("/subscriptions/:id", authenticate, loadUser, function (req, res) {
 	if (req.granted) {
-        Subscription.deleteSubscription(req.params.id, function(err) {
+        Subscription.deleteSubscription(req.params.id, req.user, function(err) {
             if (err) {
                 res.json({
                     info: "Error during deleting subscription",

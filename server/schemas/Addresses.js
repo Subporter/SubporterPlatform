@@ -14,6 +14,7 @@ let addressSchema = new mongoose.Schema({
     street: {
         type: String,
         required: true,
+		trim: true,
         match: regExp
     },
     number: {
@@ -31,6 +32,7 @@ let addressSchema = new mongoose.Schema({
     city: {
         type: String,
         required: true,
+		trim: true,
         match: regExp
     },
     country: {
