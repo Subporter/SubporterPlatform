@@ -94,7 +94,7 @@ Team.updateTeam = function(team, body, cb) {
 /* Delete */
 Team.deleteTeam = function(id, cb) {
     Team.findById(id, function(err, docs) {
-        if (err) {
+        if (err || !docs) {
             cb(err);
         } else {
             docs.remove(cb);
@@ -106,7 +106,7 @@ Team.deleteTeamsByCompetition = function(competition, cb) {
     Team.find({
         competition: competition
     }, function(err, docs) {
-        if (err) {
+        if (err || !docs) {
             cb(err);
         } else {
             docs.forEach(function(doc) {

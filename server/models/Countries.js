@@ -57,7 +57,7 @@ Country.updateCountry = function(country, body, cb) {
 /* Delete */
 Country.deleteCountry = function(id, cb) {
     Country.findById(id, function (err, docs) {
-        if (err) {
+        if (err || !docs) {
             cb(err);
         } else {
             docs.remove(cb);

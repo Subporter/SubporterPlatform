@@ -122,7 +122,7 @@ Competition.updateCompetition = function(competition, body, cb) {
 /* Delete */
 Competition.deleteCompetition = function(id, cb) {
     Competition.findById(id, function (err, docs) {
-        if (err) {
+        if (err || !docs) {
             cb(err);
         } else {
             docs.remove(cb);
@@ -134,7 +134,7 @@ Competition.deleteCompetitionsByCountry = function(country, cb) {
 	Competition.find({
 		country: country
 	}, function (err, docs) {
-		if (err) {
+		if (err || !docs) {
 			cb(err);
 		} else {
 			docs.forEach(function (doc) {
@@ -148,7 +148,7 @@ Competition.deleteCompetitionsBySport = function(sport, cb) {
     Competition.find({
 		sport: sport
 	}, function (err, docs) {
-		if (err) {
+		if (err || !docs) {
 			cb(err);
 		} else {
 			docs.forEach(function (doc) {

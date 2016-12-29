@@ -122,7 +122,7 @@ Subscription.updateSubscription = function(subscription, body, cb) {
 /* Delete */
 Subscription.deleteSubscription = function(id, user, cb) {
     Subscription.findById(id, function(err, docs) {
-        if (err || (user.admin === false && user._id !== docs.user)) {
+        if (err || !docs || (user.admin === false && user._id !== docs.user)) {
             cb(err);
         } else {
             docs.remove(cb);
@@ -134,7 +134,7 @@ Subscription.deleteSubscriptionsByTeam = function(team, cb) {
 	Subscription.find({
         team: team
     }, function(err, docs) {
-        if (err) {
+        if (err || !docs) {
             cb(err);
         } else {
             docs.forEach(function(doc) {

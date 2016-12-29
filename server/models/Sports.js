@@ -57,7 +57,7 @@ Sport.updateSport = function(sport, body, cb) {
 /* Delete */
 Sport.deleteSport = function(id, cb) {
 	Sport.findById(id, function (err, docs) {
-        if (err) {
+        if (err || !docs) {
             cb(err);
         } else {
             docs.remove(cb);

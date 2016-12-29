@@ -50,7 +50,7 @@ Game.updateGame = function(Game, body, cb) {
 /* Delete */
 Game.deleteGame = function(id, cb) {
     Game.findByIdAndRemove(id, function(err) {
-        if (err) {
+        if (err || !docs) {
             cb(err);
         }
         cb(null);
@@ -61,7 +61,7 @@ Game.deleteGamesByTeam = function(team, cb) {
 	Game.find({
         team: team
     }, function(err, docs) {
-        if (err) {
+        if (err || !docs) {
             cb(err);
         } else {
             docs.forEach(function(doc) {

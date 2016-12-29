@@ -69,7 +69,7 @@ Address.updateAddress = function(address, body, cb) {
 /* Delete */
 Address.deleteAddress = function(id, cb) {
     Address.findById(id, function(err, docs) {
-        if (err) {
+        if (err || !docs) {
             cb(err);
         } else {
             docs.remove(cb);
