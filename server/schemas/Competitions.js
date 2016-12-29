@@ -2,7 +2,7 @@ const mongoose = require('mongoose'),
     mongooseHidden = require('mongoose-hidden')({
         defaultHidden: {
             __v: true,
-			created_at: true,
+            created_at: true,
             updated_at: true
         }
     }),
@@ -15,11 +15,13 @@ let competitionSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
+        trim: true,
         match: regExp
     },
     description: {
         type: String,
         required: true,
+        trim: true,
         match: descriptionRegExp
     },
     country: {
@@ -33,7 +35,7 @@ let competitionSchema = new mongoose.Schema({
         required: true
     }
 }, {
-	_id: false,
+    _id: false,
     timestamps: {
         createdAt: 'created_at',
         updatedAt: 'updated_at'
@@ -42,8 +44,16 @@ let competitionSchema = new mongoose.Schema({
 
 competitionSchema.plugin(mongooseHidden);
 competitionSchema.plugin(autoIncrement, {
-	modelName: 'Competition',
-	fieldName: '_id'
+    modelName: 'Competition',
+    fieldName: '_id'
+});
+
+competitionSchema.index({
+    country: 1,
+    sport: 1,
+    name: 1
+}, {
+    unique: true
 });
 
 module.exports = competitionSchema;

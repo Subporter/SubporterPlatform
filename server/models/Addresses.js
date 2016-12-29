@@ -10,35 +10,47 @@ Address.addAddress = function(body, cb) {
     address.save(function(err) {
         if (err) {
             cb(err);
+        } else {
+            cb(null);
         }
-        cb(null);
     });
 };
 
 /* Read (all addresses) */
 Address.getAddresses = function(cb) {
-    Address.find({}).populate('country').sort({
-        country: 1,
-        postal: 1,
-        city: 1,
-        street: 1,
-        number: 1
-    }).exec(function(err, docs) {
-        if (err) {
-            cb(err, null);
-        }
-        cb(null, docs);
-    });
+    Address.find({})
+        .populate({
+            path: 'country'
+        })
+        .sort({
+            country: 1,
+            postal: 1,
+            city: 1,
+            street: 1,
+            number: 1
+        })
+        .exec(function(err, docs) {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        });
 };
 
 /* Read (one address) */
 Address.getAddressById = function(id, cb) {
-    Address.findById(id).populate('country').exec(function(err, docs) {
-        if (err) {
-            cb(err, null);
-        }
-        cb(null, docs);
-    });
+    Address.findById(id)
+        .populate({
+            path: 'country'
+        })
+        .exec(function(err, docs) {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        });
 };
 
 /* Update */
@@ -48,8 +60,9 @@ Address.updateAddress = function(address, body, cb) {
     address.save(function(err) {
         if (err) {
             cb(err);
+        } else {
+            cb(null);
         }
-        cb(null);
     });
 };
 
@@ -58,27 +71,30 @@ Address.deleteAddress = function(id, cb) {
     Address.findByIdAndRemove(id, function(err) {
         if (err) {
             cb(err);
+        } else {
+            cb(null);
         }
-        cb(null);
     });
 };
 
 /* Create or update */
-Address.addOrUpdateAddress = function (body, cb) {
+Address.addOrUpdateAddress = function(body, cb) {
     if (body.address === -1) {
         let address = new Address(body);
         address.save(function(err, docs) {
             if (err) {
                 cb(err, null);
+            } else {
+                cb(null, docs._id);
             }
-            cb(null, docs._id);
         });
     } else {
-        Address.findByIdAndUpdate(body.address, body, function (err, docs) {
+        Address.findByIdAndUpdate(body.address, body, function(err, docs) {
             if (err) {
                 cb(err, null);
+            } else {
+                cb(null, docs._id);
             }
-            cb(null, docs._id);
         });
     }
 };

@@ -1,8 +1,8 @@
-const express = require("express"),
-    authenticate = require("../middleware/authenticate"),
-    admin = require("../middleware/admin"),
-    bodyValidator = require("../helpers/bodyValidator"),
-    Address = require("../models/Addresses");
+const express = require('express'),
+    authenticate = require('../middleware/authenticate'),
+    admin = require('../middleware/admin'),
+    bodyValidator = require('../helpers/bodyValidator'),
+    Address = require('../models/Addresses');
 
 let router = express.Router();
 
@@ -40,7 +40,7 @@ router.post("/addresses", authenticate, admin, function(req, res) {
 });
 
 /* Read (all addresses) */
-router.get("/addresses", authenticate, function(req, res) {
+router.get("/addresses", authenticate, admin, function(req, res) {
     if (req.granted) {
         Address.getAddresses(function(err, addresses) {
             if (err) {
@@ -72,7 +72,7 @@ router.get("/addresses", authenticate, function(req, res) {
 });
 
 /* Read (one sport) */
-router.get("/addresses/:id", authenticate, function(req, res) {
+router.get("/addresses/:id", authenticate, admin, function(req, res) {
     if (req.granted) {
         Address.getAddressById(req.params.id, function(err, address) {
             if (err) {
@@ -106,7 +106,7 @@ router.get("/addresses/:id", authenticate, function(req, res) {
 /* Update */
 router.put("/addresses/:id", authenticate, admin, function(req, res) {
     if (req.granted) {
-        if (Object.keys(req.body).length !== 1 || bodyValidator(req.body.street, req.body.number, req.body.postal, req.body.city, req.body.country)) {
+        if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.street, req.body.number, req.body.postal, req.body.city, req.body.country)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false

@@ -15,6 +15,7 @@ let sportSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
+		trim: true,
         match: regExp
     }
 }, {

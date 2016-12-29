@@ -1,7 +1,9 @@
 const mongoose = require('mongoose'),
     mongooseHidden = require('mongoose-hidden')({
         defaultHidden: {
-            __v: true
+            __v: true,
+			created_at: true,
+            updated_at: true
         }
     }),
     autoIncrement = require('mongoose-increment');
@@ -37,13 +39,17 @@ let addressSchema = new mongoose.Schema({
         required: true
     }
 }, {
-    _id: false
+    _id: false,
+    timestamps: {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
+    }
 });
 
+addressSchema.plugin(mongooseHidden);
 addressSchema.plugin(autoIncrement, {
     modelName: 'Address',
     fieldName: '_id'
 });
-addressSchema.plugin(mongooseHidden);
 
 module.exports = addressSchema;
