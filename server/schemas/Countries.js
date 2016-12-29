@@ -1,7 +1,9 @@
 const mongoose = require('mongoose'),
     mongooseHidden = require('mongoose-hidden')({
         defaultHidden: {
-            __v: true
+            __v: true,
+			created_at: true,
+            updated_at: true
         }
     }),
     autoIncrement = require('mongoose-increment');
@@ -16,7 +18,11 @@ let countrySchema = new mongoose.Schema({
         match: regExp
     }
 }, {
-    _id: false
+    _id: false,
+    timestamps: {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
+    }
 });
 
 countrySchema.plugin(autoIncrement, {

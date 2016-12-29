@@ -57,7 +57,7 @@ require('./routes/index').routes(app);
 /* 404 error handler */
 
 app.use((req, res, next) => {
-    let err = new Error('Not found');
+    let err = new Error("Not found");
     err.status = 404;
     next(err);
 });
@@ -65,7 +65,7 @@ app.use((req, res, next) => {
 /* 401 error handler: unauthorized */
 
 app.use((err, req, res, next) => {
-    if (err.name == 'UnauthorizedError') {
+    if (err.name === "UnauthorizedError") {
         res.status = 401;
         res.json({
             message: err.name + ": " + err.message
@@ -75,7 +75,7 @@ app.use((err, req, res, next) => {
 
 /* Development error handler: stacktrace */
 
-if (app.get('env') === 'development') {
+if (app.get('env') === "development") {
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
@@ -98,9 +98,10 @@ app.use(function(err, req, res, next) {
 /* UncaughtException */
 
 process.on('uncaughtException', function(err) {
-    if (app.get('env') !== 'development') {
+    if (app.get('env') !== "development") {
         logger.errorLog.error("Error: ", err);
     } else {
+        console.error(err);
         throw err;
     }
 });

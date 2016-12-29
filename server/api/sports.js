@@ -1,8 +1,8 @@
-const express = require("express"),
-    authenticate = require("../middleware/authenticate"),
-    admin = require("../middleware/admin"),
-    bodyValidator = require("../helpers/bodyValidator"),
-    Sport = require("../models/Sports");
+const express = require('express'),
+    authenticate = require('../middleware/authenticate'),
+    admin = require('../middleware/admin'),
+    bodyValidator = require('../helpers/bodyValidator'),
+    Sport = require('../models/Sports');
 
 let router = express.Router();
 
@@ -112,7 +112,7 @@ router.put("/sports/:id", authenticate, admin, function(req, res) {
                 success: false
             });
         } else {
-            Sport.getSportById(req.params.id, function (err, sport) {
+            Sport.getSportById(req.params.id, function(err, sport) {
                 if (err) {
                     res.json({
                         info: "Error during reading sport",
@@ -120,7 +120,7 @@ router.put("/sports/:id", authenticate, admin, function(req, res) {
                         error: err
                     });
                 } else if (sport) {
-                    Sport.updateSport(sport, req.body, function (err) {
+                    Sport.updateSport(sport, req.body, function(err) {
                         if (err) {
                             res.json({
                                 info: "Error during updating sport",

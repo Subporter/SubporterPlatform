@@ -1,6 +1,7 @@
 const mongoose = require('mongoose'),
-    _ = require("lodash"),
-	countrySchema = require('../schemas/Countries');
+    _ = require('lodash'),
+    countrySchema = require('../schemas/Countries'),
+    Competition = require('../models/Competitions');
 
 let Country = mongoose.model('Country', countrySchema, 'Countries');
 
@@ -10,8 +11,9 @@ Country.addCountry = function(body, cb) {
     country.save(function(err) {
         if (err) {
             cb(err);
+        } else {
+            cb(null);
         }
-        cb(null);
     });
 };
 
@@ -19,9 +21,10 @@ Country.addCountry = function(body, cb) {
 Country.getCountries = function(cb) {
     Country.find({}).sort('name').exec(function(err, docs) {
         if (err) {
-            cb(err, null);
+            cb(err);
+        } else {
+            cb(null);
         }
-        cb(null, docs);
     });
 };
 
@@ -29,31 +32,40 @@ Country.getCountries = function(cb) {
 Country.getCountryById = function(id, cb) {
     Country.findById(id, function(err, docs) {
         if (err) {
-            cb(err, null);
+            cb(err);
+        } else {
+            cb(null);
         }
-        cb(null, docs);
     });
 };
 
 /* Update */
-Country.updateCountry = function (country, body, cb) {
+Country.updateCountry = function(country, body, cb) {
     _.merge(country, body);
 
     country.save(function(err) {
         if (err) {
             cb(err);
+        } else {
+            cb(null);
         }
-        cb(null);
     });
 };
 
 /* Delete */
-Country.deleteCountry = function (id, cb) {
-    Country.findByIdAndRemove(id, function (err) {
+Country.deleteCountry = function(id, cb) {
+    Competition.deleteCompetitionsByCountry(id, function(err) {
         if (err) {
             cb(err);
+        } else {
+            Country.findByIdAndRemove(id, function(err) {
+                if (err) {
+                    cb(err);
+                } else {
+                    cb(null);
+                }
+            });
         }
-        cb(null);
     });
 };
 

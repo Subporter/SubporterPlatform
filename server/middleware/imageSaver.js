@@ -1,7 +1,5 @@
-const fs = require("fs"),
-    path = require("path"),
-    url = require("url"),
-    uuid = require("uuid/v1");
+const fs = require('fs'),
+    uuid = require('uuid/v1');
 
 let imageSaver = function(req, res, next) {
     if (req.granted) {
@@ -16,7 +14,7 @@ let imageSaver = function(req, res, next) {
             }
 
             let inStream = fs.createReadStream(req.files.upload[0].path);
-            let outStream = fs.createWriteStream("./public/img/uploads/" + path + fileName);
+            let outStream = fs.createWriteStream('./public/img/uploads/' + path + fileName);
             if (inStream.pipe(outStream)) {
                 req.body.logo = "/img/uploads/" + path + fileName;
                 next();

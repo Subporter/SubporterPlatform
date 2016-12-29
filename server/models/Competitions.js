@@ -103,4 +103,26 @@ Competition.deleteCompetition = function(id, cb) {
     });
 };
 
+Competition.deleteCompetitionsByCountry = function(country, cb) {
+	Competition.remove({
+		country: country
+	}, function (err) {
+		if (err) {
+			cb(err);
+		}
+		cb(null);
+	});
+};
+
+Competition.deleteCompetitionsBySport = function(sport, cb) {
+	Competition.remove({
+		sport: sport
+	}, function (err) {
+		if (err) {
+			cb(err);
+		}
+		cb(null);
+	});
+};
+
 module.exports = Competition;

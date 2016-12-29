@@ -1,8 +1,8 @@
-const express = require("express"),
-    authenticate = require("../middleware/authenticate"),
-    admin = require("../middleware/admin"),
-    bodyValidator = require("../helpers/bodyValidator"),
-    Country = require("../models/Countries");
+const express = require('express'),
+    authenticate = require('../middleware/authenticate'),
+    admin = require('../middleware/admin'),
+    bodyValidator = require('../helpers/bodyValidator'),
+    Country = require('../models/Countries');
 
 let router = express.Router();
 
