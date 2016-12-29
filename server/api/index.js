@@ -18,6 +18,13 @@ let apiController = function(app) {
     app.use('/api', subscriptions);
     app.use('/api', games);
     app.use('/api', loans);
+
+	app.all('/api/*', function (req, res) {
+		res.json({
+			info: "API path doesn't exist",
+			success: false
+		});
+	});
 };
 
 module.exports.api = apiController;

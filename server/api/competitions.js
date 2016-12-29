@@ -1,78 +1,78 @@
-const express = require("express"),
-	authenticate = require("../middleware/authenticate"),
-	admin = require("../middleware/admin"),
-	bodyValidator = require("../helpers/bodyValidator"),
-	Competition = require("../models/Competitions");
+const express = require('express'),
+    authenticate = require('../middleware/authenticate'),
+    admin = require('../middleware/admin'),
+    bodyValidator = require('../helpers/bodyValidator'),
+    Competition = require('../models/Competitions');
 
 let router = express.Router();
 
 /* Create */
-router.post("/competitions", authenticate, admin, function (req, res) {
-	if (req.granted) {
-		if (Object.keys(req.body).length !== 4 || bodyValidator(req.body.name, req.body.description, req.body.sport, req.body.country)) {
+router.post("/competitions", authenticate, admin, function(req, res) {
+    if (req.granted) {
+        if (Object.keys(req.body).length !== 4 || bodyValidator(req.body.name, req.body.description, req.body.sport, req.body.country)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false
             });
         } else {
-			Competition.addCompetition(req.body, function (err) {
-				if (err) {
-					res.json({
-						info: "Error during creating competition",
-						success: false,
-						error: err
-					});
-				} else {
-					res.json({
-						info: "Competition created succesfully",
-						success: true
-					});
-				}
-			});
-		}
-	} else {
-		res.status(403);
-		res.json({
-			info: "Unauthorized",
-			success: false
-		});
-	}
+            Competition.addCompetition(req.body, function(err) {
+                if (err) {
+                    res.json({
+                        info: "Error during creating competition",
+                        success: false,
+                        error: err
+                    });
+                } else {
+                    res.json({
+                        info: "Competition created succesfully",
+                        success: true
+                    });
+                }
+            });
+        }
+    } else {
+        res.status(403);
+        res.json({
+            info: "Unauthorized",
+            success: false
+        });
+    }
 });
 
 /* Read (all competitions) */
-router.get("/competitions", authenticate, function (req, res) {
-	if (req.granted) {
-		Competition.getCompetitions(function(err, competitions) {
-			if (err) {
-				res.json({
-					info: "Error during reading competitions",
-					success: false,
-					error: err
-				});
-			} else if (competitions) {
-				res.json({
-					info: "Competitions found succesfully",
-					success: true,
-					data: competitions
-				});
-			} else {
+router.get("/competitions", authenticate, function(req, res) {
+    if (req.granted) {
+        Competition.getCompetitions(function(err, competitions) {
+            if (err) {
+                res.json({
+                    info: "Error during reading competitions",
+                    success: false,
+                    error: err
+                });
+            } else if (competitions) {
+                res.json({
+                    info: "Competitions found succesfully",
+                    success: true,
+                    data: competitions
+                });
+            } else {
                 res.json({
                     info: "Competitions not found",
                     success: false
                 });
             }
-		});
-	} else {
-		res.status(403);
-		res.json({
-			info: "Unauthorized",
-			success: false
-		});
-	}
+        });
+    } else {
+        res.status(403);
+        res.json({
+            info: "Unauthorized",
+            success: false
+        });
+    }
 });
 
-router.get("/competitions/country/:country", authenticate, function (req, res) {
-	if (req.granted) {
+router.get("/competitions/country/:country", authenticate, function(req, res) {
+    if (req.granted) {
         Competition.getCompetitionsByCountry(req.params.country, function(err, competitions) {
             if (err) {
                 res.json({
@@ -81,12 +81,12 @@ router.get("/competitions/country/:country", authenticate, function (req, res) {
                     error: err
                 });
             } else if (competitions) {
-				res.json({
-					info: "Competitions found succesfully",
-					success: true,
-					data: competitions
-				});
-			} else {
+                res.json({
+                    info: "Competitions found succesfully",
+                    success: true,
+                    data: competitions
+                });
+            } else {
                 res.json({
                     info: "Competitions not found",
                     success: false
@@ -102,8 +102,8 @@ router.get("/competitions/country/:country", authenticate, function (req, res) {
     }
 });
 
-router.get("/competitions/sport/:sport", authenticate, function (req, res) {
-	if (req.granted) {
+router.get("/competitions/sport/:sport", authenticate, function(req, res) {
+    if (req.granted) {
         Competition.getCompetitionsBySport(req.params.sport, function(err, competitions) {
             if (err) {
                 res.json({
@@ -112,12 +112,12 @@ router.get("/competitions/sport/:sport", authenticate, function (req, res) {
                     error: err
                 });
             } else if (competitions) {
-				res.json({
-					info: "Competitions found succesfully",
-					success: true,
-					data: competitions
-				});
-			} else {
+                res.json({
+                    info: "Competitions found succesfully",
+                    success: true,
+                    data: competitions
+                });
+            } else {
                 res.json({
                     info: "Competitions not found",
                     success: false
@@ -133,8 +133,8 @@ router.get("/competitions/sport/:sport", authenticate, function (req, res) {
     }
 });
 
-router.get("/competitions/country/:country/sport/:sport", authenticate, function (req, res) {
-	if (req.granted) {
+router.get("/competitions/country/:country/sport/:sport", authenticate, function(req, res) {
+    if (req.granted) {
         Competition.getCompetitionsByCountryAndSport(req.params.country, req.params.sport, function(err, competitions) {
             if (err) {
                 res.json({
@@ -143,12 +143,12 @@ router.get("/competitions/country/:country/sport/:sport", authenticate, function
                     error: err
                 });
             } else if (competitions) {
-				res.json({
-					info: "Competitions found succesfully",
-					success: true,
-					data: competitions
-				});
-			} else {
+                res.json({
+                    info: "Competitions found succesfully",
+                    success: true,
+                    data: competitions
+                });
+            } else {
                 res.json({
                     info: "Competitions not found",
                     success: false
@@ -165,8 +165,8 @@ router.get("/competitions/country/:country/sport/:sport", authenticate, function
 });
 
 /* Read (one competition) */
-router.get("/competitions/:id", authenticate, function (req, res) {
-	if (req.granted) {
+router.get("/competitions/:id", authenticate, function(req, res) {
+    if (req.granted) {
         Competition.getCompetitionById(req.params.id, function(err, competition) {
             if (err) {
                 res.json({
@@ -181,11 +181,11 @@ router.get("/competitions/:id", authenticate, function (req, res) {
                     data: competition
                 });
             } else {
-				res.json({
+                res.json({
                     info: "Competition not found",
                     success: false
                 });
-			}
+            }
         });
     } else {
         res.status(403);
@@ -197,23 +197,23 @@ router.get("/competitions/:id", authenticate, function (req, res) {
 });
 
 /* Update */
-router.put("/competitions/:id", authenticate, admin, function (req, res) {
-	if (req.granted) {
-		if (Object.keys(req.body).length !== 4 || bodyValidator(req.body.name, req.body.description, req.body.sport, req.body.country)) {
+router.put("/competitions/:id", authenticate, admin, function(req, res) {
+    if (req.granted) {
+        if (Object.keys(req.body).length !== 4 || bodyValidator(req.body.name, req.body.description, req.body.sport, req.body.country)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false
             });
         } else {
-			Competition.getCompetitionById(req.params.id, function (err, competition) {
-				if (err) {
+            Competition.getCompetitionById(req.params.id, function(err, competition) {
+                if (err) {
                     res.json({
                         info: "Error during reading competition",
                         success: false,
                         error: err
                     });
                 } else if (competition) {
-                    Competition.updateCompetition(competition, req.body, function (err) {
+                    Competition.updateCompetition(competition, req.body, function(err) {
                         if (err) {
                             res.json({
                                 info: "Error during updating competition",
@@ -233,20 +233,20 @@ router.put("/competitions/:id", authenticate, admin, function (req, res) {
                         success: false,
                     });
                 }
-			});
-		}
-	} else {
-		res.status(403);
-		res.json({
-			info: "Unauthorized",
-			success: false
-		});
-	}
+            });
+        }
+    } else {
+        res.status(403);
+        res.json({
+            info: "Unauthorized",
+            success: false
+        });
+    }
 });
 
 /* Delete */
-router.delete("/competitions/:id", authenticate, admin, function (req, res) {
-	if (req.granted) {
+router.delete("/competitions/:id", authenticate, admin, function(req, res) {
+    if (req.granted) {
         Competition.deleteCompetition(req.params.id, function(err) {
             if (err) {
                 res.json({

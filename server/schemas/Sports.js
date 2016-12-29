@@ -25,10 +25,10 @@ let sportSchema = new mongoose.Schema({
     }
 });
 
+sportSchema.plugin(mongooseHidden);
 sportSchema.plugin(autoIncrement, {
     modelName: 'Sport',
     fieldName: '_id'
 });
-sportSchema.plugin(mongooseHidden);
 
 module.exports = sportSchema;

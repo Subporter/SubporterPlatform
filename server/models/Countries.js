@@ -19,22 +19,24 @@ Country.addCountry = function(body, cb) {
 
 /* Read (all countries) */
 Country.getCountries = function(cb) {
-    Country.find({}).sort('name').exec(function(err, docs) {
-        if (err) {
-            cb(err);
-        } else {
-            cb(null);
-        }
-    });
+    Country.find({})
+        .sort('name')
+        .exec(function(err, docs) {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        });
 };
 
 /* Read (one sport) */
 Country.getCountryById = function(id, cb) {
     Country.findById(id, function(err, docs) {
         if (err) {
-            cb(err);
+            cb(err, null);
         } else {
-            cb(null);
+            cb(null, docs);
         }
     });
 };

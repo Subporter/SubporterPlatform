@@ -1,13 +1,15 @@
 const mongoose = require('mongoose'),
     mongooseHidden = require('mongoose-hidden')({
         defaultHidden: {
-            __v: true
+            __v: true,
+			created_at: true,
+            updated_at: true
         }
     }),
     autoIncrement = require('mongoose-increment');
 
 let regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
-let descriptionRegExp = /^[A-zÀ-ÿ0-9-\s]{2,1000}$/;
+let descriptionRegExp = /^[A-zÀ-ÿ0-9-\s.,!"'/]{2,1000}$/;
 
 let competitionSchema = new mongoose.Schema({
     name: {
@@ -31,13 +33,17 @@ let competitionSchema = new mongoose.Schema({
         required: true
     }
 }, {
-	_id: false
+	_id: false,
+    timestamps: {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
+    }
 });
 
+competitionSchema.plugin(mongooseHidden);
 competitionSchema.plugin(autoIncrement, {
 	modelName: 'Competition',
 	fieldName: '_id'
 });
-competitionSchema.plugin(mongooseHidden);
 
 module.exports = competitionSchema;

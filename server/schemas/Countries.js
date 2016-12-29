@@ -25,10 +25,10 @@ let countrySchema = new mongoose.Schema({
     }
 });
 
+countrySchema.plugin(mongooseHidden);
 countrySchema.plugin(autoIncrement, {
     modelName: 'Country',
     fieldName: '_id'
 });
-countrySchema.plugin(mongooseHidden);
 
 module.exports = countrySchema;
