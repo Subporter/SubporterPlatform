@@ -72,6 +72,37 @@ router.get("/games", authenticate, admin, function (req, res) {
 	}
 });
 
+router.get("/games/team/:team", authenticate, admin, function (req, res) {
+	if (req.granted) {
+		Game.getGamesByTeam(req.params.team, function(err, games) {
+			if (err) {
+				res.json({
+					info: "Error during reading games",
+					success: false,
+					error: err
+				});
+			} else if (games) {
+				res.json({
+					info: "Games found succesfully",
+					success: true,
+					data: games
+				});
+			} else {
+                res.json({
+                    info: "Games not found",
+                    success: false
+                });
+            }
+		});
+	} else {
+		res.status(403);
+		res.json({
+			info: "Unauthorized",
+			success: false
+		});
+	}
+});
+
 /* Read (one game) */
 router.get("/games/:id", authenticate, admin, function (req, res) {
 	if (req.granted) {

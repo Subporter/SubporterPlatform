@@ -58,6 +58,28 @@ Game.getGames = function(cb) {
         });
 };
 
+Game.getGamesByTeam = function(team, cb) {
+    Game.find({})
+        .or([{
+            home: team
+        }, {
+            away: team
+        }])
+        .populate(populateSchema)
+        .sort({
+            date: 1,
+            home: 1,
+            away: 1
+        })
+        .exec(function(err, docs) {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        });
+};
+
 /* Read (one game) */
 Game.getGameById = function(id, cb) {
     Game.findById(id)
@@ -74,7 +96,6 @@ Game.getGameById = function(id, cb) {
 /* Update */
 Game.updateGame = function(game, body, cb) {
     _.merge(game, body);
-
     game.save(function(err) {
         if (err) {
             cb(err);
@@ -96,17 +117,21 @@ Game.deleteGame = function(id, user, cb) {
 };
 
 Game.deleteGamesByTeam = function(team, cb) {
-    Game.find({
-        team: team
-    }, function(err, docs) {
-        if (err || docs.length === 0) {
-            cb(err);
-        } else {
-            docs.forEach(function(doc) {
-                doc.remove(cb);
-            });
-        }
-    });
+    Game.find({})
+        .or([{
+            home: team
+        }, {
+            away: team
+        }])
+        .exec(function(err, docs) {
+            if (err || docs.length === 0) {
+                cb(err);
+            } else {
+                docs.forEach(function(doc) {
+                    doc.remove(cb);
+                });
+            }
+        });
 };
 
 module.exports = Game;
