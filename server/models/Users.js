@@ -10,8 +10,9 @@ User.addUser = function(body, cb) {
     user.save(function(err) {
         if (err) {
             cb(err, null);
+        } else {
+            cb(null, user);
         }
-        cb(null, user);
     });
 };
 
@@ -23,12 +24,28 @@ User.getUsers = function(cb) {
     }).populate('address').sort('username').exec(function(err, docs) {
         if (err) {
             cb(err, null);
+        } else {
+            cb(null, docs);
         }
-        cb(null, docs);
     });
 };
 
 /* Read (one user) */
+User.getUserById = function(id, cb) {
+    User.findOne({
+        _id: id
+    }, {
+        admin: 0,
+        password: 0
+    }).exec(function(err, docs) {
+        if (err) {
+            cb(err, null);
+        } else {
+            cb(null, docs);
+        }
+    });
+};
+
 User.getUserByEmail = function(email, cb) {
     User.findOne({
         email: email
@@ -38,8 +55,9 @@ User.getUserByEmail = function(email, cb) {
     }).exec(function(err, docs) {
         if (err) {
             cb(err, null);
+        } else {
+            cb(null, docs);
         }
-        cb(null, docs);
     });
 };
 
@@ -51,8 +69,23 @@ User.getUserByEmailForLogin = function(email, cb) {
     }).exec(function(err, docs) {
         if (err) {
             cb(err, null);
+        } else {
+            cb(null, docs);
         }
-        cb(null, docs);
+    });
+};
+
+User.getUserByIdForAuth = function(id, cb) {
+    User.findOne({
+        _id: id
+    }, {
+        password: 0
+    }).exec(function(err, docs) {
+        if (err) {
+            cb(err, null);
+        } else {
+            cb(null, docs);
+        }
     });
 };
 
@@ -64,8 +97,9 @@ User.getUserByEmailForAuth = function(email, cb) {
     }).exec(function(err, docs) {
         if (err) {
             cb(err, null);
+        } else {
+            cb(null, docs);
         }
-        cb(null, docs);
     });
 };
 
@@ -78,32 +112,35 @@ User.getUserByUsername = function(username, cb) {
     }).exec(function(err, docs) {
         if (err) {
             cb(err, null);
+        } else {
+            cb(null, docs);
         }
-        cb(null, docs);
     });
 };
 
 /* Add */
 User.addFavorite = function(user, favorite, cb) {
-	user.favorites.push(favorite);
+    user.favorites.push(favorite);
 
-	user.save(function (err) {
-		if (err) {
-			cb(err);
-		}
-		cb (null);
-	});
+    user.save(function(err) {
+        if (err) {
+            cb(err);
+        } else {
+            cb(null);
+        }
+    });
 };
 
 User.addSubscription = function(user, subscription, cb) {
     user.subscriptions.push(subscription);
 
-	user.save(function (err) {
-		if (err) {
-			cb(err);
-		}
-		cb (null);
-	});
+    user.save(function(err) {
+        if (err) {
+            cb(err);
+        } else {
+            cb(null);
+        }
+    });
 };
 
 /* Delete */
@@ -119,8 +156,9 @@ User.updateUser = function(user, body, cb) {
     user.save(function(err) {
         if (err) {
             cb(err);
+        } else {
+            cb(null);
         }
-        cb(null);
     });
 };
 
@@ -131,8 +169,9 @@ User.updateCrucial = function(user, body, cb) {
     user.save(function(err) {
         if (err) {
             cb(err);
+        } else {
+            cb(null);
         }
-        cb(null);
     });
 };
 
@@ -143,8 +182,9 @@ User.deleteUser = function(username, cb) {
     }, function(err) {
         if (err) {
             cb(err);
+        } else {
+            cb(null);
         }
-        cb(null);
     });
 };
 

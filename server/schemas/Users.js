@@ -8,7 +8,9 @@ const mongoose = require('mongoose'),
     }),
     autoIncrement = require('mongoose-increment'),
     bcrypt = require('bcrypt-nodejs'),
-	Address = require('../models/Addresses');
+	Address = require('../models/Addresses'),
+	Subscription = require('../models/Subscriptions'),
+	Loan = require('../models/Loans');
 
 let regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
 let emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -117,7 +119,19 @@ userSchema.pre('remove', function (next) {
         if (err) {
             return next(err);
         } else {
-            return next(null);
+            Subscription.deleteSubscriptionsByUser(user._id, function (err) {
+                if (err) {
+                    return next(err);
+                } else {
+                    Loan.deleteLoansByUser(user._id, function (err) {
+                        if (err) {
+                            return next(err);
+                        } else {
+                            return next(null);
+                        }
+                    });
+                }
+			});
         }
     });
 });

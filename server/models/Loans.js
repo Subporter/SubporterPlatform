@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'),
     _ = require('lodash'),
-	loanSchema = require('../schemas/Loans');
+    loanSchema = require('../schemas/Loans');
 
 let Loan = mongoose.model('Loan', loanSchema, 'Loans');
 
@@ -10,8 +10,9 @@ Loan.addLoan = function(body, cb) {
     loan.save(function(err) {
         if (err) {
             cb(err);
+        } else {
+            cb(null);
         }
-        cb(null);
     });
 };
 
@@ -20,8 +21,9 @@ Loan.getLoans = function(body, cb) {
     Loan.find({}).populate('lent_by subscription game').exec(function(err, docs) {
         if (err) {
             cb(err, null);
+        } else {
+            cb(null, docs);
         }
-        cb(null, docs);
     });
 };
 
@@ -30,8 +32,9 @@ Loan.getLoanById = function(id, cb) {
     Loan.findById(id).populate('lent_by subscription game').exec(function(err, docs) {
         if (err) {
             cb(err, null);
+        } else {
+            cb(null, docs);
         }
-        cb(null, docs);
     });
 };
 
@@ -52,8 +55,23 @@ Loan.deleteLoan = function(id, cb) {
     Loan.findByIdAndRemove(id, function(err) {
         if (err) {
             cb(err);
+        } else {
+            cb(null);
         }
-        cb(null);
+    });
+};
+
+Loan.deleteLoansByUser = function(user, cb) {
+	Loan.find({
+        lent_out_by: user
+    }, function(err, docs) {
+        if (err || docs.length === 0) {
+            cb(err);
+        } else {
+            docs.forEach(function(doc) {
+                doc.remove(cb);
+            });
+        }
     });
 };
 

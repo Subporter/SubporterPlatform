@@ -144,4 +144,18 @@ Subscription.deleteSubscriptionsByTeam = function(team, cb) {
     });
 };
 
+Subscription.deleteSubscriptionsByUser = function(user, cb) {
+	Subscription.find({
+        user: user
+    }, function(err, docs) {
+        if (err || docs.length === 0) {
+            cb(err);
+        } else {
+            docs.forEach(function(doc) {
+                doc.remove(cb);
+            });
+        }
+    });
+};
+
 module.exports = Subscription;

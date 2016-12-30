@@ -44,7 +44,6 @@ Country.getCountryById = function(id, cb) {
 /* Update */
 Country.updateCountry = function(country, body, cb) {
     _.merge(country, body);
-
     country.save(function(err) {
         if (err) {
             cb(err);
