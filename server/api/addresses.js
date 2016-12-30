@@ -20,7 +20,7 @@ router.post("/addresses", authenticate, admin, function(req, res) {
                     res.json({
                         info: "Error during creating address",
                         success: false,
-                        error: err
+                        error: err.errmsg
                     });
                 } else {
                     res.json({
@@ -47,7 +47,7 @@ router.get("/addresses", authenticate, admin, function(req, res) {
                 res.json({
                     info: "Error during reading addresses",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else if (addresses) {
                 res.json({
@@ -78,7 +78,7 @@ router.get("/addresses/country/:country", authenticate, admin, function(req, res
                 res.json({
                     info: "Error during reading addresses",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else if (addresses) {
                 res.json({
@@ -110,7 +110,7 @@ router.get("/addresses/:id", authenticate, admin, function(req, res) {
                 res.json({
                     info: "Error during reading address",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else if (address) {
                 res.json({
@@ -148,7 +148,7 @@ router.put("/addresses/:id", authenticate, admin, function(req, res) {
                     res.json({
                         info: "Error during reading address",
                         success: false,
-                        error: err
+                        error: err.errmsg
                     });
                 } else if (address) {
                     Address.updateAddress(address, req.body, function (err) {
@@ -156,7 +156,7 @@ router.put("/addresses/:id", authenticate, admin, function(req, res) {
                             res.json({
                                 info: "Error during updating address",
                                 success: false,
-                                error: err
+                                error: err.errmsg
                             });
                         } else {
                             res.json({
@@ -190,7 +190,7 @@ router.delete("/addresses/:id", authenticate, admin, function(req, res) {
                 res.json({
                     info: "Error during deleting address",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else {
                 res.json({

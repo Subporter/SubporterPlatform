@@ -20,7 +20,7 @@ router.post("/competitions", authenticate, admin, function(req, res) {
                     res.json({
                         info: "Error during creating competition",
                         success: false,
-                        error: err
+                        error: err.errmsg
                     });
                 } else {
                     res.json({
@@ -47,7 +47,7 @@ router.get("/competitions", authenticate, function(req, res) {
                 res.json({
                     info: "Error during reading competitions",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else if (competitions) {
                 res.json({
@@ -78,7 +78,7 @@ router.get("/competitions/country/:country", authenticate, function(req, res) {
                 res.json({
                     info: "Error during reading competitions",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else if (competitions) {
                 res.json({
@@ -109,7 +109,7 @@ router.get("/competitions/sport/:sport", authenticate, function(req, res) {
                 res.json({
                     info: "Error during reading competitions",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else if (competitions) {
                 res.json({
@@ -140,7 +140,7 @@ router.get("/competitions/country/:country/sport/:sport", authenticate, function
                 res.json({
                     info: "Error during reading competitions",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else if (competitions) {
                 res.json({
@@ -172,7 +172,7 @@ router.get("/competitions/:id", authenticate, function(req, res) {
                 res.json({
                     info: "Error during reading competition",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else if (competition) {
                 res.json({
@@ -210,7 +210,7 @@ router.put("/competitions/:id", authenticate, admin, function(req, res) {
                     res.json({
                         info: "Error during reading competition",
                         success: false,
-                        error: err
+                        error: err.errmsg
                     });
                 } else if (competition) {
                     Competition.updateCompetition(competition, req.body, function(err) {
@@ -218,7 +218,7 @@ router.put("/competitions/:id", authenticate, admin, function(req, res) {
                             res.json({
                                 info: "Error during updating competition",
                                 success: false,
-                                error: err
+                                error: err.errmsg
                             });
                         } else {
                             res.json({
@@ -252,7 +252,7 @@ router.delete("/competitions/:id", authenticate, admin, function(req, res) {
                 res.json({
                     info: "Error during deleting competition",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else {
                 res.json({

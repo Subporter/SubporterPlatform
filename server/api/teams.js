@@ -21,9 +21,9 @@ router.post("/teams", authenticate, admin, formParser, imageSaver, function (req
 			Address.addOrUpdateAddress(req.body.address, req.body, function (err, id) {
 				if (err || !id) {
 					res.json({
-						info: "Error during creating address",
+						info: "Error during creating/updating address",
 						success: false,
-						error: err
+						error: err.errmsg
 					});
 				} else {
 					req.body.address = id;
@@ -32,7 +32,7 @@ router.post("/teams", authenticate, admin, formParser, imageSaver, function (req
 							res.json({
 								info: "Error during creating team",
 								success: false,
-								error: err
+								error: err.errmsg
 							});
 						} else {
 							res.json({
@@ -61,7 +61,7 @@ router.get("/teams", authenticate, function (req, res) {
 				res.json({
 					info: "Error during reading teams",
 					success: false,
-					error: err
+					error: err.errmsg
 				});
 			} else if (teams) {
 				res.json({
@@ -92,7 +92,7 @@ router.get("/teams/competition/:competition", authenticate, function (req, res) 
                 res.json({
                     info: "Error during reading teams",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else if (teams) {
 				res.json({
@@ -124,7 +124,7 @@ router.get("/teams/:id", authenticate, function (req, res) {
                 res.json({
                     info: "Error during reading team",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else if (team) {
                 res.json({
@@ -160,9 +160,9 @@ router.put("/teams/:id", authenticate, admin, formParser, imageSaver, function (
 			Address.addOrUpdateAddress(req.body.address, req.body, function (err, id) {
 				if (err || !id) {
 					res.json({
-						info: "Error during creating address",
+						info: "Error during creating/updating address",
 						success: false,
-						error: err
+						error: err.errmsg
 					});
 				} else {
 					req.body.address = id;
@@ -171,7 +171,7 @@ router.put("/teams/:id", authenticate, admin, formParser, imageSaver, function (
 			                res.json({
 			                    info: "Error during reading team",
 			                    success: false,
-			                    error: err
+			                    error: err.errmsg
 			                });
 			            } else if (team) {
 							Team.updateTeam(team, req.body, function (err) {
@@ -179,7 +179,7 @@ router.put("/teams/:id", authenticate, admin, formParser, imageSaver, function (
 									res.json({
 										info: "Error during updating team",
 										success: false,
-										error: err
+										error: err.errmsg
 									});
 								} else {
 									res.json({
@@ -215,7 +215,7 @@ router.delete("/teams/:id", authenticate, admin, function (req, res) {
 				res.json({
 					info: "Error during deleting team",
 					success: false,
-					error: err
+					error: err.errmsg
 				});
 			} else {
 				res.json({

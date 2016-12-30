@@ -45,8 +45,9 @@ Team.getTeams = function(cb) {
         .exec(function(err, docs) {
             if (err) {
                 cb(err, null);
-            }
-            cb(null, docs);
+            } else {
+				cb(null, docs);
+			}
         });
 };
 
@@ -59,10 +60,11 @@ Team.getTeamsByCompetition = function(competition, cb) {
             name: 1
         })
         .exec(function(err, docs) {
-            if (err) {
+			if (err) {
                 cb(err, null);
-            }
-            cb(null, docs);
+            } else {
+				cb(null, docs);
+			}
         });
 };
 
@@ -71,17 +73,17 @@ Team.getTeamById = function(id, cb) {
     Team.findById(id)
         .populate(populateSchema)
         .exec(function(err, docs) {
-            if (err) {
+			if (err) {
                 cb(err, null);
-            }
-            cb(null, docs);
+            } else {
+				cb(null, docs);
+			}
         });
 };
 
 /* Update */
 Team.updateTeam = function(team, body, cb) {
     _.merge(team, body);
-
     team.save(function(err) {
         if (err) {
             cb(err);

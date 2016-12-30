@@ -20,7 +20,7 @@ router.post("/sports", authenticate, admin, function(req, res) {
                     res.json({
                         info: "Error during creating sport",
                         success: false,
-                        error: err
+                        error: err.errmsg
                     });
                 } else {
                     res.json({
@@ -47,7 +47,7 @@ router.get("/sports", authenticate, function(req, res) {
                 res.json({
                     info: "Error during reading sports",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else if (sports) {
                 res.json({
@@ -79,7 +79,7 @@ router.get("/sports/:id", authenticate, function(req, res) {
                 res.json({
                     info: "Error during reading sport",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else if (sport) {
                 res.json({
@@ -117,7 +117,7 @@ router.put("/sports/:id", authenticate, admin, function(req, res) {
                     res.json({
                         info: "Error during reading sport",
                         success: false,
-                        error: err
+                        error: err.errmsg
                     });
                 } else if (sport) {
                     Sport.updateSport(sport, req.body, function(err) {
@@ -125,7 +125,7 @@ router.put("/sports/:id", authenticate, admin, function(req, res) {
                             res.json({
                                 info: "Error during updating sport",
                                 success: false,
-                                error: err
+                                error: err.errmsg
                             });
                         } else {
                             res.json({
@@ -159,7 +159,7 @@ router.delete("/sports/:id", authenticate, admin, function(req, res) {
                 res.json({
                     info: "Error during deleting sport",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else {
                 res.json({

@@ -20,7 +20,7 @@ router.post("/countries", authenticate, admin, function(req, res) {
                     res.json({
                         info: "Error during creating country",
                         success: false,
-                        error: err
+                        error: err.errmsg
                     });
                 } else {
                     res.json({
@@ -47,7 +47,7 @@ router.get("/countries", authenticate, function(req, res) {
                 res.json({
                     info: "Error during reading countries",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else if (countries) {
                 res.json({
@@ -79,7 +79,7 @@ router.get("/countries/:id", authenticate, function(req, res) {
                 res.json({
                     info: "Error during reading country",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else if (country) {
                 res.json({
@@ -117,7 +117,7 @@ router.put("/countries/:id", authenticate, admin, function(req, res) {
                     res.json({
                         info: "Error during reading country",
                         success: false,
-                        error: err
+                        error: err.errmsg
                     });
                 } else if (country) {
                     Country.updateCountry(country, req.body, function (err) {
@@ -159,7 +159,7 @@ router.delete("/countries/:id", authenticate, admin, function(req, res) {
                 res.json({
                     info: "Error during deleting country",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else {
                 res.json({
