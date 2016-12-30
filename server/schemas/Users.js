@@ -22,6 +22,11 @@ let userSchema = new mongoose.Schema({
         required: true,
         default: false
     },
+	joined_on: {
+		type: Date,
+		required: true,
+		default: Date.now
+	},
     password: {
         type: String,
         required: true

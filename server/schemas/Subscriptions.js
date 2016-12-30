@@ -38,4 +38,11 @@ subscriptionSchema.plugin(autoIncrement, {
 });
 subscriptionSchema.plugin(mongooseHidden);
 
+subscriptionSchema.index({
+    team: 1,
+	place: 1
+}, {
+    unique: true
+});
+
 module.exports = subscriptionSchema;

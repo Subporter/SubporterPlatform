@@ -1,8 +1,9 @@
-const express = require("express"),
-	authenticate = require("../middleware/authenticate"),
-	admin = require("../middleware/admin"),
-	bodyValidator = require("../helpers/bodyValidator"),
-	Game = require("../models/Games");
+const express = require('express'),
+	authenticate = require('../middleware/authenticate'),
+	admin = require('../middleware/admin'),
+	bodyValidator = require('../helpers/bodyValidator'),
+	loadUser = require('../middleware/loadUser'),
+	Game = require('../models/Games');
 
 let router = express.Router();
 
@@ -40,7 +41,7 @@ router.post("/games", authenticate, admin, function (req, res) {
 });
 
 /* Read (all games) */
-router.get("/games", authenticate, function (req, res) {
+router.get("/games", authenticate, admin, function (req, res) {
 	if (req.granted) {
 		Game.getGames(function(err, games) {
 			if (err) {
@@ -72,7 +73,7 @@ router.get("/games", authenticate, function (req, res) {
 });
 
 /* Read (one game) */
-router.get("/games/:id", authenticate, function (req, res) {
+router.get("/games/:id", authenticate, admin, function (req, res) {
 	if (req.granted) {
         Game.getGameById(req.params.id, function(err, game) {
             if (err) {

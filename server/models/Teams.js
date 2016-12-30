@@ -106,7 +106,7 @@ Team.deleteTeamsByCompetition = function(competition, cb) {
     Team.find({
         competition: competition
     }, function(err, docs) {
-        if (err || !docs) {
+        if (err || docs.length === 0) {
             cb(err);
         } else {
             docs.forEach(function(doc) {

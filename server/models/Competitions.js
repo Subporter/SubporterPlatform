@@ -134,7 +134,7 @@ Competition.deleteCompetitionsByCountry = function(country, cb) {
 	Competition.find({
 		country: country
 	}, function (err, docs) {
-		if (err || !docs) {
+		if (err || docs.length === 0) {
 			cb(err);
 		} else {
 			docs.forEach(function (doc) {
@@ -148,7 +148,7 @@ Competition.deleteCompetitionsBySport = function(sport, cb) {
     Competition.find({
 		sport: sport
 	}, function (err, docs) {
-		if (err || !docs) {
+		if (err || docs.length === 0) {
 			cb(err);
 		} else {
 			docs.forEach(function (doc) {

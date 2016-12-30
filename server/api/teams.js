@@ -12,7 +12,7 @@ let router = express.Router();
 /* Create */
 router.post("/teams", authenticate, admin, formParser, imageSaver, function (req, res) {
 	if (req.granted) {
-		if (Object.keys(req.body).length !== 11 || bodyValidator(req.body.name, req.body.stadion, req.body.logo, req.body.price, req.body.competition, req.body.address, req.body.street, req.body.number, req.body.postal, req.body.city, req.body.country)) {
+		if (Object.keys(req.body).length !== 11 || bodyValidator(req.body.name, req.body.stadion, req.body.price, req.body.logo, req.body.address, req.body.street, req.body.number, req.body.postal, req.body.city, req.body.country, req.body.competition)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false
@@ -151,7 +151,7 @@ router.get("/teams/:id", authenticate, function (req, res) {
 /* Update */
 router.put("/teams/:id", authenticate, admin, formParser, imageSaver, function (req, res) {
 	if (req.granted) {
-		if (Object.keys(req.body).length !== 11 || bodyValidator(req.body.name, req.body.stadion, req.body.logo, req.body.price, req.body.competition, req.body.address, req.body.street, req.body.number, req.body.postal, req.body.city, req.body.country)) {
+		if (Object.keys(req.body).length !== 11 || bodyValidator(req.body.name, req.body.stadion, req.body.price, req.body.logo, req.body.address, req.body.street, req.body.number, req.body.postal, req.body.city, req.body.country, req.body.competition)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false

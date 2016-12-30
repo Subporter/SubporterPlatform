@@ -85,4 +85,11 @@ teamSchema.plugin(autoIncrement, {
 });
 teamSchema.plugin(mongooseHidden);
 
+teamSchema.index({
+    competition: 1,
+    name: 1
+}, {
+    unique: true
+});
+
 module.exports = teamSchema;

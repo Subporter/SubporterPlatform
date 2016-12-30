@@ -134,7 +134,7 @@ Subscription.deleteSubscriptionsByTeam = function(team, cb) {
 	Subscription.find({
         team: team
     }, function(err, docs) {
-        if (err || !docs) {
+        if (err || docs.length === 0) {
             cb(err);
         } else {
             docs.forEach(function(doc) {
