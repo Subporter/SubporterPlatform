@@ -40,6 +40,26 @@ Address.getAddresses = function(cb) {
         });
 };
 
+Address.getAddressesByCountry = function(country, cb) {
+    Address.find({
+            country: country
+        })
+        .populate(populateSchema)
+        .sort({
+            postal: 1,
+            city: 1,
+            street: 1,
+            number: 1
+        })
+        .exec(function(err, docs) {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        });
+};
+
 /* Read (one address) */
 Address.getAddressById = function(id, cb) {
     Address.findById(id)
@@ -56,7 +76,6 @@ Address.getAddressById = function(id, cb) {
 /* Update */
 Address.updateAddress = function(address, body, cb) {
     _.merge(address, body);
-
     address.save(function(err) {
         if (err) {
             cb(err);
@@ -78,8 +97,8 @@ Address.deleteAddress = function(id, cb) {
 };
 
 /* Create or update */
-Address.addOrUpdateAddress = function(body, cb) {
-    if (body.address === -1) {
+Address.addOrUpdateAddress = function(id, body, cb) {
+    if (id === -1) {
         let address = new Address(body);
         address.save(function(err, docs) {
             if (err) {
@@ -89,11 +108,18 @@ Address.addOrUpdateAddress = function(body, cb) {
             }
         });
     } else {
-        Address.findByIdAndUpdate(body.address, body, function(err, docs) {
-            if (err) {
+        Address.findById(id, function(err, docs) {
+            if (err || !docs) {
                 cb(err, null);
             } else {
-                cb(null, docs._id);
+                _.merge(docs, body);
+                docs.save(function(err, docs) {
+                    if (err) {
+                        cb(err, null);
+                    } else {
+                        cb(null, docs._id);
+                    }
+                });
             }
         });
     }

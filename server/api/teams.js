@@ -18,7 +18,7 @@ router.post("/teams", authenticate, admin, formParser, imageSaver, function (req
                 success: false
             });
         } else {
-			Address.addOrUpdateAddress(req.body, function (err, id) {
+			Address.addOrUpdateAddress(req.body.address, req.body, function (err, id) {
 				if (err || !id) {
 					res.json({
 						info: "Error during creating address",
@@ -157,7 +157,7 @@ router.put("/teams/:id", authenticate, admin, formParser, imageSaver, function (
                 success: false
             });
         } else {
-			Address.addOrUpdateAddress(req.body, function (err, id) {
+			Address.addOrUpdateAddress(req.body.address, req.body, function (err, id) {
 				if (err || !id) {
 					res.json({
 						info: "Error during creating address",

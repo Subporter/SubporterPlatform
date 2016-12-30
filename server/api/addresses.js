@@ -71,6 +71,37 @@ router.get("/addresses", authenticate, admin, function(req, res) {
     }
 });
 
+router.get("/addresses/country/:country", authenticate, admin, function(req, res) {
+    if (req.granted) {
+        Address.getAddressesByCountry(req.params.country, function(err, addresses) {
+            if (err) {
+                res.json({
+                    info: "Error during reading addresses",
+                    success: false,
+                    error: err
+                });
+            } else if (addresses) {
+                res.json({
+                    info: "Addresses found succesfully",
+                    success: true,
+                    data: addresses
+                });
+            } else {
+                res.json({
+                    info: "Addresses not found",
+                    success: false
+                });
+            }
+        });
+    } else {
+        res.status(403);
+        res.json({
+            info: "Unauthorized",
+            success: false
+        });
+    }
+});
+
 /* Read (one address) */
 router.get("/addresses/:id", authenticate, admin, function(req, res) {
     if (req.granted) {
