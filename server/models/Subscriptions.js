@@ -109,7 +109,6 @@ Subscription.getSubscriptionById = function(id, cb) {
 /* Update */
 Subscription.updateSubscription = function(subscription, body, cb) {
     _.merge(subscription, body);
-
     subscription.save(function(err) {
         if (err) {
             cb(err);

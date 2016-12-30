@@ -22,7 +22,7 @@ router.post("/subscriptions", authenticate, loadUser, function (req, res) {
 					res.json({
 						info: "Error during creating subscription",
 						success: false,
-						error: err
+						error: err.errmsg
 					});
 				} else {
 					res.json({
@@ -49,7 +49,7 @@ router.get("/subscriptions", authenticate, admin, function (req, res) {
 				res.json({
 					info: "Error during reading subscriptions",
 					success: false,
-					error: err
+					error: err.errmsg
 				});
 			} else if (subscriptions) {
 				res.json({
@@ -80,7 +80,7 @@ router.get("/subscriptions/team/:team", authenticate, admin, function (req, res)
                 res.json({
                     info: "Error during reading subscriptions",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else if (subscriptions) {
 				res.json({
@@ -104,14 +104,14 @@ router.get("/subscriptions/team/:team", authenticate, admin, function (req, res)
     }
 });
 
-router.get("/subscriptions/user/:user", authenticate, function (req, res) {
+router.get("/subscriptions/user/:user", authenticate, admin, function (req, res) {
 	if (req.granted) {
         Subscription.getSubscriptionsByUser(req.params.user, function(err, subscriptions) {
             if (err) {
                 res.json({
                     info: "Error during reading subscriptions",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else if (subscriptions) {
 				res.json({
@@ -143,7 +143,7 @@ router.get("/subscriptions/:id", authenticate, function (req, res) {
                 res.json({
                     info: "Error during reading subscription",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else if (subscription) {
                 res.json({
@@ -181,7 +181,7 @@ router.put("/subscriptions/:id", authenticate, loadUser, function (req, res) {
                     res.json({
                         info: "Error during reading subscription",
                         success: false,
-                        error: err
+                        error: err.errmsg
                     });
                 } else if (subscription) {
                     Subscription.updateSubscription(subscription, req.body, function (err) {
@@ -189,7 +189,7 @@ router.put("/subscriptions/:id", authenticate, loadUser, function (req, res) {
                             res.json({
                                 info: "Error during updating subscription",
                                 success: false,
-                                error: err
+                                error: err.errmsg
                             });
                         } else {
                             res.json({
@@ -223,7 +223,7 @@ router.delete("/subscriptions/:id", authenticate, loadUser, function (req, res) 
                 res.json({
                     info: "Error during deleting subscription",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else {
                 res.json({
