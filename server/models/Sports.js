@@ -1,7 +1,6 @@
 const mongoose = require('mongoose'),
     _ = require('lodash'),
-    sportSchema = require('../schemas/Sports'),
-    Competition = require('../models/Competitions');
+    sportSchema = require('../schemas/Sports');
 
 let Sport = mongoose.model('Sport', sportSchema, 'Sports');
 
@@ -44,7 +43,6 @@ Sport.getSportById = function(id, cb) {
 /* Update */
 Sport.updateSport = function(sport, body, cb) {
     _.merge(sport, body);
-
     sport.save(function(err) {
         if (err) {
             cb(err);
