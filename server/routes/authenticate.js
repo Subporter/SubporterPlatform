@@ -88,7 +88,7 @@ router.post("/login", function(req, res) {
 });
 
 /* Check email */
-router.post("/check/email/:email", function(req, res) {
+router.get("/check/email/:email", function(req, res) {
     User.getUserByEmail(req.params.email, function(err, user) {
         if (err) {
             res.json({
@@ -113,7 +113,7 @@ router.post("/check/email/:email", function(req, res) {
 });
 
 /* Check username */
-router.post("/check/username/:username", function(req, res) {
+router.get("/check/username/:username", function(req, res) {
     User.getUserByUsername(req.params.username, function(err, user) {
         if (err) {
             res.json({

@@ -27,8 +27,23 @@ let formParser = function(req, res, next) {
                         req.body.address = -1;
                     }
                 } else if (req.url.startsWith("/users")) {
-					
-				}
+                    req.body.date_of_birth = fields.date_of_birth[0];
+                    req.body.national_registry_number = fields.national_registry_number[0];
+                    req.body.phone = fields.phone[0];
+                    req.body.street = fields.street[0];
+                    req.body.number = fields.number[0];
+                    req.body.postal = fields.postal[0];
+                    req.body.city = fields.city[0];
+                    req.body.country = fields.country[0];
+                    if (fields.avatar && fields.avatar[0]) {
+                        req.body.avatar = fields.avatar[0];
+                    }
+                    if (fields.address && fields.address[0]) {
+                        req.body.address = fields.address[0];
+                    } else {
+                        req.body.address = -1;
+                    }
+                }
                 next();
             }
         });

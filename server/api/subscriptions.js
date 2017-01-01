@@ -3,7 +3,8 @@ const express = require('express'),
 	admin = require('../middleware/admin'),
 	bodyValidator = require('../helpers/bodyValidator'),
 	loadUser = require('../middleware/loadUser'),
-	Subscription = require('../models/Subscriptions');
+	Subscription = require('../models/Subscriptions'),
+	User = require('../models/Users');
 
 let router = express.Router();
 
@@ -17,17 +18,28 @@ router.post("/subscriptions", authenticate, loadUser, function (req, res) {
             });
         } else {
 			req.body.user = req.user._id;
-			Subscription.addSubscription(req.body, function (err) {
-				if (err) {
+			Subscription.addSubscription(req.body, function (err, id) {
+				if (err || !id) {
 					res.json({
 						info: "Error during creating subscription",
 						success: false,
 						error: err.errmsg
 					});
 				} else {
-					res.json({
-						info: "Subscription created succesfully",
-						success: true
+					User.toggleSubscription(req.user, id, function (err, user) {
+						if (err) {
+							res.json({
+								info: "Error during adding subscription",
+								success: false,
+								error: err.errmsg
+							});
+						} else {
+							res.json({
+								info: "Subscription created succesfully",
+								success: true,
+								data: user
+							});
+						}
 					});
 				}
 			});
@@ -226,10 +238,21 @@ router.delete("/subscriptions/:id", authenticate, loadUser, function (req, res) 
                     error: err.errmsg
                 });
             } else {
-                res.json({
-                    info: "Subscription deleted succesfully",
-                    success: true
-                });
+				User.toggleSubscription(req.user, req.params.id, function (err, user) {
+					if (err) {
+						res.json({
+							info: "Error during deleting subscription",
+							success: false,
+							error: err.errmsg
+						});
+					} else {
+						res.json({
+							info: "Subscription deleted succesfully",
+							success: true,
+							data: user
+						});
+					}
+				});
             }
         });
     } else {

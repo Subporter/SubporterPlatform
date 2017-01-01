@@ -30,11 +30,11 @@ let populateSchema = [{
 /* Create */
 Subscription.addSubscription = function(body, cb) {
     let subscription = new Subscription(body);
-    subscription.save(function(err) {
+    subscription.save(function(err, docs) {
         if (err) {
-            cb(err);
+            cb(err, null);
         } else {
-            cb(null);
+            cb(null, docs._id);
         }
     });
 };

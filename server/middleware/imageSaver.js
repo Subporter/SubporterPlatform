@@ -11,12 +11,18 @@ let imageSaver = function(req, res, next) {
             let path = "";
             if (req.url.startsWith("/teams")) {
                 path = "teams/";
+            } else if (req.url.startsWith("/users")) {
+                path = "users/";
             }
 
             let inStream = fs.createReadStream(req.files.upload[0].path);
             let outStream = fs.createWriteStream('./public/img/uploads/' + path + fileName);
             if (inStream.pipe(outStream)) {
-                req.body.logo = "/img/uploads/" + path + fileName;
+                if (req.url.startsWith("/teams")) {
+                    req.body.logo = "/img/uploads/" + path + fileName;
+                } else if (req.url.startsWith("/users")) {
+                    req.body.avatar = "/img/uploads/" + path + fileName;
+                }
                 next();
             } else {
                 next();

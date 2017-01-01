@@ -39,6 +39,7 @@ subscriptionSchema.plugin(autoIncrement, {
 subscriptionSchema.plugin(mongooseHidden);
 
 subscriptionSchema.index({
+	user: 1,
     team: 1,
 	place: 1
 }, {
