@@ -55,10 +55,13 @@
              <div class="carousel-class">
 
 
+<div>
                <div *ngFor="let team of jsonDataData"  >
                  <!--TODO -> Change name in click to id-->
             <img src="{{team.logo}}" alt="{{team.name}}" id="{{team.name}}" (click)="goToTeamPage(this.id);">
            
+    </div>
+
     </div>
 <!--
 <div><img src="../../img/gent.png"></div>

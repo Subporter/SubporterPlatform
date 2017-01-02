@@ -26,7 +26,7 @@ export class Landing {
   jsonDataData:JSON;
 
  //default Belgium, I guess
-  compId:String = "585e97f0e0f6ae66b70ee218";
+  compId:String = "1";
 
 
 	constructor(public router: Router, public http: Http, public authHttp: AuthHttp, public apiService: ApiService) {

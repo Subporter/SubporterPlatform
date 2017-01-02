@@ -23,7 +23,7 @@ var Landing = (function () {
         this.apiService = apiService;
         this.jwtHelper = new angular2_jwt_1.JwtHelper();
         //default Belgium, I guess
-        this.compId = "585e97f0e0f6ae66b70ee218";
+        this.compId = "1";
     }
     Landing.prototype.ngOnInit = function () {
         this._callApi("Anonymous", "api/teams/comp/" + this.compId);
