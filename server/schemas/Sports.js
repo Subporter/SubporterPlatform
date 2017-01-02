@@ -44,4 +44,10 @@ sportSchema.plugin(autoIncrement, {
     fieldName: '_id'
 });
 
+sportSchema.index({
+	name: 1
+}, {
+    unique: true
+});
+
 module.exports = sportSchema;
