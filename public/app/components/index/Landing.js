@@ -26,7 +26,7 @@ var Landing = (function () {
         this.compId = "1";
     }
     Landing.prototype.ngOnInit = function () {
-        this._callApi("Anonymous", "api/teams/comp/" + this.compId);
+        this._callApi("Anonymous", "api/teams/competition/" + this.compId);
     };
     Landing.prototype.useJwtHelper = function () {
         var token = localStorage.getItem("id_token");

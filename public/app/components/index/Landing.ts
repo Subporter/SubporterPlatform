@@ -7,7 +7,6 @@ import * as $ from 'jquery';
 import 'slick';
 import { Footer } from "../common/footer/Footer";
 import {ApiService} from '../../services/ApiService';
-import {Team} from '../../models/team.model';
 
 
 @Component({
@@ -35,7 +34,7 @@ export class Landing {
 
 ngOnInit() { 
   
-  this._callApi("Anonymous", "api/teams/comp/"+ this.compId);
+  this._callApi("Anonymous", "api/teams/competition/"+ this.compId);
   
  
 
