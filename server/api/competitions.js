@@ -1,15 +1,17 @@
 const express = require('express'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
+    formParser = require('../middleware/formParser'),
+    imageSaver = require('../middleware/imageSaver'),
     bodyValidator = require('../helpers/bodyValidator'),
     Competition = require('../models/Competitions');
 
 let router = express.Router();
 
 /* Create */
-router.post("/competitions", authenticate, admin, function(req, res) {
+router.post("/competitions", authenticate, admin, formParser, imageSaver, function(req, res) {
     if (req.granted) {
-        if (Object.keys(req.body).length !== 4 || bodyValidator(req.body.name, req.body.description, req.body.sport, req.body.country)) {
+        if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.country, req.body.description, req.body.logo, req.body.name, req.body.sport)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false
@@ -197,9 +199,9 @@ router.get("/competitions/:id", authenticate, function(req, res) {
 });
 
 /* Update */
-router.put("/competitions/:id", authenticate, admin, function(req, res) {
+router.put("/competitions/:id", authenticate, admin, formParser, imageSaver, function(req, res) {
     if (req.granted) {
-        if (Object.keys(req.body).length !== 4 || bodyValidator(req.body.name, req.body.description, req.body.sport, req.body.country)) {
+        if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.country, req.body.description, req.body.logo, req.body.name, req.body.sport)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false

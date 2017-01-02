@@ -8,7 +8,12 @@ let imageSaver = function(req, res, next) {
         } else {
             if (req.files.logo && req.files.logo[0]) {
                 let fileName = uuid() + "_" + req.files.logo[0].originalFilename;
-                let path = "teams/";
+                let path = "";
+				if (req.url.startsWith("/competitions")) {
+					path = "/competitions";
+				} else if (req.url.startsWith("/teams")) {
+					path = "/teams";
+				}
                 if (save(req.files.logo[0].path, fileName, path)) {
                     req.body.logo = "/img/uploads/" + path + fileName;
                 }

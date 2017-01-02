@@ -13,22 +13,27 @@ let regExp = /^[A-zÀ-ÿ0-9-\s]{2,100}$/;
 let descriptionRegExp = /^[A-zÀ-ÿ0-9-\s.,!"'/]{2,1000}$/;
 
 let competitionSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        trim: true,
-        match: regExp
+    country: {
+        type: Number,
+        ref: 'Country',
+        required: true
     },
-    description: {
+	description: {
         type: String,
         required: true,
         trim: true,
         match: descriptionRegExp
     },
-    country: {
-        type: Number,
-        ref: 'Country',
-        required: true
+    logo: {
+        type: String,
+        required: true,
+        trim: true
+    },
+	name: {
+        type: String,
+        required: true,
+        trim: true,
+        match: regExp
     },
     sport: {
         type: Number,

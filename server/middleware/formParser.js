@@ -8,7 +8,15 @@ let formParser = function(req, res, next) {
                 next();
             } else {
                 req.files = files;
-                if (req.url.startsWith("/teams")) {
+                if (req.url.startsWith("/competitions")) {
+					req.body.name = fields.name[0];
+					req.body.description = fields.description[0];
+					req.body.country = fields.country[0];
+					req.body.sport = fields.sport[0];
+					if (fields.logo && fields.logo[0]) {
+                        req.body.logo = fields.logo[0];
+                    }
+				} else if (req.url.startsWith("/teams")) {
                     req.body.name = fields.name[0];
                     req.body.stadion = fields.stadion[0];
                     req.body.price = fields.price[0];
