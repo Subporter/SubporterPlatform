@@ -25,6 +25,13 @@ let imageSaver = function(req, res, next) {
                     req.body.background = "/img/uploads/" + path + fileName;
                 }
             }
+			if (req.files.subscription && req.files.subscription[0]) {
+                let fileName = uuid() + "_" + req.files.subscription[0].originalFilename;
+                let path = "subscriptions/";
+                if (save(req.files.subscription[0].path, fileName, path)) {
+                    req.body.subscription = "/img/uploads/" + path + fileName;
+                }
+            }
             if (req.files.avatar && req.files.avatar[0]) {
                 let fileName = uuid() + "_" + req.files.avatar[0].originalFilename;
                 let path = "users/";

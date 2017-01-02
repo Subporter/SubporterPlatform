@@ -14,6 +14,11 @@ let subscriptionSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+	subscription: {
+		type: String,
+		required: true,
+		trim: true
+	},
     team: {
         type: Number,
         ref: 'Team',
