@@ -173,7 +173,7 @@ router.get("/users/username/:username", authenticate, function(req, res) {
 /* Update */
 router.put("/users", authenticate, formParser, imageSaver, function(req, res) {
     if (req.granted) {
-        if (Object.keys(req.body).length != 10 || bodyValidator(req.body.address, req.body.avatar, req.body.city, req.body.country, req.body.date_of_birth, req.body.national_registry_number, req.body.number, req.body.phone, req.body.postal, req.body.street)) {
+        if (Object.keys(req.body).length !== 10 || bodyValidator(req.body.address, req.body.avatar, req.body.city, req.body.country, req.body.date_of_birth, req.body.national_registry_number, req.body.number, req.body.phone, req.body.postal, req.body.street)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false
@@ -231,7 +231,7 @@ router.put("/users", authenticate, formParser, imageSaver, function(req, res) {
 
 router.put("/users/:id", authenticate, admin, function(req, res) {
     if (req.granted) {
-        if (Object.keys(req.body).length != 10 || bodyValidator(req.body.address, req.body.avatar, req.body.city, req.body.country, req.body.date_of_birth, req.body.national_registry_number, req.body.number, req.body.phone, req.body.postal, req.body.street)) {
+        if (Object.keys(req.body).length !== 10 || bodyValidator(req.body.address, req.body.avatar, req.body.city, req.body.country, req.body.date_of_birth, req.body.national_registry_number, req.body.number, req.body.phone, req.body.postal, req.body.street)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false
