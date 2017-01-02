@@ -14,13 +14,27 @@ const mongoose = require('mongoose'),
 let regExp = /^[A-zÀ-ÿ0-9-\s]{2,100}$/;
 
 let teamSchema = new mongoose.Schema({
-    name: {
+	address: {
+		type: Number,
+		ref: 'Address',
+		required: true
+	},
+    background: {
         type: String,
         required: true,
-		trim: true,
-        match: regExp
+        trim: true
     },
-    stadion: {
+    competition: {
+        type: Number,
+        ref: 'Competition',
+        required: true
+    },
+    logo: {
+		type: String,
+		required: true,
+		trim: true
+	},
+    name: {
         type: String,
         required: true,
 		trim: true,
@@ -32,20 +46,11 @@ let teamSchema = new mongoose.Schema({
         min: 1,
         max: 99
     },
-    logo: {
-		type: String,
-		required: true,
-		trim: true
-	},
-    address: {
-        type: Number,
-        ref: 'Address',
-        required: true
-    },
-    competition: {
-        type: Number,
-        ref: 'Competition',
-        required: true
+    stadion: {
+        type: String,
+        required: true,
+		trim: true,
+        match: regExp
     }
 }, {
     _id: false,
