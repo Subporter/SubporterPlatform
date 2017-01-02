@@ -21,7 +21,9 @@ let authenticate = function(req, res, next) {
 			req.granted = false;
 			next();
 		}
-    }
+    } else {
+		req.granted = false;
+	}
     next();
 };
 

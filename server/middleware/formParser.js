@@ -21,6 +21,9 @@ let formParser = function(req, res, next) {
                     if (fields.logo && fields.logo[0]) {
                         req.body.logo = fields.logo[0];
                     }
+					if (fields.background && fields.background[0]) {
+                        req.body.background = fields.background[0];
+                    }
                     if (fields.address && fields.address[0]) {
                         req.body.address = fields.address[0];
                     } else {

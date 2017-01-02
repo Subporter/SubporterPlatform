@@ -6,6 +6,7 @@ const express = require('express'),
     admin = require('../middleware/admin'),
     formParser = require('../middleware/formParser'),
     imageSaver = require('../middleware/imageSaver'),
+    loadUser = require('../middleware/loadUser'),
     bodyValidator = require('../helpers/bodyValidator'),
     User = require('../models/Users'),
     Address = require('../models/Addresses');
@@ -76,7 +77,7 @@ router.get("/users", authenticate, function(req, res) {
     }
 });
 
-router.get("/users/:id", authenticate, admin, function(req, res) {
+router.get("/users/id/:id", authenticate, admin, function(req, res) {
     if (req.granted) {
         User.getUserById(req.params.id, function(err, user) {
             if (err) {
@@ -107,7 +108,7 @@ router.get("/users/:id", authenticate, admin, function(req, res) {
     }
 });
 
-router.get("/users/:email", authenticate, admin, function(req, res) {
+router.get("/users/email/:email", authenticate, admin, function(req, res) {
     if (req.granted) {
         User.getUserByEmail(req.params.email, function(err, user) {
             if (err) {
@@ -138,7 +139,7 @@ router.get("/users/:email", authenticate, admin, function(req, res) {
     }
 });
 
-router.get("/users/:username", authenticate, admin, function(req, res) {
+router.get("/users/username/:username", authenticate, function(req, res) {
     if (req.granted) {
         User.getUserByUsername(req.params.username, function(err, user) {
             if (err) {
@@ -172,7 +173,7 @@ router.get("/users/:username", authenticate, admin, function(req, res) {
 /* Update */
 router.put("/users", authenticate, formParser, imageSaver, function(req, res) {
     if (req.granted) {
-        if (Object.keys(req.body).length != 10 || bodyValidator(req.body.date_of_birth, req.body.national_registry_number, req.body.phone, req.body.avatar, req.body.address, req.body.street, req.body.number, req.body.postal, req.body.city, req.body.country)) {
+        if (Object.keys(req.body).length != 10 || bodyValidator(req.body.address, req.body.avatar, req.body.city, req.body.country, req.body.date_of_birth, req.body.national_registry_number, req.body.number, req.body.phone, req.body.postal, req.body.street)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false
@@ -228,15 +229,15 @@ router.put("/users", authenticate, formParser, imageSaver, function(req, res) {
     }
 });
 
-router.put("/users/:username", authenticate, admin, function(req, res) {
+router.put("/users/:id", authenticate, admin, function(req, res) {
     if (req.granted) {
-        if (Object.keys(req.body).length != 10 || bodyValidator(req.body.date_of_birth, req.body.national_registry_number, req.body.phone, req.body.avatar, req.body.address, req.body.street, req.body.number, req.body.postal, req.body.city, req.body.country)) {
+        if (Object.keys(req.body).length != 10 || bodyValidator(req.body.address, req.body.avatar, req.body.city, req.body.country, req.body.date_of_birth, req.body.national_registry_number, req.body.number, req.body.phone, req.body.postal, req.body.street)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false
             });
         } else {
-            User.getUserByUsername(req.params.username, function(err, user) {
+            User.getUserById(req.params.id, function(err, user) {
                 if (err) {
                     res.json({
                         info: "Error during reading user",
@@ -359,16 +360,9 @@ router.post("/users/update/email", authenticate, function(req, res) {
                                 error: err.errmsg
                             });
                         } else {
-                            let expires = moment().add(7, "days").unix();
-                            let token = jwt.encode({
-                                email: user.email,
-                                exp: expires
-                            }, config.jwt_secret);
                             res.json({
                                 info: "Email updated successfully",
-                                success: true,
-                                token: token,
-                                expires: moment().add(7, "days").format("dddd, MMMM Do YYYY, h:mm:ss")
+                                success: true
                             });
                         }
                     });
@@ -448,6 +442,31 @@ router.post("/users/update/password", authenticate, function(req, res) {
 });
 
 /* Delete */
+router.delete("/users", authenticate, loadUser, function (req, res) {
+    if (req.granted) {
+        User.deleteUser(req.user._id, function (err) {
+            if (err) {
+                res.json({
+                    info: "Error during deleting user",
+                    success: false,
+                    error: err.errmsg
+                });
+            } else {
+                res.json({
+                    info: "User deleted succesfully",
+                    success: true
+                });
+            }
+        });
+    } else {
+        res.status(403);
+        res.json({
+            info: "Unauthorized",
+            success: false
+        });
+    }
+});
+
 router.delete("/users/:id", authenticate, admin, function(req, res) {
     if (req.granted) {
         User.deleteUser(req.params.id, function(err) {

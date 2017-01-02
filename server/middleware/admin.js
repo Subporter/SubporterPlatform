@@ -4,7 +4,7 @@ let admin = function(req, res, next) {
     if (req.granted) {
         User.getUserByEmailForAuth(req.jwtUser.email, function(err, user) {
             if (err) {
-                throw err;
+                req.granted = false;
             } else {
                 if (user.admin === true) {
                     req.granted = true;
