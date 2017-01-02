@@ -4,18 +4,23 @@ const passport = require('passport'),
 
 let authenticate = function(req, res, next) {
     if (passport.authenticate('jwt', { session: false })) {
-        let token = getToken(req.headers);
-        if (token) {
-            let user = jwt.decode(token, config.jwt_secret);
-            if (user) {
-                req.jwtUser = user;
-                req.granted = true;
-            } else {
-                req.granted = false;
-            }
-        } else {
-            req.granted = false;
-        }
+		try {
+			let token = getToken(req.headers);
+			if (token) {
+				let user = jwt.decode(token, config.jwt_secret);
+				if (user) {
+					req.jwtUser = user;
+					req.granted = true;
+				} else {
+					req.granted = false;
+				}
+			} else {
+				req.granted = false;
+			}
+		} catch (err) {
+			req.granted = false;
+			next();
+		}
     }
     next();
 };

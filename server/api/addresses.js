@@ -2,29 +2,29 @@ const express = require('express'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
     bodyValidator = require('../helpers/bodyValidator'),
-    Sport = require('../models/Sports');
+    Address = require('../models/Addresses');
 
 let router = express.Router();
 
 /* Create */
-router.post("/sports", authenticate, admin, function(req, res) {
+router.post("/addresses", authenticate, admin, function(req, res) {
     if (req.granted) {
-        if (Object.keys(req.body).length !== 1 || bodyValidator(req.body.name)) {
+        if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.street, req.body.number, req.body.postal, req.body.city, req.body.country)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false
             });
         } else {
-            Sport.addSport(req.body, function(err) {
+            Address.addAddress(req.body, function(err) {
                 if (err) {
                     res.json({
-                        info: "Error during creating sport",
+                        info: "Error during creating address",
                         success: false,
                         error: err.errmsg
                     });
                 } else {
                     res.json({
-                        info: "Sport created succesfully",
+                        info: "Address created succesfully",
                         success: true
                     });
                 }
@@ -39,25 +39,25 @@ router.post("/sports", authenticate, admin, function(req, res) {
     }
 });
 
-/* Read (all sports) */
-router.get("/sports", authenticate, function(req, res) {
+/* Read (all addresses) */
+router.get("/addresses", authenticate, admin, function(req, res) {
     if (req.granted) {
-        Sport.getSports(function(err, sports) {
+        Address.getAddresses(function(err, addresses) {
             if (err) {
                 res.json({
-                    info: "Error during reading sports",
+                    info: "Error during reading addresses",
                     success: false,
                     error: err.errmsg
                 });
-            } else if (sports) {
+            } else if (addresses) {
                 res.json({
-                    info: "Sports found succesfully",
+                    info: "Addresses found succesfully",
                     success: true,
-                    data: sports
+                    data: addresses
                 });
             } else {
                 res.json({
-                    info: "Sports not found",
+                    info: "Addresses not found",
                     success: false
                 });
             }
@@ -71,25 +71,56 @@ router.get("/sports", authenticate, function(req, res) {
     }
 });
 
-/* Read (one sport) */
-router.get("/sports/:id", authenticate, function(req, res) {
+router.get("/addresses/country/:country", authenticate, admin, function(req, res) {
     if (req.granted) {
-        Sport.getSportById(req.params.id, function(err, sport) {
+        Address.getAddressesByCountry(req.params.country, function(err, addresses) {
             if (err) {
                 res.json({
-                    info: "Error during reading sport",
+                    info: "Error during reading addresses",
                     success: false,
                     error: err.errmsg
                 });
-            } else if (sport) {
+            } else if (addresses) {
                 res.json({
-                    info: "Sport found succesfully",
+                    info: "Addresses found succesfully",
                     success: true,
-                    data: sport
+                    data: addresses
                 });
             } else {
                 res.json({
-                    info: "Sport not found",
+                    info: "Addresses not found",
+                    success: false
+                });
+            }
+        });
+    } else {
+        res.status(403);
+        res.json({
+            info: "Unauthorized",
+            success: false
+        });
+    }
+});
+
+/* Read (one address) */
+router.get("/addresses/:id", authenticate, admin, function(req, res) {
+    if (req.granted) {
+        Address.getAddressById(req.params.id, function(err, address) {
+            if (err) {
+                res.json({
+                    info: "Error during reading address",
+                    success: false,
+                    error: err.errmsg
+                });
+            } else if (address) {
+                res.json({
+                    info: "Address found succesfully",
+                    success: true,
+                    data: address
+                });
+            } else {
+                res.json({
+                    info: "Address not found",
                     success: false
                 });
             }
@@ -104,39 +135,39 @@ router.get("/sports/:id", authenticate, function(req, res) {
 });
 
 /* Update */
-router.put("/sports/:id", authenticate, admin, function(req, res) {
+router.put("/addresses/:id", authenticate, admin, function(req, res) {
     if (req.granted) {
-        if (Object.keys(req.body).length !== 1 || bodyValidator(req.body.name)) {
+        if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.street, req.body.number, req.body.postal, req.body.city, req.body.country)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false
             });
         } else {
-            Sport.getSportById(req.params.id, function(err, sport) {
+            Address.getAddressById(req.params.id, function (err, address) {
                 if (err) {
                     res.json({
-                        info: "Error during reading sport",
+                        info: "Error during reading address",
                         success: false,
                         error: err.errmsg
                     });
-                } else if (sport) {
-                    Sport.updateSport(sport, req.body, function(err) {
+                } else if (address) {
+                    Address.updateAddress(address, req.body, function (err) {
                         if (err) {
                             res.json({
-                                info: "Error during updating sport",
+                                info: "Error during updating address",
                                 success: false,
                                 error: err.errmsg
                             });
                         } else {
                             res.json({
-                                info: "Sport updated succesfully",
+                                info: "Address updated succesfully",
                                 success: true
                             });
                         }
                     });
                 } else {
                     res.json({
-                        info: "Sport not found",
+                        info: "Address not found",
                         success: false,
                     });
                 }
@@ -152,18 +183,18 @@ router.put("/sports/:id", authenticate, admin, function(req, res) {
 });
 
 /* Delete */
-router.delete("/sports/:id", authenticate, admin, function(req, res) {
+router.delete("/addresses/:id", authenticate, admin, function(req, res) {
     if (req.granted) {
-        Sport.deleteSport(req.params.id, function(err) {
+        Address.deleteAddress(req.params.id, function(err) {
             if (err) {
                 res.json({
-                    info: "Error during deleting sport",
+                    info: "Error during deleting address",
                     success: false,
                     error: err.errmsg
                 });
             } else {
                 res.json({
-                    info: "Sport deleted succesfully",
+                    info: "Address deleted succesfully",
                     success: true
                 });
             }

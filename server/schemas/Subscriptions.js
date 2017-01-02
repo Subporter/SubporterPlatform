@@ -1,24 +1,49 @@
 const mongoose = require('mongoose'),
-    mongooseHidden = require('mongoose-hidden')(),
-    autoIncrement = require('mongoose-sequence');
-
-let regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
+    mongooseHidden = require('mongoose-hidden')({
+        defaultHidden: {
+            __v: true,
+			created_at: true,
+            updated_at: true
+        }
+    }),
+    autoIncrement = require('mongoose-increment');
 
 let subscriptionSchema = new mongoose.Schema({
     place: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     team: {
-        type: mongoose.Schema.ObjectId,
+        type: Number,
         ref: 'Team',
         required: true
+    },
+    user: {
+        type: Number,
+        ref: 'User',
+        required: true
+    }
+}, {
+    _id: false,
+    timestamps: {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
     }
 });
 
 subscriptionSchema.plugin(autoIncrement, {
-    inc_field: "subscriptions_id"
+	modelName: 'Subscription',
+	fieldName: '_id'
 });
 subscriptionSchema.plugin(mongooseHidden);
+
+subscriptionSchema.index({
+	user: 1,
+    team: 1,
+	place: 1
+}, {
+    unique: true
+});
 
 module.exports = subscriptionSchema;

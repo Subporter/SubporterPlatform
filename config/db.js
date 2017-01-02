@@ -1,4 +1,5 @@
 const mongoose = require('mongoose'),
+	autoIncrement = require('mongoose-auto-increment'),
     config = require('./subporter.config');
 
 let gracefulShutdown,
