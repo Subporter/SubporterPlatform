@@ -23,7 +23,7 @@ export class Search {
 	response: String;
 	api: String;
 	jwtHelper: JwtHelper = new JwtHelper();
-  jsonDataData:JSON;
+  games:JSON;
 
   private loggedIn = false;
 
@@ -32,6 +32,16 @@ export class Search {
 
       this.loggedIn = !!localStorage.getItem('id_token');
 	}
+
+
+	ngOnInit() { 
+  
+  this._callApi("Anonymous", "api/games/");
+  
+
+
+
+}
 
 
 
@@ -55,7 +65,7 @@ export class Search {
 
   _callApi(type, url) {
 		this.apiService.call(url).subscribe(
-			response => this.response = response.text(),
+			response =>  this.getGames(response.text()),
 			error => this.response = error.text
 		);
 
@@ -64,6 +74,16 @@ export class Search {
     
   }
 
+  getGames(data){
+     let Data = data;
+     let jsonData = JSON.parse(Data);
+     this.games = jsonData.data;
+
+	 console.log(this.games);
+
+  }
+
+ 
   
  
 

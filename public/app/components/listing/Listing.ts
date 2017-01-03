@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { Http } from '@angular/http';
 import { AuthHttp, JwtHelper } from 'angular2-jwt';
 import { contentHeaders } from '../../common/headers'
@@ -7,60 +7,59 @@ import { Footer } from "../common/footer/Footer";
 import { Header } from "../common/header/Header";
 import {ApiService} from '../../services/ApiService';
 import {Subscription } from 'rxjs';
+import "materialize-css";
+import "angular2-materialize";
+import {Location} from '@angular/common';
+
 
 
 
 @Component({
-	selector: 'evenement',
-	 templateUrl: './app/components/evenement/evenement.view.html',
-	  styleUrls: ['../../css/css/evenement.css']
+	selector: 'listings',
+	 templateUrl: './app/components/listing/listing.view.html',
+	  styleUrls: ['../../css/css/listing.css']
 })
 
-export class Evenement {
+export class Listing {
 
-    
- jwt: String;
+  jwt: String;
 	decodedJwt: String;
 	response: String;
 	api: String;
 	jwtHelper: JwtHelper = new JwtHelper();
   game:JSON;
-home:String;
+  home:String;
 away:String;
-date:String;
+date:String ;
 stadion:String;
-banner:String;
-loans:JSON;
-id:String;
-test:JSON;
-
-    private subscription: Subscription;
-
-  
+banner:String ;
 
   private loggedIn = false;
+      private subscription: Subscription;
 
 
-	constructor(public router: Router, public http: Http, public authHttp: AuthHttp, public apiService: ApiService, private activatedRoute: ActivatedRoute) {
+
+	constructor(public router: Router, public http: Http, public authHttp: AuthHttp, public apiService: ApiService, private activatedRoute: ActivatedRoute, private _location: Location) {
 
       this.loggedIn = !!localStorage.getItem('id_token');
 	}
 
-	
-ngOnInit(){
-	this.subscription = this.activatedRoute.params.subscribe(
+
+	ngOnInit() { 
+  
+  this.subscription = this.activatedRoute.params.subscribe(
       (param: any) => {
         let id = param['id'];
 		this._callApi("Anonymous", "api/games/"+id);
 
       });
+  
+
+
+
 }
 
 
- ngOnDestroy() {
-    // prevent memory leak by unsubscribing
-    this.subscription.unsubscribe();
-  }
 
 
 
@@ -82,8 +81,8 @@ ngOnInit(){
 
   _callApi(type, url) {
 		this.apiService.call(url).subscribe(
-			response =>this.getGames(response.text()),
-			error => this.goHome()
+			response =>  this.getGame(response.text()),
+			error => this.response = error.text
 		);
 
     
@@ -91,35 +90,31 @@ ngOnInit(){
     
   }
 
-  getGames(data){
+  getGame(data){
      let Data = data;
      let jsonData = JSON.parse(Data);
      this.game = jsonData.data;
 
-	 if(!this.game){
-	  this.router.navigateByUrl('../');
+    console.log(this.game);    
+	  if(!this.game){
+	   this.router.navigateByUrl('../');
 
-	 }
+	  }
 
 	 this.home = jsonData.data.home.name;
 	 this.away = jsonData.data.away.name;
 	 this.date = jsonData.data.date;
      this.stadion = jsonData.data.home.stadion;
 	 this.banner = jsonData.data.banner;
-	 this.loans = jsonData.data.loans;
-	 this.id=jsonData.data._id;
-
-	 this.test = jsonData.data.home;
-
-	 console.log(this.loans);
-	 console.log(this.test);
 
 
-	//  console.log(this.game);
 
   }
 
-  goHome(){
+  back(){
+              this._location.back();
+
   }
+
 
 }

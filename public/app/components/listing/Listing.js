@@ -15,43 +15,61 @@ var angular2_jwt_1 = require("angular2-jwt");
 var ApiService_1 = require("../../services/ApiService");
 require("materialize-css");
 require("angular2-materialize");
-var Search = (function () {
-    function Search(router, http, authHttp, apiService) {
+var common_1 = require("@angular/common");
+var Listing = (function () {
+    function Listing(router, http, authHttp, apiService, activatedRoute, _location) {
         this.router = router;
         this.http = http;
         this.authHttp = authHttp;
         this.apiService = apiService;
+        this.activatedRoute = activatedRoute;
+        this._location = _location;
         this.jwtHelper = new angular2_jwt_1.JwtHelper();
         this.loggedIn = false;
         this.loggedIn = !!localStorage.getItem('id_token');
     }
-    Search.prototype.ngOnInit = function () {
-        this._callApi("Anonymous", "api/games/");
+    Listing.prototype.ngOnInit = function () {
+        var _this = this;
+        this.subscription = this.activatedRoute.params.subscribe(function (param) {
+            var id = param['id'];
+            _this._callApi("Anonymous", "api/games/" + id);
+        });
     };
-    Search.prototype.useJwtHelper = function () {
+    Listing.prototype.useJwtHelper = function () {
         var token = localStorage.getItem("id_token");
         console.log("Token:", token);
         console.log(this.jwtHelper.decodeToken(token), this.jwtHelper.getTokenExpirationDate(token), this.jwtHelper.isTokenExpired(token));
     };
-    Search.prototype._callApi = function (type, url) {
+    Listing.prototype._callApi = function (type, url) {
         var _this = this;
-        this.apiService.call(url).subscribe(function (response) { return _this.getGames(response.text()); }, function (error) { return _this.response = error.text; });
+        this.apiService.call(url).subscribe(function (response) { return _this.getGame(response.text()); }, function (error) { return _this.response = error.text; });
     };
-    Search.prototype.getGames = function (data) {
+    Listing.prototype.getGame = function (data) {
         var Data = data;
         var jsonData = JSON.parse(Data);
-        this.games = jsonData.data;
-        console.log(this.games);
+        this.game = jsonData.data;
+        console.log(this.game);
+        if (!this.game) {
+            this.router.navigateByUrl('../');
+        }
+        this.home = jsonData.data.home.name;
+        this.away = jsonData.data.away.name;
+        this.date = jsonData.data.date;
+        this.stadion = jsonData.data.home.stadion;
+        this.banner = jsonData.data.banner;
     };
-    return Search;
+    Listing.prototype.back = function () {
+        this._location.back();
+    };
+    return Listing;
 }());
-Search = __decorate([
+Listing = __decorate([
     core_1.Component({
-        selector: 'search',
-        templateUrl: './app/components/search/search.view.html',
-        styleUrls: ['../../css/css/search.css']
+        selector: 'listings',
+        templateUrl: './app/components/listing/listing.view.html',
+        styleUrls: ['../../css/css/listing.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService])
-], Search);
-exports.Search = Search;
-//# sourceMappingURL=Search.js.map
+    __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService, router_1.ActivatedRoute, common_1.Location])
+], Listing);
+exports.Listing = Listing;
+//# sourceMappingURL=Listing.js.map

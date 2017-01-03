@@ -20,6 +20,7 @@ import { Topwedstrijd } from "./components/index/Topwedstrijden/Topwedstrijd";
 import { Weekwedstrijd } from "./components/index/Weekwedstrijden/Weekwedstrijd";
 import { Search } from "./components/search/Search";
 import { Evenement } from "./components/evenement/Evenement";
+import { Listing } from "./components/listing/Listing";
 import {MaterializeDirective} from "angular2-materialize";
 
 
@@ -30,7 +31,7 @@ import { Routing } from "./modules/Routes";
 
 @NgModule({
     bootstrap: [App],
-    declarations: [App, Home, Register, Login, Landing, Footer, Header, Topwedstrijd,Search, Evenement, MaterializeDirective],
+    declarations: [App, Home, Register, Login, Landing, Footer, Header, Topwedstrijd,Weekwedstrijd, Search, Evenement, Listing, MaterializeDirective],
     imports: [
         BrowserModule,
         HttpModule,

@@ -31,7 +31,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Weekwedstrijd.prototype, "amount", void 0);
 __decorate([
-    input(),
+    core_1.Input(),
     __metadata("design:type", String)
 ], Weekwedstrijd.prototype, "location", void 0);
 Weekwedstrijd = __decorate([

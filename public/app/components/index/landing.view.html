@@ -1,6 +1,18 @@
 <div class="section " id="section0">
 
-   <navmenu></navmenu>
+ <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">Subporter</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="sass.html">Info</a></li>
+        <li><a  [routerLink]="['/search']">Zoeken</a></li>
+        <li *ngIf="!loggedIn"><a  [routerLink]="['/login']">Login</a></li>
+        <li *ngIf="loggedIn"><a  [routerLink]="['/profiel']">Profiel</a></li>
+
+        <li><a class="waves-effect waves-light btn" (click)="search()">Abonnement aanbieden</a></li>
+      </ul>
+    </div>
+  </nav>
 
             <div class="container landingContainer " >
 

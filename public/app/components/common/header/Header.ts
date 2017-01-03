@@ -9,7 +9,7 @@ import { contentHeaders } from '../../../common/headers'
 	 template: `
 
 
-    <div class="header" [ngStyle]="{ 'background-image':  'url(../../../../img/'+image+')' }">
+    <div class="header" [ngStyle]="{ 'background-image':  'url(../../../..'+image+')' }">
    
  
 	 <nav>
@@ -17,7 +17,7 @@ import { contentHeaders } from '../../../common/headers'
       <a href="#" class="brand-logo">Subporter</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="sass.html">Info</a></li>
-        <li><a href="badges.html">Zoeken</a></li>
+        <li> <a  [routerLink]="['/search']">Zoeken</a></li>
         <li *ngIf="!loggedIn"><a  [routerLink]="['/login']">Login</a></li>
         <li *ngIf="loggedIn"><a  [routerLink]="['/profiel']">Profiel</a></li>
 
@@ -37,7 +37,7 @@ import { contentHeaders } from '../../../common/headers'
 
 	 
 	 `,
-	  styles: ['.header .container{ text-align: center;} .header .container h1{color: #fff;font-weight: 600;} .header{background-size: cover; height: 300px;}nav{background: none; -webkit-box-shadow: none; -moz-box-shadow: none;	box-shadow: none;}.brand-logo{margin-left: 10px;}']
+	  styles: ['.header .container{ text-align: center;} .header .container h1{color: #fff;font-weight: 600; font-size:3em;} .header .container h2{color:#fff;font-size:2em;} .header{background-size: cover; height: 300px;}nav{background: none; -webkit-box-shadow: none; -moz-box-shadow: none;	box-shadow: none;}.brand-logo{margin-left: 10px;}']
 })
 
 export class Header {

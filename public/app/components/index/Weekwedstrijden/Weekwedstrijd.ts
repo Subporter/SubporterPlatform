@@ -27,7 +27,7 @@ export class Weekwedstrijd {
     @Input() away:string;
     @Input() date:string;
     @Input() amount:number;
-    @input() location:string;
+    @Input() location:string;
 
 
 }

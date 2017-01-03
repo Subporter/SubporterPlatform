@@ -1,4 +1,4 @@
-  <navmenu header1="Zoek abonnementen" header2="" image="search_bg.jpg"></navmenu>
+  <navmenu header1="Zoek abonnementen" header2="" image="/img/search_bg.jpg"></navmenu>
 
 <section class="search">
 <div class="container">
@@ -89,63 +89,25 @@
 <div class="col s12">
 
 
-              <ul class="collection">
-    <li class="collection-item " (click)="test()">
-
-      <span class="title">Club Brugge - Anderlecht</span>
-      <br/>
-      <p>Zaterdag 18 april, Jan Breydelstadion
-      </p>
-      <div class="secondary-content">
-      <i class="fa fa-ticket fa-2x " aria-hidden="true"></i>
-      <span>25</span>
-      </div>
-
-      </li>
-
-      </ul>
-
-</div>
-
-<div class="col s12">
+    <ul *ngFor="let game of games" class="collection">
+        <a [routerLink]="['../evenement', game._id]">
+        <li class="collection-item" >
+            
+            <span class="title"> {{game.home.name}} - {{game.away.name}}  </span>
+            <br/>
+            <p>{{game.date}}, {{game.home.stadion}}</p>
+            <div class="secondary-content">
+            <i class="fa fa-ticket fa-2x " aria-hidden="true"></i>
+            <span>25</span>
+            </div>
+            </li>
+</a>
 
 
-              <ul class="collection">
-    <li class="collection-item " (click)="test()">
-
-      <span class="title">Club Brugge - Anderlecht</span>
-      <br/>
-      <p>Zaterdag 18 april, Jan Breydelstadion
-      </p>
-      <div class="secondary-content">
-      <i class="fa fa-ticket fa-2x " aria-hidden="true"></i>
-      <span>25</span>
-      </div>
-
-      </li>
-
-      </ul>
-
-</div>
-
-<div class="col s12">
+        </ul> 
 
 
-              <ul class="collection">
-    <li class="collection-item " (click)="test()">
-
-      <span class="title">Club Brugge - Anderlecht</span>
-      <br/>
-      <p>Zaterdag 18 april, Jan Breydelstadion
-      </p>
-      <div class="secondary-content">
-      <i class="fa fa-ticket fa-2x " aria-hidden="true"></i>
-      <span>25</span>
-      </div>
-
-      </li>
-
-      </ul>
+             
 
 </div>
 

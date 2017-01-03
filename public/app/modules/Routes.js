@@ -5,6 +5,7 @@ var Register_1 = require("../components/auth/register/Register");
 var Login_1 = require("../components/auth/login/Login");
 var Landing_1 = require("../components/index/Landing");
 var Search_1 = require("../components/search/Search");
+var Listing_1 = require("../components/listing/Listing");
 var Evenement_1 = require("../components/evenement/Evenement");
 var AuthGuard_1 = require("../common/AuthGuard");
 exports.SubporterRoutes = [
@@ -24,7 +25,10 @@ exports.SubporterRoutes = [
         path: 'search', component: Search_1.Search
     },
     {
-        path: 'evenement', component: Evenement_1.Evenement
+        path: 'evenement/:id', component: Evenement_1.Evenement
+    },
+    {
+        path: 'listing/:id', component: Listing_1.Listing
     },
     {
         path: '**', component: Login_1.Login

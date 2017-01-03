@@ -1,0 +1,52 @@
+
+$white : #fff;
+$bg-color-second : #F4F4F4;
+$bg-footer : #121415;
+
+section{
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.container{
+    overflow: hidden;
+}
+
+.crumContainer{
+    width:510px;
+    margin: 0 auto;
+}
+
+.crumb{
+    text-align: center;
+    width:150px;
+    float: left;
+    border: 1px solid $bg-color-second ;
+    margin-right: 20px;
+}
+
+.buttonContainer{
+    padding-top: 20px;
+    clear: both;
+    text-align: center;
+}
+
+.row .col .collection{
+    border: 0;
+        cursor: pointer;
+
+}
+
+.row .col .collection .collection-item:hover{
+        background-color: $bg-color-second ;
+
+}
+
+.circle{
+    max-width: 30px;
+    max-height: 30px;
+}
+
+.dark{
+    color:black;
+}
