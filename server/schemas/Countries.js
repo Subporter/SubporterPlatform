@@ -44,4 +44,10 @@ countrySchema.plugin(autoIncrement, {
     fieldName: '_id'
 });
 
+countrySchema.index({
+	name: 1
+}, {
+    unique: true
+});
+
 module.exports = countrySchema;

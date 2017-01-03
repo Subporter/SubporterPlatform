@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'),
-    _ = require("lodash"),
+    _ = require('lodash'),
     userSchema = require('../schemas/Users');
 
 let User = mongoose.model('User', userSchema, 'Users');
@@ -10,6 +10,27 @@ let populateSchema = [{
     populate: [{
         path: 'country',
         model: 'Country'
+    }]
+}, {
+    path: 'favorites',
+    model: 'Team',
+    populate: [{
+        path: 'competition',
+        model: 'Competition',
+        populate: [{
+            path: 'country',
+            model: 'Country'
+        }, {
+            path: 'sport',
+            model: 'Sport'
+        }]
+    }, {
+        path: 'address',
+        model: 'Address',
+        populate: [{
+            path: 'country',
+            model: 'Country'
+        }]
     }]
 }, {
     path: 'subscriptions',
@@ -34,27 +55,6 @@ let populateSchema = [{
                 path: 'sport',
                 model: 'Sport'
             }]
-        }]
-    }]
-}, {
-    path: 'favorites',
-    model: 'Team',
-    populate: [{
-        path: 'address',
-        model: 'Address',
-        populate: [{
-            path: 'country',
-            model: 'Country'
-        }]
-    }, {
-        path: 'competition',
-        model: 'Competition',
-        populate: [{
-            path: 'country',
-            model: 'Country'
-        }, {
-            path: 'sport',
-            model: 'Sport'
         }]
     }]
 }];
@@ -184,23 +184,15 @@ User.getUserByUsername = function(username, cb) {
         });
 };
 
-/* Subscriptions */
-User.toggleSubscription = function(user, subscription, cb) {
-    let i = user.subscriptions.findIndex(item => item._id === subscription);
-    if (i === -1) {
-        user.subscriptions.push(subscription);
-    } else {
-        user.subscriptions.splice(i, 1);
-    }
-    user.subscriptions.sort(function(a, b) {
-        return a - b;
-    });
+/* Favorites */
+User.toggleFavorite = function(user, favorite, cb) {
+    user.favorites.toggleAndSort(favorite);
     user.save(function(err, docs) {
         if (err || !docs) {
             cb(err, null);
         } else {
             User.populate(docs, populateSchema, function(err, docs) {
-                if (err || !docs) {
+                if (err) {
                     cb(err, null);
                 } else {
                     cb(null, docs);
@@ -210,29 +202,37 @@ User.toggleSubscription = function(user, subscription, cb) {
     });
 };
 
-/* Favorites */
-User.toggleFavorite = function(user, favorite, cb) {
-    let i = user.favorites.findIndex(item => item._id === favorite);
-    if (i === -1) {
-        user.favorites.push(favorite);
-    } else {
-        user.favorites.splice(i, 1);
-    }
-    user.favorites.sort(function(a, b) {
-        return a - b;
-    });
+/* Subscriptions */
+User.toggleSubscription = function(user, subscription, cb) {
+    user.subscriptions.toggleAndSort(subscription);
     user.save(function(err, docs) {
         if (err || !docs) {
             cb(err, null);
         } else {
             User.populate(docs, populateSchema, function(err, docs) {
-                if (err || !docs) {
+                if (err) {
                     cb(err, null);
                 } else {
                     cb(null, docs);
                 }
             });
         }
+    });
+};
+
+/* Helper */
+
+Array.prototype.toggleAndSort = function(value) {
+    let i = this.findIndex(item => item._id === value);
+
+    if (i === -1) {
+        this.push(value);
+    } else {
+        this.splice(i, 1);
+    }
+
+    this.sort(function(a, b) {
+        return a - b;
     });
 };
 

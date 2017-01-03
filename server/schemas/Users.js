@@ -2,15 +2,15 @@ const mongoose = require('mongoose'),
     mongooseHidden = require('mongoose-hidden')({
         defaultHidden: {
             __v: true,
-			created_at: true,
+            created_at: true,
             updated_at: true
         }
     }),
     autoIncrement = require('mongoose-increment'),
     bcrypt = require('bcrypt-nodejs'),
-	Address = require('../models/Addresses'),
-	Subscription = require('../models/Subscriptions'),
-	Loan = require('../models/Loans');
+    Address = require('../models/Addresses'),
+    Subscription = require('../models/Subscriptions'),
+    Loan = require('../models/Loans');
 
 let regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
 let emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -19,14 +19,22 @@ let phoneRegExp = /^((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
 let registryRegExp = /^[0-9]{2}.[0-9]{2}.[0-9]{2}-[0-9]{3}.[0-9]{2}$/;
 
 let userSchema = new mongoose.Schema({
+    address: {
+        type: Number,
+        ref: 'Address'
+    },
     admin: {
         type: Boolean,
         required: true,
         default: false
     },
-    password: {
+    avatar: {
         type: String,
-        required: true
+        required: true,
+        default: '/img/person.png'
+    },
+    date_of_birth: {
+        type: Date
     },
     email: {
         type: String,
@@ -34,55 +42,47 @@ let userSchema = new mongoose.Schema({
         required: true,
         match: emailRegExp
     },
-    username: {
+    favorites: [{
+        type: Number,
+        ref: 'Team'
+    }],
+    firstname: {
         type: String,
-        unique: true,
         required: true,
-        match: usernameRegExp
+        match: regExp
+    },
+    joined_on: {
+        type: Date,
+        required: true,
+        default: Date.now
     },
     name: {
         type: String,
         required: true,
         match: regExp
     },
-    firstname: {
-        type: String,
-        required: true,
-        match: regExp
-    },
-    date_of_birth: {
-		type: Date
-	},
     national_registry_number: {
         type: String,
         match: registryRegExp
     },
-	phone: {
-		type: String,
-		match: phoneRegExp,
-	},
-	avatar: {
-		type: String,
-        required: true,
-		default: '/img/person.png'
-	},
-    joined_on: {
-        type: Date,
-        required: true,
-        default: Date.now
+    password: {
+        type: String,
+        required: true
     },
-    address: {
-        type: Number,
-        ref: 'Address'
+    phone: {
+        type: String,
+        match: phoneRegExp,
     },
     subscriptions: [{
         type: Number,
         ref: 'Subscription'
     }],
-    favorites: [{
-        type: Number,
-        ref: 'Team'
-    }]
+    username: {
+        type: String,
+        unique: true,
+        required: true,
+        match: usernameRegExp
+    }
 }, {
     _id: false,
     timestamps: {
@@ -103,7 +103,7 @@ userSchema.pre('save', function(next) {
                         return next(err);
                     } else {
                         user.password = hash;
-                        return next();
+                        return next(null);
                     }
                 });
             }
@@ -113,17 +113,17 @@ userSchema.pre('save', function(next) {
     }
 });
 
-userSchema.pre('remove', function (next) {
+userSchema.pre('remove', function(next) {
     let user = this;
-    Address.deleteAddress(user.address, function (err) {
+    Address.deleteAddress(user.address, function(err) {
         if (err) {
             return next(err);
         } else {
-            Subscription.deleteSubscriptionsByUser(user._id, function (err) {
+            Subscription.deleteSubscriptionsByUser(user._id, function(err) {
                 if (err) {
                     return next(err);
                 } else {
-                    Loan.deleteLoansByUser(user._id, function (err) {
+                    Loan.deleteLoansByUser(user._id, function(err) {
                         if (err) {
                             return next(err);
                         } else {
@@ -131,17 +131,17 @@ userSchema.pre('remove', function (next) {
                         }
                     });
                 }
-			});
+            });
         }
     });
 });
 
-userSchema.methods.comparePassword = function(providedPassword, actualPassword, cb) {
+userSchema.methods.comparePassword = function(providedPassword, actualPassword, next) {
     bcrypt.compare(providedPassword, actualPassword, function(err, isMatch) {
         if (err) {
-            return cb(err);
+            return next(err, null);
         } else {
-            cb(null, isMatch);
+            return next(null, isMatch);
         }
     });
 };

@@ -9,7 +9,7 @@ let router = express.Router();
 /* Create */
 router.post("/addresses", authenticate, admin, function(req, res) {
     if (req.granted) {
-        if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.street, req.body.number, req.body.postal, req.body.city, req.body.country)) {
+        if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.city, req.body.country, req.body.number, req.body.postal, req.body.street)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false
@@ -137,7 +137,7 @@ router.get("/addresses/:id", authenticate, admin, function(req, res) {
 /* Update */
 router.put("/addresses/:id", authenticate, admin, function(req, res) {
     if (req.granted) {
-        if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.street, req.body.number, req.body.postal, req.body.city, req.body.country)) {
+        if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.city, req.body.country, req.body.number, req.body.postal, req.body.street)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false

@@ -2,11 +2,12 @@ const User = require('../models/Users');
 
 let loadUser = function(req, res, next) {
     if (req.granted) {
-		User.getUserByEmail(req.jwtUser.email, function (err, user) {
+		User.getUserByEmailForAuth(req.jwtUser.email, function (err, user) {
 			if (err) {
-				throw err;
+				req.granted = false;
 			} else {
 				req.user = user;
+				req.granted = true;
 			}
 			next();
 		});

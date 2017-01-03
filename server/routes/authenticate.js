@@ -11,7 +11,7 @@ let router = express.Router();
 
 /* Register */
 router.post("/register", function(req, res) {
-    if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.username, req.body.email, req.body.password, req.body.name, req.body.firstname)) {
+    if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.email, req.body.firstname, req.body.name, req.body.password, req.body.username)) {
         res.json({
             info: "Please supply all required fields",
             success: false
@@ -20,11 +20,11 @@ router.post("/register", function(req, res) {
         User.addUser(req.body, function(err, user) {
             if (err) {
                 res.json({
-                    info: "Error during creating user, e-mail or username may be already in use or they may be some validation errors",
+                    info: "Error during creating user, e-mail or username could be already in use or there might be some validation errors",
                     success: false,
                     error: err.errmsg
                 });
-            } else {
+            } else if (user) {
                 let expires = moment().add(7, 'days').unix();
                 let token = jwt.encode({
                     email: user.email,
@@ -35,6 +35,11 @@ router.post("/register", function(req, res) {
                     success: true,
                     token: token,
                     expires: moment().add(7, 'days').format('dddd, MMMM Do YYYY, h:mm:ss')
+                });
+            } else {
+                res.json({
+                    info: "Error during creating user",
+                    success: false
                 });
             }
         });
