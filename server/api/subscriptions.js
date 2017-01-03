@@ -1,15 +1,17 @@
 const express = require('express'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
-    bodyValidator = require('../helpers/bodyValidator'),
+    formParser = require('../middleware/formParser'),
+    imageSaver = require('../middleware/imageSaver'),
     loadUser = require('../middleware/loadUser'),
+    bodyValidator = require('../helpers/bodyValidator'),
     Subscription = require('../models/Subscriptions'),
     User = require('../models/Users');
 
 let router = express.Router();
 
 /* Create */
-router.post("/subscriptions", authenticate, loadUser, function(req, res) {
+router.post("/subscriptions", authenticate, formParser, imageSaver, loadUser, function(req, res) {
     if (req.granted) {
         if (Object.keys(req.body).length !== 3 || bodyValidator(req.body.place, req.body.subscription, req.body.team)) {
             res.json({
@@ -180,7 +182,7 @@ router.get("/subscriptions/:id", authenticate, function(req, res) {
 });
 
 /* Update */
-router.put("/subscriptions/:id", authenticate, loadUser, function(req, res) {
+router.put("/subscriptions/:id", authenticate, formParser, imageSaver, loadUser, function(req, res) {
     if (req.granted) {
         if (Object.keys(req.body).length !== 3 || bodyValidator(req.body.place, req.body.subscription, req.body.team)) {
             res.json({
