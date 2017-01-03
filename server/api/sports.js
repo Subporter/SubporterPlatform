@@ -40,67 +40,51 @@ router.post("/sports", authenticate, admin, function(req, res) {
 });
 
 /* Read (all sports) */
-router.get("/sports", authenticate, function(req, res) {
-    if (req.granted) {
-        Sport.getSports(function(err, sports) {
-            if (err) {
-                res.json({
-                    info: "Error during reading sports",
-                    success: false,
-                    error: err.errmsg
-                });
-            } else if (sports) {
-                res.json({
-                    info: "Sports found succesfully",
-                    success: true,
-                    data: sports
-                });
-            } else {
-                res.json({
-                    info: "Sports not found",
-                    success: false
-                });
-            }
-        });
-    } else {
-        res.status(403);
-        res.json({
-            info: "Unauthorized",
-            success: false
-        });
-    }
+router.get("/sports", function(req, res) {
+    Sport.getSports(function(err, sports) {
+        if (err) {
+            res.json({
+                info: "Error during reading sports",
+                success: false,
+                error: err.errmsg
+            });
+        } else if (sports) {
+            res.json({
+                info: "Sports found succesfully",
+                success: true,
+                data: sports
+            });
+        } else {
+            res.json({
+                info: "Sports not found",
+                success: false
+            });
+        }
+    });
 });
 
 /* Read (one sport) */
-router.get("/sports/:id", authenticate, function(req, res) {
-    if (req.granted) {
-        Sport.getSportById(req.params.id, function(err, sport) {
-            if (err) {
-                res.json({
-                    info: "Error during reading sport",
-                    success: false,
-                    error: err.errmsg
-                });
-            } else if (sport) {
-                res.json({
-                    info: "Sport found succesfully",
-                    success: true,
-                    data: sport
-                });
-            } else {
-                res.json({
-                    info: "Sport not found",
-                    success: false
-                });
-            }
-        });
-    } else {
-        res.status(403);
-        res.json({
-            info: "Unauthorized",
-            success: false
-        });
-    }
+router.get("/sports/:id", function(req, res) {
+    Sport.getSportById(req.params.id, function(err, sport) {
+        if (err) {
+            res.json({
+                info: "Error during reading sport",
+                success: false,
+                error: err.errmsg
+            });
+        } else if (sport) {
+            res.json({
+                info: "Sport found succesfully",
+                success: true,
+                data: sport
+            });
+        } else {
+            res.json({
+                info: "Sport not found",
+                success: false
+            });
+        }
+    });
 });
 
 /* Update */

@@ -6,7 +6,7 @@ const express = require('express'),
     loadUser = require('../middleware/loadUser'),
     bodyValidator = require('../helpers/bodyValidator'),
     Team = require('../models/Teams'),
-	Address = require('../models/Addresses'),
+    Address = require('../models/Addresses'),
     User = require('../models/Users');
 
 let router = express.Router();
@@ -56,98 +56,74 @@ router.post("/teams", authenticate, admin, formParser, imageSaver, function(req,
 });
 
 /* Read (all teams) */
-router.get("/teams", authenticate, function(req, res) {
-    if (req.granted) {
-        Team.getTeams(function(err, teams) {
-            if (err) {
-                res.json({
-                    info: "Error during reading teams",
-                    success: false,
-                    error: err.errmsg
-                });
-            } else if (teams) {
-                res.json({
-                    info: "Teams found succesfully",
-                    success: true,
-                    data: teams
-                });
-            } else {
-                res.json({
-                    info: "Teams not found",
-                    success: false
-                });
-            }
-        });
-    } else {
-        res.status(403);
-        res.json({
-            info: "Unauthorized",
-            success: false
-        });
-    }
+router.get("/teams", function(req, res) {
+    Team.getTeams(function(err, teams) {
+        if (err) {
+            res.json({
+                info: "Error during reading teams",
+                success: false,
+                error: err.errmsg
+            });
+        } else if (teams) {
+            res.json({
+                info: "Teams found succesfully",
+                success: true,
+                data: teams
+            });
+        } else {
+            res.json({
+                info: "Teams not found",
+                success: false
+            });
+        }
+    });
 });
 
-router.get("/teams/competition/:competition", authenticate, function(req, res) {
-    if (req.granted) {
-        Team.getTeamsByCompetition(req.params.competition, function(err, teams) {
-            if (err) {
-                res.json({
-                    info: "Error during reading teams",
-                    success: false,
-                    error: err.errmsg
-                });
-            } else if (teams) {
-                res.json({
-                    info: "Teams found succesfully",
-                    success: true,
-                    data: teams
-                });
-            } else {
-                res.json({
-                    info: "Teams not found",
-                    success: false
-                });
-            }
-        });
-    } else {
-        res.status(403);
-        res.json({
-            info: "Unauthorized",
-            success: false
-        });
-    }
+router.get("/teams/competition/:competition", function(req, res) {
+    Team.getTeamsByCompetition(req.params.competition, function(err, teams) {
+        if (err) {
+            res.json({
+                info: "Error during reading teams",
+                success: false,
+                error: err.errmsg
+            });
+        } else if (teams) {
+            res.json({
+                info: "Teams found succesfully",
+                success: true,
+                data: teams
+            });
+        } else {
+            res.json({
+                info: "Teams not found",
+                success: false
+            });
+        }
+    });
 });
 
 /* Read (one team) */
-router.get("/teams/:id", authenticate, function(req, res) {
-    if (req.granted) {
-        Team.getTeamById(req.params.id, function(err, team) {
-            if (err) {
-                res.json({
-                    info: "Error during reading team",
-                    success: false,
-                    error: err.errmsg
-                });
-            } else if (team) {
-                res.json({
-                    info: "Team found succesfully",
-                    success: true,
-                    data: team
-                });
-            } else {
-                res.json({
-                    info: "Team not found",
-                    success: false
-                });
-            }
-        });
-    } else {
-        res.status(403);
-        res.json({
-            info: "Unauthorized",
-            success: false
-        });
-    }
+router.get("/teams/:id", function(req, res) {
+    Team.getTeamById(req.params.id, function(err, team) {
+        if (err) {
+            res.json({
+                info: "Error during reading team",
+                success: false,
+                error: err.errmsg
+            });
+        } else if (team) {
+            res.json({
+                info: "Team found succesfully",
+                success: true,
+                data: team
+            });
+        } else {
+            res.json({
+                info: "Team not found",
+                success: false
+            });
+        }
+    });
 });
 
 /* Update */
@@ -210,9 +186,9 @@ router.put("/teams/:id", authenticate, admin, formParser, imageSaver, function(r
 });
 
 /* Favorite */
-router.get("/teams/favorite/:id", authenticate, loadUser, function (req, res) {
+router.get("/teams/favorite/:id", authenticate, loadUser, function(req, res) {
     if (req.granted) {
-        User.toggleFavorite(req.user, req.params.id, function (err, user) {
+        User.toggleFavorite(req.user, req.params.id, function(err, user) {
             if (err) {
                 res.json({
                     info: "Error during favoriting team",

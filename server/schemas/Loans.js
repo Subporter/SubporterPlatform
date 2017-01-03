@@ -6,25 +6,22 @@ const mongoose = require('mongoose'),
             updated_at: true
         }
     }),
-    autoIncrement = require('mongoose-increment'),
-    Game = require('../models/Games'),
-    User = require('../models/Users');
+    autoIncrement = require('mongoose-increment');
 
 let loanSchema = new mongoose.Schema({
-    placed_on: {
-        type: Date,
-        required: true,
-        default: Date.now
+    game: {
+        type: Number,
+        ref: 'Game',
+        required: true
     },
-    paid: {
+	lent: {
         type: Boolean,
         required: true,
         default: false
     },
-    lent: {
-        type: Boolean,
-        required: true,
-        default: false
+    lent_by: {
+        type: Number,
+        ref: 'User'
     },
     lent_on: {
         type: Date
@@ -34,18 +31,19 @@ let loanSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    lent_by: {
-        type: Number,
-        ref: 'User'
+    paid: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
+    placed_on: {
+        type: Date,
+        required: true,
+        default: Date.now
     },
     subscription: {
         type: Number,
         ref: 'Subscription',
-        required: true
-    },
-    game: {
-        type: Number,
-        ref: 'Game',
         required: true
     }
 }, {
@@ -54,23 +52,6 @@ let loanSchema = new mongoose.Schema({
         createdAt: 'created_at',
         updatedAt: 'updated_at'
     }
-});
-
-loanSchema.pre('remove', function(next) {
-    let loan = this;
-    User.getUserByIdForAuth(loan.lent_out_by, function(err, docs) {
-        if (err || !docs) {
-            return next(err);
-        } else {
-            Game.deleteGame(loan.game, docs, function(err) {
-                if (err) {
-                    return next(err);
-                } else {
-                    return next(null);
-                }
-            });
-        }
-    });
 });
 
 loanSchema.plugin(autoIncrement, {

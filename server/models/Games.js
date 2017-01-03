@@ -61,6 +61,10 @@ Game.getGames = function(cb) {
         });
 };
 
+Game.getFeaturedGames = function(cb) {
+
+};
+
 Game.getGamesByTeam = function(team, cb) {
     Game.find({
             home: team

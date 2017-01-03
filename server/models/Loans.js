@@ -61,8 +61,22 @@ Loan.deleteLoan = function(id, cb) {
     });
 };
 
+Loan.deleteLoansByGame = function(game, cb) {
+    Loan.find({
+        game: game
+    }, function(err, docs) {
+        if (err || docs.length === 0) {
+            cb(err);
+        } else {
+            docs.forEach(function(doc) {
+                doc.remove(cb);
+            });
+        }
+    });
+};
+
 Loan.deleteLoansByUser = function(user, cb) {
-	Loan.find({
+    Loan.find({
         lent_out_by: user
     }, function(err, docs) {
         if (err || docs.length === 0) {
