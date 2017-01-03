@@ -6,7 +6,7 @@ let Subscription = mongoose.model('Subscription', subscriptionSchema, 'Subscript
 
 let populateSchema = [{
     path: 'team',
-	model: 'Team',
+    model: 'Team',
     populate: [{
         path: 'address',
         model: 'Address',
@@ -23,6 +23,63 @@ let populateSchema = [{
         }, {
             path: 'sport',
             model: 'Sport'
+        }]
+    }]
+}, {
+    path: 'user',
+    model: 'User',
+    populate: [{
+        path: 'address',
+        model: 'Address',
+        populate: [{
+            path: 'country',
+            model: 'Country'
+        }]
+    }, {
+        path: 'favorites',
+        model: 'Team',
+        populate: [{
+            path: 'competition',
+            model: 'Competition',
+            populate: [{
+                path: 'country',
+                model: 'Country'
+            }, {
+                path: 'sport',
+                model: 'Sport'
+            }]
+        }, {
+            path: 'address',
+            model: 'Address',
+            populate: [{
+                path: 'country',
+                model: 'Country'
+            }]
+        }]
+    }, {
+        path: 'subscriptions',
+        model: 'Subscription',
+        populate: [{
+            path: 'team',
+            model: 'Team',
+            populate: [{
+                path: 'address',
+                model: 'Address',
+                populate: [{
+                    path: 'country',
+                    model: 'Country'
+                }]
+            }, {
+                path: 'competition',
+                model: 'Competition',
+                populate: [{
+                    path: 'country',
+                    model: 'Country'
+                }, {
+                    path: 'sport',
+                    model: 'Sport'
+                }]
+            }]
         }]
     }]
 }];
@@ -121,7 +178,7 @@ Subscription.updateSubscription = function(subscription, body, cb) {
 /* Delete */
 Subscription.deleteSubscription = function(id, user, cb) {
     Subscription.findById(id, function(err, docs) {
-        if (err || !docs || (user.admin === false && user._id !== docs.user)) {
+        if (err || !docs) {
             cb(err);
         } else {
             docs.remove(cb);
@@ -130,7 +187,7 @@ Subscription.deleteSubscription = function(id, user, cb) {
 };
 
 Subscription.deleteSubscriptionsByTeam = function(team, cb) {
-	Subscription.find({
+    Subscription.find({
         team: team
     }, function(err, docs) {
         if (err || docs.length === 0) {
@@ -144,7 +201,7 @@ Subscription.deleteSubscriptionsByTeam = function(team, cb) {
 };
 
 Subscription.deleteSubscriptionsByUser = function(user, cb) {
-	Subscription.find({
+    Subscription.find({
         user: user
     }, function(err, docs) {
         if (err || docs.length === 0) {

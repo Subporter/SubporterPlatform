@@ -26,6 +26,16 @@ let populateSchema = [{
             model: 'Country'
         }]
     }]
+}, {
+	path: 'loans',
+	model: 'Loan',
+    populate: [{
+        path: 'game',
+        model: 'Game'
+    }, {
+        path: 'lent_by',
+        model: 'User'
+    }]
 }];
 
 // TODO: sort by importance
@@ -95,6 +105,33 @@ Game.getGameById = function(id, cb) {
                 cb(null, docs);
             }
         });
+};
+
+/* Loans */
+Game.toggleLoans = function(game, loan, cb) {
+	game.loans.toggleAndSort(loan);
+	game.save(function(err, docs) {
+		if (err) {
+			cb(err);
+		} else {
+			cb(null);
+		}
+	});
+};
+
+/* Helper */
+Array.prototype.toggleAndSort = function(value) {
+    let i = this.findIndex(item => item._id === value);
+
+    if (i === -1) {
+        this.push(value);
+    } else {
+        this.splice(i, 1);
+    }
+
+    this.sort(function(a, b) {
+        return a - b;
+    });
 };
 
 /* Update */

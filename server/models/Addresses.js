@@ -101,7 +101,7 @@ Address.addOrUpdateAddress = function(id, body, cb) {
     if (id === -1) {
         let address = new Address(body);
         address.save(function(err, docs) {
-            if (err) {
+            if (err || !docs) {
                 cb(err, null);
             } else {
                 cb(null, docs._id);
@@ -114,7 +114,7 @@ Address.addOrUpdateAddress = function(id, body, cb) {
             } else {
                 _.merge(docs, body);
                 docs.save(function(err, docs) {
-                    if (err) {
+                    if (err || !docs) {
                         cb(err, null);
                     } else {
                         cb(null, docs._id);

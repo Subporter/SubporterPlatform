@@ -4,14 +4,19 @@ const mongoose = require('mongoose'),
 
 let Loan = mongoose.model('Loan', loanSchema, 'Loans');
 
+let populateSchema = [{
+    path: 'game',
+    model: 'Game'
+}];
+
 /* Create */
 Loan.addLoan = function(body, cb) {
     let loan = new Loan(body);
-    loan.save(function(err) {
-        if (err) {
-            cb(err);
+    loan.save(function(err, docs) {
+        if (err || !docs) {
+            cb(err, null);
         } else {
-            cb(null);
+            cb(null, docs._id);
         }
     });
 };

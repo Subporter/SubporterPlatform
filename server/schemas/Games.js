@@ -34,7 +34,11 @@ let gameSchema = new mongoose.Schema({
         required: true,
         min: 1,
         max: 10
-    }
+    },
+	loans: [{
+		type: Number,
+		ref: 'Loan'
+	}]
 }, {
     _id: false,
     timestamps: {
