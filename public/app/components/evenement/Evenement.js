@@ -28,6 +28,7 @@ var Evenement = (function () {
         var _this = this;
         this.subscription = this.activatedRoute.params.subscribe(function (param) {
             var id = param['id'];
+            _this.gameId = id;
             _this._callApi("Anonymous", "api/games/" + id);
         });
     };
@@ -58,9 +59,8 @@ var Evenement = (function () {
         this.banner = jsonData.data.banner;
         this.loans = jsonData.data.loans;
         this.id = jsonData.data._id;
+        this.price = jsonData.data.home.price;
         this.test = jsonData.data.home;
-        console.log(this.loans);
-        console.log(this.test);
         //  console.log(this.game);
     };
     Evenement.prototype.goHome = function () {

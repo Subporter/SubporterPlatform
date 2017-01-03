@@ -33,6 +33,8 @@ banner:String;
 loans:JSON;
 id:String;
 test:JSON;
+gameId: number;
+price:number;
 
     private subscription: Subscription;
 
@@ -51,6 +53,7 @@ ngOnInit(){
 	this.subscription = this.activatedRoute.params.subscribe(
       (param: any) => {
         let id = param['id'];
+		this.gameId = id;
 		this._callApi("Anonymous", "api/games/"+id);
 
       });
@@ -108,11 +111,11 @@ ngOnInit(){
 	 this.banner = jsonData.data.banner;
 	 this.loans = jsonData.data.loans;
 	 this.id=jsonData.data._id;
+	 this.price = jsonData.data.home.price;
 
 	 this.test = jsonData.data.home;
 
-	 console.log(this.loans);
-	 console.log(this.test);
+
 
 
 	//  console.log(this.game);
