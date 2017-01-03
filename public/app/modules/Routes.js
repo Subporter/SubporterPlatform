@@ -4,6 +4,8 @@ var Home_1 = require("../components/home/Home");
 var Register_1 = require("../components/auth/register/Register");
 var Login_1 = require("../components/auth/login/Login");
 var Landing_1 = require("../components/index/Landing");
+var Search_1 = require("../components/search/Search");
+var Evenement_1 = require("../components/evenement/Evenement");
 var AuthGuard_1 = require("../common/AuthGuard");
 exports.SubporterRoutes = [
     {
@@ -17,6 +19,12 @@ exports.SubporterRoutes = [
     },
     {
         path: 'home', component: Home_1.Home, canActivate: [AuthGuard_1.AuthGuard]
+    },
+    {
+        path: 'search', component: Search_1.Search
+    },
+    {
+        path: 'evenement', component: Evenement_1.Evenement
     },
     {
         path: '**', component: Login_1.Login

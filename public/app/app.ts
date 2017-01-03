@@ -15,13 +15,22 @@ import { Register } from "./components/auth/register/Register";
 import { Login } from "./components/auth/login/Login";
 import { Landing } from "./components/index/Landing";
 import { Footer } from "./components/common/footer/Footer";
+import { Header } from "./components/common/header/Header";
+import { Topwedstrijd } from "./components/index/Topwedstrijden/Topwedstrijd";
+import { Weekwedstrijd } from "./components/index/Weekwedstrijden/Weekwedstrijd";
+import { Search } from "./components/search/Search";
+import { Evenement } from "./components/evenement/Evenement";
+import {MaterializeDirective} from "angular2-materialize";
+
+
+
 
 import { Routing } from "./modules/Routes";
 
 
 @NgModule({
     bootstrap: [App],
-    declarations: [App, Home, Register, Login, Landing, Footer],
+    declarations: [App, Home, Register, Login, Landing, Footer, Header, Topwedstrijd,Search, Evenement, MaterializeDirective],
     imports: [
         BrowserModule,
         HttpModule,

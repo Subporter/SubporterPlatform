@@ -87,7 +87,7 @@ router.get("/teams", authenticate, function(req, res) {
     }
 });
 
-router.get("/teams/competition/:competition", authenticate, function(req, res) {
+router.get("/teams/competition/:competition",authenticate, function(req, res) {
     if (req.granted) {
         Team.getTeamsByCompetition(req.params.competition, function(err, teams) {
             if (err) {

@@ -23,6 +23,11 @@ var Register_1 = require("./components/auth/register/Register");
 var Login_1 = require("./components/auth/login/Login");
 var Landing_1 = require("./components/index/Landing");
 var Footer_1 = require("./components/common/footer/Footer");
+var Header_1 = require("./components/common/header/Header");
+var Topwedstrijd_1 = require("./components/index/Topwedstrijden/Topwedstrijd");
+var Search_1 = require("./components/search/Search");
+var Evenement_1 = require("./components/evenement/Evenement");
+var angular2_materialize_1 = require("angular2-materialize");
 var Routes_1 = require("./modules/Routes");
 var Subporter = (function () {
     function Subporter() {
@@ -32,7 +37,7 @@ var Subporter = (function () {
 Subporter = __decorate([
     core_1.NgModule({
         bootstrap: [App_1.App],
-        declarations: [App_1.App, Home_1.Home, Register_1.Register, Login_1.Login, Landing_1.Landing, Footer_1.Footer],
+        declarations: [App_1.App, Home_1.Home, Register_1.Register, Login_1.Login, Landing_1.Landing, Footer_1.Footer, Header_1.Header, Topwedstrijd_1.Topwedstrijd, Search_1.Search, Evenement_1.Evenement, angular2_materialize_1.MaterializeDirective],
         imports: [
             platform_browser_1.BrowserModule,
             http_1.HttpModule,
