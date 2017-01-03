@@ -1,6 +1,8 @@
 const mongoose = require('mongoose'),
     _ = require('lodash'),
-    teamSchema = require('../schemas/Teams');
+    teamSchema = require('../schemas/Teams'),
+	Subscription = require('../models/Subscriptions'),
+	Game = require('../models/Games');
 
 let Team = mongoose.model('Team', teamSchema, 'Teams');
 
@@ -102,6 +104,28 @@ Team.deleteTeam = function(id, cb) {
             docs.remove(cb);
         }
     });
+};
+
+Team.deleteTeamReferences = function(id, cb) {
+	Team.findById(id, function (err, docs) {
+		if (err || !docs) {
+			cb(err);
+		} else {
+			Subscription.deleteSubscriptionsByTeam(docs._id, function (err) {
+                if (err) {
+                    cb(err);
+                } else {
+                    Game.deleteGamesByTeam(docs._id, function (err) {
+                        if (err) {
+                            cb(err);
+                        } else {
+                            cb(null);
+                        }
+                    });
+                }
+			});
+		}
+	});
 };
 
 Team.deleteTeamsByCompetition = function(competition, cb) {

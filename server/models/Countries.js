@@ -1,7 +1,6 @@
 const mongoose = require('mongoose'),
     _ = require('lodash'),
-    countrySchema = require('../schemas/Countries'),
-    Competition = require('../models/Competitions');
+    countrySchema = require('../schemas/Countries');
 
 let Country = mongoose.model('Country', countrySchema, 'Countries');
 

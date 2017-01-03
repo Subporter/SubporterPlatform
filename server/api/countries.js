@@ -42,67 +42,51 @@ router.post("/countries", authenticate, admin, function(req, res) {
 });
 
 /* Read (all countries) */
-router.get("/countries", authenticate, function(req, res) {
-    if (req.granted) {
-        Country.getCountries(function(err, countries) {
-            if (err) {
-                res.json({
-                    info: "Error during reading countries",
-                    success: false,
-                    error: err.errmsg
-                });
-            } else if (countries) {
-                res.json({
-                    info: "Countries found succesfully",
-                    success: true,
-                    data: countries
-                });
-            } else {
-                res.json({
-                    info: "Countries not found",
-                    success: false
-                });
-            }
-        });
-    } else {
-        res.status(403);
-        res.json({
-            info: "Unauthorized",
-            success: false
-        });
-    }
+router.get("/countries", function(req, res) {
+    Country.getCountries(function(err, countries) {
+        if (err) {
+            res.json({
+                info: "Error during reading countries",
+                success: false,
+                error: err.errmsg
+            });
+        } else if (countries) {
+            res.json({
+                info: "Countries found succesfully",
+                success: true,
+                data: countries
+            });
+        } else {
+            res.json({
+                info: "Countries not found",
+                success: false
+            });
+        }
+    });
 });
 
 /* Read (one country) */
-router.get("/countries/:id", authenticate, function(req, res) {
-    if (req.granted) {
-        Country.getCountryById(req.params.id, function(err, country) {
-            if (err) {
-                res.json({
-                    info: "Error during reading country",
-                    success: false,
-                    error: err.errmsg
-                });
-            } else if (country) {
-                res.json({
-                    info: "Country found succesfully",
-                    success: true,
-                    data: country
-                });
-            } else {
-                res.json({
-                    info: "Country not found",
-                    success: false
-                });
-            }
-        });
-    } else {
-        res.status(403);
-        res.json({
-            info: "Unauthorized",
-            success: false
-        });
-    }
+router.get("/countries/:id", function(req, res) {
+    Country.getCountryById(req.params.id, function(err, country) {
+        if (err) {
+            res.json({
+                info: "Error during reading country",
+                success: false,
+                error: err.errmsg
+            });
+        } else if (country) {
+            res.json({
+                info: "Country found succesfully",
+                success: true,
+                data: country
+            });
+        } else {
+            res.json({
+                info: "Country not found",
+                success: false
+            });
+        }
+    });
 });
 
 /* Update */
@@ -114,7 +98,7 @@ router.put("/countries/:id", authenticate, admin, function(req, res) {
                 success: false
             });
         } else {
-            Country.getCountryById(req.params.id, function (err, country) {
+            Country.getCountryById(req.params.id, function(err, country) {
                 if (err) {
                     res.json({
                         info: "Error during reading country",
@@ -122,7 +106,7 @@ router.put("/countries/:id", authenticate, admin, function(req, res) {
                         error: err.errmsg
                     });
                 } else if (country) {
-                    Country.updateCountry(country, req.body, function (err) {
+                    Country.updateCountry(country, req.body, function(err) {
                         if (err) {
                             res.json({
                                 info: "Error during updating country",

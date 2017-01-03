@@ -42,160 +42,120 @@ router.post("/competitions", authenticate, admin, formParser, imageSaver, functi
 });
 
 /* Read (all competitions) */
-router.get("/competitions", authenticate, function(req, res) {
-    if (req.granted) {
-        Competition.getCompetitions(function(err, competitions) {
-            if (err) {
-                res.json({
-                    info: "Error during reading competitions",
-                    success: false,
-                    error: err.errmsg
-                });
-            } else if (competitions) {
-                res.json({
-                    info: "Competitions found succesfully",
-                    success: true,
-                    data: competitions
-                });
-            } else {
-                res.json({
-                    info: "Competitions not found",
-                    success: false
-                });
-            }
-        });
-    } else {
-        res.status(403);
-        res.json({
-            info: "Unauthorized",
-            success: false
-        });
-    }
+router.get("/competitions", function(req, res) {
+    Competition.getCompetitions(function(err, competitions) {
+        if (err) {
+            res.json({
+                info: "Error during reading competitions",
+                success: false,
+                error: err.errmsg
+            });
+        } else if (competitions) {
+            res.json({
+                info: "Competitions found succesfully",
+                success: true,
+                data: competitions
+            });
+        } else {
+            res.json({
+                info: "Competitions not found",
+                success: false
+            });
+        }
+    });
 });
 
-router.get("/competitions/country/:country", authenticate, function(req, res) {
-    if (req.granted) {
-        Competition.getCompetitionsByCountry(req.params.country, function(err, competitions) {
-            if (err) {
-                res.json({
-                    info: "Error during reading competitions",
-                    success: false,
-                    error: err.errmsg
-                });
-            } else if (competitions) {
-                res.json({
-                    info: "Competitions found succesfully",
-                    success: true,
-                    data: competitions
-                });
-            } else {
-                res.json({
-                    info: "Competitions not found",
-                    success: false
-                });
-            }
-        });
-    } else {
-        res.status(403);
-        res.json({
-            info: "Unauthorized",
-            success: false
-        });
-    }
+router.get("/competitions/country/:country", function(req, res) {
+    Competition.getCompetitionsByCountry(req.params.country, function(err, competitions) {
+        if (err) {
+            res.json({
+                info: "Error during reading competitions",
+                success: false,
+                error: err.errmsg
+            });
+        } else if (competitions) {
+            res.json({
+                info: "Competitions found succesfully",
+                success: true,
+                data: competitions
+            });
+        } else {
+            res.json({
+                info: "Competitions not found",
+                success: false
+            });
+        }
+    });
 });
 
-router.get("/competitions/sport/:sport", authenticate, function(req, res) {
-    if (req.granted) {
-        Competition.getCompetitionsBySport(req.params.sport, function(err, competitions) {
-            if (err) {
-                res.json({
-                    info: "Error during reading competitions",
-                    success: false,
-                    error: err.errmsg
-                });
-            } else if (competitions) {
-                res.json({
-                    info: "Competitions found succesfully",
-                    success: true,
-                    data: competitions
-                });
-            } else {
-                res.json({
-                    info: "Competitions not found",
-                    success: false
-                });
-            }
-        });
-    } else {
-        res.status(403);
-        res.json({
-            info: "Unauthorized",
-            success: false
-        });
-    }
+router.get("/competitions/sport/:sport", function(req, res) {
+    Competition.getCompetitionsBySport(req.params.sport, function(err, competitions) {
+        if (err) {
+            res.json({
+                info: "Error during reading competitions",
+                success: false,
+                error: err.errmsg
+            });
+        } else if (competitions) {
+            res.json({
+                info: "Competitions found succesfully",
+                success: true,
+                data: competitions
+            });
+        } else {
+            res.json({
+                info: "Competitions not found",
+                success: false
+            });
+        }
+    });
 });
 
-router.get("/competitions/country/:country/sport/:sport", authenticate, function(req, res) {
-    if (req.granted) {
-        Competition.getCompetitionsByCountryAndSport(req.params.country, req.params.sport, function(err, competitions) {
-            if (err) {
-                res.json({
-                    info: "Error during reading competitions",
-                    success: false,
-                    error: err.errmsg
-                });
-            } else if (competitions) {
-                res.json({
-                    info: "Competitions found succesfully",
-                    success: true,
-                    data: competitions
-                });
-            } else {
-                res.json({
-                    info: "Competitions not found",
-                    success: false
-                });
-            }
-        });
-    } else {
-        res.status(403);
-        res.json({
-            info: "Unauthorized",
-            success: false
-        });
-    }
+router.get("/competitions/country/:country/sport/:sport", function(req, res) {
+    Competition.getCompetitionsByCountryAndSport(req.params.country, req.params.sport, function(err, competitions) {
+        if (err) {
+            res.json({
+                info: "Error during reading competitions",
+                success: false,
+                error: err.errmsg
+            });
+        } else if (competitions) {
+            res.json({
+                info: "Competitions found succesfully",
+                success: true,
+                data: competitions
+            });
+        } else {
+            res.json({
+                info: "Competitions not found",
+                success: false
+            });
+        }
+    });
 });
 
 /* Read (one competition) */
-router.get("/competitions/:id", authenticate, function(req, res) {
-    if (req.granted) {
-        Competition.getCompetitionById(req.params.id, function(err, competition) {
-            if (err) {
-                res.json({
-                    info: "Error during reading competition",
-                    success: false,
-                    error: err.errmsg
-                });
-            } else if (competition) {
-                res.json({
-                    info: "Competition found succesfully",
-                    success: true,
-                    data: competition
-                });
-            } else {
-                res.json({
-                    info: "Competition not found",
-                    success: false
-                });
-            }
-        });
-    } else {
-        res.status(403);
-        res.json({
-            info: "Unauthorized",
-            success: false
-        });
-    }
+router.get("/competitions/:id", function(req, res) {
+    Competition.getCompetitionById(req.params.id, function(err, competition) {
+        if (err) {
+            res.json({
+                info: "Error during reading competition",
+                success: false,
+                error: err.errmsg
+            });
+        } else if (competition) {
+            res.json({
+                info: "Competition found succesfully",
+                success: true,
+                data: competition
+            });
+        } else {
+            res.json({
+                info: "Competition not found",
+                success: false
+            });
+        }
+    });
 });
 
 

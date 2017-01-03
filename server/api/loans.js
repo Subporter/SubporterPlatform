@@ -3,7 +3,8 @@ const express = require('express'),
     admin = require('../middleware/admin'),
     loadUser = require('../middleware/loadUser'),
     bodyValidator = require('../helpers/bodyValidator'),
-    Loan = require('../models/Loans');
+    Loan = require('../models/Loans'),
+    Game = require('../models/Games');
 
 let router = express.Router();
 
@@ -16,17 +17,38 @@ router.post("/loans", authenticate, loadUser, function(req, res) {
                 success: false
             });
         } else {
-            Loan.addLoan(req.body, function(err) {
-                if (err) {
+			req.body.lent_out_by = req.user._id;
+            Loan.addLoan(req.body, function(err, id) {
+                if (err || !id) {
                     res.json({
                         info: "Error during creating loan",
                         success: false,
                         error: err
                     });
                 } else {
-                    res.json({
-                        info: "Loan created succesfully",
-                        success: true
+                    Game.getGameById(req.body.game, function (err, game) {
+                        if (err) {
+                            res.json({
+                                info: "Error during creating loan",
+                                success: false,
+                                error: err
+                            });
+                        } else {
+                            Game.toggleLoans(game, id, function (err) {
+                                if (err) {
+                                    res.json({
+                                        info: "Error during creating loan",
+                                        success: false,
+                                        error: err
+                                    });
+                                } else {
+                                    res.json({
+                                        info: "Loan created succesfully",
+                                        success: true
+                                    });
+                                }
+                            });
+                        }
                     });
                 }
             });

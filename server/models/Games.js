@@ -26,7 +26,19 @@ let populateSchema = [{
             model: 'Country'
         }]
     }]
+}, {
+	path: 'loans',
+	model: 'Loan',
+    populate: [{
+        path: 'game',
+        model: 'Game'
+    }, {
+        path: 'lent_by',
+        model: 'User'
+    }]
 }];
+
+// TODO: sort by importance
 
 /* Create */
 Game.addGame = function(body, cb) {
@@ -46,6 +58,7 @@ Game.getGames = function(cb) {
         .populate(populateSchema)
         .sort({
             date: 1,
+            importance: 1,
             home: 1,
             away: 1
         })
@@ -58,13 +71,14 @@ Game.getGames = function(cb) {
         });
 };
 
+Game.getFeaturedGames = function(cb) {
+
+};
+
 Game.getGamesByTeam = function(team, cb) {
-    Game.find({})
-        .or([{
+    Game.find({
             home: team
-        }, {
-            away: team
-        }])
+        })
         .populate(populateSchema)
         .sort({
             date: 1,
@@ -93,6 +107,33 @@ Game.getGameById = function(id, cb) {
         });
 };
 
+/* Loans */
+Game.toggleLoans = function(game, loan, cb) {
+	game.loans.toggleAndSort(loan);
+	game.save(function(err, docs) {
+		if (err) {
+			cb(err);
+		} else {
+			cb(null);
+		}
+	});
+};
+
+/* Helper */
+Array.prototype.toggleAndSort = function(value) {
+    let i = this.findIndex(item => item._id === value);
+
+    if (i === -1) {
+        this.push(value);
+    } else {
+        this.splice(i, 1);
+    }
+
+    this.sort(function(a, b) {
+        return a - b;
+    });
+};
+
 /* Update */
 Game.updateGame = function(game, body, cb) {
     _.merge(game, body);
@@ -108,7 +149,7 @@ Game.updateGame = function(game, body, cb) {
 /* Delete */
 Game.deleteGame = function(id, user, cb) {
     Game.findById(id, function(err, docs) {
-        if (err || !docs || (user.admin === false && user._id !== docs.user)) {
+        if (err || !docs) {
             cb(err);
         } else {
             docs.remove(cb);
@@ -117,12 +158,9 @@ Game.deleteGame = function(id, user, cb) {
 };
 
 Game.deleteGamesByTeam = function(team, cb) {
-    Game.find({})
-        .or([{
+    Game.find({
             home: team
-        }, {
-            away: team
-        }])
+        })
         .exec(function(err, docs) {
             if (err || docs.length === 0) {
                 cb(err);

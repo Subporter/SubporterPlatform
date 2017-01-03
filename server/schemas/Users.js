@@ -3,7 +3,9 @@ const mongoose = require('mongoose'),
         defaultHidden: {
             __v: true,
             created_at: true,
-            updated_at: true
+            updated_at: true,
+			admin: true,
+			password: true
         }
     }),
     autoIncrement = require('mongoose-increment'),

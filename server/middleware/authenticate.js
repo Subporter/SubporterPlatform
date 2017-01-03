@@ -19,7 +19,6 @@ let authenticate = function(req, res, next) {
 			}
 		} catch (err) {
 			req.granted = false;
-			next();
 		}
     } else {
 		req.granted = false;

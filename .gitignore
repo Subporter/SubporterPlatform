@@ -3,7 +3,6 @@ subporter.config.js
 *.js.map
 typings/
 .npmrc
-public/img/uploads/
 
 ### IDE ###
 

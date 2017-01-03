@@ -73,10 +73,7 @@ User.addUser = function(body, cb) {
 
 /* Read (all users) */
 User.getUsers = function(cb) {
-    User.find({}, {
-            admin: 0,
-            password: 0
-        })
+    User.find({})
         .populate(populateSchema)
         .sort('username')
         .exec(function(err, docs) {
@@ -90,9 +87,20 @@ User.getUsers = function(cb) {
 
 /* Read (one user) */
 User.getUserById = function(id, cb) {
+    User.findById(id)
+        .populate(populateSchema)
+        .exec(function(err, docs) {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        });
+};
+
+User.getUserByIdForLogin = function(id, cb) {
     User.findById(id, {
-            admin: 0,
-            password: 0
+            password: 1
         })
         .populate(populateSchema)
         .exec(function(err, docs) {
@@ -106,7 +114,7 @@ User.getUserById = function(id, cb) {
 
 User.getUserByIdForAuth = function(id, cb) {
     User.findById(id, {
-            password: 0
+            admin: 1
         })
         .populate(populateSchema)
         .exec(function(err, docs) {
@@ -121,9 +129,6 @@ User.getUserByIdForAuth = function(id, cb) {
 User.getUserByEmail = function(email, cb) {
     User.findOne({
             email: email
-        }, {
-            admin: 0,
-            password: 0
         })
         .populate(populateSchema)
         .exec(function(err, docs) {
@@ -139,7 +144,7 @@ User.getUserByEmailForLogin = function(email, cb) {
     User.findOne({
             email: email
         }, {
-            admin: 0
+            password: 1
         })
         .populate(populateSchema)
         .exec(function(err, docs) {
@@ -155,7 +160,7 @@ User.getUserByEmailForAuth = function(email, cb) {
     User.findOne({
             email: email
         }, {
-            password: 0
+            admin: 1
         })
         .populate(populateSchema)
         .exec(function(err, docs) {
@@ -170,9 +175,38 @@ User.getUserByEmailForAuth = function(email, cb) {
 User.getUserByUsername = function(username, cb) {
     User.findOne({
             username: username
+        })
+        .populate(populateSchema)
+        .exec(function(err, docs) {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        });
+};
+
+User.getUserByUsernameForLogin = function(username, cb) {
+    User.findOne({
+            username: username
         }, {
-            admin: 0,
-            password: 0
+            password: 1
+        })
+        .populate(populateSchema)
+        .exec(function(err, docs) {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        });
+};
+
+User.getUserByUsernameForAuth = function(username, cb) {
+    User.findOne({
+            username: username
+        }, {
+            admin: 1
         })
         .populate(populateSchema)
         .exec(function(err, docs) {
@@ -192,7 +226,7 @@ User.toggleFavorite = function(user, favorite, cb) {
             cb(err, null);
         } else {
             User.populate(docs, populateSchema, function(err, docs) {
-                if (err) {
+                if (err || !docs) {
                     cb(err, null);
                 } else {
                     cb(null, docs);
@@ -210,7 +244,7 @@ User.toggleSubscription = function(user, subscription, cb) {
             cb(err, null);
         } else {
             User.populate(docs, populateSchema, function(err, docs) {
-                if (err) {
+                if (err || !docs) {
                     cb(err, null);
                 } else {
                     cb(null, docs);
@@ -221,7 +255,6 @@ User.toggleSubscription = function(user, subscription, cb) {
 };
 
 /* Helper */
-
 Array.prototype.toggleAndSort = function(value) {
     let i = this.findIndex(item => item._id === value);
 
