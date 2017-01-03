@@ -1,16 +1,17 @@
 const express = require('express'),
 	authenticate = require('../middleware/authenticate'),
 	admin = require('../middleware/admin'),
+	formParser = require('../middleware/formParser'),
+	imageSaver = require('../middleware/imageSaver'),
 	bodyValidator = require('../helpers/bodyValidator'),
-	loadUser = require('../middleware/loadUser'),
 	Game = require('../models/Games');
 
 let router = express.Router();
 
 /* Create */
-router.post("/games", authenticate, admin, function (req, res) {
+router.post("/games", authenticate, admin, formParser, imageSaver, function (req, res) {
 	if (req.granted) {
-		if (Object.keys(req.body).length !== 3 || bodyValidator(req.body.date, req.body.home, req.body.away)) {
+		if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.away, req.body.banner, req.body.date, req.body.home, req.body.importance)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false
@@ -41,7 +42,8 @@ router.post("/games", authenticate, admin, function (req, res) {
 });
 
 /* Read (all games) */
-router.get("/games", authenticate, admin, function (req, res) {
+router.get("/games", authenticate, function (req, res) {
+	// TODO: where date > current date (upcoming)
 	if (req.granted) {
 		Game.getGames(function(err, games) {
 			if (err) {
@@ -72,7 +74,7 @@ router.get("/games", authenticate, admin, function (req, res) {
 	}
 });
 
-router.get("/games/team/:team", authenticate, admin, function (req, res) {
+router.get("/games/team/:team", authenticate, function (req, res) {
 	if (req.granted) {
 		Game.getGamesByTeam(req.params.team, function(err, games) {
 			if (err) {
@@ -103,8 +105,12 @@ router.get("/games/team/:team", authenticate, admin, function (req, res) {
 	}
 });
 
+router.get("/games/featured", authenticate, function (req, res) {
+	// TODO: featured
+});
+
 /* Read (one game) */
-router.get("/games/:id", authenticate, admin, function (req, res) {
+router.get("/games/:id", authenticate, function (req, res) {
 	if (req.granted) {
         Game.getGameById(req.params.id, function(err, game) {
             if (err) {
@@ -136,9 +142,9 @@ router.get("/games/:id", authenticate, admin, function (req, res) {
 });
 
 /* Update */
-router.put("/games/:id", authenticate, admin, function (req, res) {
+router.put("/games/:id", authenticate, admin, formParser, imageSaver, function (req, res) {
 	if (req.granted) {
-		if (Object.keys(req.body).length !== 3 || bodyValidator(req.body.date, req.body.home, req.body.away)) {
+		if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.away, req.body.banner, req.body.date, req.body.home, req.body.importance)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false

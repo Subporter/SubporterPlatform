@@ -32,6 +32,13 @@ let imageSaver = function(req, res, next) {
                     req.body.subscription = "/img/uploads/" + path + fileName;
                 }
             }
+            if (req.files.banner && req.files.banner[0]) {
+                let fileName = uuid() + "_" + req.files.banner[0].originalFilename;
+                let path = "games/";
+                if (save(req.files.banner[0].path, fileName, path)) {
+                    req.body.banner = "/img/uploads/" + path + fileName;
+                }
+            }
             if (req.files.avatar && req.files.avatar[0]) {
                 let fileName = uuid() + "_" + req.files.avatar[0].originalFilename;
                 let path = "users/";

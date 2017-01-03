@@ -9,6 +9,16 @@ const mongoose = require('mongoose'),
     autoIncrement = require('mongoose-increment');
 
 let gameSchema = new mongoose.Schema({
+	away: {
+        type: Number,
+        ref: 'Team',
+        required: true
+    },
+	banner: {
+		type: String,
+		required: true,
+		trim: true
+	},
     date: {
         type: Date,
         required: true
@@ -18,10 +28,11 @@ let gameSchema = new mongoose.Schema({
         ref: 'Team',
         required: true
     },
-	away: {
+    importance: {
         type: Number,
-        ref: 'Team',
-        required: true
+        required: true,
+        min: 1,
+        max: 10
     }
 }, {
     _id: false,
@@ -36,5 +47,13 @@ gameSchema.plugin(autoIncrement, {
 	fieldName: '_id'
 });
 gameSchema.plugin(mongooseHidden);
+
+gameSchema.index({
+    home: 1,
+    away: 1,
+    date: 1
+}, {
+    unique: true
+});
 
 module.exports = gameSchema;
