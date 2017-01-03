@@ -27,18 +27,149 @@ let populateSchema = [{
         }]
     }]
 }, {
-	path: 'loans',
-	model: 'Loan',
+    path: 'loans',
+    model: 'Loan',
     populate: [{
-        path: 'game',
-        model: 'Game'
-    }, {
         path: 'lent_by',
-        model: 'User'
+        model: 'User',
+        populate: [{
+            path: 'address',
+            model: 'Address',
+            populate: [{
+                path: 'country',
+                model: 'Country'
+            }]
+        }, {
+            path: 'favorites',
+            model: 'Team',
+            populate: [{
+                path: 'competition',
+                model: 'Competition',
+                populate: [{
+                    path: 'country',
+                    model: 'Country'
+                }, {
+                    path: 'sport',
+                    model: 'Sport'
+                }]
+            }, {
+                path: 'address',
+                model: 'Address',
+                populate: [{
+                    path: 'country',
+                    model: 'Country'
+                }]
+            }]
+        }, {
+            path: 'subscriptions',
+            model: 'Subscription',
+            populate: [{
+                path: 'team',
+                model: 'Team',
+                populate: [{
+                    path: 'address',
+                    model: 'Address',
+                    populate: [{
+                        path: 'country',
+                        model: 'Country'
+                    }]
+                }, {
+                    path: 'competition',
+                    model: 'Competition',
+                    populate: [{
+                        path: 'country',
+                        model: 'Country'
+                    }, {
+                        path: 'sport',
+                        model: 'Sport'
+                    }]
+                }]
+            }]
+        }]
+    }, {
+        path: 'lent_out_by',
+        model: 'User',
+        populate: [{
+            path: 'address',
+            model: 'Address',
+            populate: [{
+                path: 'country',
+                model: 'Country'
+            }]
+        }, {
+            path: 'favorites',
+            model: 'Team',
+            populate: [{
+                path: 'competition',
+                model: 'Competition',
+                populate: [{
+                    path: 'country',
+                    model: 'Country'
+                }, {
+                    path: 'sport',
+                    model: 'Sport'
+                }]
+            }, {
+                path: 'address',
+                model: 'Address',
+                populate: [{
+                    path: 'country',
+                    model: 'Country'
+                }]
+            }]
+        }, {
+            path: 'subscriptions',
+            model: 'Subscription',
+            populate: [{
+                path: 'team',
+                model: 'Team',
+                populate: [{
+                    path: 'address',
+                    model: 'Address',
+                    populate: [{
+                        path: 'country',
+                        model: 'Country'
+                    }]
+                }, {
+                    path: 'competition',
+                    model: 'Competition',
+                    populate: [{
+                        path: 'country',
+                        model: 'Country'
+                    }, {
+                        path: 'sport',
+                        model: 'Sport'
+                    }]
+                }]
+            }]
+        }]
+    }, {
+        path: 'subscription',
+        model: 'Subscription',
+        populate: [{
+            path: 'team',
+            model: 'Team',
+            populate: [{
+                path: 'address',
+                model: 'Address',
+                populate: [{
+                    path: 'country',
+                    model: 'Country'
+                }]
+            }, {
+                path: 'competition',
+                model: 'Competition',
+                populate: [{
+                    path: 'country',
+                    model: 'Country'
+                }, {
+                    path: 'sport',
+                    model: 'Sport'
+                }]
+            }]
+        }]
     }]
 }];
-
-// TODO: sort by importance
 
 /* Create */
 Game.addGame = function(body, cb) {
@@ -81,9 +212,7 @@ Game.getGamesByTeam = function(team, cb) {
         })
         .populate(populateSchema)
         .sort({
-            date: 1,
-            home: 1,
-            away: 1
+            date: 1
         })
         .exec(function(err, docs) {
             if (err) {
@@ -109,14 +238,14 @@ Game.getGameById = function(id, cb) {
 
 /* Loans */
 Game.toggleLoans = function(game, loan, cb) {
-	game.loans.toggleAndSort(loan);
-	game.save(function(err, docs) {
-		if (err) {
-			cb(err);
-		} else {
-			cb(null);
-		}
-	});
+    game.loans.toggleAndSort(loan);
+    game.save(function(err, docs) {
+        if (err) {
+            cb(err);
+        } else {
+            cb(null);
+        }
+    });
 };
 
 /* Helper */
