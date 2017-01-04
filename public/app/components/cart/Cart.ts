@@ -99,7 +99,10 @@ for(var cook in cookie){
 
 }
 
-this._callApi2("Secured", "api/users");
+this.apiService.get("api/users").subscribe(
+	 		response =>  this.getUser(response.text()),
+	 		error => this.response = error.text
+	 	);
 
 
 
@@ -132,7 +135,7 @@ showEmpty(){
 
 
   _callApi(type, url) {
-		this.apiService.call(url).subscribe(
+		this.apiService.get(url).subscribe(
 			response =>  this.getLoan(response.text()),
 			error => this.response = error.text
 		);
@@ -145,7 +148,7 @@ showEmpty(){
   }
 
      _callApi2(type, url) {
-	 	this.apiService.call("api/users").subscribe(
+	 	this.apiService.get("api/users").subscribe(
 	 		response =>  this.getUser(response.text()),
 	 		error => this.response = error.text
 	 	);
