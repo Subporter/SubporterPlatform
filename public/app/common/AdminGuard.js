@@ -20,17 +20,13 @@ var AdminGuard = (function () {
     }
     AdminGuard.prototype.canActivate = function () {
         if (this.auth.isLoggedIn()) {
-            /*if (this.auth.isAdmin()) {
+            if (this.auth.isAdmin()) {
                 return true;
-            } else {
+            }
+            else {
+                this.router.navigate(['/login']);
                 return false;
-            }*/
-            this.apiService.call("check/admin").subscribe(function (response) {
-                var success = JSON.parse(response.text()).success;
-                return JSON.parse(response.text()).success;
-            }, function (error) {
-                return false;
-            });
+            }
         }
         else {
             this.router.navigate(['/login']);

@@ -39,10 +39,10 @@ export class Landing {
 	}
 
 
-ngOnInit() { 
-  
+ngOnInit() {
+
   this._callApi("Anonymous", "api/teams/competition/"+ this.compId);
-  
+
 
 
 
@@ -68,14 +68,14 @@ search(){
   }
 
   _callApi(type, url) {
-		this.apiService.call(url).subscribe(
+		this.apiService.get(url).subscribe(
 			response => this.getTeam(response.text()),
 			error => this.response = error.text
 		);
 
-    
 
-    
+
+
   }
 
    getTeam(data){
@@ -83,7 +83,7 @@ search(){
      let jsonData = JSON.parse(Data);
      this.jsonDataData = jsonData.data;
 
-     
+
 
      this.displayCarousel();
 
@@ -92,10 +92,10 @@ search(){
   displayCarousel(){
      $('.carousel-class').slick({  infinite: true, autoplay:true, arrows:false,
   slidesToShow: 12,
-  slidesToScroll: 1 }); 
+  slidesToScroll: 1 });
   }
 
- 
+
 
   test(){
     console.log("test");

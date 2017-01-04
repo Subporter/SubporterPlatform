@@ -9,20 +9,12 @@ export class AdminGuard implements CanActivate {
 
 	canActivate() {
 		if (this.auth.isLoggedIn()) {
-			/*if (this.auth.isAdmin()) {
+			if (this.auth.isAdmin()) {
                 return true;
             } else {
+				this.router.navigate(['/login']);
                 return false;
-            }*/
-			this.apiService.call("check/admin").subscribe(
-			response => {
-				let success = JSON.parse(response.text()).success;
-				return JSON.parse(response.text()).success;
-			},
-			error => {
-				return false;
-			}
-		);
+            }
 		} else {
 			this.router.navigate(['/login']);
 			return false;

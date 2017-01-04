@@ -100,7 +100,8 @@ User.getUserById = function(id, cb) {
 
 User.getUserByIdForLogin = function(id, cb) {
     User.findById(id, {
-            password: 1
+            password: 1,
+            email: 1
         })
         .populate(populateSchema)
         .exec(function(err, docs) {
@@ -114,7 +115,8 @@ User.getUserByIdForLogin = function(id, cb) {
 
 User.getUserByIdForAuth = function(id, cb) {
     User.findById(id, {
-            admin: 1
+            admin: 1,
+			email: 1
         })
         .populate(populateSchema)
         .exec(function(err, docs) {
@@ -144,7 +146,8 @@ User.getUserByEmailForLogin = function(email, cb) {
     User.findOne({
             email: email
         }, {
-            password: 1
+            password: 1,
+			email: 1
         })
         .populate(populateSchema)
         .exec(function(err, docs) {
@@ -160,7 +163,8 @@ User.getUserByEmailForAuth = function(email, cb) {
     User.findOne({
             email: email
         }, {
-            admin: 1
+            admin: 1,
+			email: 1
         })
         .populate(populateSchema)
         .exec(function(err, docs) {
@@ -190,7 +194,8 @@ User.getUserByUsernameForLogin = function(username, cb) {
     User.findOne({
             username: username
         }, {
-            password: 1
+            password: 1,
+			email: 1
         })
         .populate(populateSchema)
         .exec(function(err, docs) {
@@ -206,7 +211,8 @@ User.getUserByUsernameForAuth = function(username, cb) {
     User.findOne({
             username: username
         }, {
-            admin: 1
+            admin: 1,
+            email: 1
         })
         .populate(populateSchema)
         .exec(function(err, docs) {
