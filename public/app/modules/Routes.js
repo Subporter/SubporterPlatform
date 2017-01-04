@@ -26,9 +26,6 @@ exports.SubporterRoutes = [
         path: 'register', component: Register_1.Register
     },
     {
-        path: 'admin/overview', component: Overview_1.AdminOverview, canActivate: [AdminGuard_1.AdminGuard]
-    },
-    {
         path: 'search', component: Search_1.Search
     },
     {
@@ -39,6 +36,9 @@ exports.SubporterRoutes = [
     },
     {
         path: 'cart', component: Cart_1.Cart
+    },
+    {
+        path: 'admin', component: Overview_1.AdminOverview, canActivate: [AdminGuard_1.AdminGuard]
     },
     {
         path: '**', component: Login_1.Login

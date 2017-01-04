@@ -30,9 +30,6 @@ export const SubporterRoutes: Routes = [
         path: 'register', component: Register
     },
     {
-        path: 'admin/overview', component: AdminOverview, canActivate: [AdminGuard]
-    },
-    {
         path: 'search', component: Search
     },
     {
@@ -43,6 +40,9 @@ export const SubporterRoutes: Routes = [
     },
     {
         path: 'cart', component: Cart
+    },
+    {
+        path: 'admin', component: AdminOverview, canActivate: [AdminGuard]
     },
     {
         path: '**', component: Login

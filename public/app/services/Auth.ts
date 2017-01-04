@@ -1,6 +1,6 @@
 import { tokenNotExpired } from "angular2-jwt";
 import { Injectable } from '@angular/core';
-import { ApiService } from './ApiService';
+import { ApiService } from "./ApiService";
 
 @Injectable()
 export class Auth {
@@ -13,13 +13,16 @@ export class Auth {
 	}
 
 	isAdmin() {
-		this.apiService.get("check/admin").subscribe(
-			response => {
-				return JSON.parse(response.text()).success;
-			},
-			error => {
-				return false;
-			}
-		);
+		let auth = this;
+		return new Promise(function (resolve, reject) {
+			auth.apiService.get("check/admin").subscribe(
+				response => {
+					resolve(JSON.parse(response.text()).success);
+				},
+				error => {
+					resolve(false);
+				}
+			);
+		});
 	}
 }
