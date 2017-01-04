@@ -28,6 +28,16 @@ let populateSchema = [{
         }]
     }]
 }, {
+    path: 'competition',
+    model: 'Competition',
+    populate: [{
+        path: 'country',
+        model: 'Country'
+    }, {
+        path: 'sport',
+        model: 'Sport'
+    }]
+}, {
     path: 'loans',
     model: 'Loan',
     populate: [{
@@ -207,21 +217,38 @@ Game.getGames = function(cb) {
         });
 };
 
-Game.getFeaturedGames = function(country, cb) {
-    
+Game.getFeaturedGames = function(competition, cb) {
     Game.find({
+            competition: competition,
             date: {
                 $gt: moment().toDate()
             }
         })
-        .populateSchema(populateSchema)
-        .sort({
-            importance: -1,
-            date: 1,
-            home: 1,
-            away: 1
-        })
         .limit(6)
+        .populate(populateSchema)
+        .sort({
+            date: 1
+        })
+        .exec(function(err, docs) {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        });
+};
+
+Game.getGamesByCompetition = function(competition, cb) {
+    Game.find({
+            competition: competition,
+            date: {
+                $gt: moment().toDate()
+            }
+        })
+        .populate(populateSchema)
+        .sort({
+            date: 1
+        })
         .exec(function(err, docs) {
             if (err) {
                 cb(err, null);

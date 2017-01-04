@@ -62,7 +62,8 @@ let subscriptions = function(req, fields) {
 
 let games = function(req, fields) {
     if (fields.away && fields.away[0]) req.body.away = fields.away[0];
-    if (fields.banner && fields.banner[0]) req.body.banner = fields.banner[0];
+	if (fields.banner && fields.banner[0]) req.body.banner = fields.banner[0];
+    if (fields.competition && fields.competition[0]) req.body.competition = fields.competition[0];
     if (fields.date && fields.date[0]) req.body.date = fields.date[0];
     if (fields.home && fields.home[0]) req.body.home = fields.home[0];
     if (fields.importance && fields.importance[0]) req.body.importance = fields.importance[0];

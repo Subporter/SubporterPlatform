@@ -2,8 +2,7 @@ const mongoose = require('mongoose'),
     _ = require('lodash'),
     teamSchema = require('../schemas/Teams'),
     Subscription = require('../models/Subscriptions'),
-    Game = require('../models/Games'),
-    Competition = require('mongoose').model('Competition');
+    Game = require('../models/Games');
 
 let Team = mongoose.model('Team', teamSchema, 'Teams');
 
@@ -69,38 +68,6 @@ Team.getTeamsByCompetition = function(competition, cb) {
                 cb(null, docs);
             }
         });
-};
-
-Team.getTeamsByCountry = function(country, cb) {
-    Competition.deleteCompetition(1, function (err) {
-
-    });
-    /*Competition.getCompetitions(function(err, docs) {
-        if (err || !docs) {
-            cb(err, null);
-        } else {
-            let ids = docs.map(function(doc) {
-                return doc._id;
-            });
-            Team.find({
-                    competition: {
-                        $in: ids
-                    }
-                })
-                .populate(populateSchema)
-                .sort({
-                    competition: 1,
-                    name: 1
-                })
-                .exec(function(err, docs) {
-                    if (err) {
-                        cb(err, null);
-                    } else {
-                        cb(null, docs);
-                    }
-                });
-        }
-    });*/
 };
 
 /* Read (one team) */
