@@ -17,16 +17,8 @@ var AdminGuard = (function () {
         this.router = router;
     }
     AdminGuard.prototype.canActivate = function () {
-        if (this.auth.isLoggedIn()) {
-            this.auth.isAdmin().then(function (res) {
-                if (res) {
-                    return true;
-                }
-                else {
-                    this.router.navigate(['/landing']);
-                    return false;
-                }
-            });
+        if (this.auth.isAdmin()) {
+            return true;
         }
         else {
             this.router.navigate(['/login']);

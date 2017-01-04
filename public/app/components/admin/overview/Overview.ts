@@ -6,22 +6,7 @@ import { ApiService } from '../../../services/ApiService';
 
 @Component({
 	selector: 'admin-overview',
-	template: `
-		<div>
-			<div class="home jumbotron centered">
-				<h1>Welcome to Angular2 through Auth</h1>
-				<h2 *ngIf="jwt">Your JWT is:</h2>
-				<pre *ngIf="jwt" class="jwt"><code>{{ jwt }}</code></pre>
-				<p>Click any of the buttons to call an API and get a response</p>
-				<p><a class="btn btn-primary btn-lg" role="button" (click)="callAnonymousApi()">Call Anonymous API</a></p>
-    			<p><a class="btn btn-primary btn-lg" role="button" (click)="callSecuredApi()">Call Secure API</a></p>
-    			<p><a class="btn btn-primary btn-lg" role="button" (click)="logout()">Logout</a></p>
-    			<p><a class="btn btn-primary btn-lg" role="button" (click)="updateUser()">Update user</a></p>
-    			<h2 *ngIf="response">The response of calling the <span class="red">{{ api }}</span> API is:</h2>
-    			<h3 *ngIf="response">{{ response }}</h3>
-			</div>
-		</div>
-	`
+	templateUrl: './app/components/admin/overview/overview.view.html'
 })
 
 export class AdminOverview {
