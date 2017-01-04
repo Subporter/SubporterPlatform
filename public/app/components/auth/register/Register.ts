@@ -6,30 +6,41 @@ import { contentHeaders } from '../../../common/Headers'
 @Component({
 	selector: 'register',
 	template: `
-		<div>
-			<h1>Register</h1>
+	<div class="register container">
+		<div class="register-section">
+			<h1>Create an account</h1>
 			<form (submit)="register($event)">
-				<div class="form-group">
+				<div class="form-group one">
+				<div class="input-field">
      				<label for="username">Username</label>
      				<input [(ngModel)]="username" type="text" class="form-control" name="username" id="username" placeholder="Username">
+					 </div>
    				</div>
-				<div class="form-group">
+				<div class="form-group two">
+				<div class="input-field">
      				<label for="email">Email</label>
      				<input [(ngModel)]="email" type="email" class="form-control" name="email" id="email" placeholder="Email">
+					 </div>
    				</div>
-   				<div class="form-group">
+   				<div class="form-group one">
+				   <div class="input-field">
      				<label for="password">Password</label>
      				<input [(ngModel)]="password" type="password" class="form-control" name="password" id="password" placeholder="Password">
+					 </div>
    				</div>
-				<div class="form-group">
+				<div class="form-group two">
+				<div class="input-field">
      				<label for="confirmPassword">Confirm password</label>
      				<input [(ngModel)]="confirmPassword" type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Confirm password">
+					 </div>
    				</div>
-   				<button type="submit" class="btn btn-default">Submit</button>
-     			<a [routerLink]="['/login']">Click here to login</a>
+   				<button type="submit" class="btn btn-default">Register</button>
+     			<a [routerLink]="['/login']">Click here to go back</a>
 			</form>
 		</div>
-	`
+		</div>
+	`,
+    styleUrls: ['../../../css/css/register.css']
 })
 
 export class Register {

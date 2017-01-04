@@ -1,12 +1,16 @@
 <div class="section " id="section0">
 
-    <nav>
+ <nav>
     <div class="nav-wrapper">
       <a href="#" class="brand-logo">Subporter</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="sass.html">Sass</a></li>
-        <li><a href="badges.html">Components</a></li>
-        <li><a  [routerLink]="['/login']">Login</a></li>
+        <li><a href="sass.html">Info</a></li>
+        <li><a  [routerLink]="['/search']">Zoeken</a></li>
+        <li *ngIf="loggedIn"><a  [routerLink]="['/cart']">Winkelwagen</a></li>
+
+        <li *ngIf="!loggedIn"><a  [routerLink]="['/login']">Login</a></li>
+        <li *ngIf="loggedIn"><a  [routerLink]="['/profiel']">Profiel</a></li>
+
         <li><a class="waves-effect waves-light btn" (click)="search()">Abonnement aanbieden</a></li>
       </ul>
     </div>
@@ -23,14 +27,17 @@
     required
     name="q"
     [(ngModel)]="q"/>
-          <label for="search"><i class="material-icons">search</i></label>
-    <select [(ngModel)]="s" id="searchBar" name="s">
-        <option selected>België</option>
-        <option>Nederland</option>
-        <option>Duitsland</option>
+          <label for="search"><i class="material-icons prefix">search</i></label>
+ 
 
-
+<select [(ngModel)]="s" id="searchBar" name="s">
+      <option value="" disabled selected>Choose your option</option>
+      <option value="1">België</option>
+      <option value="2">Nederland</option>
+      <option value="3">Engeland</option>
     </select>
+
+
     <button class="btn waves-effect waves-light"  (click)="search()"> ZOEKEN </button>
      </div>
 
@@ -46,15 +53,69 @@
             </div>
             <div class="section fp-auto-height" data-anchor="section2" id="section1">
 
-            <div class="container">
+              
+<div class="test" >
+             <div class="carousel-class">
+
+
+<div>
+               <div *ngFor="let team of jsonDataData"  >
+            <img src="{{team.logo}}" alt="{{team.name}}" id="{{team._id}}" (click)="goToTeamPage(this.id);">
+           
+    </div>
+
+    </div>
+<!--
+<div><img src="../../img/gent.png"></div>
+<div><img src="../../img/oostemde.png"></div>
+
+<div><img src="../../img/genk.png"></div>
+
+<div><img src="../../img/gent.png"></div>
+<div><img src="../../img/oostemde.png"></div>
+<div><img src="../../img/genk.png"></div>
+<div><img src="../../img/gent.png"></div>
+<div><img src="../../img/oostemde.png"></div>
+<div><img src="../../img/genk.png"></div>
+<div><img src="../../img/gent.png"></div>
+<div><img src="../../img/oostemde.png"></div>
+<div><img src="../../img/genk.png"></div>
+<div><img src="../../img/gent.png"></div>
+<div><img src="../../img/oostemde.png"></div>
+<div><img src="../../img/genk.png"></div>
+<div><img src="../../img/gent.png"></div>
+<div><img src="../../img/oostemde.png"></div>
+<div><img src="../../img/genk.png"></div>
+<div><img src="../../img/gent.png"></div>
+<div><img src="../../img/oostemde.png"></div>
+<div><img src="../../img/genk.png"></div>-->
+
+
+</div>
+
+
+             </div>
+
+            <div class="container margintop">
 
 
 <h3>Topwedstrijden</h3>
 
 
+<!--<div *ngFor="let game of games" class="row" >
+        <div *ngIf="count =< 9" class="col s3">
+          <div *ngIf="game.scale = 10" class="card">
+                <topwedstrijd home="{{game.home}}" away="{{game.away}}" date="{{game.date}}" id="{{game._id}}" gameImage="{{game.gameImage}}"></topwedstrijd>
+            </div>
+</div>
 
-             <div class="row">
-        <div class="col s4">
+  </div>-->
+
+
+
+          <div class="row">
+                           <div class="col s4">
+
           <div class="card">
             <div class="card-image">
               <img src="../../img/match1.png">
@@ -67,7 +128,7 @@
                 <a href="#">Zoek abonnementen</a>
             </div>
           </div>
-        </div>
+          </div>
 
 
                <div class="col s4">
@@ -367,31 +428,11 @@
             <div class="section fp-auto-height" data-anchor="section5">
 
 
- <footer class="page-footer">
-          <div class="container">
-            <div class="row">
-              <div class="col l6 s12">
-                <h5 class="white-text">Footer Content</h5>
-                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-              </div>
-              <div class="col l4 offset-l2 s12">
-                <h5 class="white-text">Links</h5>
-                <ul>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="footer-copyright">
-            <div class="container">
-            © 2014 Copyright Text
-            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-            </div>
-          </div>
-        </footer>
+ <subporterFooter>
+
+   
+ </subporterFooter>
+
 
 
             </div>

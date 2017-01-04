@@ -1,0 +1,126 @@
+  <navmenu header1="Zoek abonnementen" header2="" image="/img/search_bg.jpg"></navmenu>
+
+<section class="search">
+<div class="container">
+
+<aside>
+
+<form class="filter">
+
+
+<ul materialize="collapsible" class="collapsible" data-collapsible="Expandable">
+    <li>
+        <div class="collapsible-header active"><i class="material-icons">filter_drama</i>Zoekwoorden</div>
+    <!--<h3>Zoekwoorden</h3>-->
+    <!--<span *ngIf="{{search}}">{{search}}</span>-->
+          <div class="collapsible-body">
+    <input type="text" placeholder="Zoek"></div>
+
+
+</li>
+<li>
+     <div class="collapsible-header active"><i class="material-icons">filter_drama</i>Datum</div>
+    <!--<h3>Datum</h3>-->
+          <div class="collapsible-body">
+    <ul>
+        <li><a href="#">Vandaag</a></li>
+        <li><a href="#">Morgen</a></li>
+        <li><a href="#">Dit weekend</a></li>
+        <li><a href="#">Deze week</a></li>
+        <li><a href="#">Volgende week</a></li>
+        <li><a href="#">Deze maand</a></li>
+
+
+    </ul>
+
+    </div>
+
+    </li>
+
+
+<li>
+ <div class="collapsible-header"><i class="material-icons">filter_drama</i>Land</div>
+           <div class="collapsible-body">
+
+
+<ul >
+<li><a href="#">Belgie</a></li>
+
+<li><a href="#">Nederland</a></li>
+<li><a href="#">Engeland</a></li>
+<li><a href="#">Duitsland</a></li>
+<li><a href="#">Spanje</a></li>
+</ul>
+
+</div>
+</li>
+<li>
+ <div class="collapsible-header"><i class="material-icons">filter_drama</i>Team</div>
+           <div class="collapsible-body">
+
+<ul >
+<li><a href="#">Club Brugge KV</a></li>
+
+<li><a href="#">Anderlecht</a></li>
+<li><a href="#">Oostende</a></li>
+<li><a href="#">Gent</a></li>
+<li><a href="#">Genk</a></li>
+</ul>
+
+<p>Anders:</p>
+<input type="text" placeholder="Zoek een team">
+
+
+           </div>
+
+    </li>
+</ul>
+
+    </form>
+
+
+
+</aside>
+
+<article>
+
+    <div class="row">
+
+<div class="col s12">
+
+
+    <ul *ngFor="let game of games" class="collection">
+        <a [routerLink]="['../evenement', game._id]">
+        <li class="collection-item" >
+            
+            <span class="title"> {{game.home.name}} - {{game.away.name}}  </span>
+            <br/>
+            <p>{{game.date}}, {{game.home.stadion}}</p>
+            <div class="secondary-content">
+            <i class="fa fa-ticket fa-2x " aria-hidden="true"></i>
+            <span>{{game.loans.length}}</span>
+            </div>
+            </li>
+</a>
+
+
+        </ul> 
+
+
+             
+
+</div>
+
+
+</div>
+
+</article>
+</div>
+</section>
+
+
+
+<subporterFooter>
+
+   
+ </subporterFooter>

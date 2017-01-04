@@ -29,7 +29,10 @@
             'angular2-jwt': 'npm:angular2-jwt/angular2-jwt.js',
             'jquery': 'npm:jquery/dist/jquery.js',
             'slick': 'npm:slick-carousel/slick/slick.js',
-            'angular-slick': 'npm:angular-slick-carousel/dist/angular-slick.js'
+            'angular-slick': 'npm:angular-slick-carousel/dist/angular-slick.js',
+            'materialize-css': 'npm:materialize-css',
+            'angular2-materialize':'npm:angular2-materialize',
+            'angular2-cookie': 'npm:angular2-cookie'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -39,7 +42,20 @@
             },
             rxjs: {
                 defaultExtension: 'js'
-            }
+            },
+      'materialize-css': {
+        "format": "global",
+        "main": "dist/js/materialize",
+        "defaultExtension": "js"
+      },
+      'angular2-materialize': {
+        "main": "dist/index",
+        "defaultExtension": "js"
+      }, 
+      'angular2-cookie': {
+        main: './core.js',
+        defaultExtension: 'js'
+      }
         }
 
     });

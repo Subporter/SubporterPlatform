@@ -1,0 +1,48 @@
+section {
+  padding-top: 50px;
+  padding-bottom: 50px; }
+
+.container {
+  overflow: hidden; }
+
+.crumContainer {
+  width: 340px;
+  margin: 0 auto; }
+
+.crumb {
+  text-align: center;
+  width: 150px;
+  float: left;
+  border: 1px solid #F4F4F4;
+  margin-right: 20px; }
+
+.buttonContainer {
+  padding-top: 20px;
+  clear: both;
+  text-align: center; }
+
+.row .col .collection {
+  border: 0;
+  cursor: pointer; }
+
+.row .col .collection .collection-item:hover {
+  background-color: #F4F4F4; }
+
+.row .col .collection .collection-item {
+  padding: 20px; }
+
+.circle {
+  max-width: 30px;
+  max-height: 30px;
+  vertical-align: middle; }
+
+.dark {
+  color: black;
+  margin-left: 20px; }
+
+.imageSpan {
+  display: inline-block;
+  vertical-align: middle; }
+
+.secondary-content {
+  display: inline-block; }

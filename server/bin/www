@@ -3,8 +3,8 @@ const passport = require('passport');
 
 /* Development or production */
 
-process.env.NODE_ENV = 'development';
-//process.env.NODE_ENV = 'production';
+process.env.NODE_ENV = "development";
+//process.env.NODE_ENV = "production";
 
 /* Module dependencies */
 
@@ -56,8 +56,8 @@ function onError(error) {
 	}
 
 	let bind = typeof port === 'string' ?
-		'Pipe ' + port :
-		'Port ' + port;
+		"Pipe " + port :
+		"Port " + port;
 
 	switch (error.code) {
 		case 'EACCES':
