@@ -16,9 +16,11 @@ var ApiService = (function () {
         this.http = http;
         this.baseUrl = "http://localhost:1337/";
     }
-    ApiService.prototype.call = function (url) {
+    ApiService.prototype.get = function (url) {
         url = this.baseUrl + url;
-        Headers_1.contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+        if (localStorage.getItem("id_token")) {
+            Headers_1.contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+        }
         return this.http.get(url, {
             headers: Headers_1.contentHeaders
         });

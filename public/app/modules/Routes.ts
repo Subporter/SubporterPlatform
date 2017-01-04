@@ -8,40 +8,44 @@ import { Search } from "../components/search/Search";
 import { Listing } from "../components/listing/Listing";
 import { Evenement } from "../components/evenement/Evenement";
 import { Cart } from "../components/cart/Cart";
+import { AdminOverview } from "../components/admin/overview/Overview";
 import { AuthGuard } from "../common/AuthGuard";
 import { AdminGuard } from "../common/AdminGuard";
 
 export const SubporterRoutes: Routes = [
-	{
-		path: '', component: Landing
-	},
-	{
-		path: 'login', component: Login
-	},
-	{
-		path: 'login/:id', component: Login
-	},
-	{
-		path: 'register', component: Register
-	},
-	{
-		path: 'home', component: Home, canActivate: [ AuthGuard ]
-	},
-	{
-		path: 'search', component: Search
-	},
-	{
-		path: 'evenement/:id', component: Evenement
-	},
-	{
-		path: 'listing/:id', component: Listing
-	},
-	{
-		path: 'cart', component: Cart
-	},
-	{
-		path: '**', component: Login
-	}
+    {
+        path: '', component: Landing
+    },
+    {
+        path: 'login', component: Login
+    },
+    {
+        path: 'login/:id', component: Login
+    },
+    {
+        path: 'register', component: Register
+    },
+    {
+        path: 'admin/overview', component: AdminOverview, canActivate: [AdminGuard]
+    },
+    {
+        path: 'home', component: Home, canActivate: [AuthGuard]
+    },
+    {
+        path: 'search', component: Search
+    },
+    {
+        path: 'evenement/:id', component: Evenement
+    },
+    {
+        path: 'listing/:id', component: Listing
+    },
+    {
+        path: 'cart', component: Cart
+    },
+    {
+        path: '**', component: Login
+    }
 ]
 
 export const Routing: ModuleWithProviders = RouterModule.forRoot(SubporterRoutes);

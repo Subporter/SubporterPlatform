@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { AuthHttp, JwtHelper } from 'angular2-jwt';
-import { ApiService } from '../../services/ApiService';
+import { ApiService } from '../../../services/ApiService';
 
 @Component({
-	selector: 'home',
+	selector: 'admin-overview',
 	template: `
 		<div>
 			<div class="home jumbotron centered">
@@ -24,7 +24,7 @@ import { ApiService } from '../../services/ApiService';
 	`
 })
 
-export class Home {
+export class AdminOverview {
 	jwt: String;
 	decodedJwt: String;
 	response: String;

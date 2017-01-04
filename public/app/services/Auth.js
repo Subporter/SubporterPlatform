@@ -19,7 +19,7 @@ var Auth = (function () {
         return angular2_jwt_1.tokenNotExpired();
     };
     Auth.prototype.isAdmin = function () {
-        this.apiService.call("check/admin").subscribe(function (response) {
+        this.apiService.get("check/admin").subscribe(function (response) {
             var success = JSON.parse(response.text()).success;
             return JSON.parse(response.text()).success;
         }, function (error) {

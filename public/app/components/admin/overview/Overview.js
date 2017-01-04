@@ -12,25 +12,25 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
 var angular2_jwt_1 = require("angular2-jwt");
-var ApiService_1 = require("../../services/ApiService");
-var Home = (function () {
-    function Home(router, http, authHttp, apiService) {
+var ApiService_1 = require("../../../services/ApiService");
+var AdminOverview = (function () {
+    function AdminOverview(router, http, authHttp, apiService) {
         this.router = router;
         this.http = http;
         this.authHttp = authHttp;
         this.apiService = apiService;
         this.jwtHelper = new angular2_jwt_1.JwtHelper();
     }
-    Home.prototype.useJwtHelper = function () {
+    AdminOverview.prototype.useJwtHelper = function () {
         var token = localStorage.getItem("id_token");
         console.log("Token:", token);
         console.log(this.jwtHelper.decodeToken(token), this.jwtHelper.getTokenExpirationDate(token), this.jwtHelper.isTokenExpired(token));
     };
-    Home.prototype.logout = function () {
+    AdminOverview.prototype.logout = function () {
         localStorage.removeItem("id_token");
         this.router.navigate(["login"]);
     };
-    Home.prototype.updateUser = function () {
+    AdminOverview.prototype.updateUser = function () {
         var name = "Niels";
         var body = JSON.stringify({
             name: name
@@ -44,13 +44,13 @@ var Home = (function () {
             error => this.response = error.text
             );*/
     };
-    Home.prototype.callAnonymousApi = function () {
+    AdminOverview.prototype.callAnonymousApi = function () {
         this._callApi("Anonymous", "api/sports");
     };
-    Home.prototype.callSecuredApi = function () {
+    AdminOverview.prototype.callSecuredApi = function () {
         this._callApi("Secured", "api/user");
     };
-    Home.prototype._callApi = function (type, url) {
+    AdminOverview.prototype._callApi = function (type, url) {
         var _this = this;
         this.apiService.get(url).subscribe(function (response) { return _this.response = response.text(); }, function (error) { return _this.response = error.text; });
         /*this.useJwtHelper();
@@ -73,14 +73,14 @@ var Home = (function () {
                 );
         }*/
     };
-    return Home;
+    return AdminOverview;
 }());
-Home = __decorate([
+AdminOverview = __decorate([
     core_1.Component({
-        selector: 'home',
+        selector: 'admin-overview',
         template: "\n\t\t<div>\n\t\t\t<div class=\"home jumbotron centered\">\n\t\t\t\t<h1>Welcome to Angular2 through Auth</h1>\n\t\t\t\t<h2 *ngIf=\"jwt\">Your JWT is:</h2>\n\t\t\t\t<pre *ngIf=\"jwt\" class=\"jwt\"><code>{{ jwt }}</code></pre>\n\t\t\t\t<p>Click any of the buttons to call an API and get a response</p>\n\t\t\t\t<p><a class=\"btn btn-primary btn-lg\" role=\"button\" (click)=\"callAnonymousApi()\">Call Anonymous API</a></p>\n    \t\t\t<p><a class=\"btn btn-primary btn-lg\" role=\"button\" (click)=\"callSecuredApi()\">Call Secure API</a></p>\n    \t\t\t<p><a class=\"btn btn-primary btn-lg\" role=\"button\" (click)=\"logout()\">Logout</a></p>\n    \t\t\t<p><a class=\"btn btn-primary btn-lg\" role=\"button\" (click)=\"updateUser()\">Update user</a></p>\n    \t\t\t<h2 *ngIf=\"response\">The response of calling the <span class=\"red\">{{ api }}</span> API is:</h2>\n    \t\t\t<h3 *ngIf=\"response\">{{ response }}</h3>\n\t\t\t</div>\n\t\t</div>\n\t"
     }),
     __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService])
-], Home);
-exports.Home = Home;
-//# sourceMappingURL=Home.js.map
+], AdminOverview);
+exports.AdminOverview = AdminOverview;
+//# sourceMappingURL=Overview.js.map
