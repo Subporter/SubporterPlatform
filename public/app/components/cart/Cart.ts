@@ -1,3 +1,5 @@
+
+
 import { Component, Input } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { Http } from '@angular/http';
@@ -40,7 +42,7 @@ avatar:String;
 name:String;
 firstname:String;
 city:String;
-prices:number;
+prices:number=0;
 price:number=0;
 id:number;
 cookie:any;
@@ -60,6 +62,11 @@ show = true;
 
 
 	ngOnInit() { 
+
+         if(!this.loggedIn){
+              this.router.navigateByUrl('#');
+         }
+
         let  x = this._cookieService.getAll();
         this.cookie = x;
 
@@ -86,9 +93,13 @@ showCart(){
 for(var cook in cookie){
 
     this._callApi("Anonymous", "api/loans/"+cook);
+    
+
 
 
 }
+
+this._callApi2("Secured", "api/users");
 
 
 
@@ -126,10 +137,25 @@ showEmpty(){
 			error => this.response = error.text
 		);
 
+      
+
     
 
     
   }
+
+     _callApi2(type, url) {
+	 	this.apiService.call("api/users").subscribe(
+	 		response =>  this.getUser(response.text()),
+	 		error => this.response = error.text
+	 	);
+
+     }
+
+
+   getUser(data){
+       console.log(data);
+   }
 
   getLoan(data){
      let Data = data;
@@ -145,6 +171,7 @@ showEmpty(){
 
     
     this.price += (this.loan.game.home.price *0.1);
+    this.prices += (this.loan.game.home.price);
 
     
 
@@ -194,27 +221,35 @@ showEmpty(){
 
 
 pay(){
-    alert("betaaaald");
 
-    (for let loan in this.loans){
+    for (let loan of this.loans){
+
+        
+
+        console.log(loan._id);
 
         this._cookieService.remove(loan._id);
 
+        let id= loan._id;
+
         let paid = true;
         let lent = true;
+        let lent_by = "asd";
 
-		let body = JSON.stringify({
-			name
-		});
+		 let body = JSON.stringify({
+		 	paid,
+             lent,
+             lent_by
+		 });
 
-		/*contentHeaders.append("Authorization", localStorage.getItem("id_token"));
-		this.authHttp.put("http://localhost:1337/api/user", body, {
-			headers: contentHeaders
-		})
-			.subscribe(
-			response => this.response = response.text(),
-			error => this.response = error.text
-			);*/
+		 contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+		 this.authHttp.put("http://localhost:1337/api/loans/"+id, body, {
+		 	headers: contentHeaders
+		 })
+		 	.subscribe(
+		 	response => this.response = response.text(),
+		 	error => this.response = error.text
+		 	);
 	}
 
 
@@ -222,7 +257,7 @@ pay(){
     }
 
 
-}
+
 
 
 }

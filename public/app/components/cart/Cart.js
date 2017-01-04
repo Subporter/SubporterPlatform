@@ -12,6 +12,7 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
 var angular2_jwt_1 = require("angular2-jwt");
+var headers_1 = require("../../common/headers");
 var ApiService_1 = require("../../services/ApiService");
 require("materialize-css");
 require("angular2-materialize");
@@ -27,6 +28,7 @@ var Cart = (function () {
         this._location = _location;
         this._cookieService = _cookieService;
         this.jwtHelper = new angular2_jwt_1.JwtHelper();
+        this.prices = 0;
         this.price = 0;
         this.loans = [];
         this.counter = 0;
@@ -35,6 +37,9 @@ var Cart = (function () {
         this.loggedIn = !!localStorage.getItem('id_token');
     }
     Cart.prototype.ngOnInit = function () {
+        if (!this.loggedIn) {
+            this.router.navigateByUrl('#');
+        }
         var x = this._cookieService.getAll();
         this.cookie = x;
         if (this.isEmpty(x)) {
@@ -51,6 +56,7 @@ var Cart = (function () {
         for (var cook in cookie) {
             this._callApi("Anonymous", "api/loans/" + cook);
         }
+        this._callApi2("Secured", "api/users");
     };
     Cart.prototype.showEmpty = function () {
     };
@@ -63,6 +69,13 @@ var Cart = (function () {
         var _this = this;
         this.apiService.call(url).subscribe(function (response) { return _this.getLoan(response.text()); }, function (error) { return _this.response = error.text; });
     };
+    Cart.prototype._callApi2 = function (type, url) {
+        var _this = this;
+        this.apiService.call("api/users").subscribe(function (response) { return _this.getUser(response.text()); }, function (error) { return _this.response = error.text; });
+    };
+    Cart.prototype.getUser = function (data) {
+        console.log(data);
+    };
     Cart.prototype.getLoan = function (data) {
         var Data = data;
         var jsonData = JSON.parse(Data);
@@ -74,6 +87,7 @@ var Cart = (function () {
         //  fullDate.toLocaleString().substring(0,fullDate.toLocaleString().indexOf(' '));
         //  console.log (fullDate);
         this.price += (this.loan.game.home.price * 0.1);
+        this.prices += (this.loan.game.home.price);
         console.log(this.loan);
         console.log(this.loans);
         this.counter++;
@@ -110,15 +124,25 @@ var Cart = (function () {
         return true;
     };
     Cart.prototype.pay = function () {
-        alert("betaaaald");
-        ();
-        for (var loan in this.loans) {
+        var _this = this;
+        for (var _i = 0, _a = this.loans; _i < _a.length; _i++) {
+            var loan = _a[_i];
+            console.log(loan._id);
             this._cookieService.remove(loan._id);
+            var id = loan._id;
             var paid = true;
             var lent = true;
+            var lent_by = "asd";
             var body = JSON.stringify({
-                name: name
+                paid: paid,
+                lent: lent,
+                lent_by: lent_by
             });
+            headers_1.contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+            this.authHttp.put("http://localhost:1337/api/loans/" + id, body, {
+                headers: headers_1.contentHeaders
+            })
+                .subscribe(function (response) { return _this.response = response.text(); }, function (error) { return _this.response = error.text; });
         }
     };
     return Cart;
