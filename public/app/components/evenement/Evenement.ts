@@ -18,7 +18,7 @@ import {Subscription } from 'rxjs';
 
 export class Evenement {
 
-    
+
  jwt: String;
 	decodedJwt: String;
 	response: String;
@@ -41,7 +41,7 @@ lendable:number=0;
 
     private subscription: Subscription;
 
-  
+
 
   private loggedIn = false;
 
@@ -51,7 +51,7 @@ lendable:number=0;
       this.loggedIn = !!localStorage.getItem('id_token');
 	}
 
-	
+
 ngOnInit(){
 	this.subscription = this.activatedRoute.params.subscribe(
       (param: any) => {
@@ -87,14 +87,14 @@ ngOnInit(){
 
 
   _callApi(type, url) {
-		this.apiService.call(url).subscribe(
+		this.apiService.get(url).subscribe(
 			response =>this.getGames(response.text()),
 			error => this.goHome()
 		);
 
-    
 
-    
+
+
   }
 
   getGames(data){
@@ -123,8 +123,10 @@ ngOnInit(){
 	 for(let i = 0; i<this.loans.length; i++){
 		 if(this.loans.paid == true){
 			 this.lent ++ ;
+			 this.loans.splice(i,1);
 		 }else{
 			 this.lendable ++ ;
+
 		 }
 	 }
 

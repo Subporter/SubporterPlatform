@@ -11,7 +11,7 @@ let router = express.Router();
 /* Create */
 router.post("/games", authenticate, admin, formParser, imageSaver, function(req, res) {
     if (req.granted) {
-        if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.away, req.body.banner, req.body.date, req.body.home, req.body.importance)) {
+        if (Object.keys(req.body).length !== 6 || bodyValidator(req.body.away, req.body.banner, req.body.competition, req.body.date, req.body.home, req.body.importance)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false
@@ -65,8 +65,31 @@ router.get("/games", function(req, res) {
     });
 });
 
-router.get("/games/featured/:country", function(req, res) {
-    Game.getFeaturedGames(req.params.country, function(err, games) {
+router.get("/games/featured/:competition", function(req, res) {
+    Game.getFeaturedGames(req.params.competition, function(err, games) {
+        if (err) {
+            res.json({
+                info: "Error during reading games",
+                success: false,
+                error: err
+            });
+        } else if (games) {
+            res.json({
+                info: "Games found succesfully",
+                success: true,
+                data: games
+            });
+        } else {
+            res.json({
+                info: "Games not found",
+                success: false
+            });
+        }
+    });
+});
+
+router.get("/games/competition/:competition", function(req, res) {
+    Game.getGamesByCompetition(req.params.competition, function(err, games) {
         if (err) {
             res.json({
                 info: "Error during reading games",
@@ -138,7 +161,7 @@ router.get("/games/:id", function(req, res) {
 /* Update */
 router.put("/games/:id", authenticate, admin, formParser, imageSaver, function(req, res) {
     if (req.granted) {
-        if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.away, req.body.banner, req.body.date, req.body.home, req.body.importance)) {
+        if (Object.keys(req.body).length !== 6 || bodyValidator(req.body.away, req.body.banner, req.body.competition, req.body.date, req.body.home, req.body.importance)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false

@@ -52,7 +52,7 @@ var Home = (function () {
     };
     Home.prototype._callApi = function (type, url) {
         var _this = this;
-        this.apiService.call(url).subscribe(function (response) { return _this.response = response.text(); }, function (error) { return _this.response = error.text; });
+        this.apiService.get(url).subscribe(function (response) { return _this.response = response.text(); }, function (error) { return _this.response = error.text; });
         /*this.useJwtHelper();
         this.response = null;
         if (type === "Anonymous") {

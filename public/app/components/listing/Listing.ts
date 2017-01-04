@@ -10,6 +10,8 @@ import {Subscription } from 'rxjs';
 import "materialize-css";
 import "angular2-materialize";
 import {Location} from '@angular/common';
+import {CookieService} from 'angular2-cookie/core';
+
 
 
 
@@ -39,27 +41,29 @@ name:String;
 firstname:String;
 city:String;
 price:String;
+id:number;
 
   private loggedIn = false;
       private subscription: Subscription;
 
 
 
-	constructor(public router: Router, public http: Http, public authHttp: AuthHttp, public apiService: ApiService, private activatedRoute: ActivatedRoute, private _location: Location) {
+	constructor(public router: Router, public http: Http, public authHttp: AuthHttp, public apiService: ApiService, private activatedRoute: ActivatedRoute, private _location: Location, private _cookieService:CookieService) {
 
       this.loggedIn = !!localStorage.getItem('id_token');
 	}
 
 
-	ngOnInit() { 
-  
+	ngOnInit() {
+
   this.subscription = this.activatedRoute.params.subscribe(
       (param: any) => {
         let id = param['id'];
+		this.id = id;
 		this._callApi("Anonymous", "api/loans/"+id);
 
       });
-  
+
 
 
 
@@ -86,14 +90,14 @@ price:String;
 
 
   _callApi(type, url) {
-		this.apiService.call(url).subscribe(
+		this.apiService.get(url).subscribe(
 			response =>  this.getLoan(response.text()),
 			error => this.response = error.text
 		);
 
-    
 
-    
+
+
   }
 
   getLoan(data){
@@ -128,6 +132,23 @@ price:String;
   back(){
               this._location.back();
 
+  }
+
+  huurAbbo(){
+	  if(this.loggedIn){
+
+	this._cookieService.put(this.id.toString(),this.id.toString());
+
+	 this.router.navigateByUrl('../cart');
+
+
+
+
+
+	  }else{
+		  alert("Gelieve eerst in te loggen");
+		  this.router.navigateByUrl('../login/'+this.id);
+	  }
   }
 
 

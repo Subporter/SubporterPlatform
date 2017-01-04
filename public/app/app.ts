@@ -8,9 +8,9 @@ import { Auth } from './services/Auth';
 import { AuthGuard } from "./common/AuthGuard";
 import { AdminGuard } from "./common/AdminGuard";
 import { ApiService } from "./services/ApiService";
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 import { App } from "./components/App";
-import { Home } from "./components/home/Home";
 import { Register } from "./components/auth/register/Register";
 import { Login } from "./components/auth/login/Login";
 import { Landing } from "./components/index/Landing";
@@ -21,17 +21,15 @@ import { Weekwedstrijd } from "./components/index/Weekwedstrijden/Weekwedstrijd"
 import { Search } from "./components/search/Search";
 import { Evenement } from "./components/evenement/Evenement";
 import { Listing } from "./components/listing/Listing";
-import {MaterializeDirective} from "angular2-materialize";
-
-
-
+import { Cart } from "./components/cart/Cart";
+import { AdminOverview } from "./components/admin/overview/Overview";
+import { MaterializeDirective } from "angular2-materialize";
 
 import { Routing } from "./modules/Routes";
 
-
 @NgModule({
     bootstrap: [App],
-    declarations: [App, Home, Register, Login, Landing, Footer, Header, Topwedstrijd,Weekwedstrijd, Search, Evenement, Listing, MaterializeDirective],
+    declarations: [App, Register, Login, Landing, Footer, Header, Topwedstrijd, Weekwedstrijd, Search, Evenement, Listing, Cart, AdminOverview, MaterializeDirective],
     imports: [
         BrowserModule,
         HttpModule,
@@ -43,7 +41,8 @@ import { Routing } from "./modules/Routes";
         AuthGuard,
         AdminGuard,
         AUTH_PROVIDERS,
-        ApiService
+        ApiService,
+        CookieService
     ]
 })
 

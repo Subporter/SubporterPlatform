@@ -45,6 +45,7 @@
     "@angular/router-deprecated": "^2.0.0-rc.2",
     "@angular/upgrade": "^2.2.3",
     "angular-slick-carousel": "^3.1.7",
+    "angular2-cookie": "^1.2.6",
     "angular2-jwt": "^0.1.25",
     "angular2-materialize": "^6.3.0",
     "bcrypt-nodejs": "0.0.3",

@@ -76,7 +76,7 @@ export class Home {
 	}
 
 	_callApi(type, url) {
-		this.apiService.call(url).subscribe(
+		this.apiService.get(url).subscribe(
 			response => this.response = response.text(),
 			error => this.response = error.text
 		);

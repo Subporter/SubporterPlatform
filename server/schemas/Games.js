@@ -20,6 +20,11 @@ let gameSchema = new mongoose.Schema({
 		required: true,
 		trim: true
 	},
+	competition: {
+		type: Number,
+		ref: 'Competition',
+		required: true
+	},
     date: {
         type: Date,
         required: true
@@ -67,6 +72,7 @@ gameSchema.plugin(mongooseHidden);
 gameSchema.index({
     home: 1,
     away: 1,
+    competition: 1,
     date: 1
 }, {
     unique: true

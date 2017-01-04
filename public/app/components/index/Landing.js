@@ -39,7 +39,7 @@ var Landing = (function () {
     };
     Landing.prototype._callApi = function (type, url) {
         var _this = this;
-        this.apiService.call(url).subscribe(function (response) { return _this.getTeam(response.text()); }, function (error) { return _this.response = error.text; });
+        this.apiService.get(url).subscribe(function (response) { return _this.getTeam(response.text()); }, function (error) { return _this.response = error.text; });
     };
     Landing.prototype.getTeam = function (data) {
         var Data = data;
