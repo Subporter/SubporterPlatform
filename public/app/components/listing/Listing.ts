@@ -54,8 +54,8 @@ id:number;
 	}
 
 
-	ngOnInit() { 
-  
+	ngOnInit() {
+
   this.subscription = this.activatedRoute.params.subscribe(
       (param: any) => {
         let id = param['id'];
@@ -63,7 +63,7 @@ id:number;
 		this._callApi("Anonymous", "api/loans/"+id);
 
       });
-  
+
 
 
 
@@ -90,14 +90,14 @@ id:number;
 
 
   _callApi(type, url) {
-		this.apiService.call(url).subscribe(
+		this.apiService.get(url).subscribe(
 			response =>  this.getLoan(response.text()),
 			error => this.response = error.text
 		);
 
-    
 
-    
+
+
   }
 
   getLoan(data){
@@ -137,7 +137,7 @@ id:number;
   huurAbbo(){
 	  if(this.loggedIn){
 
-	this._cookieService.put(""+this.id+"",this.id);
+	this._cookieService.put(this.id.toString(),this.id.toString());
 
 
 

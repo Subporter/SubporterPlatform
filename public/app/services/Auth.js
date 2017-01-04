@@ -20,7 +20,6 @@ var Auth = (function () {
     };
     Auth.prototype.isAdmin = function () {
         this.apiService.get("check/admin").subscribe(function (response) {
-            var success = JSON.parse(response.text()).success;
             return JSON.parse(response.text()).success;
         }, function (error) {
             return false;

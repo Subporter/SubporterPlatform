@@ -15,7 +15,6 @@ export class Auth {
 	isAdmin() {
 		this.apiService.get("check/admin").subscribe(
 			response => {
-				let success = JSON.parse(response.text()).success;
 				return JSON.parse(response.text()).success;
 			},
 			error => {

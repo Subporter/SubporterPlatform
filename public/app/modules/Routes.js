@@ -14,6 +14,9 @@ exports.SubporterRoutes = [
         path: '', component: Landing_1.Landing
     },
     {
+        path: 'landing', component: Landing_1.Landing
+    },
+    {
         path: 'login', component: Login_1.Login
     },
     {

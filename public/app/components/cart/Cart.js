@@ -61,7 +61,7 @@ var Cart = (function () {
     };
     Cart.prototype._callApi = function (type, url) {
         var _this = this;
-        this.apiService.call(url).subscribe(function (response) { return _this.getLoan(response.text()); }, function (error) { return _this.response = error.text; });
+        this.apiService.get(url).subscribe(function (response) { return _this.getLoan(response.text()); }, function (error) { return _this.response = error.text; });
     };
     Cart.prototype.getLoan = function (data) {
         var Data = data;

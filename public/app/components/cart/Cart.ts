@@ -59,7 +59,7 @@ show = true;
 	}
 
 
-	ngOnInit() { 
+	ngOnInit() {
         let  x = this._cookieService.getAll();
         this.cookie = x;
 
@@ -70,8 +70,8 @@ show = true;
             this.showCart();
         }
 
-       
-        
+
+
         console.log(x);
 
 }
@@ -121,14 +121,14 @@ showEmpty(){
 
 
   _callApi(type, url) {
-		this.apiService.call(url).subscribe(
+		this.apiService.get(url).subscribe(
 			response =>  this.getLoan(response.text()),
 			error => this.response = error.text
 		);
 
-    
 
-    
+
+
   }
 
   getLoan(data){
@@ -143,10 +143,10 @@ showEmpty(){
     //  fullDate.toLocaleString().substring(0,fullDate.toLocaleString().indexOf(' '));
     //  console.log (fullDate);
 
-    
+
     this.price += (this.loan.game.home.price *0.1);
 
-    
+
 
 
      console.log(this.loan);
@@ -190,7 +190,7 @@ showEmpty(){
     }
 
     return true;
-} 
+}
 
 
 }
