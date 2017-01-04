@@ -32,7 +32,7 @@ var Listing = (function () {
         var _this = this;
         this.subscription = this.activatedRoute.params.subscribe(function (param) {
             var id = param['id'];
-            _this._callApi("Anonymous", "api/games/" + id);
+            _this._callApi("Anonymous", "api/loans/" + id);
         });
     };
     Listing.prototype.useJwtHelper = function () {
@@ -42,21 +42,27 @@ var Listing = (function () {
     };
     Listing.prototype._callApi = function (type, url) {
         var _this = this;
-        this.apiService.call(url).subscribe(function (response) { return _this.getGame(response.text()); }, function (error) { return _this.response = error.text; });
+        this.apiService.call(url).subscribe(function (response) { return _this.getLoan(response.text()); }, function (error) { return _this.response = error.text; });
     };
-    Listing.prototype.getGame = function (data) {
+    Listing.prototype.getLoan = function (data) {
         var Data = data;
         var jsonData = JSON.parse(Data);
-        this.game = jsonData.data;
-        console.log(this.game);
-        if (!this.game) {
+        this.loan = jsonData.data;
+        if (!this.loan) {
             this.router.navigateByUrl('../');
         }
-        this.home = jsonData.data.home.name;
-        this.away = jsonData.data.away.name;
-        this.date = jsonData.data.date;
-        this.stadion = jsonData.data.home.stadion;
-        this.banner = jsonData.data.banner;
+        this.home = jsonData.data.game.home.name;
+        this.away = jsonData.data.game.away.name;
+        this.date = jsonData.data.game.date;
+        this.stadion = jsonData.data.game.home.stadion;
+        this.banner = jsonData.data.game.banner;
+        this.profile = jsonData.data.lent_out_by;
+        this.avatar = jsonData.data.lent_out_by.avatar;
+        this.name = jsonData.data.lent_out_by.name;
+        this.firstname = jsonData.data.lent_out_by.firstname;
+        this.city = jsonData.data.lent_out_by.address.city;
+        this.price = jsonData.data.game.home.price;
+        console.log(this.profile);
     };
     Listing.prototype.back = function () {
         this._location.back();

@@ -27,12 +27,18 @@ export class Listing {
 	response: String;
 	api: String;
 	jwtHelper: JwtHelper = new JwtHelper();
-  game:JSON;
+  loan:JSON;
   home:String;
 away:String;
 date:String ;
 stadion:String;
 banner:String ;
+profile:JSON;
+avatar:String;
+name:String;
+firstname:String;
+city:String;
+price:String;
 
   private loggedIn = false;
       private subscription: Subscription;
@@ -50,7 +56,7 @@ banner:String ;
   this.subscription = this.activatedRoute.params.subscribe(
       (param: any) => {
         let id = param['id'];
-		this._callApi("Anonymous", "api/games/"+id);
+		this._callApi("Anonymous", "api/loans/"+id);
 
       });
   
@@ -81,7 +87,7 @@ banner:String ;
 
   _callApi(type, url) {
 		this.apiService.call(url).subscribe(
-			response =>  this.getGame(response.text()),
+			response =>  this.getLoan(response.text()),
 			error => this.response = error.text
 		);
 
@@ -90,22 +96,30 @@ banner:String ;
     
   }
 
-  getGame(data){
+  getLoan(data){
      let Data = data;
      let jsonData = JSON.parse(Data);
-     this.game = jsonData.data;
+     this.loan = jsonData.data;
 
-    console.log(this.game);    
-	  if(!this.game){
-	   this.router.navigateByUrl('../');
+	   if(!this.loan){
+	    this.router.navigateByUrl('../');
 
-	  }
+	   }
 
-	 this.home = jsonData.data.home.name;
-	 this.away = jsonData.data.away.name;
-	 this.date = jsonData.data.date;
-     this.stadion = jsonData.data.home.stadion;
-	 this.banner = jsonData.data.banner;
+	 this.home = jsonData.data.game.home.name;
+	 this.away = jsonData.data.game.away.name;
+	 this.date = jsonData.data.game.date;
+     this.stadion = jsonData.data.game.home.stadion;
+	 this.banner = jsonData.data.game.banner;
+
+	 this.profile = jsonData.data.lent_out_by;
+	 this.avatar = jsonData.data.lent_out_by.avatar;
+	 this.name = jsonData.data.lent_out_by.name;
+	 this.firstname = jsonData.data.lent_out_by.firstname;
+	 this.city = jsonData.data.lent_out_by.address.city;
+	 this.price=jsonData.data.game.home.price;
+
+	 console.log(this.profile);
 
 
 

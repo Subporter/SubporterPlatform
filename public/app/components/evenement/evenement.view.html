@@ -6,16 +6,13 @@
 
     <div class="container">
         <div class="crumContainer">
-        <div class="crumb"><span>Aangeboden</span><p>26</p></div>
-        <div class="crumb"><span>Verkocht</span><p>25</p></div>
-        <div class="crumb"><span>Gezocht</span><p>24</p></div>
+        <div class="crumb"><span>Aangeboden</span><p>{{lendable}}</p></div>
+        <div class="crumb"><span>Verhuurd</span><p>{{lent}}</p></div>
         </div>
         <div class="buttonContainer">
             <button class="waves-effect waves-light btn">Abonnement aanbieden</button>
-            <button class="waves-effect waves-light btn">Plaats een oproep</button>
 
         </div>
-
 
 
         <div class="row">
@@ -23,32 +20,21 @@
 <div class="col s12">
 
 
-<ul *ngFOr="let loan in loans" class="collection">
-<a [routerLink]="['../../listing', loan._id]">
+<ul *ngFor="let loan of loans" class="collection">
+    <a [routerLink]="['../../listing', loan._id]">
 <li class="collection-item" >
   <span class="title">  {{home}} - {{away}}    </span>
  <span class="dark">€{{price}}</span>
 
+ <div class="secondary-content">
+     <img src="{{loan.lent_out_by.avatar}}" class="circle">
+     <span class="imageSpan">{{loan.lent_out_by.firstname}} {{loan.lent_out_by.name}}</span>
+ </div>
     </li>
-
+</a>
 </ul>
 
-    <ul class="collection"><a [routerLink]="['../../listing', id]"> <!--LOAN ID!!-->
-        <li class="collection-item" >
-            
-            <span class="title"> {{home}} - {{away}}  </span>
-          
-           <span class="dark">€10</span>
-            <div class="secondary-content">
-            <img src="img/genk.png" alt="" class="circle">
-
-            <span>Niels Bril</span>
-            </div>
-            </li>
-</a>
-
-
-        </ul> 
+   
 
 
              

@@ -6,7 +6,7 @@ section {
   overflow: hidden; }
 
 .crumContainer {
-  width: 510px;
+  width: 340px;
   margin: 0 auto; }
 
 .crumb {
@@ -28,9 +28,21 @@ section {
 .row .col .collection .collection-item:hover {
   background-color: #F4F4F4; }
 
+.row .col .collection .collection-item {
+  padding: 20px; }
+
 .circle {
   max-width: 30px;
-  max-height: 30px; }
+  max-height: 30px;
+  vertical-align: middle; }
 
 .dark {
-  color: black; }
+  color: black;
+  margin-left: 20px; }
+
+.imageSpan {
+  display: inline-block;
+  vertical-align: middle; }
+
+.secondary-content {
+  display: inline-block; }

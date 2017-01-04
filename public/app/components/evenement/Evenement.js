@@ -21,6 +21,8 @@ var Evenement = (function () {
         this.apiService = apiService;
         this.activatedRoute = activatedRoute;
         this.jwtHelper = new angular2_jwt_1.JwtHelper();
+        this.lent = 0;
+        this.lendable = 0;
         this.loggedIn = false;
         this.loggedIn = !!localStorage.getItem('id_token');
     }
@@ -61,7 +63,17 @@ var Evenement = (function () {
         this.id = jsonData.data._id;
         this.price = jsonData.data.home.price;
         this.test = jsonData.data.home;
-        //  console.log(this.game);
+        this.size = this.loans.length;
+        for (var i = 0; i < this.loans.length; i++) {
+            if (this.loans.paid == true) {
+                this.lent++;
+            }
+            else {
+                this.lendable++;
+            }
+        }
+        console.log(this.lendable);
+        console.log(this.lent);
     };
     Evenement.prototype.goHome = function () {
     };

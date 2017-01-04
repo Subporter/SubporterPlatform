@@ -35,6 +35,9 @@ id:String;
 test:JSON;
 gameId: number;
 price:number;
+size:number;
+lent:number=0;
+lendable:number=0;
 
     private subscription: Subscription;
 
@@ -115,10 +118,24 @@ ngOnInit(){
 
 	 this.test = jsonData.data.home;
 
+	 this.size= this.loans.length;
+
+	 for(let i = 0; i<this.loans.length; i++){
+		 if(this.loans.paid == true){
+			 this.lent ++ ;
+		 }else{
+			 this.lendable ++ ;
+		 }
+	 }
 
 
 
-	//  console.log(this.game);
+
+
+
+	 console.log(this.lendable);
+	 	 console.log(this.lent);
+
 
   }
 
