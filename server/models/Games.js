@@ -1,4 +1,5 @@
 const mongoose = require('mongoose'),
+    moment = require('moment'),
     _ = require('lodash'),
     gameSchema = require('../schemas/Games');
 
@@ -25,6 +26,16 @@ let populateSchema = [{
             path: 'country',
             model: 'Country'
         }]
+    }]
+}, {
+    path: 'competition',
+    model: 'Competition',
+    populate: [{
+        path: 'country',
+        model: 'Country'
+    }, {
+        path: 'sport',
+        model: 'Sport'
     }]
 }, {
     path: 'loans',
@@ -185,11 +196,15 @@ Game.addGame = function(body, cb) {
 
 /* Read (all games) */
 Game.getGames = function(cb) {
-    Game.find({})
+    Game.find({
+            date: {
+                $gt: moment().toDate()
+            }
+        })
         .populate(populateSchema)
         .sort({
             date: 1,
-            importance: 1,
+            importance: -1,
             home: 1,
             away: 1
         })
@@ -202,13 +217,53 @@ Game.getGames = function(cb) {
         });
 };
 
-Game.getFeaturedGames = function(cb) {
+Game.getFeaturedGames = function(competition, cb) {
+    Game.find({
+            competition: competition,
+            date: {
+                $gt: moment().toDate()
+            }
+        })
+        .limit(6)
+        .populate(populateSchema)
+        .sort({
+            date: 1
+        })
+        .exec(function(err, docs) {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        });
+};
 
+Game.getGamesByCompetition = function(competition, cb) {
+    Game.find({
+            competition: competition,
+            date: {
+                $gt: moment().toDate()
+            }
+        })
+        .populate(populateSchema)
+        .sort({
+            date: 1
+        })
+        .exec(function(err, docs) {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        });
 };
 
 Game.getGamesByTeam = function(team, cb) {
     Game.find({
-            home: team
+            home: team,
+            date: {
+                $gt: moment().toDate()
+            }
         })
         .populate(populateSchema)
         .sort({

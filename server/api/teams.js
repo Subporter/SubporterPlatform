@@ -104,6 +104,29 @@ router.get("/teams/competition/:competition", function(req, res) {
 
 });
 
+router.get("/teams/country/:country", function(req, res) {
+    Team.getTeamsByCountry(req.params.country, function(err, teams) {
+        if (err) {
+            res.json({
+                info: "Error during reading teams",
+                success: false,
+                error: err.errmsg
+            });
+        } else if (teams) {
+            res.json({
+                info: "Teams found succesfully",
+                success: true,
+                data: teams
+            });
+        } else {
+            res.json({
+                info: "Teams not found",
+                success: false
+            });
+        }
+    });
+});
+
 /* Read (one team) */
 router.get("/teams/:id", function(req, res) {
     Team.getTeamById(req.params.id, function(err, team) {
@@ -252,6 +275,31 @@ router.delete("/teams/:id", authenticate, admin, function(req, res) {
             }
         });
     } else {
+        res.status(403);
+        res.json({
+            info: "Unauthorized",
+            success: false
+        });
+    }
+});
+
+router.delete("/teams/references/:id", authenticate, admin, function(req, res) {
+	if (req.granted) {
+		Team.deleteTeamReferences(req.params.id, function(err) {
+			if (err) {
+                res.json({
+                    info: "Error during deleting team references",
+                    success: false,
+                    error: err.errmsg
+                });
+            } else {
+                res.json({
+                    info: "Team references deleted succesfully",
+                    success: true
+                });
+            }
+		});
+	} else {
         res.status(403);
         res.json({
             info: "Unauthorized",

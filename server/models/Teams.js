@@ -1,8 +1,8 @@
 const mongoose = require('mongoose'),
     _ = require('lodash'),
     teamSchema = require('../schemas/Teams'),
-	Subscription = require('../models/Subscriptions'),
-	Game = require('../models/Games');
+    Subscription = require('../models/Subscriptions'),
+    Game = require('../models/Games');
 
 let Team = mongoose.model('Team', teamSchema, 'Teams');
 
@@ -48,8 +48,8 @@ Team.getTeams = function(cb) {
             if (err) {
                 cb(err, null);
             } else {
-				cb(null, docs);
-			}
+                cb(null, docs);
+            }
         });
 };
 
@@ -62,11 +62,11 @@ Team.getTeamsByCompetition = function(competition, cb) {
             name: 1
         })
         .exec(function(err, docs) {
-			if (err) {
+            if (err) {
                 cb(err, null);
             } else {
-				cb(null, docs);
-			}
+                cb(null, docs);
+            }
         });
 };
 
@@ -75,11 +75,11 @@ Team.getTeamById = function(id, cb) {
     Team.findById(id)
         .populate(populateSchema)
         .exec(function(err, docs) {
-			if (err) {
+            if (err) {
                 cb(err, null);
             } else {
-				cb(null, docs);
-			}
+                cb(null, docs);
+            }
         });
 };
 
@@ -107,15 +107,15 @@ Team.deleteTeam = function(id, cb) {
 };
 
 Team.deleteTeamReferences = function(id, cb) {
-	Team.findById(id, function (err, docs) {
-		if (err || !docs) {
-			cb(err);
-		} else {
-			Subscription.deleteSubscriptionsByTeam(docs._id, function (err) {
+    Team.findById(id, function(err, docs) {
+        if (err || !docs) {
+            cb(err);
+        } else {
+            Subscription.deleteSubscriptionsByTeam(docs._id, function(err) {
                 if (err) {
                     cb(err);
                 } else {
-                    Game.deleteGamesByTeam(docs._id, function (err) {
+                    Game.deleteGamesByTeam(docs._id, function(err) {
                         if (err) {
                             cb(err);
                         } else {
@@ -123,9 +123,9 @@ Team.deleteTeamReferences = function(id, cb) {
                         }
                     });
                 }
-			});
-		}
-	});
+            });
+        }
+    });
 };
 
 Team.deleteTeamsByCompetition = function(competition, cb) {
