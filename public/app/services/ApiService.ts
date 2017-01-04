@@ -19,4 +19,34 @@ export class ApiService {
             headers: contentHeaders
         });
     }
+
+	post(url, body) {
+		url = this.baseUrl + url;
+		if (localStorage.getItem("id_token")) {
+			contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+		}
+        return this.http.post(url, body, {
+            headers: contentHeaders
+        });
+	}
+
+    put(url, body) {
+        url = this.baseUrl + url;
+		if (localStorage.getItem("id_token")) {
+			contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+		}
+        return this.http.put(url, body, {
+            headers: contentHeaders
+        });
+    }
+
+    delete(url) {
+        url = this.baseUrl + url;
+		if (localStorage.getItem("id_token")) {
+			contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+		}
+        return this.http.delete(url, {
+            headers: contentHeaders
+        });
+    }
 }

@@ -25,6 +25,33 @@ var ApiService = (function () {
             headers: Headers_1.contentHeaders
         });
     };
+    ApiService.prototype.post = function (url, body) {
+        url = this.baseUrl + url;
+        if (localStorage.getItem("id_token")) {
+            Headers_1.contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+        }
+        return this.http.post(url, body, {
+            headers: Headers_1.contentHeaders
+        });
+    };
+    ApiService.prototype.put = function (url, body) {
+        url = this.baseUrl + url;
+        if (localStorage.getItem("id_token")) {
+            Headers_1.contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+        }
+        return this.http.put(url, body, {
+            headers: Headers_1.contentHeaders
+        });
+    };
+    ApiService.prototype.delete = function (url) {
+        url = this.baseUrl + url;
+        if (localStorage.getItem("id_token")) {
+            Headers_1.contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+        }
+        return this.http.delete(url, {
+            headers: Headers_1.contentHeaders
+        });
+    };
     return ApiService;
 }());
 ApiService = __decorate([

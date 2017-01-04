@@ -1,6 +1,5 @@
 "use strict";
 var router_1 = require("@angular/router");
-var Home_1 = require("../components/home/Home");
 var Register_1 = require("../components/auth/register/Register");
 var Login_1 = require("../components/auth/login/Login");
 var Landing_1 = require("../components/index/Landing");
@@ -9,7 +8,6 @@ var Listing_1 = require("../components/listing/Listing");
 var Evenement_1 = require("../components/evenement/Evenement");
 var Cart_1 = require("../components/cart/Cart");
 var Overview_1 = require("../components/admin/overview/Overview");
-var AuthGuard_1 = require("../common/AuthGuard");
 var AdminGuard_1 = require("../common/AdminGuard");
 exports.SubporterRoutes = [
     {
@@ -26,9 +24,6 @@ exports.SubporterRoutes = [
     },
     {
         path: 'admin/overview', component: Overview_1.AdminOverview, canActivate: [AdminGuard_1.AdminGuard]
-    },
-    {
-        path: 'home', component: Home_1.Home, canActivate: [AuthGuard_1.AuthGuard]
     },
     {
         path: 'search', component: Search_1.Search

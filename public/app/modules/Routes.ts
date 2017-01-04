@@ -1,6 +1,5 @@
 import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { Home } from "../components/home/Home";
 import { Register } from "../components/auth/register/Register";
 import { Login } from "../components/auth/login/Login";
 import { Landing } from "../components/index/Landing";
@@ -27,9 +26,6 @@ export const SubporterRoutes: Routes = [
     },
     {
         path: 'admin/overview', component: AdminOverview, canActivate: [AdminGuard]
-    },
-    {
-        path: 'home', component: Home, canActivate: [AuthGuard]
     },
     {
         path: 'search', component: Search
