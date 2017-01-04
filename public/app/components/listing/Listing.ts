@@ -10,6 +10,8 @@ import {Subscription } from 'rxjs';
 import "materialize-css";
 import "angular2-materialize";
 import {Location} from '@angular/common';
+import {CookieService} from 'angular2-cookie/core';
+
 
 
 
@@ -39,13 +41,14 @@ name:String;
 firstname:String;
 city:String;
 price:String;
+id:number;
 
   private loggedIn = false;
       private subscription: Subscription;
 
 
 
-	constructor(public router: Router, public http: Http, public authHttp: AuthHttp, public apiService: ApiService, private activatedRoute: ActivatedRoute, private _location: Location) {
+	constructor(public router: Router, public http: Http, public authHttp: AuthHttp, public apiService: ApiService, private activatedRoute: ActivatedRoute, private _location: Location, private _cookieService:CookieService) {
 
       this.loggedIn = !!localStorage.getItem('id_token');
 	}
@@ -56,6 +59,7 @@ price:String;
   this.subscription = this.activatedRoute.params.subscribe(
       (param: any) => {
         let id = param['id'];
+		this.id = id;
 		this._callApi("Anonymous", "api/loans/"+id);
 
       });
@@ -128,6 +132,19 @@ price:String;
   back(){
               this._location.back();
 
+  }
+
+  huurAbbo(){
+	  if(this.loggedIn){
+
+	this._cookieService.put(""+this.id+"",this.id);
+
+
+
+	  }else{
+		  alert("Gelieve eerst in te loggen");
+		  this.router.navigateByUrl('../login/'+this.id);
+	  }
   }
 
 

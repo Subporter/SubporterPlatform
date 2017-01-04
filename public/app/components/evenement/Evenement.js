@@ -67,6 +67,7 @@ var Evenement = (function () {
         for (var i = 0; i < this.loans.length; i++) {
             if (this.loans.paid == true) {
                 this.lent++;
+                this.loans.splice(i, 1);
             }
             else {
                 this.lendable++;

@@ -7,6 +7,7 @@ import { Landing } from "../components/index/Landing";
 import { Search } from "../components/search/Search";
 import { Listing } from "../components/listing/Listing";
 import { Evenement } from "../components/evenement/Evenement";
+import { Cart } from "../components/cart/Cart";
 import { AuthGuard } from "../common/AuthGuard";
 import { AdminGuard } from "../common/AdminGuard";
 
@@ -16,6 +17,9 @@ export const SubporterRoutes: Routes = [
 	},
 	{
 		path: 'login', component: Login
+	},
+	{
+		path: 'login/:id', component: Login
 	},
 	{
 		path: 'register', component: Register
@@ -31,6 +35,9 @@ export const SubporterRoutes: Routes = [
 	},
 	{
 		path: 'listing/:id', component: Listing
+	},
+	{
+		path: 'cart', component: Cart
 	},
 	{
 		path: '**', component: Login

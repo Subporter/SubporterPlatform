@@ -15,13 +15,22 @@ import { contentHeaders } from '../../../common/headers'
 	 <nav>
     <div class="nav-wrapper">
       <a href="#" class="brand-logo">Subporter</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="sass.html">Info</a></li>
         <li> <a  [routerLink]="['/search']">Zoeken</a></li>
+        <li *ngIf="loggedIn"><a  [routerLink]="['/cart']">Winkelwagen</a></li>
+
         <li *ngIf="!loggedIn"><a  [routerLink]="['/login']">Login</a></li>
         <li *ngIf="loggedIn"><a  [routerLink]="['/profiel']">Profiel</a></li>
 
         <li><a class="waves-effect waves-light btn" (click)="search()">Abonnement aanbieden</a></li>
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+        <li><a href="sass.html">Sass</a></li>
+        <li><a href="badges.html">Components</a></li>
+        <li><a href="collapsible.html">JavaScript</a></li>
       </ul>
     </div>
   </nav>

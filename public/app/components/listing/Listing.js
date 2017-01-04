@@ -16,14 +16,16 @@ var ApiService_1 = require("../../services/ApiService");
 require("materialize-css");
 require("angular2-materialize");
 var common_1 = require("@angular/common");
+var core_2 = require("angular2-cookie/core");
 var Listing = (function () {
-    function Listing(router, http, authHttp, apiService, activatedRoute, _location) {
+    function Listing(router, http, authHttp, apiService, activatedRoute, _location, _cookieService) {
         this.router = router;
         this.http = http;
         this.authHttp = authHttp;
         this.apiService = apiService;
         this.activatedRoute = activatedRoute;
         this._location = _location;
+        this._cookieService = _cookieService;
         this.jwtHelper = new angular2_jwt_1.JwtHelper();
         this.loggedIn = false;
         this.loggedIn = !!localStorage.getItem('id_token');
@@ -32,6 +34,7 @@ var Listing = (function () {
         var _this = this;
         this.subscription = this.activatedRoute.params.subscribe(function (param) {
             var id = param['id'];
+            _this.id = id;
             _this._callApi("Anonymous", "api/loans/" + id);
         });
     };
@@ -67,6 +70,15 @@ var Listing = (function () {
     Listing.prototype.back = function () {
         this._location.back();
     };
+    Listing.prototype.huurAbbo = function () {
+        if (this.loggedIn) {
+            this._cookieService.put("" + this.id + "", this.id);
+        }
+        else {
+            alert("Gelieve eerst in te loggen");
+            this.router.navigateByUrl('../login/' + this.id);
+        }
+    };
     return Listing;
 }());
 Listing = __decorate([
@@ -75,7 +87,7 @@ Listing = __decorate([
         templateUrl: './app/components/listing/listing.view.html',
         styleUrls: ['../../css/css/listing.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService, router_1.ActivatedRoute, common_1.Location])
+    __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService, router_1.ActivatedRoute, common_1.Location, core_2.CookieService])
 ], Listing);
 exports.Listing = Listing;
 //# sourceMappingURL=Listing.js.map

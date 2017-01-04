@@ -1,0 +1,36 @@
+.header {
+  background-size: cover;
+  height: 300px; }
+
+nav {
+  background: url("../../img/bg_cart.jpeg");
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none; }
+
+.brand-logo {
+  margin-left: 10px; }
+
+.bold {
+  font-weight: bold; }
+
+#section0 {
+  background-color: #F4F4F4;
+  margin-top: 0; }
+
+.winkelwagen {
+  padding: 20px;
+  background-color: #fff; }
+
+td.rights {
+  text-align: right; }
+
+td i {
+  cursor: pointer;
+  color: grey; }
+
+td i:hover {
+  color: #212121; }
+
+#section0 .container h1 {
+  margin-top: 0; }

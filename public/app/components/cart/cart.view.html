@@ -1,0 +1,75 @@
+<nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">Subporter</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="sass.html">Info</a></li>
+        <li> <a  [routerLink]="['/search']">Zoeken</a></li>
+        <li *ngIf="loggedIn"><a  [routerLink]="['/cart']">Winkelwagen</a></li>
+
+        <li *ngIf="!loggedIn"><a  [routerLink]="['/login']">Login</a></li>
+        <li *ngIf="loggedIn"><a  [routerLink]="['/profiel']">Profiel</a></li>
+
+        <li><a class="waves-effect waves-light btn" (click)="search()">Abonnement aanbieden</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+<section id="section0">
+
+<div class="container">
+
+<div *ngIf="show" class="full">
+    <h1>Bestelling afronden</h1>
+
+    <div class="winkelwagen">
+        <h2>Winkelwagen</h2>
+         <table class="responsive-table">
+        <thead>
+             <tr>
+              <th data-field="verkoper">Verkoper</th>
+              <th data-field="name">Wedstrijd</th>
+              <th data-field="price">Prijs</th>
+
+          </tr>
+
+        </thead>
+
+           <tbody>
+          <tr  *ngFor="let loan of loans">
+            <td>{{loan.lent_out_by.firstname}} {{loan.lent_out_by.name}}</td>
+            <td><span class="bold">{{loan.game.home.name}} - {{loan.game.away.name}}</span>
+                <br/>
+                {{loan.game.date}}, {{loan.game.home.stadion}}
+            </td>
+            <td>€ {{loan.game.home.price}}</td>
+            <td>
+                 <i class="material-icons" (click)="removeCookie(loan._id)">delete</i>
+                </td>
+          </tr>
+
+           </tbody>
+           <tfoot>
+                <tr>
+                    <td rowspan="4"></td>
+                    <td colspan="2" class="rights">Servicekosten:</td>
+                    <td >€ {{price}}</td>
+
+                </tr>
+
+           </tfoot>
+      </table>
+
+
+
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+  <subporterFooter></subporterFooter>
