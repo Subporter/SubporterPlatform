@@ -1,0 +1,42 @@
+
+
+@import 'reset';
+
+:host {
+  background: url("/img/bg2.jpg");
+  background-size: cover;
+  display: block;
+  height: 100vh; }
+
+h1 {
+  font-size: 2em;
+  font-weight: bold;
+  line-height: 35px; }
+
+
+  .register {
+  padding-top: 200px;
+  width: 50%;
+  margin: 0 auto; }
+
+
+  .register-section {
+  background: white;
+  padding: 40px;
+  width: 100%;
+  float: left;
+  height: 318px; }
+
+
+.form-group{
+    width: 45%;
+    float:left;
+    
+}
+
+.one{
+   margin-right: 40px;
+}
+
+
+

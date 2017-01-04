@@ -1,0 +1,32 @@
+.container aside {
+  width: 25%;
+  float: left;
+  overflow: hidden; }
+
+.container article {
+  width: 75%;
+  float: left;
+  overflow: hidden; }
+
+.search {
+  overflow: hidden;
+  padding: 40px; }
+
+.search .container {
+  overflow: hidden; }
+
+.collection-item p {
+  display: inline-block;
+  margin: 0; }
+
+.collection-item .title {
+  margin-right: 0;
+  font-weight: bold; }
+
+.row .col .collection {
+  padding: 0;
+  border: 0;
+  cursor: pointer; }
+
+.row .col .collection .collection-item:hover {
+  background-color: #F4F4F4; }

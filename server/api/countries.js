@@ -1,3 +1,4 @@
+
 const express = require('express'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
@@ -7,6 +8,7 @@ const express = require('express'),
 let router = express.Router();
 
 /* Create */
+
 router.post("/countries", authenticate, admin, function(req, res) {
     if (req.granted) {
         if (Object.keys(req.body).length !== 1 || bodyValidator(req.body.name)) {

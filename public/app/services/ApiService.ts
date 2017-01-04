@@ -10,6 +10,7 @@ export class ApiService {
 
 	}
 
+
 	call(url) {
 		url = this.baseUrl + url;
 		contentHeaders.append("Authorization", localStorage.getItem("id_token"));

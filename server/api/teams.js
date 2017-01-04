@@ -79,6 +79,7 @@ router.get("/teams", function(req, res) {
     });
 });
 
+
 router.get("/teams/competition/:competition", function(req, res) {
     Team.getTeamsByCompetition(req.params.competition, function(err, teams) {
         if (err) {
@@ -100,6 +101,7 @@ router.get("/teams/competition/:competition", function(req, res) {
             });
         }
     });
+
 });
 
 router.get("/teams/country/:country", function(req, res) {
@@ -148,6 +150,26 @@ router.get("/teams/:id", function(req, res) {
         }
     });
 });
+
+/* Read (teams by competition) */
+router.get("/teams/comp/:competition", authenticate, function (req, res) {
+	Team.find({"competition":req.params.competition}, function (err, team) {
+		if (err) {
+			res.json({
+				info: "Error during reading team",
+				success: false,
+				error: err
+			});
+		} else {
+			res.json({
+				info: "Teams found succesfully",
+				success: true,
+				data: team
+			});
+		}
+	});
+});
+
 
 /* Update */
 router.put("/teams/:id", authenticate, admin, formParser, imageSaver, function(req, res) {
