@@ -12,7 +12,6 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
 var angular2_jwt_1 = require("angular2-jwt");
-var headers_1 = require("../../common/headers");
 var ApiService_1 = require("../../services/ApiService");
 require("materialize-css");
 require("angular2-materialize");
@@ -129,21 +128,17 @@ var Cart = (function () {
         for (var _i = 0, _a = this.loans; _i < _a.length; _i++) {
             var loan = _a[_i];
             console.log(loan._id);
-            this._cookieService.remove(loan._id);
+            // this._cookieService.remove(loan._id);
             var id = loan._id;
             var paid = true;
             var lent = true;
-            var lent_by = "asd";
+            var lent_by = 3;
             var body = JSON.stringify({
                 paid: paid,
                 lent: lent,
                 lent_by: lent_by
             });
-            headers_1.contentHeaders.append("Authorization", localStorage.getItem("id_token"));
-            this.authHttp.put("http://localhost:1337/api/loans/" + id, body, {
-                headers: headers_1.contentHeaders
-            })
-                .subscribe(function (response) { return _this.response = response.text(); }, function (error) { return _this.response = error.text; });
+            this.apiService.put("api/loans/" + id, body).subscribe(function (response) { return console.log(response.text()); }, function (error) { return _this.response = error.text; });
         }
     };
     return Cart;

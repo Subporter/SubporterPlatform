@@ -235,13 +235,13 @@ pay(){
 
         console.log(loan._id);
 
-        this._cookieService.remove(loan._id);
+        // this._cookieService.remove(loan._id);
 
         let id= loan._id;
 
         let paid = true;
         let lent = true;
-        let lent_by = "asd";
+        let lent_by = 3;
 
 		 let body = JSON.stringify({
 		 	paid,
@@ -249,22 +249,23 @@ pay(){
              lent_by
 		 });
 
-		 contentHeaders.append("Authorization", localStorage.getItem("id_token"));
-		 this.authHttp.put("http://localhost:1337/api/loans/"+id, body, {
-		 	headers: contentHeaders
-		 })
-		 	.subscribe(
-		 	response => this.response = response.text(),
-		 	error => this.response = error.text
-		 	);
+
+this.apiService.put("api/loans/"+id,body).subscribe(
+	 		response =>  console.log(response.text()),
+	 		error => this.response = error.text
+	 	);
+
+
+		//  contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+		//  this.authHttp.put("http://localhost:1337/api/loans/"+id, body, {
+		//  	headers: contentHeaders
+		//  })
+		//  	.subscribe(
+		//  	response => this.response = response.text(),
+		//  	error => this.response = error.text
+		//  	);
 	}
 
-
-
     }
-
-
-
-
 
 }
