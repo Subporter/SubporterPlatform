@@ -193,4 +193,36 @@ showEmpty(){
 } 
 
 
+pay(){
+    alert("betaaaald");
+
+    (for let loan in this.loans){
+
+        this._cookieService.remove(loan._id);
+
+        let paid = true;
+        let lent = true;
+
+		let body = JSON.stringify({
+			name
+		});
+
+		/*contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+		this.authHttp.put("http://localhost:1337/api/user", body, {
+			headers: contentHeaders
+		})
+			.subscribe(
+			response => this.response = response.text(),
+			error => this.response = error.text
+			);*/
+	}
+
+
+
+    }
+
+
+}
+
+
 }

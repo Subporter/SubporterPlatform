@@ -73,6 +73,7 @@ var Listing = (function () {
     Listing.prototype.huurAbbo = function () {
         if (this.loggedIn) {
             this._cookieService.put("" + this.id + "", this.id);
+            this.router.navigateByUrl('../cart');
         }
         else {
             alert("Gelieve eerst in te loggen");

@@ -138,6 +138,7 @@ id:number;
 	  if(this.loggedIn){
 
 	this._cookieService.put(""+this.id+"",this.id);
+	 this.router.navigateByUrl('../cart');
 
 
 

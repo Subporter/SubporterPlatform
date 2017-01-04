@@ -109,6 +109,18 @@ var Cart = (function () {
         }
         return true;
     };
+    Cart.prototype.pay = function () {
+        alert("betaaaald");
+        ();
+        for (var loan in this.loans) {
+            this._cookieService.remove(loan._id);
+            var paid = true;
+            var lent = true;
+            var body = JSON.stringify({
+                name: name
+            });
+        }
+    };
     return Cart;
 }());
 Cart = __decorate([
