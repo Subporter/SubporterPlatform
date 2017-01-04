@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'),
-    _ = require("lodash"),
+    _ = require('lodash'),
     sportSchema = require('../schemas/Sports');
 
 let Sport = mongoose.model('Sport', sportSchema, 'Sports');
@@ -9,53 +9,57 @@ Sport.addSport = function(body, cb) {
     let sport = new Sport(body);
     sport.save(function(err) {
         if (err) {
-            cb(err, false);
+            cb(err);
+        } else {
+            cb(null);
         }
-        cb(null, true);
     });
 };
 
 /* Read (all sports) */
 Sport.getSports = function(cb) {
-    Sport.find({}).sort('name').exec(function(err, docs) {
-        if (err) {
-            cb(err, null);
-        }
-        cb(null, docs);
-    });
+    Sport.find({})
+        .sort('name')
+        .exec(function(err, docs) {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        });
 };
 
 /* Read (one sport) */
 Sport.getSportById = function(id, cb) {
-    Sport.findOne({
-        id: id
-    }).exec(function(err, docs) {
+    Sport.findById(id, function(err, docs) {
         if (err) {
             cb(err, null);
+        } else {
+            cb(null, docs);
         }
-        cb(null, docs);
     });
 };
 
 /* Update */
-Sport.updateSport = function (sport, body, cb) {
+Sport.updateSport = function(sport, body, cb) {
     _.merge(sport, body);
-
     sport.save(function(err) {
         if (err) {
             cb(err);
+        } else {
+            cb(null);
         }
-        cb(null);
     });
 };
 
 /* Delete */
-Sport.deleteSport = function (id, cb) {
-    Sport.findByIdAndRemove(id, function (err) {
-        if (err) {
+Sport.deleteSport = function(id, cb) {
+	Sport.findById(id, function (err, docs) {
+        if (err || !docs) {
             cb(err);
+        } else {
+            docs.remove(cb);
         }
-        cb(null);
     });
 };
 

@@ -1,14 +1,26 @@
 const mongoose = require('mongoose'),
-    mongooseHidden = require('mongoose-hidden')(),
-    autoIncrement = require('mongoose-sequence');
+    mongooseHidden = require('mongoose-hidden')({
+        defaultHidden: {
+            __v: true,
+			created_at: true,
+            updated_at: true
+        }
+    }),
+    autoIncrement = require('mongoose-increment');
 
 let regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
 
 let addressSchema = new mongoose.Schema({
-    street: {
+    city: {
         type: String,
         required: true,
+		trim: true,
         match: regExp
+    },
+    country: {
+		type: Number,
+        ref: 'Country',
+        required: true
     },
     number: {
         type: Number,
@@ -22,21 +34,24 @@ let addressSchema = new mongoose.Schema({
         min: 1000,
         max: 9999
     },
-    city: {
+    street: {
         type: String,
         required: true,
+		trim: true,
         match: regExp
-    },
-    country: {
-		type: mongoose.Schema.ObjectId,
-        ref: 'Country',
-        required: true
+    }
+}, {
+    _id: false,
+    timestamps: {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
     }
 });
 
-addressSchema.plugin(autoIncrement, {
-    inc_field: 'addresses_id'
-});
 addressSchema.plugin(mongooseHidden);
+addressSchema.plugin(autoIncrement, {
+    modelName: 'Address',
+    fieldName: '_id'
+});
 
 module.exports = addressSchema;
