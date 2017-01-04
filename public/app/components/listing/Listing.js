@@ -45,7 +45,7 @@ var Listing = (function () {
     };
     Listing.prototype._callApi = function (type, url) {
         var _this = this;
-        this.apiService.call(url).subscribe(function (response) { return _this.getLoan(response.text()); }, function (error) { return _this.response = error.text; });
+        this.apiService.get(url).subscribe(function (response) { return _this.getLoan(response.text()); }, function (error) { return _this.response = error.text; });
     };
     Listing.prototype.getLoan = function (data) {
         var Data = data;
@@ -72,7 +72,7 @@ var Listing = (function () {
     };
     Listing.prototype.huurAbbo = function () {
         if (this.loggedIn) {
-            this._cookieService.put("" + this.id + "", this.id);
+            this._cookieService.put(this.id.toString(), this.id.toString());
             this.router.navigateByUrl('../cart');
         }
         else {

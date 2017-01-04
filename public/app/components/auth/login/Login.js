@@ -37,10 +37,10 @@ var Login = (function () {
         })
             .subscribe(function (response) {
             console.log(response.json());
-            if (response.json().success == true) {
+            if (response.json().success === true) {
                 localStorage.setItem("id_token", response.json().token);
                 _this.useJwtHelper();
-                _this.router.navigate(['home']);
+                _this.router.navigate(['landing']);
             }
         }, function (error) {
             alert(error.text());

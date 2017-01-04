@@ -61,11 +61,13 @@ show = true;
 	}
 
 
+
 	ngOnInit() { 
 
          if(!this.loggedIn){
               this.router.navigateByUrl('#');
          }
+
 
         let  x = this._cookieService.getAll();
         this.cookie = x;
@@ -77,8 +79,8 @@ show = true;
             this.showCart();
         }
 
-       
-        
+
+
         console.log(x);
 
 }
@@ -144,7 +146,9 @@ showEmpty(){
 
     
 
-    
+
+
+
   }
 
      _callApi2(type, url) {
@@ -172,11 +176,11 @@ showEmpty(){
     //  fullDate.toLocaleString().substring(0,fullDate.toLocaleString().indexOf(' '));
     //  console.log (fullDate);
 
-    
+
     this.price += (this.loan.game.home.price *0.1);
     this.prices += (this.loan.game.home.price);
 
-    
+
 
 
      console.log(this.loan);
@@ -220,7 +224,7 @@ showEmpty(){
     }
 
     return true;
-} 
+}
 
 
 pay(){

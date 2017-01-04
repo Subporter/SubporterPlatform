@@ -1,5 +1,6 @@
 import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { Register } from "../components/auth/register/Register";
 import { Login } from "../components/auth/login/Login";
 import { Landing } from "../components/index/Landing";
@@ -8,6 +9,7 @@ import { Listing } from "../components/listing/Listing";
 import { Evenement } from "../components/evenement/Evenement";
 import { Cart } from "../components/cart/Cart";
 import { AdminOverview } from "../components/admin/overview/Overview";
+
 import { AuthGuard } from "../common/AuthGuard";
 import { AdminGuard } from "../common/AdminGuard";
 
@@ -15,6 +17,9 @@ export const SubporterRoutes: Routes = [
     {
         path: '', component: Landing
     },
+	{
+		path: 'landing', component: Landing
+	},
     {
         path: 'login', component: Login
     },

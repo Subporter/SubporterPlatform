@@ -45,7 +45,7 @@ var Evenement = (function () {
     };
     Evenement.prototype._callApi = function (type, url) {
         var _this = this;
-        this.apiService.call(url).subscribe(function (response) { return _this.getGames(response.text()); }, function (error) { return _this.goHome(); });
+        this.apiService.get(url).subscribe(function (response) { return _this.getGames(response.text()); }, function (error) { return _this.goHome(); });
     };
     Evenement.prototype.getGames = function (data) {
         var Data = data;

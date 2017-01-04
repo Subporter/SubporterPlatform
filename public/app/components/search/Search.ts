@@ -34,10 +34,10 @@ export class Search {
 	}
 
 
-	ngOnInit() { 
-  
+	ngOnInit() {
+
   this._callApi("Anonymous", "api/games/");
-  
+
 
 
 
@@ -64,14 +64,14 @@ export class Search {
 
 
   _callApi(type, url) {
-		this.apiService.call(url).subscribe(
+		this.apiService.get(url).subscribe(
 			response =>  this.getGames(response.text()),
 			error => this.response = error.text
 		);
 
-    
 
-    
+
+
   }
 
   getGames(data){
@@ -83,9 +83,9 @@ export class Search {
 
   }
 
- 
-  
- 
+
+
+
 
 }
 
