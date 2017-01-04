@@ -1,8 +1,9 @@
 const mongoose = require('mongoose'),
     _ = require('lodash'),
     teamSchema = require('../schemas/Teams'),
-	Subscription = require('../models/Subscriptions'),
-	Game = require('../models/Games');
+    Subscription = require('../models/Subscriptions'),
+    Game = require('../models/Games'),
+    Competition = require('mongoose').model('Competition');
 
 let Team = mongoose.model('Team', teamSchema, 'Teams');
 
@@ -48,8 +49,8 @@ Team.getTeams = function(cb) {
             if (err) {
                 cb(err, null);
             } else {
-				cb(null, docs);
-			}
+                cb(null, docs);
+            }
         });
 };
 
@@ -62,12 +63,44 @@ Team.getTeamsByCompetition = function(competition, cb) {
             name: 1
         })
         .exec(function(err, docs) {
-			if (err) {
+            if (err) {
                 cb(err, null);
             } else {
-				cb(null, docs);
-			}
+                cb(null, docs);
+            }
         });
+};
+
+Team.getTeamsByCountry = function(country, cb) {
+    Competition.deleteCompetition(1, function (err) {
+
+    });
+    /*Competition.getCompetitions(function(err, docs) {
+        if (err || !docs) {
+            cb(err, null);
+        } else {
+            let ids = docs.map(function(doc) {
+                return doc._id;
+            });
+            Team.find({
+                    competition: {
+                        $in: ids
+                    }
+                })
+                .populate(populateSchema)
+                .sort({
+                    competition: 1,
+                    name: 1
+                })
+                .exec(function(err, docs) {
+                    if (err) {
+                        cb(err, null);
+                    } else {
+                        cb(null, docs);
+                    }
+                });
+        }
+    });*/
 };
 
 /* Read (one team) */
@@ -75,11 +108,11 @@ Team.getTeamById = function(id, cb) {
     Team.findById(id)
         .populate(populateSchema)
         .exec(function(err, docs) {
-			if (err) {
+            if (err) {
                 cb(err, null);
             } else {
-				cb(null, docs);
-			}
+                cb(null, docs);
+            }
         });
 };
 
@@ -107,15 +140,15 @@ Team.deleteTeam = function(id, cb) {
 };
 
 Team.deleteTeamReferences = function(id, cb) {
-	Team.findById(id, function (err, docs) {
-		if (err || !docs) {
-			cb(err);
-		} else {
-			Subscription.deleteSubscriptionsByTeam(docs._id, function (err) {
+    Team.findById(id, function(err, docs) {
+        if (err || !docs) {
+            cb(err);
+        } else {
+            Subscription.deleteSubscriptionsByTeam(docs._id, function(err) {
                 if (err) {
                     cb(err);
                 } else {
-                    Game.deleteGamesByTeam(docs._id, function (err) {
+                    Game.deleteGamesByTeam(docs._id, function(err) {
                         if (err) {
                             cb(err);
                         } else {
@@ -123,9 +156,9 @@ Team.deleteTeamReferences = function(id, cb) {
                         }
                     });
                 }
-			});
-		}
-	});
+            });
+        }
+    });
 };
 
 Team.deleteTeamsByCompetition = function(competition, cb) {

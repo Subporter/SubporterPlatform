@@ -1,4 +1,5 @@
 const mongoose = require('mongoose'),
+    moment = require('moment'),
     _ = require('lodash'),
     gameSchema = require('../schemas/Games');
 
@@ -185,11 +186,15 @@ Game.addGame = function(body, cb) {
 
 /* Read (all games) */
 Game.getGames = function(cb) {
-    Game.find({})
+    Game.find({
+            date: {
+                $gt: moment().toDate()
+            }
+        })
         .populate(populateSchema)
         .sort({
             date: 1,
-            importance: 1,
+            importance: -1,
             home: 1,
             away: 1
         })
@@ -202,13 +207,36 @@ Game.getGames = function(cb) {
         });
 };
 
-Game.getFeaturedGames = function(cb) {
-
+Game.getFeaturedGames = function(country, cb) {
+    
+    Game.find({
+            date: {
+                $gt: moment().toDate()
+            }
+        })
+        .populateSchema(populateSchema)
+        .sort({
+            importance: -1,
+            date: 1,
+            home: 1,
+            away: 1
+        })
+        .limit(6)
+        .exec(function(err, docs) {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        });
 };
 
 Game.getGamesByTeam = function(team, cb) {
     Game.find({
-            home: team
+            home: team,
+            date: {
+                $gt: moment().toDate()
+            }
         })
         .populate(populateSchema)
         .sort({

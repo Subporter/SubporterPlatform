@@ -178,7 +178,7 @@ Subscription.updateSubscription = function(subscription, body, cb) {
 /* Delete */
 Subscription.deleteSubscription = function(id, user, cb) {
     Subscription.findById(id, function(err, docs) {
-        if (err || !docs) {
+        if (err || !docs || (user.admin === false && user._id !== docs.user)) {
             cb(err);
         } else {
             docs.remove(cb);

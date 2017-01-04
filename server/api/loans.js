@@ -23,7 +23,7 @@ router.post("/loans", authenticate, loadUser, function(req, res) {
                     res.json({
                         info: "Error during creating loan",
                         success: false,
-                        error: err
+                        error: err.errmsg
                     });
                 } else {
                     Game.getGameById(req.body.game, function (err, game) {
@@ -31,7 +31,7 @@ router.post("/loans", authenticate, loadUser, function(req, res) {
                             res.json({
                                 info: "Error during creating loan",
                                 success: false,
-                                error: err
+                                error: err.errmsg
                             });
                         } else {
                             Game.toggleLoans(game, id, function (err) {
@@ -39,7 +39,7 @@ router.post("/loans", authenticate, loadUser, function(req, res) {
                                     res.json({
                                         info: "Error during creating loan",
                                         success: false,
-                                        error: err
+                                        error: err.errmsg
                                     });
                                 } else {
                                     res.json({
@@ -70,7 +70,100 @@ router.get("/loans", authenticate, function(req, res) {
                 res.json({
                     info: "Error during reading loans",
                     success: false,
-                    error: err
+                    error: err.errmsg
+                });
+            } else if (loans) {
+                res.json({
+                    info: "Loans found succesfully",
+                    success: true,
+                    data: loans
+                });
+            } else {
+                res.json({
+                    info: "Loans not found",
+                    success: false
+                });
+            }
+        });
+    } else {
+        res.status(403);
+        res.json({
+            info: "Unauthorized",
+            success: false
+        });
+    }
+});
+
+router.get("/loans/game/:game", authenticate, function(req, res) {
+    if (req.granted) {
+        Loan.getLoansByGame(req.params.game, function(err, loans) {
+            if (err) {
+                res.json({
+                    info: "Error during reading loans",
+                    success: false,
+                    error: err.errmsg
+                });
+            } else if (loans) {
+                res.json({
+                    info: "Loans found succesfully",
+                    success: true,
+                    data: loans
+                });
+            } else {
+                res.json({
+                    info: "Loans not found",
+                    success: false
+                });
+            }
+        });
+    } else {
+        res.status(403);
+        res.json({
+            info: "Unauthorized",
+            success: false
+        });
+    }
+});
+
+router.get("/loans/lent_out_by/:lent_out_by", authenticate, function(req, res) {
+    if (req.granted) {
+        Loan.getLoansByLentOutBy(req.params.lent_out_by, function(err, loans) {
+            if (err) {
+                res.json({
+                    info: "Error during reading loans",
+                    success: false,
+                    error: err.errmsg
+                });
+            } else if (loans) {
+                res.json({
+                    info: "Loans found succesfully",
+                    success: true,
+                    data: loans
+                });
+            } else {
+                res.json({
+                    info: "Loans not found",
+                    success: false
+                });
+            }
+        });
+    } else {
+        res.status(403);
+        res.json({
+            info: "Unauthorized",
+            success: false
+        });
+    }
+});
+
+router.get("/loans/lent_by/:lent_by", authenticate, function(req, res) {
+    if (req.granted) {
+        Loan.getLoansByGame(req.params.lent_by, function(err, loans) {
+            if (err) {
+                res.json({
+                    info: "Error during reading loans",
+                    success: false,
+                    error: err.errmsg
                 });
             } else if (loans) {
                 res.json({
@@ -102,7 +195,7 @@ router.get("/loans/:id", authenticate, function(req, res) {
                 res.json({
                     info: "Error during reading loan",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else if (loan) {
                 res.json({
@@ -127,9 +220,9 @@ router.get("/loans/:id", authenticate, function(req, res) {
 });
 
 /* Update */
-router.put("/loans/:id", authenticate, admin, function(req, res) {
+router.put("/loans/:id", authenticate, loadUser, function(req, res) {
     if (req.granted) {
-        if (1 === 2) {
+        if (Object.keys(req.body).length !== 2 || bodyValidator(req.body.subscription, req.body.game)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false
@@ -140,7 +233,7 @@ router.put("/loans/:id", authenticate, admin, function(req, res) {
                     res.json({
                         info: "Error during reading loan",
                         success: false,
-                        error: err
+                        error: err.errmsg
                     });
                 } else if (loan) {
                     Loan.updateLoan(loan, req.body, function(err) {
@@ -148,7 +241,7 @@ router.put("/loans/:id", authenticate, admin, function(req, res) {
                             res.json({
                                 info: "Error during updating loan",
                                 success: false,
-                                error: err
+                                error: err.errmsg
                             });
                         } else {
                             res.json({
@@ -174,6 +267,97 @@ router.put("/loans/:id", authenticate, admin, function(req, res) {
     }
 });
 
+router.put("/loans/lend/:id", authenticate, loadUser, function(req, res) {
+    if (req.granted) {
+        req.body.lent = true;
+        req.body.lent_by = req.user._id;
+        req.body.lent_on = Date.now.toISOString();
+        Loan.getLoanById(req.params.id, function(err, loan) {
+            if (err) {
+                res.json({
+                    info: "Error during reading loan",
+                    success: false,
+                    error: err.errmsg
+                });
+            } else if (loan) {
+                Loan.updateLoan(loan, req.body, function(err) {
+                    if (err) {
+                        res.json({
+                            info: "Error during updating loan",
+                            success: false,
+                            error: err.errmsg
+                        });
+                    } else {
+                        res.json({
+                            info: "Loan updated succesfully",
+                            success: true
+                        });
+                    }
+                });
+            } else {
+                res.json({
+                    info: "Loan not found",
+                    success: false,
+                });
+            }
+        });
+    } else {
+        res.status(403);
+        res.json({
+            info: "Unauthorized",
+            success: false
+        });
+    }
+});
+
+router.put("/loans/pay/:id", authenticate, loadUser, function(req, res) {
+    if (req.granted) {
+        Loan.getLoanById(req.params.id, function(err, loan) {
+            if (err) {
+                res.json({
+                    info: "Error during reading loan",
+                    success: false,
+                    error: err.errmsg
+                });
+            } else if (loan) {
+                if (loan.lent_by === req.user._id) {
+                    req.body.paid = true;
+                    Loan.updateLoan(loan, req.body, function(err) {
+                        if (err) {
+                            res.json({
+                                info: "Error during updating loan",
+                                success: false,
+                                error: err.errmsg
+                            });
+                        } else {
+                            res.json({
+                                info: "Loan updated succesfully",
+                                success: true
+                            });
+                        }
+                    });
+                } else {
+                    res.json({
+                        info: "Error during updating loan",
+                        success: false,
+                    });
+                }
+            } else {
+                res.json({
+                    info: "Loan not found",
+                    success: false,
+                });
+            }
+        });
+    } else {
+        res.status(403);
+        res.json({
+            info: "Unauthorized",
+            success: false
+        });
+    }
+});
+
 /* Delete */
 router.delete("/loans/:id", authenticate, admin, function(req, res) {
     if (req.granted) {
@@ -182,7 +366,7 @@ router.delete("/loans/:id", authenticate, admin, function(req, res) {
                 res.json({
                     info: "Error during deleting loan",
                     success: false,
-                    error: err
+                    error: err.errmsg
                 });
             } else {
                 res.json({
