@@ -60,4 +60,12 @@ loanSchema.plugin(autoIncrement, {
 });
 loanSchema.plugin(mongooseHidden);
 
+loanSchema.index({
+	game: 1,
+	lent_out_by: 1,
+    subscription: 1
+}, {
+    unique: true
+});
+
 module.exports = loanSchema;

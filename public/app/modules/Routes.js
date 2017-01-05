@@ -9,6 +9,9 @@ var Evenement_1 = require("../components/evenement/Evenement");
 var Cart_1 = require("../components/cart/Cart");
 var Offer_1 = require("../components/offer/Offer");
 var Overview_1 = require("../components/admin/overview/Overview");
+var Sports_1 = require("../components/admin/sports/list/Sports");
+var Create_1 = require("../components/admin/sports/create/Create");
+var Edit_1 = require("../components/admin/sports/edit/Edit");
 var AdminGuard_1 = require("../common/AdminGuard");
 exports.SubporterRoutes = [
     {
@@ -27,9 +30,6 @@ exports.SubporterRoutes = [
         path: 'register', component: Register_1.Register
     },
     {
-        path: 'admin/overview', component: Overview_1.AdminOverview, canActivate: [AdminGuard_1.AdminGuard]
-    },
-    {
         path: 'search', component: Search_1.Search
     },
     {
@@ -44,9 +44,26 @@ exports.SubporterRoutes = [
     {
         path: 'offer', component: Offer_1.Offer
     },
-    {
-        path: '**', component: Login_1.Login
-    }
+    path, 'admin', component, Overview_1.AdminOverview, canActivate, [AdminGuard_1.AdminGuard]
 ];
+{
+    path: 'admin/sports', component;
+    Sports_1.AdminSports, canActivate;
+    [AdminGuard_1.AdminGuard];
+}
+{
+    path: 'admin/sports/add', component;
+    Create_1.SportsCreate, canActivate;
+    [AdminGuard_1.AdminGuard];
+}
+{
+    path: 'admin/sports/edit/:id', component;
+    Edit_1.SportsEdit, canActivate;
+    [AdminGuard_1.AdminGuard];
+}
+{
+    path: '**', component;
+    Login_1.Login;
+}
 exports.Routing = router_1.RouterModule.forRoot(exports.SubporterRoutes);
 //# sourceMappingURL=Routes.js.map

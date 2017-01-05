@@ -9,19 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var ApiService_1 = require("../../../services/ApiService");
-var AdminOverview = (function () {
-    function AdminOverview(apiService) {
-        this.apiService = apiService;
+var NotFound = (function () {
+    function NotFound() {
     }
-    return AdminOverview;
+    return NotFound;
 }());
-AdminOverview = __decorate([
+NotFound = __decorate([
     core_1.Component({
-        selector: 'admin-overview',
-        templateUrl: './app/components/admin/overview/overview.view.html'
+        selector: 'subporter_404',
+        templateUrl: './app/components/index/404.view.html',
+        styleUrls: ['../../css/css/404.css']
     }),
-    __metadata("design:paramtypes", [ApiService_1.ApiService])
-], AdminOverview);
-exports.AdminOverview = AdminOverview;
-//# sourceMappingURL=Overview.js.map
+    __metadata("design:paramtypes", [])
+], NotFound);
+exports.NotFound = NotFound;
+//# sourceMappingURL=404.js.map

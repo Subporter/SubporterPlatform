@@ -1,0 +1,6 @@
+{
+    "ui": "tdd",
+    "timeout": 300000,
+    "reporter": "tap",
+    "path": "./node_modules/.bin/mocha"
+}
