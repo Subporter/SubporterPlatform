@@ -279,11 +279,11 @@ Loan.updateLoan = function(loan, body, cb) {
 
 /* Delete */
 Loan.deleteLoan = function(id, cb) {
-    Loan.findByIdAndRemove(id, function(err) {
-        if (err) {
+    Loan.findById(id, function(err, docs) {
+        if (err || !docs) {
             cb(err);
         } else {
-            cb(null);
+            docs.remove(cb);
         }
     });
 };
