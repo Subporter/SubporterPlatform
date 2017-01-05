@@ -12,6 +12,7 @@ var Overview_1 = require("../components/admin/overview/Overview");
 var Sports_1 = require("../components/admin/sports/list/Sports");
 var Create_1 = require("../components/admin/sports/create/Create");
 var Edit_1 = require("../components/admin/sports/edit/Edit");
+var Profile_1 = require("../components/profile/Profile");
 var AdminGuard_1 = require("../common/AdminGuard");
 exports.SubporterRoutes = [
     {
@@ -55,6 +56,9 @@ exports.SubporterRoutes = [
     },
     {
         path: 'admin/sports/edit/:id', component: Edit_1.SportsEdit, canActivate: [AdminGuard_1.AdminGuard]
+    },
+    {
+        path: 'profile', component: Profile_1.Profile
     },
     {
         path: '**', component: Login_1.Login

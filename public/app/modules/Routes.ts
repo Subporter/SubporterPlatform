@@ -13,6 +13,7 @@ import { AdminOverview } from "../components/admin/overview/Overview";
 import { AdminSports } from "../components/admin/sports/list/Sports";
 import { SportsCreate } from "../components/admin/sports/create/Create";
 import { SportsEdit } from "../components/admin/sports/edit/Edit";
+import { Profile } from "../components/profile/Profile";
 
 import { AuthGuard } from "../common/AuthGuard";
 import { AdminGuard } from "../common/AdminGuard";
@@ -59,6 +60,9 @@ export const SubporterRoutes: Routes = [
 	},
     {
 		path: 'admin/sports/edit/:id', component: SportsEdit, canActivate: [AdminGuard]
+	},
+    {
+		path: 'profile', component: Profile
 	},
     {
         path: '**', component: Login

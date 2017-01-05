@@ -8,6 +8,7 @@ import { Auth } from './services/Auth';
 import { AuthGuard } from "./common/AuthGuard";
 import { AdminGuard } from "./common/AdminGuard";
 import { ApiService } from "./services/ApiService";
+import { UploadService } from "./services/UploadService";
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 import { App } from "./components/App";
@@ -23,6 +24,7 @@ import { Evenement } from "./components/evenement/Evenement";
 import { Listing } from "./components/listing/Listing";
 import { Cart } from "./components/cart/Cart";
 import { Offer } from "./components/offer/Offer";
+import { Profile } from "./components/profile/Profile";
 import { AdminOverview } from "./components/admin/overview/Overview";
 import { AdminSports } from "./components/admin/sports/list/Sports";
 import { SportsCreate } from "./components/admin/sports/create/Create";
@@ -34,7 +36,7 @@ import { Routing } from "./modules/Routes";
 @NgModule({
     bootstrap: [App],
 
-    declarations: [App, Register, Login, Landing, Footer, Header, Topwedstrijd, Weekwedstrijd, Search, Evenement, Listing, Cart, Offer, AdminOverview, AdminSports, SportsCreate, SportsEdit, MaterializeDirective],
+    declarations: [App, Register, Login, Landing, Footer, Header, Topwedstrijd, Weekwedstrijd, Search, Evenement, Listing, Cart, Offer, AdminOverview, AdminSports, SportsCreate, SportsEdit, Profile, MaterializeDirective],
     imports: [
         BrowserModule,
         HttpModule,
@@ -47,7 +49,8 @@ import { Routing } from "./modules/Routes";
         AdminGuard,
         AUTH_PROVIDERS,
         ApiService,
-        CookieService
+        CookieService,
+        UploadService
     ]
 })
 
