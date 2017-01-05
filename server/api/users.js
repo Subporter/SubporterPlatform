@@ -1,7 +1,7 @@
 const express = require('express'),
+    config = require('../../config/subporter.config'),
     moment = require('moment'),
     jwt = require('jwt-simple'),
-    config = require('../../config/subporter.config'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
     formParser = require('../middleware/formParser'),
@@ -10,6 +10,17 @@ const express = require('express'),
     bodyValidator = require('../helpers/bodyValidator'),
     User = require('../models/Users'),
     Address = require('../models/Addresses');
+
+let redis = config.redis_dev;
+
+if (process.env.NODE_ENV === 'production') {
+    redis = config.redis_prod;
+}
+
+const cache = require('express-redis-cache')({
+    host: redis.host,
+    port: redis.port
+});
 
 let router = express.Router();
 
@@ -46,7 +57,7 @@ router.get("/users/all", authenticate, admin, function(req, res) {
 });
 
 /* Read (one user) */
-router.get("/users", authenticate, function(req, res) {
+router.get("/users", authenticate, cache.route(), function(req, res) {
     if (req.granted) {
         User.getUserByEmail(req.jwtUser.email, function(err, user) {
             if (err) {
@@ -442,9 +453,9 @@ router.post("/users/update/password", authenticate, function(req, res) {
 });
 
 /* Delete */
-router.delete("/users", authenticate, loadUser, function (req, res) {
+router.delete("/users", authenticate, loadUser, function(req, res) {
     if (req.granted) {
-        User.deleteUser(req.user._id, function (err) {
+        User.deleteUser(req.user._id, function(err) {
             if (err) {
                 res.json({
                     info: "Error during deleting user",

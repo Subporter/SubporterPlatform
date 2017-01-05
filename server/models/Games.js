@@ -1,7 +1,17 @@
 const mongoose = require('mongoose'),
+    config = require('../../config/subporter.config'),
+    cachegoose = require('cachegoose'),
     moment = require('moment'),
     _ = require('lodash'),
     gameSchema = require('../schemas/Games');
+
+let redis = config.redis_dev;
+
+if (process.env.NODE_ENV === 'production') {
+    redis = config.redis_prod;
+}
+
+cachegoose(mongoose, redis);
 
 let Game = mongoose.model('Game', gameSchema, 'Games');
 
@@ -214,7 +224,8 @@ Game.getGames = function(cb) {
             } else {
                 cb(null, docs);
             }
-        });
+        })
+        .cache();
 };
 
 Game.getFeaturedGames = function(competition, cb) {
@@ -235,7 +246,8 @@ Game.getFeaturedGames = function(competition, cb) {
             } else {
                 cb(null, docs);
             }
-        });
+        })
+        .cache();
 };
 
 Game.getGamesByCompetition = function(competition, cb) {
@@ -255,7 +267,8 @@ Game.getGamesByCompetition = function(competition, cb) {
             } else {
                 cb(null, docs);
             }
-        });
+        })
+        .cache();
 };
 
 Game.getGamesByCompetitionForThisWeek = function(competition, cb) {
@@ -276,7 +289,8 @@ Game.getGamesByCompetitionForThisWeek = function(competition, cb) {
             } else {
                 cb(null, docs);
             }
-        });
+        })
+        .cache();
 };
 
 
@@ -297,7 +311,8 @@ Game.getGamesByTeam = function(team, cb) {
             } else {
                 cb(null, docs);
             }
-        });
+        })
+        .cache();
 };
 
 /* Read (one game) */
@@ -310,7 +325,8 @@ Game.getGameById = function(id, cb) {
             } else {
                 cb(null, docs);
             }
-        });
+        })
+        .cache();
 };
 
 /* Loans */

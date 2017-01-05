@@ -2,6 +2,7 @@ const express = require('express'),
     path = require('path'),
     favicon = require('serve-favicon'),
     logger = require('../config/logger'),
+	responseTime = require('response-time'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     passport = require('passport');
@@ -17,6 +18,7 @@ app.set('view engine', 'html');
 
 /* Middleware */
 
+app.use(responseTime());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
