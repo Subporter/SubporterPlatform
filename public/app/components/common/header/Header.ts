@@ -22,7 +22,7 @@ import { contentHeaders } from '../../../common/headers'
         <li *ngIf="loggedIn"><a  [routerLink]="['/cart']">Winkelwagen</a></li>
 
         <li *ngIf="!loggedIn"><a  [routerLink]="['/login']">Login</a></li>
-        <li *ngIf="loggedIn"><a  [routerLink]="['/profiel']">Profiel</a></li>
+        <li *ngIf="loggedIn"><a  [routerLink]="['/profiel']">Profile</a></li>
 
         <li><a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a></li>
       </ul>

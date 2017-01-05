@@ -132,7 +132,7 @@ var Profile = (function () {
         var _this = this;
         var select = document.getElementById('select');
         var select = select.value;
-        this.apiService.post("api/teams/favorite/" + this.favoriteId, null).subscribe(function (response) { return _this.showFavoritesBack(); }, function (error) { return _this.response = error.text; });
+        this.apiService.post("api/teams/favorite/" + select, null).subscribe(function (response) { return _this.showFavoritesBack(); }, function (error) { return _this.response = error.text; });
     };
     Profile.prototype.isEmpty = function (obj) {
         // null and undefined are "empty"

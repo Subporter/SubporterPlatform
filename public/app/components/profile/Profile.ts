@@ -227,7 +227,7 @@ updateFavorite(){
      let select = document.getElementById('select');
      let select = select.value;
 
-     this.apiService.post("api/teams/favorite/"+this.favoriteId, null).subscribe(
+     this.apiService.post("api/teams/favorite/"+select, null).subscribe(
   	 		response =>  this.showFavoritesBack(),
   	 		error => this.response = error.text
   	 	);

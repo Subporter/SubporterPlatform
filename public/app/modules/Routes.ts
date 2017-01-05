@@ -64,10 +64,9 @@ export const SubporterRoutes: Routes = [
 		path: 'admin/sports/edit/:id', component: SportsEdit, canActivate: [AdminGuard]
 	},
     {
-<<<<<<< HEAD
 		path: 'profile', component: Profile
 	},
-=======
+    {
         path: 'admin/countries', component: AdminCountries, canActivate: [AdminGuard]
     },
     {
@@ -76,7 +75,6 @@ export const SubporterRoutes: Routes = [
     {
         path: 'admin/countries/edit/:id', component: CountriesEdit, canActivate: [AdminGuard]
     },
->>>>>>> refs/remotes/origin/Niels
     {
         path: '**', component: Login
     }

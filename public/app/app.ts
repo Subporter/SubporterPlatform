@@ -38,7 +38,7 @@ import { Routing } from "./modules/Routes";
 
 @NgModule({
     bootstrap: [App],
-    declarations: [App, Register, Login, Landing, Footer, Header, Topwedstrijd, Weekwedstrijd, Search, Evenement, Listing, Cart, AdminOverview, AdminSports, SportsCreate, SportsEdit, AdminCountries, Profile, CountriesCreate, CountriesEdit, MaterializeDirective],
+    declarations: [App, Register, Login, Landing, Footer, Header, Topwedstrijd, Weekwedstrijd, Search, Evenement, Listing, Cart, AdminOverview, AdminSports, SportsCreate, SportsEdit,Offer,  AdminCountries, Profile, CountriesCreate, CountriesEdit, MaterializeDirective],
     imports: [
         BrowserModule,
         HttpModule,

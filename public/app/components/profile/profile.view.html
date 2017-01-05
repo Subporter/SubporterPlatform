@@ -132,7 +132,7 @@
           <div class="input-field col s12">
     <select id="select"  materialize="material_select"  >
       <option value="" disabled selected>Kies een team</option>
-      <option *ngFor="let team of teams" value="team._id">
+      <option *ngFor="let team of teams" value="{{team._id}}">
           {{team.name}}
       </option>
      
