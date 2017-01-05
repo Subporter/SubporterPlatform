@@ -1,26 +1,43 @@
-const assert = require('assert'),
+const mocha = require('mocha'),
+    assert = require('assert'),
     sinon = require('sinon'),
-    http = require('http'),
     request = require('request'),
-    sports = require('../../server/api/sports.js'),
-    loadUser = require('../../server/middleware/loadUser.js'),
     Sport = require('../../server/models/Sports.js');
 
-let app;
-
-if (!app) {
-    app = require('../../server/bin/www');
-}
-
-beforeEach(function () {
-
-});
-
-describe('Sports testing', function () {
-    it('should get all sports', function (done) {
+describe('Sports testing', function() {
+    it('should get all sports', function(done) {
         Sport.getSports(function(err, sports) {
-            assert.isAtLeast(sports.length, 1, 'One or more sports are found');
+            if (err) {
+                console.log("Error: " + err.errmsg);
+            } else {
+                let result = sports.length >= 1;
+                assert.equal(result, true, "One or more sports are found");
+            }
             done();
-        })
+        });
+    });
+
+    it('should make an API call and get all sports', function(done) {
+        request.get('http://localhost:1337/api/sports', function(err, res, body) {
+            if (err) {
+                console.log("Error: " + err.message);
+            } else {
+                let sports = JSON.parse(body).data;
+                let result = sports.length >= 1;
+                assert.equal(result, true, "One or more sports are found");
+                done();
+            }
+        });
+    });
+
+    it('should get one sport by id', function(done) {
+        Sport.getSportById(1, function(err, sport) {
+            if (err) {
+                console.log("Error: " + err.errmsg);
+            } else {
+                assert.equal(sport._id, 1);
+            }
+            done();
+        });
     });
 });

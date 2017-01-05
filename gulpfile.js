@@ -85,15 +85,11 @@ gulp.task('copy-externals', function() {
 /* Unit testing */
 
 gulp.task('testing', function() {
-    run('mocha_backend_testing', 'watch_testing');
-});
-
-gulp.task('watch_testing', function () {
-    gulp.watch(['testing/backend/*.js', './**/*.js'], ['mocha_backend_testing']);
+    run('mocha_backend_testing');
 });
 
 gulp.task('mocha_backend_testing', function() {
-    return gulp.src(['testing/backend/*.js'], {
+    return gulp.src(['testing/backend/testing.js'], {
             read: false
         })
         .pipe(mocha({
