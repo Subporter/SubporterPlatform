@@ -19,6 +19,7 @@ var ApiService = (function () {
     ApiService.prototype.get = function (url) {
         url = this.baseUrl + url;
         if (localStorage.getItem("id_token")) {
+            Headers_1.contentHeaders.delete("Authorization");
             Headers_1.contentHeaders.append("Authorization", localStorage.getItem("id_token"));
         }
         return this.http.get(url, {
@@ -28,6 +29,7 @@ var ApiService = (function () {
     ApiService.prototype.post = function (url, body) {
         url = this.baseUrl + url;
         if (localStorage.getItem("id_token")) {
+            Headers_1.contentHeaders.delete("Authorization");
             Headers_1.contentHeaders.append("Authorization", localStorage.getItem("id_token"));
         }
         return this.http.post(url, body, {
@@ -37,6 +39,7 @@ var ApiService = (function () {
     ApiService.prototype.put = function (url, body) {
         url = this.baseUrl + url;
         if (localStorage.getItem("id_token")) {
+            Headers_1.contentHeaders.delete("Authorization");
             Headers_1.contentHeaders.append("Authorization", localStorage.getItem("id_token"));
         }
         return this.http.put(url, body, {
@@ -46,6 +49,7 @@ var ApiService = (function () {
     ApiService.prototype.delete = function (url) {
         url = this.baseUrl + url;
         if (localStorage.getItem("id_token")) {
+            Headers_1.contentHeaders.delete("Authorization");
             Headers_1.contentHeaders.append("Authorization", localStorage.getItem("id_token"));
         }
         return this.http.delete(url, {
