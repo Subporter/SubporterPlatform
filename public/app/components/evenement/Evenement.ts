@@ -57,7 +57,7 @@ ngOnInit(){
       (param: any) => {
         let id = param['id'];
 		this.gameId = id;
-		this._callApi("Anonymous", "api/games/"+id);
+		this._callApi("Anonymous", "api/loans/game/"+id);
 
       });
 }
@@ -107,28 +107,32 @@ ngOnInit(){
 
 	 }
 
-	 this.home = jsonData.data.home.name;
-	 this.away = jsonData.data.away.name;
-	 this.date = jsonData.data.date;
-     this.stadion = jsonData.data.home.stadion;
-	 this.banner = jsonData.data.banner;
-	 this.loans = jsonData.data.loans;
-	 this.id=jsonData.data._id;
-	 this.price = jsonData.data.home.price;
+	 console.log(jsonData.data);
 
-	 this.test = jsonData.data.home;
+	 this.home = jsonData.data[0].game.home.name;
+	 this.away = jsonData.data[0].game.away.name;
+	 this.date = jsonData.data[0].game.date;
+     this.stadion = jsonData.data[0].game.home.stadion;
+	 this.banner = jsonData.data[0].game.banner;
+	 this.loans = jsonData.data;
+	 this.price = jsonData.data[0].game.home.price;
+
+	 this.test = jsonData.data[0].game.home;
 
 	 this.size= this.loans.length;
 
-	 for(let i = 0; i<this.loans.length; i++){
-		 if(this.loans.paid == true){
-			 this.lent ++ ;
-			 this.loans.splice(i,1);
-		 }else{
-			 this.lendable ++ ;
+	 this.lent = jsonData.count;
+	 this.lendable = this.loans.length;
 
-		 }
-	 }
+	//  for(let i = 0; i<this.loans.length; i++){
+	// 	 if(this.loans.paid == true){
+	// 		 this.lent ++ ;
+	// 		 this.loans.splice(i,1);
+	// 	 }else{
+	// 		 this.lendable ++ ;
+
+	// 	 }
+	//  }
 
 
 

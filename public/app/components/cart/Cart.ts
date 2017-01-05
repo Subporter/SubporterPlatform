@@ -239,10 +239,9 @@ pay(){
      for (let loan of this.loans){
 
         
-        // this._cookieService.remove(loan._id);
+        this._cookieService.remove(loan._id);
 
-         
-
+        
         this.apiService.put("api/loans/lend/"+loan._id, null).subscribe(
   	 		response =>  console.log(response.text()),
   	 		error => this.response = error.text

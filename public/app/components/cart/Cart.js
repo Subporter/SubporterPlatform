@@ -122,7 +122,7 @@ var Cart = (function () {
         var _this = this;
         for (var _i = 0, _a = this.loans; _i < _a.length; _i++) {
             var loan = _a[_i];
-            // this._cookieService.remove(loan._id);
+            this._cookieService.remove(loan._id);
             this.apiService.put("api/loans/lend/" + loan._id, null).subscribe(function (response) { return console.log(response.text()); }, function (error) { return _this.response = error.text; });
         }
         this.modalActions2.emit({ action: "modal", params: ['open'] });
