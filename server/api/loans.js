@@ -230,6 +230,7 @@ router.put("/loans/:id", authenticate, loadUser, function(req, res) {
 router.put("/loans/lend/:id", authenticate, loadUser, function(req, res) {
     if (req.granted) {
         req.body.lent = true;
+		req.body.paid = true;
         req.body.lent_by = req.user._id;
         req.body.lent_on = Date.now.toISOString();
         Loan.getLoanById(req.params.id, function(err, loan) {
@@ -254,54 +255,6 @@ router.put("/loans/lend/:id", authenticate, loadUser, function(req, res) {
                         });
                     }
                 });
-            } else {
-                res.json({
-                    info: "Loan not found",
-                    success: false,
-                });
-            }
-        });
-    } else {
-        res.status(403);
-        res.json({
-            info: "Unauthorized",
-            success: false
-        });
-    }
-});
-
-router.put("/loans/pay/:id", authenticate, loadUser, function(req, res) {
-    if (req.granted) {
-        Loan.getLoanById(req.params.id, function(err, loan) {
-            if (err) {
-                res.json({
-                    info: "Error during reading loan",
-                    success: false,
-                    error: err.errmsg
-                });
-            } else if (loan) {
-                if (loan.lent_by === req.user._id) {
-                    req.body.paid = true;
-                    Loan.updateLoan(loan, req.body, function(err) {
-                        if (err) {
-                            res.json({
-                                info: "Error during updating loan",
-                                success: false,
-                                error: err.errmsg
-                            });
-                        } else {
-                            res.json({
-                                info: "Loan updated succesfully",
-                                success: true
-                            });
-                        }
-                    });
-                } else {
-                    res.json({
-                        info: "Error during updating loan",
-                        success: false,
-                    });
-                }
             } else {
                 res.json({
                     info: "Loan not found",
