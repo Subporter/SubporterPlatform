@@ -34,6 +34,12 @@ var ApiService = (function () {
             headers: Headers_1.contentHeaders
         });
     };
+    ApiService.prototype.postWithFiles = function (url, body, files) {
+        url = this.baseUrl + url;
+        if (localStorage.getItem("id_token")) {
+            Headers_1.contentHeaders.set("Authorization", localStorage.getItem("id_token"));
+        }
+    };
     ApiService.prototype.put = function (url, body) {
         url = this.baseUrl + url;
         if (localStorage.getItem("id_token")) {
@@ -42,6 +48,12 @@ var ApiService = (function () {
         return this.http.put(url, body, {
             headers: Headers_1.contentHeaders
         });
+    };
+    ApiService.prototype.putWithFiles = function (url, body, files) {
+        url = this.baseUrl + url;
+        if (localStorage.getItem("id_token")) {
+            Headers_1.contentHeaders.set("Authorization", localStorage.getItem("id_token"));
+        }
     };
     ApiService.prototype.delete = function (url) {
         url = this.baseUrl + url;

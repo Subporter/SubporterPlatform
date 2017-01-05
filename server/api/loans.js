@@ -1,4 +1,5 @@
 const express = require('express'),
+    config = require('../../config/subporter.config'),
     moment = require('moment'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
@@ -6,6 +7,18 @@ const express = require('express'),
     bodyValidator = require('../helpers/bodyValidator'),
     Loan = require('../models/Loans'),
     Game = require('../models/Games');
+
+let redis = config.redis_dev;
+
+if (process.env.NODE_ENV === 'production') {
+    redis = config.redis.prod;
+}
+
+const cache = require('express-redis-cache')({
+    host: redis.host,
+    port: redis.port,
+    expire: 60
+});
 
 let router = express.Router();
 
@@ -64,7 +77,7 @@ router.post("/loans", authenticate, loadUser, function(req, res) {
 });
 
 /* Read (all games) */
-router.get("/loans", function(req, res) {
+router.get("/loans", cache.route(), function(req, res) {
     Loan.getLoans(function(err, loans) {
         if (err) {
             res.json({
@@ -87,8 +100,9 @@ router.get("/loans", function(req, res) {
     });
 });
 
-router.get("/loans/game/:game", function(req, res) {
-    Loan.getLoansByGame(req.params.game, function(err, loans) {
+router.get("/loans/game/:game", cache.route(), function(req, res) {
+    let game = req.params.game;
+    Loan.getLoansByGame(game, function(err, loans) {
         if (err) {
             res.json({
                 info: "Error during reading loans",
@@ -96,7 +110,7 @@ router.get("/loans/game/:game", function(req, res) {
                 error: err.errmsg
             });
         } else if (loans) {
-            Loan.getAmountOfLoanedOutGames(req.params.game, function (err, count) {
+            Loan.getAmountOfLoanedOutGames(game, function(err, count) {
                 if (err) {
                     res.json({
                         info: "Error during reading loans",
@@ -121,7 +135,7 @@ router.get("/loans/game/:game", function(req, res) {
     });
 });
 
-router.get("/loans/lent_out_by/:lent_out_by", function(req, res) {
+router.get("/loans/lent_out_by/:lent_out_by", cache.route(), function(req, res) {
     Loan.getLoansByLentOutBy(req.params.lent_out_by, function(err, loans) {
         if (err) {
             res.json({
@@ -144,7 +158,7 @@ router.get("/loans/lent_out_by/:lent_out_by", function(req, res) {
     });
 });
 
-router.get("/loans/lent_by/:lent_by", function(req, res) {
+router.get("/loans/lent_by/:lent_by", cache.route(), function(req, res) {
     Loan.getLoansByGame(req.params.lent_by, function(err, loans) {
         if (err) {
             res.json({
@@ -168,7 +182,7 @@ router.get("/loans/lent_by/:lent_by", function(req, res) {
 });
 
 /* Read (one game) */
-router.get("/loans/:id", function(req, res) {
+router.get("/loans/:id", cache.route(), function(req, res) {
     Loan.getLoanById(req.params.id, function(err, loan) {
         if (err) {
             res.json({
@@ -242,7 +256,7 @@ router.put("/loans/:id", authenticate, loadUser, function(req, res) {
 router.put("/loans/lend/:id", authenticate, loadUser, function(req, res) {
     if (req.granted) {
         req.body.lent = true;
-		req.body.paid = true;
+        req.body.paid = true;
         req.body.lent_by = req.user._id;
         req.body.lent_on = moment().toDate();
         Loan.getLoanById(req.params.id, function(err, loan) {

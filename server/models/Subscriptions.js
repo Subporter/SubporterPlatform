@@ -1,16 +1,6 @@
 const mongoose = require('mongoose'),
-    config = require('../../config/subporter.config'),
-    cachegoose = require('cachegoose'),
     _ = require('lodash'),
     subscriptionSchema = require('../schemas/Subscriptions');
-
-let redis = config.redis_dev;
-
-if (process.env.NODE_ENV === 'production') {
-    redis = config.redis_prod;
-}
-
-cachegoose(mongoose, redis);
 
 let Subscription = mongoose.model('Subscription', subscriptionSchema, 'Subscriptions');
 
@@ -121,8 +111,7 @@ Subscription.getSubscriptions = function(cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 Subscription.getSubscriptionsByTeam = function(team, cb) {
@@ -140,8 +129,7 @@ Subscription.getSubscriptionsByTeam = function(team, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 Subscription.getSubscriptionsByUser = function(user, cb) {
@@ -159,8 +147,7 @@ Subscription.getSubscriptionsByUser = function(user, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 /* Read (one subscription) */
@@ -173,8 +160,7 @@ Subscription.getSubscriptionById = function(id, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 /* Update */

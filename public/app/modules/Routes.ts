@@ -17,6 +17,8 @@ import { Profile } from "../components/profile/Profile";
 import { AdminCountries } from "../components/admin/countries/list/Countries";
 import { CountriesCreate } from "../components/admin/countries/create/Create";
 import { CountriesEdit } from "../components/admin/countries/edit/Edit";
+import { AdminCompetitions } from "../components/admin/competitions/list/Competitions";
+
 import { AuthGuard } from "../common/AuthGuard";
 import { AdminGuard } from "../common/AdminGuard";
 
@@ -74,6 +76,9 @@ export const SubporterRoutes: Routes = [
     },
     {
         path: 'admin/countries/edit/:id', component: CountriesEdit, canActivate: [AdminGuard]
+    },
+    {
+        path: 'admin/competitions', component: AdminCompetitions, canActivate: [AdminGuard]
     },
     {
         path: '**', component: Login

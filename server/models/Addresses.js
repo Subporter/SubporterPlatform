@@ -1,16 +1,7 @@
 const mongoose = require('mongoose'),
-	config = require('../../config/subporter.config'),
-	cachegoose = require('cachegoose'),
     _ = require('lodash'),
     addressSchema = require('../schemas/Addresses');
 
-let redis = config.redis_dev;
-
-if (process.env.NODE_ENV === 'production') {
-    redis = config.redis_prod;
-}
-
-cachegoose(mongoose, redis);
 let Address = mongoose.model('Address', addressSchema, 'Addresses');
 
 let populateSchema = {
@@ -46,8 +37,7 @@ Address.getAddresses = function(cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 Address.getAddressesByCountry = function(country, cb) {
@@ -67,8 +57,7 @@ Address.getAddressesByCountry = function(country, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 /* Read (one address) */
@@ -81,8 +70,7 @@ Address.getAddressById = function(id, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 /* Update */

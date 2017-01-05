@@ -1,8 +1,21 @@
 const express = require('express'),
+    config = require('../../config/subporter.config'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
     bodyValidator = require('../helpers/bodyValidator'),
     Sport = require('../models/Sports');
+
+let redis = config.redis_dev;
+
+if (process.env.NODE_ENV === 'production') {
+    redis = config.redis.prod;
+}
+
+const cache = require('express-redis-cache')({
+    host: redis.host,
+    port: redis.port,
+    expire: 60
+});
 
 let router = express.Router();
 
@@ -40,7 +53,7 @@ router.post("/sports", authenticate, admin, function(req, res) {
 });
 
 /* Read (all sports) */
-router.get("/sports", function(req, res) {
+router.get("/sports", cache.route(), function(req, res) {
     Sport.getSports(function(err, sports) {
         if (err) {
             res.json({
@@ -64,7 +77,7 @@ router.get("/sports", function(req, res) {
 });
 
 /* Read (one sport) */
-router.get("/sports/:id", function(req, res) {
+router.get("/sports/:id", cache.route(), function(req, res) {
     Sport.getSportById(req.params.id, function(err, sport) {
         if (err) {
             res.json({

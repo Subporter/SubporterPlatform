@@ -1,6 +1,5 @@
 const mocha = require('mocha'),
     assert = require('assert'),
-    sinon = require('sinon'),
     request = require('request'),
     Sport = require('../../server/models/Sports.js');
 

@@ -1,6 +1,5 @@
 const mocha = require('mocha'),
     assert = require('assert'),
-    sinon = require('sinon'),
     request = require('request'),
     Country = require('../../server/models/Countries.js');
 

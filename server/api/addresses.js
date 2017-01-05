@@ -1,8 +1,21 @@
 const express = require('express'),
+    config = require('../../config/subporter.config'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
     bodyValidator = require('../helpers/bodyValidator'),
     Address = require('../models/Addresses');
+
+let redis = config.redis_dev;
+
+if (process.env.NODE_ENV === 'production') {
+    redis = config.redis.prod;
+}
+
+const cache = require('express-redis-cache')({
+    host: redis.host,
+    port: redis.port,
+    expire: 60
+});
 
 let router = express.Router();
 
@@ -40,7 +53,7 @@ router.post("/addresses", authenticate, admin, function(req, res) {
 });
 
 /* Read (all addresses) */
-router.get("/addresses", authenticate, admin, function(req, res) {
+router.get("/addresses", authenticate, admin, cache.route(), function(req, res) {
     if (req.granted) {
         Address.getAddresses(function(err, addresses) {
             if (err) {
@@ -71,7 +84,7 @@ router.get("/addresses", authenticate, admin, function(req, res) {
     }
 });
 
-router.get("/addresses/country/:country", authenticate, admin, function(req, res) {
+router.get("/addresses/country/:country", authenticate, admin, cache.route(), function(req, res) {
     if (req.granted) {
         Address.getAddressesByCountry(req.params.country, function(err, addresses) {
             if (err) {
@@ -103,7 +116,7 @@ router.get("/addresses/country/:country", authenticate, admin, function(req, res
 });
 
 /* Read (one address) */
-router.get("/addresses/:id", authenticate, admin, function(req, res) {
+router.get("/addresses/:id", authenticate, admin, cache.route(), function(req, res) {
     if (req.granted) {
         Address.getAddressById(req.params.id, function(err, address) {
             if (err) {

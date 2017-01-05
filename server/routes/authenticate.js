@@ -1,11 +1,23 @@
 const express = require('express'),
+    config = require('../../config/subporter.config'),
     moment = require('moment'),
     jwt = require('jwt-simple'),
-    config = require('../../config/subporter.config'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
     bodyValidator = require('../helpers/bodyValidator'),
     User = require('../models/Users');
+
+let redis = config.redis_dev;
+
+if (process.env.NODE_ENV === 'production') {
+    redis = config.redis.prod;
+}
+
+const cache = require('express-redis-cache')({
+    host: redis.host,
+    port: redis.port,
+    expire: 60
+});
 
 let router = express.Router();
 
@@ -47,7 +59,7 @@ router.post("/register", function(req, res) {
 });
 
 /* Login */
-router.post("/login", function(req, res) {
+router.post("/login", cache.route(), function(req, res) {
     if (Object.keys(req.body).length !== 2 || bodyValidator(req.body.email, req.body.password)) {
         res.json({
             info: "Please supply all required fields",
@@ -94,7 +106,7 @@ router.post("/login", function(req, res) {
 });
 
 /* Check email */
-router.get("/check/email/:email", function(req, res) {
+router.get("/check/email/:email", cache.route(), function(req, res) {
     User.getUserByEmail(req.params.email, function(err, user) {
         if (err) {
             res.json({
@@ -119,7 +131,7 @@ router.get("/check/email/:email", function(req, res) {
 });
 
 /* Check username */
-router.get("/check/username/:username", function(req, res) {
+router.get("/check/username/:username", cache.route(), function(req, res) {
     User.getUserByUsername(req.params.username, function(err, user) {
         if (err) {
             res.json({
@@ -144,7 +156,7 @@ router.get("/check/username/:username", function(req, res) {
 });
 
 /* Check admin */
-router.get("/check/admin", authenticate, admin, function(req, res) {
+router.get("/check/admin", authenticate, admin, cache.route(), function(req, res) {
     if (req.granted) {
         res.status(200);
         res.json({
