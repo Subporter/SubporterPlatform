@@ -294,7 +294,7 @@ Game.getGameById = function(id, cb) {
 /* Loans */
 Game.toggleLoans = function(game, loan, cb) {
     game.loans.toggleAndSort(loan);
-    game.save(function(err, docs) {
+    game.save(function(err) {
         if (err) {
             cb(err);
         } else {
