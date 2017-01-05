@@ -13,7 +13,7 @@ export class ApiService {
     get(url) {
         url = this.baseUrl + url;
         if (localStorage.getItem("id_token")) {
-            v
+            contentHeaders.set("Authorization", localStorage.getItem("id_token"));
         }
         return this.http.get(url, {
             headers: contentHeaders

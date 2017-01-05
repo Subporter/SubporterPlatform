@@ -19,7 +19,7 @@ var ApiService = (function () {
     ApiService.prototype.get = function (url) {
         url = this.baseUrl + url;
         if (localStorage.getItem("id_token")) {
-            v;
+            Headers_1.contentHeaders.set("Authorization", localStorage.getItem("id_token"));
         }
         return this.http.get(url, {
             headers: Headers_1.contentHeaders
