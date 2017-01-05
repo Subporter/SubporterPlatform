@@ -33,6 +33,7 @@ export class Landing {
   games:JSON;
      gameNames = [];
 countries:JSON;
+weekGames:JSON;
 
  //default Belgium, I guess
   compId:String = "1";
@@ -53,6 +54,13 @@ ngOnInit() {
 
 
   	this.apiService.get("api/games/featured/1").subscribe(
+			response => this.getFeaturedGames(response.text()),
+     
+        
+			error => this.response = error.text
+		);
+
+    	this.apiService.get("api/games/week/1").subscribe(
 			response => this.getFeaturedGames(response.text()),
      
         
@@ -113,10 +121,10 @@ onChange(country) {
 
 onchange2(country){
 
-   let Country = "api/games/featured/"+country;
+   let Country = "api/games/week/"+country;
 
   		this.apiService.get(Country).subscribe(
-			response => this.getFeaturedGames(response.text()),
+			response => this.getWeeklyGames(response.text()),
      
         
 			error => this.response = error.text
@@ -177,6 +185,12 @@ this.gameNames = obj;
 
 
 
+  }
+
+  getWeeklyGames(data){
+    let Data = data;
+     let jsonData = JSON.parse(Data);
+     this.weekGames = jsonData.data;
   }
 
    getTeam(data){

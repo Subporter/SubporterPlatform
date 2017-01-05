@@ -33,6 +33,7 @@ var Landing = (function () {
         this._callApi("Anonymous", "api/teams/competition/" + this.compId);
         // this._callApi("kek", "api/users");
         this.apiService.get("api/games/featured/1").subscribe(function (response) { return _this.getFeaturedGames(response.text()); }, function (error) { return _this.response = error.text; });
+        this.apiService.get("api/games/week/1").subscribe(function (response) { return _this.getFeaturedGames(response.text()); }, function (error) { return _this.response = error.text; });
         this.apiService.get("api/games/").subscribe(function (response) { return _this.showGames(response.text()); }, function (error) { return _this.response = error.text; });
         this.apiService.get("api/countries/").subscribe(function (response) { return _this.showCountries(response.text()); }, function (error) { return _this.response = error.text; });
     };
@@ -53,8 +54,8 @@ var Landing = (function () {
     };
     Landing.prototype.onchange2 = function (country) {
         var _this = this;
-        var Country = "api/games/featured/" + country;
-        this.apiService.get(Country).subscribe(function (response) { return _this.getFeaturedGames(response.text()); }, function (error) { return _this.response = error.text; });
+        var Country = "api/games/week/" + country;
+        this.apiService.get(Country).subscribe(function (response) { return _this.getWeeklyGames(response.text()); }, function (error) { return _this.response = error.text; });
     };
     Landing.prototype.showGames = function (data) {
         var Data = data;
@@ -82,6 +83,11 @@ var Landing = (function () {
         var Data = data;
         var jsonData = JSON.parse(Data);
         this.featuredGames = jsonData.data;
+    };
+    Landing.prototype.getWeeklyGames = function (data) {
+        var Data = data;
+        var jsonData = JSON.parse(Data);
+        this.weekGames = jsonData.data;
     };
     Landing.prototype.getTeam = function (data) {
         var Data = data;
