@@ -1,6 +1,7 @@
  import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
+import { MaterializeAction, MaterializeDirective } from 'angular2/materialize';
 import { contentHeaders } from '../../../common/headers'
 
 
@@ -63,6 +64,10 @@ constructor(public router: Router, public http: Http) {
    @Input() image:string;
 
 
+}
+
+export class SideNav {
+    private routeNames = ["Buttons", "Carousel", "Chips", "Collapsible", "Dialogs", "Dropdown", "Forms", "Tabs", "DatePicker", "ModelBindings"];
 }
  
  
