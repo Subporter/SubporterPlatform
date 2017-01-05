@@ -4,7 +4,7 @@ import { contentHeaders } from '../common/Headers'
 
 @Injectable()
 export class ApiService {
-    baseUrl: String = "http://localhost:1337/";
+    baseUrl: String = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "") + "/";
 
     constructor(public http: Http) {
 

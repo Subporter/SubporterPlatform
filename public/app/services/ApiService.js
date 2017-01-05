@@ -14,7 +14,7 @@ var Headers_1 = require("../common/Headers");
 var ApiService = (function () {
     function ApiService(http) {
         this.http = http;
-        this.baseUrl = "http://localhost:1337/";
+        this.baseUrl = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "") + "/";
     }
     ApiService.prototype.get = function (url) {
         url = this.baseUrl + url;
