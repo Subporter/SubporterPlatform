@@ -234,8 +234,7 @@ Loan.getAmountOfLoanedOutGames = function(game, cb) {
             } else {
                 cb(null, count);
             }
-        })
-        .cache();
+        });
 };
 
 Loan.getLoansByLentOutBy = function(user, cb) {

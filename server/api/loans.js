@@ -88,7 +88,8 @@ router.get("/loans", function(req, res) {
 });
 
 router.get("/loans/game/:game", function(req, res) {
-    Loan.getLoansByGame(req.params.game, function(err, loans) {
+	let game = req.params.game;
+    Loan.getLoansByGame(game, function(err, loans) {
         if (err) {
             res.json({
                 info: "Error during reading loans",
@@ -96,7 +97,7 @@ router.get("/loans/game/:game", function(req, res) {
                 error: err.errmsg
             });
         } else if (loans) {
-            Loan.getAmountOfLoanedOutGames(req.params.game, function (err, count) {
+            Loan.getAmountOfLoanedOutGames(game, function (err, count) {
                 if (err) {
                     res.json({
                         info: "Error during reading loans",

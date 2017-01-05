@@ -291,7 +291,6 @@ User.updateUser = function(user, body, cb) {
     body.email = user.email;
     body.username = user.username;
     _.merge(user, body);
-    user.admin = false;
     user.save(function(err) {
         if (err) {
             cb(err);
