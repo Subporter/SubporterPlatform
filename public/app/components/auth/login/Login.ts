@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { JwtHelper } from 'angular2-jwt';
 import { contentHeaders } from '../../../common/Headers'
+import { ApiService} from '../../../services/ApiService';
 
 @Component({
     selector: 'login',
@@ -56,7 +57,7 @@ export class Login {
     email: String;
     password: String;
 
-    constructor(public router: Router, public http: Http) {
+    constructor(public router: Router, public http: Http, public apiService: ApiService) {
     }
 
     jwtHelper: JwtHelper = new JwtHelper();
@@ -89,6 +90,34 @@ export class Login {
             response => {
                 console.log(response.json());
                 if (response.json().success === true) {
+
+                    var socket = io.connect();
+                    socket.emit("login", response.json().id)
+
+                    
+
+                    this.apiService.get('api/users').subscribe(
+                        response => {
+                            console.log("USER DATA");
+                            var jsonrespons = response.json().data;
+                            console.log(jsonrespons["favorites"]);
+                            
+                            socket.emit("addFav", jsonrespons["favorites"])
+                        },
+                        error => {
+                            console.log(error.text());
+                        }
+                    )
+
+
+                    socket.on("NewLoanuser", function(){
+                        alert("socket.io laat weten dat iemand you loan heeft aanvaard");
+                    });
+
+                    socket.on("loanAddedTeam", function(){
+                        alert("socket.io laat weten dat iemnand een wedstrijd voor je favoriete ploeg online heeft geplaatst");
+                    })
+
                     localStorage.setItem("id_token", response.json().token);
                     this.useJwtHelper();
                     this.router.navigate(['landing']);

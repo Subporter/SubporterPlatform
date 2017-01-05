@@ -113,7 +113,8 @@ User.getUserById = function(id, cb) {
 User.getUserByIdForLogin = function(id, cb) {
     User.findById(id, {
             password: 1,
-            email: 1
+            email: 1,
+            id: 1
         })
         .populate(populateSchema)
         .exec(function(err, docs) {
@@ -160,7 +161,9 @@ User.getUserByEmailForLogin = function(email, cb) {
             email: email
         }, {
             password: 1,
-            email: 1
+			      email: 1,
+            id: 1
+
         })
         .populate(populateSchema)
         .exec(function(err, docs) {
@@ -209,7 +212,8 @@ User.getUserByUsernameForLogin = function(username, cb) {
             username: username
         }, {
             password: 1,
-            email: 1
+			      email: 1,
+            id: 1
         })
         .populate(populateSchema)
         .exec(function(err, docs) {

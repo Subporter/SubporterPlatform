@@ -120,12 +120,23 @@ var Cart = (function () {
     };
     Cart.prototype.pay = function () {
         var _this = this;
+        var _loop_1 = function (loan) {
+            this_1._cookieService.remove(loan._id);
+            this_1.apiService.put("api/loans/lend/" + loan._id, null).subscribe(function (response) { return _this.paySuccess(response, loan); }, function (error) { return _this.response = error.text; });
+        };
+        var this_1 = this;
         for (var _i = 0, _a = this.loans; _i < _a.length; _i++) {
             var loan = _a[_i];
-            this._cookieService.remove(loan._id);
-            this.apiService.put("api/loans/lend/" + loan._id, null).subscribe(function (response) { return console.log(response.text()); }, function (error) { return _this.response = error.text; });
+            _loop_1(loan);
         }
         this.modalActions2.emit({ action: "modal", params: ['open'] });
+    };
+    Cart.prototype.paySuccess = function (response, loan) {
+        console.log(response.text());
+        var socket = io.connect();
+        console.log("Arno!!!2");
+        console.log(loan.lent_out_by._id);
+        socket.emit("loanCreated", loan.lent_out_by._id);
     };
     Cart.prototype.openModal = function () {
         this.modalActions.emit({ action: "modal", params: ['open'] });
