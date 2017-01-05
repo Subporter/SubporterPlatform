@@ -15,7 +15,7 @@ import { contentHeaders } from '../../../common/headers'
 	 <nav>
     <div class="nav-wrapper">
       <a href="#" class="brand-logo">Subporter</a>
-            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <a [routerLink]="['/']" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="sass.html">Info</a></li>
