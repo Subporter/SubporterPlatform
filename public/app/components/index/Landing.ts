@@ -27,6 +27,7 @@ export class Landing {
 	jwtHelper: JwtHelper = new JwtHelper();
   jsonDataData:JSON;
   count:number;
+  featuredGames: JSON;
 
  //default Belgium, I guess
   compId:String = "1";
@@ -41,8 +42,17 @@ export class Landing {
 
 ngOnInit() {
 
-  //this._callApi("Anonymous", "api/teams/competition/"+ this.compId);
-  this._callApi("kek", "api/users");
+  this._callApi("Anonymous", "api/teams/competition/"+ this.compId);
+  // this._callApi("kek", "api/users");
+
+
+
+  	this.apiService.get("api/games/featured/1").subscribe(
+			response => this.getFeaturedGames(response.text()),
+     
+        
+			error => this.response = error.text
+		);
 
 
 
@@ -70,15 +80,23 @@ search(){
 
   _callApi(type, url) {
 		this.apiService.get(url).subscribe(
-			//response => this.getTeam(response.text()),
-      response => {
-        this.response = response.text();
-        console.log(this.response);
-      }
-        ,
+			response => this.getTeam(response.text()),
+     
+        
 			error => this.response = error.text
 		);
 
+
+
+
+  }
+
+  getFeaturedGames(data){
+
+
+     let Data = data;
+     let jsonData = JSON.parse(Data);
+     this.featuredGames = jsonData.data;
 
 
 

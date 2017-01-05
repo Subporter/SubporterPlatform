@@ -48,6 +48,7 @@ export const SubporterRoutes: Routes = [
     {
         path: 'offer', component: Offer
     },
+    {
         path: 'admin', component: AdminOverview, canActivate: [AdminGuard]
     },
 	{

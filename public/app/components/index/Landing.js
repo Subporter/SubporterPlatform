@@ -28,8 +28,10 @@ var Landing = (function () {
         this.loggedIn = !!localStorage.getItem('id_token');
     }
     Landing.prototype.ngOnInit = function () {
-        //this._callApi("Anonymous", "api/teams/competition/"+ this.compId);
-        this._callApi("kek", "api/users");
+        var _this = this;
+        this._callApi("Anonymous", "api/teams/competition/" + this.compId);
+        // this._callApi("kek", "api/users");
+        this.apiService.get("api/games/featured/1").subscribe(function (response) { return _this.getFeaturedGames(response.text()); }, function (error) { return _this.response = error.text; });
     };
     Landing.prototype.useJwtHelper = function () {
         var token = localStorage.getItem("id_token");
@@ -40,12 +42,12 @@ var Landing = (function () {
     };
     Landing.prototype._callApi = function (type, url) {
         var _this = this;
-        this.apiService.get(url).subscribe(
-        //response => this.getTeam(response.text()),
-        function (response) {
-            _this.response = response.text();
-            console.log(_this.response);
-        }, function (error) { return _this.response = error.text; });
+        this.apiService.get(url).subscribe(function (response) { return _this.getTeam(response.text()); }, function (error) { return _this.response = error.text; });
+    };
+    Landing.prototype.getFeaturedGames = function (data) {
+        var Data = data;
+        var jsonData = JSON.parse(Data);
+        this.featuredGames = jsonData.data;
     };
     Landing.prototype.getTeam = function (data) {
         var Data = data;

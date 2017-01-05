@@ -2,7 +2,7 @@
 
  <nav>
     <div class="nav-wrapper">
-      <a href="#" class="brand-logo">Subporter</a>
+      <a [routerLink]="['/']" class="brand-logo">Subporter</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="sass.html">Info</a></li>
         <li><a  [routerLink]="['/search']">Zoeken</a></li>
@@ -112,8 +112,33 @@
   </div>-->
 
 
+  <div class="row">
 
-          <div class="row">
+    <div *ngFor="let game of featuredGames" class="col s4">
+
+
+         <div class="card">
+            <div class="card-image">
+              <img src="{{game.banner}}">
+            </div>
+            <div class="card-content">
+            <h6>{{game.home.name}} - {{game.away.name}}</h6>
+              <p>{{game.date}}</p>
+            </div>
+            <div class="card-action">
+                <a  [routerLink]="['/evenement/',game._id]">Zoek abonnementen</a>
+            </div>
+          </div>
+
+
+    </div>
+
+
+  </div>
+
+
+
+          <!--<div class="row">
                            <div class="col s4">
 
           <div class="card">
@@ -250,7 +275,7 @@
 
 
 
-    </div>
+    </div>-->
 
 
 

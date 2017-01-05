@@ -44,26 +44,21 @@ exports.SubporterRoutes = [
     {
         path: 'offer', component: Offer_1.Offer
     },
-    path, 'admin', component, Overview_1.AdminOverview, canActivate, [AdminGuard_1.AdminGuard]
+    {
+        path: 'admin', component: Overview_1.AdminOverview, canActivate: [AdminGuard_1.AdminGuard]
+    },
+    {
+        path: 'admin/sports', component: Sports_1.AdminSports, canActivate: [AdminGuard_1.AdminGuard]
+    },
+    {
+        path: 'admin/sports/add', component: Create_1.SportsCreate, canActivate: [AdminGuard_1.AdminGuard]
+    },
+    {
+        path: 'admin/sports/edit/:id', component: Edit_1.SportsEdit, canActivate: [AdminGuard_1.AdminGuard]
+    },
+    {
+        path: '**', component: Login_1.Login
+    }
 ];
-{
-    path: 'admin/sports', component;
-    Sports_1.AdminSports, canActivate;
-    [AdminGuard_1.AdminGuard];
-}
-{
-    path: 'admin/sports/add', component;
-    Create_1.SportsCreate, canActivate;
-    [AdminGuard_1.AdminGuard];
-}
-{
-    path: 'admin/sports/edit/:id', component;
-    Edit_1.SportsEdit, canActivate;
-    [AdminGuard_1.AdminGuard];
-}
-{
-    path: '**', component;
-    Login_1.Login;
-}
 exports.Routing = router_1.RouterModule.forRoot(exports.SubporterRoutes);
 //# sourceMappingURL=Routes.js.map
