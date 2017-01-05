@@ -30,7 +30,7 @@ export class AdminSports {
                         data.forEach((i: any) => {
                             let sport: Sport = new Sport(i._id, i.name);
                             this.sports.push(sport);
-                        })
+                        });
                     }
                 } else {
                     Materialize.toast("Unable to load sports at this time", 2000);
@@ -50,13 +50,13 @@ export class AdminSports {
         this.apiService.delete(`api/sports/${id}`).subscribe(
             response => {
                 let result = JSON.parse(response.text());
-                Materialize.toast(result.info, 5000);
+                Materialize.toast(result.info, 2000);
                 if (result.success) {
                     this.sports = this.sports.filter(sport => sport._id !== id);
                 }
             },
             error => {
-                Materialize.toast("Unable to delete sport at this time", 5000);
+                Materialize.toast("Unable to delete sport at this time", 2000);
             }
         )
     }

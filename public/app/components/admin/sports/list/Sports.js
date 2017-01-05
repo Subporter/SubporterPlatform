@@ -47,12 +47,12 @@ var AdminSports = (function () {
         var _this = this;
         this.apiService.delete("api/sports/" + id).subscribe(function (response) {
             var result = JSON.parse(response.text());
-            materialize_css_1.Materialize.toast(result.info, 5000);
+            materialize_css_1.Materialize.toast(result.info, 2000);
             if (result.success) {
                 _this.sports = _this.sports.filter(function (sport) { return sport._id !== id; });
             }
         }, function (error) {
-            materialize_css_1.Materialize.toast("Unable to delete sport at this time", 5000);
+            materialize_css_1.Materialize.toast("Unable to delete sport at this time", 2000);
         });
     };
     return AdminSports;

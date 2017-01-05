@@ -1,0 +1,22 @@
+section {
+  background-color: #F4F4F4;
+  margin-top: 0; }
+
+.profiel {
+  padding: 20px;
+  background-color: #fff;
+  margin-bottom: 20px; }
+
+td i {
+  cursor: pointer;
+  color: grey; }
+
+td i:hover {
+  color: #212121; }
+
+h2 {
+  display: inline-block;
+  float: left; }
+
+.btn-floating {
+  float: right; }

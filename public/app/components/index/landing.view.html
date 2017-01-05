@@ -9,7 +9,7 @@
         <li *ngIf="loggedIn"><a  [routerLink]="['/cart']">Winkelwagen</a></li>
 
         <li *ngIf="!loggedIn"><a  [routerLink]="['/login']">Login</a></li>
-        <li *ngIf="loggedIn"><a  [routerLink]="['/profiel']">Profiel</a></li>
+        <li *ngIf="loggedIn"><a  [routerLink]="['/profile']">Profiel</a></li>
 
         <li><a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a></li>
       </ul>
@@ -136,149 +136,8 @@
 
 
 
-          <!--<div class="row">
-                           <div class="col s4">
-
-          <div class="card">
-            <div class="card-image">
-              <img src="../../img/match1.png">
-            </div>
-            <div class="card-content">
-            <h6>Club Brugge kv - RSC Anderlecht</h6>
-              <p>28 februari 2017</p>
-            </div>
-            <div class="card-action">
-                <a href="#">Zoek abonnementen</a>
-            </div>
-          </div>
-          </div>
-
-
-               <div class="col s4">
-          <div class="card">
-            <div class="card-image">
-              <img src="../../img/match1.png">
-            </div>
-            <div class="card-content">
-            <h6>Club Brugge kv - RSC Anderlecht</h6>
-              <p>28 februari 2017</p>
-            </div>
-            <div class="card-action">
-              <a href="#">Zoek abonnementen</a>
-            </div>
-          </div>
-          </div>
-
-
-
-
-         <div class="col s4">
-          <div class="card">
-            <div class="card-image">
-              <img src="../../img/match1.png">
-            </div>
-            <div class="card-content">
-            <h6>Club Brugge kv - RSC Anderlecht</h6>
-              <p>28 februari 2017</p>
-            </div>
-            <div class="card-action">
-              <a href="#">Zoek abonnementen</a>
-            </div>
-          </div>
-          </div>
-
-
-
-
-             <div class="col s6">
-          <div class="card">
-            <div class="card-image">
-              <img src="../../img/match1.png">
-            </div>
-            <div class="card-content">
-            <h6>Club Brugge kv - RSC Anderlecht</h6>
-              <p>28 februari 2017</p>
-            </div>
-            <div class="card-action">
-             <a href="#">Zoek abonnementen</a>
-            </div>
-          </div>
-          </div>
-
-
-
-
-
-               <div class="col s6">
-          <div class="card">
-            <div class="card-image">
-              <img src="../../img/match1.png">
-            </div>
-            <div class="card-content">
-            <h6>Club Brugge kv - RSC Anderlecht</h6>
-              <p>28 februari 2017</p>
-            </div>
-            <div class="card-action">
-              <a href="#">Zoek abonnementen</a>
-            </div>
-          </div>
-          </div>
-
-
-      <div class="col s4">
-          <div class="card">
-            <div class="card-image">
-              <img src="../../img/match1.png">
-            </div>
-            <div class="card-content">
-            <h6>Club Brugge kv - RSC Anderlecht</h6>
-              <p>28 februari 2017</p>
-            </div>
-            <div class="card-action">
-               <a href="#">Zoek abonnementen</a>
-            </div>
-          </div>
-          </div>
-
-  <div class="col s4">
-          <div class="card">
-            <div class="card-image">
-              <img src="../../img/match1.png">
-            </div>
-            <div class="card-content">
-            <h6>Club Brugge kv - RSC Anderlecht</h6>
-              <p>28 februari 2017</p>
-            </div>
-            <div class="card-action">
-                <a href="#">Zoek abonnementen</a>
-            </div>
-          </div>
-          </div>
-
-
-  <div class="col s4">
-          <div class="card">
-            <div class="card-image">
-              <img src="../../img/match1.png">
-            </div>
-            <div class="card-content">
-            <h6>Club Brugge kv - RSC Anderlecht</h6>
-              <p>28 februari 2017</p>
-            </div>
-            <div class="card-action">
-              <a href="#">Zoek abonnementen</a>
-            </div>
-          </div>
-          </div>
-
-
-
-    </div>-->
-
-
-
     <div class="center">
-    <button class="btn center-align"> Ontdek meer wedstrijden </button>
+    <a class="btn waves-effect waves-light center-align" [routerLink]="['/search']"> Ontdek meer wedstrijden </a>
     </div>
 
     </div>
@@ -392,7 +251,7 @@
 </div>
 
 <div class="center">
-    <button class="btn center-align"> Meer wedstrijden vandaag </button>
+    <a class="btn waves-effect waves-light center-align" [routerLink]="['/search']"> Ontdek meer wedstrijden </a>
     </div>
 
 </div>

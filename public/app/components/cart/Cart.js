@@ -41,7 +41,7 @@ var Cart = (function () {
     }
     Cart.prototype.ngOnInit = function () {
         if (!this.loggedIn) {
-            this.router.navigateByUrl('#');
+            this.router.navigateByUrl('/');
         }
         var x = this._cookieService.getAll();
         this.cookie = x;

@@ -78,7 +78,7 @@ show = true;
 
 
          if(!this.loggedIn){
-              this.router.navigateByUrl('#');
+              this.router.navigateByUrl('/');
          }
 
 

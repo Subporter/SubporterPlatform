@@ -13,7 +13,10 @@ import { AdminOverview } from "../components/admin/overview/Overview";
 import { AdminSports } from "../components/admin/sports/list/Sports";
 import { SportsCreate } from "../components/admin/sports/create/Create";
 import { SportsEdit } from "../components/admin/sports/edit/Edit";
-
+import { Profile } from "../components/profile/Profile";
+import { AdminCountries } from "../components/admin/countries/list/Countries";
+import { CountriesCreate } from "../components/admin/countries/create/Create";
+import { CountriesEdit } from "../components/admin/countries/edit/Edit";
 import { AuthGuard } from "../common/AuthGuard";
 import { AdminGuard } from "../common/AdminGuard";
 
@@ -60,6 +63,18 @@ export const SubporterRoutes: Routes = [
     {
 		path: 'admin/sports/edit/:id', component: SportsEdit, canActivate: [AdminGuard]
 	},
+    {
+		path: 'profile', component: Profile
+	},
+    {
+        path: 'admin/countries', component: AdminCountries, canActivate: [AdminGuard]
+    },
+    {
+        path: 'admin/countries/add', component: CountriesCreate, canActivate: [AdminGuard]
+    },
+    {
+        path: 'admin/countries/edit/:id', component: CountriesEdit, canActivate: [AdminGuard]
+    },
     {
         path: '**', component: Login
     }
