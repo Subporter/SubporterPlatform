@@ -1,11 +1,21 @@
 const mongoose = require('mongoose'),
+    config = require('../../config/subporter.config'),
+    cachegoose = require('cachegoose'),
     _ = require('lodash'),
     competitionSchema = require('../schemas/Competitions');
+
+let redis = config.redis_dev;
+
+if (process.env.NODE_ENV === 'production') {
+    redis = config.redis_prod;
+}
+
+cachegoose(mongoose, redis);
 
 let Competition = mongoose.model('Competition', competitionSchema, 'Competitions');
 
 let populateSchema = {
-	path: 'country sport'
+    path: 'country sport'
 };
 
 /* Create */
@@ -35,13 +45,15 @@ Competition.getCompetitions = function(cb) {
             } else {
                 cb(null, docs);
             }
-        });
+        })
+        .cache();
 };
 
 Competition.getCompetitionsByCountry = function(country, cb) {
     Competition.find({
             country: country
         })
+
         .populate(populateSchema)
         .sort({
             sport: 1,
@@ -53,7 +65,8 @@ Competition.getCompetitionsByCountry = function(country, cb) {
             } else {
                 cb(null, docs);
             }
-        });
+        })
+        .cache();
 };
 
 Competition.getCompetitionsBySport = function(sport, cb) {
@@ -71,7 +84,8 @@ Competition.getCompetitionsBySport = function(sport, cb) {
             } else {
                 cb(null, docs);
             }
-        });
+        })
+        .cache();
 };
 
 Competition.getCompetitionsByCountryAndSport = function(country, sport, cb) {
@@ -89,7 +103,8 @@ Competition.getCompetitionsByCountryAndSport = function(country, sport, cb) {
             } else {
                 cb(null, docs);
             }
-        });
+        })
+        .cache();
 };
 
 /* Read (one competition) */
@@ -102,7 +117,8 @@ Competition.getCompetitionById = function(id, cb) {
             } else {
                 cb(null, docs);
             }
-        });
+        })
+        .cache();
 };
 
 /* Update */
@@ -119,7 +135,7 @@ Competition.updateCompetition = function(competition, body, cb) {
 
 /* Delete */
 Competition.deleteCompetition = function(id, cb) {
-    Competition.findById(id, function (err, docs) {
+    Competition.findById(id, function(err, docs) {
         if (err || !docs) {
             cb(err);
         } else {
@@ -129,31 +145,31 @@ Competition.deleteCompetition = function(id, cb) {
 };
 
 Competition.deleteCompetitionsByCountry = function(country, cb) {
-	Competition.find({
-		country: country
-	}, function (err, docs) {
-		if (err || docs.length === 0) {
-			cb(err);
-		} else {
-			docs.forEach(function (doc) {
-				doc.remove(cb);
-			});
-		}
-	});
+    Competition.find({
+        country: country
+    }, function(err, docs) {
+        if (err || docs.length === 0) {
+            cb(err);
+        } else {
+            docs.forEach(function(doc) {
+                doc.remove(cb);
+            });
+        }
+    });
 };
 
 Competition.deleteCompetitionsBySport = function(sport, cb) {
     Competition.find({
-		sport: sport
-	}, function (err, docs) {
-		if (err || docs.length === 0) {
-			cb(err);
-		} else {
-			docs.forEach(function (doc) {
-				doc.remove(cb);
-			});
-		}
-	});
+        sport: sport
+    }, function(err, docs) {
+        if (err || docs.length === 0) {
+            cb(err);
+        } else {
+            docs.forEach(function(doc) {
+                doc.remove(cb);
+            });
+        }
+    });
 };
 
 module.exports = Competition;

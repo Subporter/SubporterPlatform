@@ -1,0 +1,203 @@
+  <navmenu header1="Profiel" header2="" image="/img/search_bg.jpg"></navmenu>
+
+
+<section>
+
+<div class="container">
+
+    <div class="persoonlijk profiel">
+
+        <h2>Persoonlijke gegevens</h2>
+
+          <div class="row">
+    <form class="col s12" enctype='multipart/form-data' (ngSubmit)="save(f1.value)" #f1="ngForm">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="first_name" type="text" class="validate">
+          <label for="first_name">Voornaam</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="last_name" type="text" class="validate">
+          <label for="last_name">Naam</label>
+        </div>
+      </div>
+
+
+<div class="row">
+       <div class="input-field col s6">
+          <input id="last_name" type="text" class="validate">
+          <label for="last_name">Email</label>
+        </div>
+      </div>
+
+      <div class="row">
+      <div class="file-field input-field">
+      <div class="btn">
+        <span>Afbeelding</span>
+        <input type="file">
+      </div>
+      <div class="file-path-wrapper">
+        <input class="file-path validate" type="text">
+      </div>
+    </div>
+      </div>
+
+
+      <input class="btn waves-effect waves-light " type="submit" value="Opslaan">
+
+    
+    </form>
+  </div>
+  <div>
+      {{form1 | json}}
+    </div>
+
+  <div class="row">
+      <form class="col s12" (submit)="changePass()">
+
+          <div class="row">
+        <div class="input-field col s12">
+          <input id="password" type="password" class="validate">
+          <label for="password">Oud wachtwoord</label>
+        </div>
+      </div>
+
+    <div class="row">       
+        <div class="input-field col s12">
+          <input id="password" type="password" class="validate">
+          <label for="password">Nieuw wachtwoord</label>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="password" type="password" class="validate">
+          <label for="password">Bevestig nieuw wachtwoord</label>
+        </div>
+      </div>
+      <input class="btn waves-effect waves-light " type="submit" value="Wijzig wachtwoord">
+
+
+      </form>
+
+  </div>
+
+
+    </div>
+
+    <div class="abbos profiel">
+
+                <h2>Abonnementen</h2>
+
+
+
+<form (submit)="changePass($event)">
+
+<input type="text" value="A12-2">
+
+      <input type="file" />
+
+<input type="text" value="1">
+<input type="submit" value="submit">
+</form>
+    </div>
+
+    <div class="favos profiel">
+        <h2>Favorieten</h2>  <button class="btn-floating btn-large waves-effect waves-light red" (click)="showAdd()"><i class="material-icons">add</i></button>
+
+
+         <table *ngIf="showFavorites">
+        <thead>
+          <tr>
+              <th data-field="team">Team</th>
+              <th data-field="land">Land</th>
+              <th data-field="competitie">Competitie</th>
+          </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let favorite of favorites">
+                <td>{{favorite.name}}</td>
+                <td>{{favorite.competition.country.name}}</td>
+                <td>{{favorite.competition.name}}</td>
+                <td><i class="material-icons" (click)="removeFavorite(favorite._id)">delete</i></td>
+            </tr>
+         
+        </tbody>
+      </table>
+
+      <div *ngIf="showNew">
+
+          <div class="input-field col s12">
+    <select id="select"  materialize="material_select"  >
+      <option value="" disabled selected>Kies een team</option>
+      <option *ngFor="let team of teams" value="{{team._id}}">
+          {{team.name}}
+      </option>
+     
+    </select>
+  </div>
+  <button class="waves-effect waves-light btn" (click)="showFavoritesBack()">Ga terug</button>
+
+  <button class="waves-effect waves-light btn" (click)="updateFavorite()">Voeg toe</button>
+
+      </div>
+
+
+    </div> 
+
+
+</div>
+
+
+
+ <div id="modal1" class="modal " materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
+  <div class="modal-content">
+    <h4>Ben je zeker?</h4>
+    <p>Bent je zeker dat je deze favoriet wil verwijderen? </p>
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-green btn-flat" (click)="closeModal1()">Ik heb me bedacht.</a>
+    <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="removeFavoriteReal()">Ik ben zeker!</a>
+  </div>
+</div>
+
+ <div id="modal2" class="modal " materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions2">
+  <div class="modal-content">
+    <h4>Geslaagd!</h4>
+    <p>Je hebt jouw favoriet verwijderd.</p>
+  </div>
+  <div class="modal-footer">
+    <a class="modal-action modal-close waves-effect waves-green btn-flat"  (click)="closeModal()" >Sluiten</a>
+  </div>
+</div>
+
+
+ <div id="modal3" class="modal " materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions3">
+  <div class="modal-content">
+    <h4>Nieuwe favoriet toevoegen</h4>
+
+
+<div class="input-field col s12">
+    <select  materialize="material_select"  >
+      <option value="" disabled selected>Kies een team</option>
+      <option *ngFor="let team of teams" value="team._id">
+          {{team.name}}
+      </option>
+     
+    </select>
+    <label>Materialize Select</label>
+  </div>
+
+  </div>
+  <div class="modal-footer">
+    <a class="modal-action modal-close waves-effect waves-green btn-flat"  (click)="closeModal3()" >Sluiten</a>
+    <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="addFavorite()">Toevoegen</a>
+
+  </div>
+</div>
+
+</section>
+
+<subporterfooter></subporterfooter>

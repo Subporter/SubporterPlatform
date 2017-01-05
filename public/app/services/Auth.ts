@@ -1,25 +1,16 @@
 import { tokenNotExpired } from "angular2-jwt";
 import { Injectable } from '@angular/core';
-import { ApiService } from './ApiService';
+import { ApiService } from "./ApiService";
 
 @Injectable()
 export class Auth {
-	constructor(public apiService: ApiService) {
+    constructor(public apiService: ApiService) { }
 
-	}
+    isLoggedIn() {
+        return tokenNotExpired();
+    }
 
-	isLoggedIn() {
-		return tokenNotExpired();
-	}
-
-	isAdmin() {
-		this.apiService.get("check/admin").subscribe(
-			response => {
-				return JSON.parse(response.text()).success;
-			},
-			error => {
-				return false;
-			}
-		);
-	}
+    isAdmin() {
+        return this.apiService.get("check/admin").map(response => JSON.parse(response.text()).success);
+    }
 }

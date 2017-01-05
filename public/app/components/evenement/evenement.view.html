@@ -21,6 +21,7 @@
 
 
 <ul *ngFor="let loan of loans" class="collection">
+    
     <a [routerLink]="['../../listing', loan._id]">
 <li class="collection-item" >
   <span class="title">  {{home}} - {{away}}    </span>
@@ -34,10 +35,10 @@
 </a>
 </ul>
 
-   
 
 
-             
+
+
 
 </div>
 
@@ -53,5 +54,5 @@
 
 
 
-<subporterFooter></subporterFooter>
+<subporterfooter></subporterfooter>
 

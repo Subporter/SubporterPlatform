@@ -1,0 +1,17 @@
+.autocomplete-content {
+  position: absolute; }
+
+section {
+  background-color: #F4F4F4;
+  margin-top: 0; }
+
+.article {
+  padding: 20px;
+  background-color: #fff;
+  margin-bottom: 20px; }
+
+.bold {
+  font-weight: bold; }
+
+.pointer {
+  cursor: pointer; }

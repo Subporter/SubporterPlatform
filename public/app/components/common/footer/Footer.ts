@@ -5,9 +5,9 @@ import { contentHeaders } from '../../../common/headers'
 
 
 @Component({
-	selector: 'subporterFooter',
+	selector: 'subporterfooter',
 	 template: `
-	 
+
 	 <footer class="page-footer">
           <div class="container">
             <div class="row">
@@ -34,7 +34,7 @@ import { contentHeaders } from '../../../common/headers'
             </div>
           </div>
         </footer>
-	 
+
 	 `,
 	  styleUrls: ['../../css/css/landing.css']
 })

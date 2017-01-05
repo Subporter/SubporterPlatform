@@ -6,7 +6,8 @@ const mongoose = require('mongoose'),
             updated_at: true
         }
     }),
-    autoIncrement = require('mongoose-increment');
+    autoIncrement = require('mongoose-increment'),
+	Game = require('../models/Games');
 
 let loanSchema = new mongoose.Schema({
     game: {
@@ -54,10 +55,35 @@ let loanSchema = new mongoose.Schema({
     }
 });
 
+loanSchema.pre('remove', function(next) {
+    let loan = this;
+    Game.getGameById(loan.game, function (err, game) {
+        if (err) {
+            return next(err);
+        } else {
+            Game.toggleLoans(game, loan._id, function (err) {
+                if (err) {
+                    return next(err);
+                } else {
+                    return next(null);
+                }
+            });
+        }
+    });
+});
+
 loanSchema.plugin(autoIncrement, {
     modelName: 'Loan',
     fieldName: '_id'
 });
 loanSchema.plugin(mongooseHidden);
+
+loanSchema.index({
+	game: 1,
+	lent_out_by: 1,
+    subscription: 1
+}, {
+    unique: true
+});
 
 module.exports = loanSchema;

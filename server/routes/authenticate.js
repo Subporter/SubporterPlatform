@@ -78,7 +78,8 @@ router.post("/login", function(req, res) {
                             info: "Logged in successfully",
                             success: true,
                             token: token,
-                            expires: moment().add(7, 'days').format('dddd, MMMM Do YYYY, h:mm:ss')
+                            expires: moment().add(7, 'days').format('dddd, MMMM Do YYYY, h:mm:ss'),
+                            id: user.id
                         });
                     }
                 });

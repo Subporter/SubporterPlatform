@@ -9,35 +9,40 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var Rx_1 = require("rxjs/Rx");
 var router_1 = require("@angular/router");
 var Auth_1 = require("../services/Auth");
-var ApiService_1 = require("../services/ApiService");
 var AdminGuard = (function () {
-    function AdminGuard(auth, router, apiService) {
+    function AdminGuard(auth, router) {
         this.auth = auth;
         this.router = router;
-        this.apiService = apiService;
     }
-    AdminGuard.prototype.canActivate = function () {
+    AdminGuard.prototype.canActivate = function (next, state) {
+        var _this = this;
         if (this.auth.isLoggedIn()) {
-            if (this.auth.isAdmin()) {
-                return true;
-            }
-            else {
-                this.router.navigate(['/login']);
-                return false;
-            }
+            return this.auth.isAdmin().map(function (success) {
+                if (success) {
+                    return true;
+                }
+                else {
+                    _this.router.navigate(['/landing']);
+                    return false;
+                }
+            }).catch(function () {
+                _this.router.navigate(['/landing']);
+                return Rx_1.Observable.of(false);
+            });
         }
         else {
             this.router.navigate(['/login']);
-            return false;
+            return Rx_1.Observable.of(false);
         }
     };
     return AdminGuard;
 }());
 AdminGuard = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [Auth_1.Auth, router_1.Router, ApiService_1.ApiService])
+    __metadata("design:paramtypes", [Auth_1.Auth, router_1.Router])
 ], AdminGuard);
 exports.AdminGuard = AdminGuard;
 //# sourceMappingURL=AdminGuard.js.map
