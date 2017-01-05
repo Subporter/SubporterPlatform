@@ -31,7 +31,7 @@ var Evenement = (function () {
         this.subscription = this.activatedRoute.params.subscribe(function (param) {
             var id = param['id'];
             _this.gameId = id;
-            _this._callApi("Anonymous", "api/games/" + id);
+            _this._callApi("Anonymous", "api/loans/game/" + id);
         });
     };
     Evenement.prototype.ngOnDestroy = function () {
@@ -54,25 +54,26 @@ var Evenement = (function () {
         if (!this.game) {
             this.router.navigateByUrl('../');
         }
-        this.home = jsonData.data.home.name;
-        this.away = jsonData.data.away.name;
-        this.date = jsonData.data.date;
-        this.stadion = jsonData.data.home.stadion;
-        this.banner = jsonData.data.banner;
-        this.loans = jsonData.data.loans;
-        this.id = jsonData.data._id;
-        this.price = jsonData.data.home.price;
-        this.test = jsonData.data.home;
+        console.log(jsonData.data);
+        this.home = jsonData.data[0].game.home.name;
+        this.away = jsonData.data[0].game.away.name;
+        this.date = jsonData.data[0].game.date;
+        this.stadion = jsonData.data[0].game.home.stadion;
+        this.banner = jsonData.data[0].game.banner;
+        this.loans = jsonData.data;
+        this.price = jsonData.data[0].game.home.price;
+        this.test = jsonData.data[0].game.home;
         this.size = this.loans.length;
-        for (var i = 0; i < this.loans.length; i++) {
-            if (this.loans.paid == true) {
-                this.lent++;
-                this.loans.splice(i, 1);
-            }
-            else {
-                this.lendable++;
-            }
-        }
+        this.lent = jsonData.count;
+        this.lendable = this.loans.length;
+        //  for(let i = 0; i<this.loans.length; i++){
+        // 	 if(this.loans.paid == true){
+        // 		 this.lent ++ ;
+        // 		 this.loans.splice(i,1);
+        // 	 }else{
+        // 		 this.lendable ++ ;
+        // 	 }
+        //  }
         console.log(this.lendable);
         console.log(this.lent);
     };

@@ -5,7 +5,10 @@ let gulp = require("gulp"),
     autoprefixer = require('gulp-autoprefixer'),
     cleanCSS = require('gulp-clean-css'),
     csslint = require('gulp-csslint'),
-    uglify = require('gulp-uglify');
+    uglify = require('gulp-uglify'),
+    mocha = require('gulp-mocha'),
+    util = require('gulp-util'),
+    run = require('run-sequence');
 
 const PATHS = {
     EXTERNALS: {
@@ -27,7 +30,7 @@ const PATHS = {
 
 gulp.task('default', function() {
     var htmlwatcher = gulp.watch(PATHS.HTML.SRC, ['html-validate']);
-    var csswatcher = gulp.watch(PATHS.CSS.SRC,['css']);
+    // var csswatcher = gulp.watch(PATHS.CSS.SRC, ['css']);
     var sasswatcher = gulp.watch(PATHS.SCSS.SRC, ['sass']);
 });
 
@@ -66,7 +69,7 @@ gulp.task('html-validate', function() {
 
 /* Copy externals */
 
-gulp.task("copy-externals", function() {
+gulp.task('copy-externals', function() {
     gulp.src(PATHS.EXTERNALS.SRC + "/materialize/dist/**")
         .pipe(gulp.dest(PATHS.EXTERNALS.DEST + "/materialize"));
     gulp.src(PATHS.EXTERNALS.SRC + "/material-icons/css/**")
@@ -77,4 +80,20 @@ gulp.task("copy-externals", function() {
         .pipe(gulp.dest(PATHS.EXTERNALS.DEST + "/font-awesome/css"));
     gulp.src(PATHS.EXTERNALS.SRC + "/font-awesome/fonts/**")
         .pipe(gulp.dest(PATHS.EXTERNALS.DEST + "/font-awesome/fonts"));
+});
+
+/* Unit testing */
+
+gulp.task('testing', function() {
+    run('mocha_backend_testing');
+});
+
+gulp.task('mocha_backend_testing', function() {
+    return gulp.src(['testing/backend/testing.js'], {
+            read: false
+        })
+        .pipe(mocha({
+            reporter: 'list'
+        }))
+        .on('error', util.log);
 });

@@ -7,10 +7,15 @@ var Search_1 = require("../components/search/Search");
 var Listing_1 = require("../components/listing/Listing");
 var Evenement_1 = require("../components/evenement/Evenement");
 var Cart_1 = require("../components/cart/Cart");
+var Offer_1 = require("../components/offer/Offer");
 var Overview_1 = require("../components/admin/overview/Overview");
 var Sports_1 = require("../components/admin/sports/list/Sports");
 var Create_1 = require("../components/admin/sports/create/Create");
 var Edit_1 = require("../components/admin/sports/edit/Edit");
+var Profile_1 = require("../components/profile/Profile");
+var Countries_1 = require("../components/admin/countries/list/Countries");
+var Create_2 = require("../components/admin/countries/create/Create");
+var Edit_2 = require("../components/admin/countries/edit/Edit");
 var AdminGuard_1 = require("../common/AdminGuard");
 exports.SubporterRoutes = [
     {
@@ -41,6 +46,9 @@ exports.SubporterRoutes = [
         path: 'cart', component: Cart_1.Cart
     },
     {
+        path: 'offer', component: Offer_1.Offer
+    },
+    {
         path: 'admin', component: Overview_1.AdminOverview, canActivate: [AdminGuard_1.AdminGuard]
     },
     {
@@ -51,6 +59,18 @@ exports.SubporterRoutes = [
     },
     {
         path: 'admin/sports/edit/:id', component: Edit_1.SportsEdit, canActivate: [AdminGuard_1.AdminGuard]
+    },
+    {
+        path: 'profile', component: Profile_1.Profile
+    },
+    {
+        path: 'admin/countries', component: Countries_1.AdminCountries, canActivate: [AdminGuard_1.AdminGuard]
+    },
+    {
+        path: 'admin/countries/add', component: Create_2.CountriesCreate, canActivate: [AdminGuard_1.AdminGuard]
+    },
+    {
+        path: 'admin/countries/edit/:id', component: Edit_2.CountriesEdit, canActivate: [AdminGuard_1.AdminGuard]
     },
     {
         path: '**', component: Login_1.Login

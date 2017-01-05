@@ -1,6 +1,16 @@
 const mongoose = require('mongoose'),
+    config = require('../../config/subporter.config'),
+    cachegoose = require('cachegoose'),
     _ = require('lodash'),
     loanSchema = require('../schemas/Loans');
+
+let redis = config.redis_dev;
+
+if (process.env.NODE_ENV === 'production') {
+    redis = config.redis_prod;
+}
+
+cachegoose(mongoose, redis);
 
 let Loan = mongoose.model('Loan', loanSchema, 'Loans');
 
@@ -193,12 +203,14 @@ Loan.getLoans = function(cb) {
             } else {
                 cb(null, docs);
             }
-        });
+        })
+        .cache();
 };
 
 Loan.getLoansByGame = function(game, cb) {
     Loan.find({
-            game: game
+            game: game,
+            lent: false
         })
         .populate(populateSchema)
         .exec(function(err, docs) {
@@ -207,7 +219,23 @@ Loan.getLoansByGame = function(game, cb) {
             } else {
                 cb(null, docs);
             }
-        });
+        })
+        .cache();
+};
+
+Loan.getAmountOfLoanedOutGames = function(game, cb) {
+    Loan.count({
+            game: game,
+            lent: true
+        })
+        .exec(function(err, count) {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, count);
+            }
+        })
+        .cache();
 };
 
 Loan.getLoansByLentOutBy = function(user, cb) {
@@ -221,7 +249,8 @@ Loan.getLoansByLentOutBy = function(user, cb) {
             } else {
                 cb(null, docs);
             }
-        });
+        })
+        .cache();
 };
 
 Loan.getLoansByLentBy = function(user, cb) {
@@ -235,7 +264,8 @@ Loan.getLoansByLentBy = function(user, cb) {
             } else {
                 cb(null, docs);
             }
-        });
+        })
+        .cache();
 };
 
 /* Read (one subscription) */
@@ -248,7 +278,8 @@ Loan.getLoanById = function(id, cb) {
             } else {
                 cb(null, docs);
             }
-        });
+        })
+        .cache();
 };
 
 /* Update */
@@ -264,11 +295,11 @@ Loan.updateLoan = function(loan, body, cb) {
 
 /* Delete */
 Loan.deleteLoan = function(id, cb) {
-    Loan.findByIdAndRemove(id, function(err) {
-        if (err) {
+    Loan.findById(id, function(err, docs) {
+        if (err || !docs) {
             cb(err);
         } else {
-            cb(null);
+            docs.remove(cb);
         }
     });
 };

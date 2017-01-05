@@ -1,343 +1,146 @@
-/*Wanneer het scherm kleiner wordt dan 500px in de breedte dan krijg je de smalle opmaak*/
-@media only screen and (max-width: 500px) {
-
-  .section {
-    background-size: cover;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
-  #section0 {
-    background-image: url("/img/bgLanding.jpg");
-    height: 100vh;
-  }
-
-  .landingContainer {
-    text-align: center;
-
-  }
-
-  .section .landingContainer h1 {
-    color: #fff;
-    padding: 20px;
-    font-weight: bold;
-    text-align: center;
-    font-size: 2.0rem;
-  }
-
-  .section .landingContainer input[type="search"] {
-    background: #fff;
-    height: 50px;
-    width: 84%;
-  }
-
-  .section .landingContainer button {
-    height: 50px;
-  }
-
-  .section .landingContainer select {
-    vertical-align: top;
-    width: 100px;
-    z-index: 999;
-    display: inline-block;
-    position: absolute;
-    right: 20px;
-    border: none;
-    height: 50px;
-  }
-
-  .row .col.s4 {
-    width: 100%;
-    margin-left: auto;
-    left: auto;
-    right: auto;
-
-  }
-
-  .row .col.s6{
-    width:100%;
-    margin-left: auto;
-    left: auto;
-    right: auto;
-  }
-
-  .btn-none {
-    background: none;
-    border: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-  }
-
-  .btn-none:active {
-    background: none;
-    border: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-  }
-
-  .btn-none:focus {
-    background: none;
-    border: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-  }
-
-  .secondary-content{
-    color: #26a69a;
-    float: none;
-  }
-
-  .col {
-    text-align: center;
-  }
-
-  .row .col{
-    float: left;
-    box-sizing: border-box;
-    padding: 0 0.75rem;
-    min-height: 1px;
-
-  }
-
-  div{
-    display: block;
-  }
-
-  div .col.s4{
-    border: 1px solid #e0e0e0;
-    border-radius: 2px;
-  }
-
-  .card-content h6 {
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .title {
-    font-weight: bold;
-    font-size:1.3rem;
-  }
-
-
-
-  h3{
-    text-align: center;
-  }
-
-  h6
-  {
-    font-size: 1.3rem;
-    line-height:110%;
-    margin:0.5rem 0 0.4rem 0;
-
-  }
-
-  .card .card-action{
-    position: relative;
-    background-color: inherit;
-    border-top:1px solid rgba(160,160,160,0.2);
-    padding: 20px;
-  }
-
-  .card .card-action a:not(.btn):not(.btn-large):not(.btn-floating){
-    color: #ffab40;
-    margin: auto;
-    transition: color .3s ease;
-    text-transform: uppercase;
-  }
-
-  .fa-angle-down {
-    color: #fff;
-    text-align: center;
-    /*font-size: 5em;*/
-  }
-
-}
-
-/*Wanneer het scherm minstens 500px breed is krijgt het de desktop opmaak*/
-@media only screen and (min-width: 500px) {
-  .section {
-    background-size: cover;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
-  #section0 {
-    background-image: url("/img/bgLanding.jpg");
-    height: 100vh;
-  }
-
-  /*.container{
-      width: 100%;
-      max-width: none;
-  }	*/
-  .landingContainer {
-    text-align: center;
-    margin: 180px auto;
-  }
-
-  .section .landingContainer h1 {
-    color: #fff;
-    padding: 20px;
-    font-weight: bold;
-  }
-
-  .section .landingContainer input[type="search"] {
-    width: 82%;
-    background: #fff;
-    padding-left: 3rem;
-    height: 50px;
-    vertical-align: top;
-    display: inline-block;
-  }
-
-  .section .landingContainer button {
-    height: 50px;
-  }
-
-  #fp-nav ul li a span, .fp-slidesNav ul li a span {
-    background: #fff;
-  }
-
-  .section .landingContainer select {
-    vertical-align: top;
-    width: 100px;
-    z-index: 999;
-    display: inline-block;
-    position: absolute;
-    right: 135px;
-    border: none;
-    height: 50px;
-  }
-
-  .logo {
-    font-size: 2em;
-  }
-
-  .input-field input[type=search] + label {
-    left: 1.4rem;
-  }
-
-  nav {
-    background: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-  }
-
-  .brand-logo {
-    margin-left: 10px;
-  }
-
-  .fa-angle-down {
-    color: #fff;
-    text-align: center;
-    /*font-size: 5em;*/
-  }
-
-  .btn-none {
-    background: none;
-    border: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-  }
-
-  .btn-none:active {
-    background: none;
-    border: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-  }
-
-  .btn-none:focus {
-    background: none;
-    border: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-  }
-
-  .col {
-    text-align: center;
-  }
-
-  .container h3 {
-    text-align: center;
-  }
-
-  .center {
-    width: 100%;
-    text-align: center;
-  }
-
-  .card-content h6 {
-    font-weight: bold;
-  }
-
-  #section4 {
-    padding-top: 50px;
-    padding-bottom: 50px;
-  }
-
-  .margintop {
-    padding-top: 20px;
-    padding-bottom: 50px;
-  }
-
-  .title {
-    font-weight: bold;
-  }
-
-  .collection-item p {
-    display: inline-block;
-  }
-
-  #section3 .collection-item:hover {
-    background: #F4F4F4;
-    cursor: pointer;
-  }
-
-  #section4 {
-    background-color: #F4F4F4;
-  }
-
-  #section4 .collection {
-    border: none;
-    background: none;
-  }
-
-  #section4 .collection .collection-item {
-    background: none;
-  }
-
-  #section3 {
-    padding-bottom: 50px;
-  }
-
-  footer.page-footer {
-    margin-top: 0;
-  }
-
-  .collection-item .title {
-    display: block;
-  }
-
-  .carousel-class {
-    padding-top: 20px;
-  }
-
-  .carousel-class img {
-    max-width: 100px;
-    max-height: 100px;
-  }
-
-  footer.page-footer {
-    background: #121415;
-  }
-
-}
+.section {
+  background-size: cover;
+  padding-top: 0;
+  padding-bottom: 0; }
+
+#section0 {
+  background-image: url("/img/bgLanding.jpg");
+  height: 100vh; }
+
+/*.container{
+	width: 100%;
+	max-width: none;
+}	*/
+.landingContainer {
+  text-align: center;
+  margin: 180px auto; }
+
+.section .landingContainer h1 {
+  color: #fff;
+  padding: 20px;
+  font-weight: bold; }
+
+.section .landingContainer input[type="search"] {
+  width: 82%;
+  background: #fff;
+  padding-left: 3rem;
+  height: 50px;
+  vertical-align: top;
+  display: inline-block; }
+
+.section .landingContainer button {
+  height: 50px; }
+
+#fp-nav ul li a span, .fp-slidesNav ul li a span {
+  background: #fff; }
+
+.section .landingContainer select {
+  vertical-align: top;
+  width: 100px;
+  z-index: 999;
+  display: inline-block;
+  position: absolute;
+  right: 135px;
+  border: none;
+  height: 50px; }
+
+.logo {
+  font-size: 2em; }
+
+.input-field input[type=search] + label {
+  left: 1.4rem; }
+
+nav {
+  background: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none; }
+
+.brand-logo {
+  margin-left: 10px; }
+
+.fa-angle-down {
+  color: #fff;
+  text-align: center;
+  /*font-size: 5em;*/ }
+
+.btn-none {
+  background: none;
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none; }
+
+.btn-none:active {
+  background: none;
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none; }
+
+.btn-none:focus {
+  background: none;
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none; }
+
+.col {
+  text-align: center; }
+
+.container h3 {
+  text-align: center; }
+
+.center {
+  width: 100%;
+  text-align: center; }
+
+.card-content h6 {
+  font-weight: bold; }
+
+#section4 {
+  padding-top: 50px;
+  padding-bottom: 50px; }
+
+.margintop {
+  padding-top: 20px;
+  padding-bottom: 50px; }
+
+.title {
+  font-weight: bold; }
+
+.collection-item p {
+  display: inline-block; }
+
+#section3 .collection-item:hover {
+  background: #F4F4F4;
+  cursor: pointer; }
+
+#section4 {
+  background-color: #F4F4F4; }
+
+#section4 .collection {
+  border: none;
+  background: none; }
+
+#section4 .collection .collection-item {
+  background: none; }
+
+#section3 {
+  padding-bottom: 50px; }
+
+footer.page-footer {
+  margin-top: 0; }
+
+.collection-item .title {
+  display: block; }
+
+.carousel-class {
+  padding-top: 20px; }
+
+.carousel-class img {
+  max-width: 100px;
+  max-height: 100px; }
+
+footer.page-footer {
+  background: #121415; }
