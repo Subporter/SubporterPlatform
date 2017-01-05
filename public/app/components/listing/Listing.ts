@@ -139,6 +139,10 @@ id:number;
 
 	this._cookieService.put(this.id.toString(),this.id.toString());
 
+	 this.router.navigateByUrl('../cart');
+
+
+
 
 
 	  }else{

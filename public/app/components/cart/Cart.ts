@@ -1,3 +1,5 @@
+
+
 import { Component, Input } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { Http } from '@angular/http';
@@ -40,7 +42,7 @@ avatar:String;
 name:String;
 firstname:String;
 city:String;
-prices:number;
+prices:number=0;
 price:number=0;
 id:number;
 cookie:any;
@@ -59,7 +61,14 @@ show = true;
 	}
 
 
-	ngOnInit() {
+
+	ngOnInit() { 
+
+         if(!this.loggedIn){
+              this.router.navigateByUrl('#');
+         }
+
+
         let  x = this._cookieService.getAll();
         this.cookie = x;
 
@@ -86,9 +95,16 @@ showCart(){
 for(var cook in cookie){
 
     this._callApi("Anonymous", "api/loans/"+cook);
+    
+
 
 
 }
+
+this.apiService.get("api/users").subscribe(
+	 		response =>  this.getUser(response.text()),
+	 		error => this.response = error.text
+	 	);
 
 
 
@@ -126,10 +142,27 @@ showEmpty(){
 			error => this.response = error.text
 		);
 
+      
+
+    
+
 
 
 
   }
+
+     _callApi2(type, url) {
+	 	this.apiService.get("api/users").subscribe(
+	 		response =>  this.getUser(response.text()),
+	 		error => this.response = error.text
+	 	);
+
+     }
+
+
+   getUser(data){
+       console.log(data);
+   }
 
   getLoan(data){
      let Data = data;
@@ -145,6 +178,7 @@ showEmpty(){
 
 
     this.price += (this.loan.game.home.price *0.1);
+    this.prices += (this.loan.game.home.price);
 
 
 
@@ -192,5 +226,46 @@ showEmpty(){
     return true;
 }
 
+
+pay(){
+
+    for (let loan of this.loans){
+
+        
+
+        console.log(loan._id);
+
+        // this._cookieService.remove(loan._id);
+
+        let id= loan._id;
+
+        let paid = true;
+        let lent = true;
+        let lent_by = 3;
+
+		 let body = JSON.stringify({
+		 	paid,
+             lent,
+             lent_by
+		 });
+
+
+this.apiService.put("api/loans/"+id,body).subscribe(
+	 		response =>  console.log(response.text()),
+	 		error => this.response = error.text
+	 	);
+
+
+		//  contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+		//  this.authHttp.put("http://localhost:1337/api/loans/"+id, body, {
+		//  	headers: contentHeaders
+		//  })
+		//  	.subscribe(
+		//  	response => this.response = response.text(),
+		//  	error => this.response = error.text
+		//  	);
+	}
+
+    }
 
 }
