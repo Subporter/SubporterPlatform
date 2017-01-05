@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { JwtHelper } from 'angular2-jwt';
 import { contentHeaders } from '../../../common/Headers'
+import { ApiService} from '../../../services/ApiService';
 
 @Component({
     selector: 'login',
@@ -56,7 +57,7 @@ export class Login {
     email: String;
     password: String;
 
-    constructor(public router: Router, public http: Http, public apiService: apiService) {
+    constructor(public router: Router, public http: Http, public apiService: ApiService) {
     }
 
     jwtHelper: JwtHelper = new JwtHelper();
@@ -95,10 +96,13 @@ export class Login {
 
                     
 
-                    this.apiService.get('/api/users').subscribe(
+                    this.apiService.get('api/users').subscribe(
                         response => {
                             console.log("USER DATA");
-                            console.log(response);
+                            var jsonrespons = response.json().data;
+                            console.log(jsonrespons["favorites"]);
+                            
+                            socket.emit("addFav", jsonrespons["favorites"])
                         },
                         error => {
                             console.log(error.text());
@@ -110,7 +114,7 @@ export class Login {
                         alert("socket.io laat weten dat iemand you loan heeft aanvaard");
                     });
 
-                    socket.on("loanAdded", function(){
+                    socket.on("loanAddedTeam", function(){
                         alert("socket.io laat weten dat iemnand een wedstrijd voor je favoriete ploeg online heeft geplaatst");
                     })
 

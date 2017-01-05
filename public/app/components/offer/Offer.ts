@@ -342,7 +342,11 @@ offerSubscription(){
 }
 
 showSuccess(){
-  console.log("this does work");
+
+  console.log(this.selectedGame.home["_id"]);
+    var socket = io.connect();
+    socket.emit("offerAdded", this.selectedGame.home["_id"], this.selectedGame.away["_id"]);
+
    this.modalActions2.emit({action:"modal",params:['open']});
 }
 

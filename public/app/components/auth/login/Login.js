@@ -13,6 +13,7 @@ var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
 var angular2_jwt_1 = require("angular2-jwt");
 var Headers_1 = require("../../../common/Headers");
+var ApiService_1 = require("../../../services/ApiService");
 var Login = (function () {
     function Login(router, http, apiService) {
         this.router = router;
@@ -41,16 +42,18 @@ var Login = (function () {
             if (response.json().success === true) {
                 var socket = io.connect();
                 socket.emit("login", response.json().id);
-                _this.apiService.get('/api/users').subscribe(function (response) {
+                _this.apiService.get('api/users').subscribe(function (response) {
                     console.log("USER DATA");
-                    console.log(response);
+                    var jsonrespons = response.json().data;
+                    console.log(jsonrespons["favorites"]);
+                    socket.emit("addFav", jsonrespons["favorites"]);
                 }, function (error) {
                     console.log(error.text());
                 });
                 socket.on("NewLoanuser", function () {
                     alert("socket.io laat weten dat iemand you loan heeft aanvaard");
                 });
-                socket.on("loanAdded", function () {
+                socket.on("loanAddedTeam", function () {
                     alert("socket.io laat weten dat iemnand een wedstrijd voor je favoriete ploeg online heeft geplaatst");
                 });
                 localStorage.setItem("id_token", response.json().token);
@@ -74,7 +77,7 @@ Login = __decorate([
         template: "\n\t\t<div class=\"login container\">\n\t<div class=\"login-section\">\n\t\t<h1>Login</h1>\n\t\t<form (submit)=\"login($event)\">\n\t\t\t<div class=\"form-group\">\n\t\t\t\t<div class=\"input-field\">\n\t\t\t\t\t<input [(ngModel)]=\"email\" type=\"email\" class=\"form-control validate\" name=\"email\" id=\"email\">\n\t\t\t\t\t<label for=\"email\">Email</label>\n\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"form-group\">\n\t\t\t\t<div class=\"input-field\">\n\n\t\t\t\t\t<input [(ngModel)]=\"password\" type=\"password\" class=\"form-control validate\" name=\"password\" id=\"password\">\n\t\t\t\t\t<label for=\"password\">Password</label>\n\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<button type=\"submit\" class=\"btn btn-default\">Submit</button>\n\t\t\t<a [routerLink]=\"['/']\">Click here to go landing</a>\n\t\t</form>\n\t</div>\n\t<div class=\"register-section\">\n\t\t<h1>Not a member?</h1>\n\t\t<p>If you're not yet registered, please register now to obtain full access.</p>\n\t\t<br/>\n\n\t\t<button class=\"btn\" [routerLink]=\"['/register']\"> Register now </button>\n\n\n\t</div>\n</div>\n\n\n\n\n\n\n\n\t",
         styleUrls: ['../../../css/css/login.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router, http_1.Http, Object])
+    __metadata("design:paramtypes", [router_1.Router, http_1.Http, ApiService_1.ApiService])
 ], Login);
 exports.Login = Login;
 //# sourceMappingURL=Login.js.map

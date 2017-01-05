@@ -15,13 +15,17 @@
             });
 
             socket.on("addFav",function(data){
-                for(var fav in data){
-                    socket.join(fav);
-                    console.log("fav team toegevoegd" + fav);
+               
+                var count = Object.keys(data).length;
+                for(var i = 0; i<count; i++){
+                    socket.join(data[i]["_id"]);
+                    console.log("fav team toegevoegd" + data[i]["_id"]);
                 }
             });
 
-            socket.on("loanAdded", function(teamA, teamB){
+            socket.on("offerAdded", function(teamA, teamB){
+                console.log("offer added " + teamA + " - " + teamB)
+
                 socket.broadcast.to(teamA).emit("loanAddedTeam");
                 socket.broadcast.to(teamB).emit("loanAddedTeam");
             })
