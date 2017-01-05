@@ -101,10 +101,7 @@ for(var cook in cookie){
 
 }
 
-this.apiService.get("api/users").subscribe(
-	 		response =>  this.getUser(response.text()),
-	 		error => this.response = error.text
-	 	);
+
 
 
 
@@ -151,13 +148,7 @@ showEmpty(){
 
   }
 
-     _callApi2(type, url) {
-	 	this.apiService.get("api/users").subscribe(
-	 		response =>  this.getUser(response.text()),
-	 		error => this.response = error.text
-	 	);
-
-     }
+     
 
 
    getUser(data){
@@ -229,6 +220,12 @@ showEmpty(){
 
 pay(){
 
+
+    this.apiService.get("api/users").subscribe(
+	 		response =>  this.getUser(response.text()),
+	 		error => this.response = error.text
+	 	);
+
     for (let loan of this.loans){
 
         
@@ -250,10 +247,10 @@ pay(){
 		 });
 
 
-this.apiService.put("api/loans/"+id,body).subscribe(
-	 		response =>  console.log(response.text()),
-	 		error => this.response = error.text
-	 	);
+// this.apiService.put("api/loans/"+id,body).subscribe(
+// 	 		response =>  console.log(response.text()),
+// 	 		error => this.response = error.text
+// 	 	);
 
 
 		//  contentHeaders.append("Authorization", localStorage.getItem("id_token"));

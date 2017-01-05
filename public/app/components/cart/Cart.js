@@ -51,12 +51,10 @@ var Cart = (function () {
         console.log(x);
     };
     Cart.prototype.showCart = function () {
-        var _this = this;
         var cookie = this.cookie;
         for (var cook in cookie) {
             this._callApi("Anonymous", "api/loans/" + cook);
         }
-        this.apiService.get("api/users").subscribe(function (response) { return _this.getUser(response.text()); }, function (error) { return _this.response = error.text; });
     };
     Cart.prototype.showEmpty = function () {
     };
@@ -68,10 +66,6 @@ var Cart = (function () {
     Cart.prototype._callApi = function (type, url) {
         var _this = this;
         this.apiService.get(url).subscribe(function (response) { return _this.getLoan(response.text()); }, function (error) { return _this.response = error.text; });
-    };
-    Cart.prototype._callApi2 = function (type, url) {
-        var _this = this;
-        this.apiService.get("api/users").subscribe(function (response) { return _this.getUser(response.text()); }, function (error) { return _this.response = error.text; });
     };
     Cart.prototype.getUser = function (data) {
         console.log(data);
@@ -125,6 +119,7 @@ var Cart = (function () {
     };
     Cart.prototype.pay = function () {
         var _this = this;
+        this.apiService.get("api/users").subscribe(function (response) { return _this.getUser(response.text()); }, function (error) { return _this.response = error.text; });
         for (var _i = 0, _a = this.loans; _i < _a.length; _i++) {
             var loan = _a[_i];
             console.log(loan._id);
@@ -138,7 +133,6 @@ var Cart = (function () {
                 lent: lent,
                 lent_by: lent_by
             });
-            this.apiService.put("api/loans/" + id, body).subscribe(function (response) { return console.log(response.text()); }, function (error) { return _this.response = error.text; });
         }
     };
     return Cart;

@@ -8,6 +8,7 @@ import { Search } from "../components/search/Search";
 import { Listing } from "../components/listing/Listing";
 import { Evenement } from "../components/evenement/Evenement";
 import { Cart } from "../components/cart/Cart";
+import { Offer } from "../components/offer/Offer";
 import { AdminOverview } from "../components/admin/overview/Overview";
 
 import { AuthGuard } from "../common/AuthGuard";
@@ -43,6 +44,9 @@ export const SubporterRoutes: Routes = [
     },
     {
         path: 'cart', component: Cart
+    },
+    {
+        path: 'offer', component: Offer
     },
     {
         path: '**', component: Login

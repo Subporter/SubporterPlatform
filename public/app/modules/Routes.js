@@ -7,6 +7,7 @@ var Search_1 = require("../components/search/Search");
 var Listing_1 = require("../components/listing/Listing");
 var Evenement_1 = require("../components/evenement/Evenement");
 var Cart_1 = require("../components/cart/Cart");
+var Offer_1 = require("../components/offer/Offer");
 var Overview_1 = require("../components/admin/overview/Overview");
 var AdminGuard_1 = require("../common/AdminGuard");
 exports.SubporterRoutes = [
@@ -39,6 +40,9 @@ exports.SubporterRoutes = [
     },
     {
         path: 'cart', component: Cart_1.Cart
+    },
+    {
+        path: 'offer', component: Offer_1.Offer
     },
     {
         path: '**', component: Login_1.Login
