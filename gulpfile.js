@@ -7,7 +7,8 @@ let gulp = require("gulp"),
     csslint = require('gulp-csslint'),
     uglify = require('gulp-uglify'),
     mocha = require('gulp-mocha'),
-    util = require('gulp-util');
+    util = require('gulp-util'),
+    run = require('run-sequence');
 
 const PATHS = {
     EXTERNALS: {
@@ -84,7 +85,10 @@ gulp.task('copy-externals', function() {
 /* Unit testing */
 
 gulp.task('testing', function() {
-    gulp.run('mocha_backend_testing');
+    run('mocha_backend_testing', 'watch_testing');
+});
+
+gulp.task('watch_testing', function () {
     gulp.watch(['testing/backend/*.js', './**/*.js'], ['mocha_backend_testing']);
 });
 
