@@ -88,10 +88,10 @@ export class Login {
             .subscribe(
             response => {
                 console.log(response.json());
-                if (response.json().success == true) {
+                if (response.json().success === true) {
                     localStorage.setItem("id_token", response.json().token);
                     this.useJwtHelper();
-                    this.router.navigate(['home']);
+                    this.router.navigate(['landing']);
                 }
             },
             error => {

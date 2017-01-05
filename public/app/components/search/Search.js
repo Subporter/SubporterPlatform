@@ -35,7 +35,7 @@ var Search = (function () {
     };
     Search.prototype._callApi = function (type, url) {
         var _this = this;
-        this.apiService.call(url).subscribe(function (response) { return _this.getGames(response.text()); }, function (error) { return _this.response = error.text; });
+        this.apiService.get(url).subscribe(function (response) { return _this.getGames(response.text()); }, function (error) { return _this.response = error.text; });
     };
     Search.prototype.getGames = function (data) {
         var Data = data;
