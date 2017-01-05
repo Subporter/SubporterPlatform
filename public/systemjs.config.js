@@ -32,7 +32,8 @@
             'angular-slick': 'npm:angular-slick-carousel/dist/angular-slick.js',
             'materialize-css': 'npm:materialize-css',
             'angular2-materialize': 'npm:angular2-materialize',
-            'angular2-cookie': 'npm:angular2-cookie'
+            'angular2-cookie': 'npm:angular2-cookie',
+            'algoliasearch': 'npm:algoliasearch'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -54,6 +55,10 @@
             },
             'angular2-cookie': {
                 main: './core.js',
+                defaultExtension: 'js'
+            },
+            'algoliasearch':{
+                main:'./dist/algoliasearch',
                 defaultExtension: 'js'
             }
         }

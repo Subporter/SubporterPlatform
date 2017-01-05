@@ -30,7 +30,7 @@ const PATHS = {
 
 gulp.task('default', function() {
     var htmlwatcher = gulp.watch(PATHS.HTML.SRC, ['html-validate']);
-    var csswatcher = gulp.watch(PATHS.CSS.SRC, ['css']);
+    // var csswatcher = gulp.watch(PATHS.CSS.SRC, ['css']);
     var sasswatcher = gulp.watch(PATHS.SCSS.SRC, ['sass']);
 });
 

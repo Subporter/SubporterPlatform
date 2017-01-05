@@ -17,6 +17,7 @@ var Auth_1 = require("./services/Auth");
 var AuthGuard_1 = require("./common/AuthGuard");
 var AdminGuard_1 = require("./common/AdminGuard");
 var ApiService_1 = require("./services/ApiService");
+var UploadService_1 = require("./services/UploadService");
 var cookies_service_1 = require("angular2-cookie/services/cookies.service");
 var App_1 = require("./components/App");
 var Register_1 = require("./components/auth/register/Register");
@@ -30,6 +31,8 @@ var Search_1 = require("./components/search/Search");
 var Evenement_1 = require("./components/evenement/Evenement");
 var Listing_1 = require("./components/listing/Listing");
 var Cart_1 = require("./components/cart/Cart");
+var Offer_1 = require("./components/offer/Offer");
+var Profile_1 = require("./components/profile/Profile");
 var Overview_1 = require("./components/admin/overview/Overview");
 var Sports_1 = require("./components/admin/sports/list/Sports");
 var Create_1 = require("./components/admin/sports/create/Create");
@@ -48,7 +51,7 @@ var Subporter = (function () {
 Subporter = __decorate([
     core_1.NgModule({
         bootstrap: [App_1.App],
-        declarations: [App_1.App, Register_1.Register, Login_1.Login, Landing_1.Landing, Footer_1.Footer, Header_1.Header, Topwedstrijd_1.Topwedstrijd, Weekwedstrijd_1.Weekwedstrijd, Search_1.Search, Evenement_1.Evenement, Listing_1.Listing, Cart_1.Cart, Overview_1.AdminOverview, Sports_1.AdminSports, Create_1.SportsCreate, Edit_1.SportsEdit, Countries_1.AdminCountries, Create_2.CountriesCreate, Edit_2.CountriesEdit, Competitions_1.AdminCompetitions, angular2_materialize_1.MaterializeDirective],
+        declarations: [App_1.App, Register_1.Register, Login_1.Login, Landing_1.Landing, Footer_1.Footer, Header_1.Header, Topwedstrijd_1.Topwedstrijd, Weekwedstrijd_1.Weekwedstrijd, Search_1.Search, Evenement_1.Evenement, Listing_1.Listing, Cart_1.Cart, Overview_1.AdminOverview, Sports_1.AdminSports, Create_1.SportsCreate, Edit_1.SportsEdit, Offer_1.Offer, Countries_1.AdminCountries, Profile_1.Profile, Create_2.CountriesCreate, Edit_2.CountriesEdit, Competitions_1.AdminCompetitions, angular2_materialize_1.MaterializeDirective],
         imports: [
             platform_browser_1.BrowserModule,
             http_1.HttpModule,
@@ -61,7 +64,8 @@ Subporter = __decorate([
             AdminGuard_1.AdminGuard,
             angular2_jwt_1.AUTH_PROVIDERS,
             ApiService_1.ApiService,
-            cookies_service_1.CookieService
+            cookies_service_1.CookieService,
+            UploadService_1.UploadService
         ]
     }),
     __metadata("design:paramtypes", [])
