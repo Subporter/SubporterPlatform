@@ -155,6 +155,26 @@
     /*font-size: 5em;*/
   }
 
+
+  nav {
+    height: 20px;
+  }
+
+  .nav-mobile{
+    width: 200px;
+  }
+
+  .side-nav {
+    width: 200px;
+  }
+  li.active {
+    background-color: #ee6e73
+  }
+
+
+  footer.page-footer {
+    background: #121415;
+  }
 }
 
 /*Wanneer het scherm minstens 500px breed is krijgt het de desktop opmaak*/

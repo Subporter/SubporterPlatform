@@ -33,7 +33,7 @@ let userSchema = new mongoose.Schema({
     avatar: {
         type: String,
         required: true,
-        default: '/img/person.png'
+        default: '/img/avatar.png'
     },
     date_of_birth: {
         type: Date

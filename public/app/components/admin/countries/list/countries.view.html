@@ -1,10 +1,19 @@
 <navadmin></navadmin>
 
+<nav>
+	<div class="nav-wrapper">
+		<div class="col s12">
+			<a [routerLink]="['/admin']" class="breadcrumb">Admin</a>
+			<a [routerLink]="['/admin/countries']" class="breadcrumb">Landen</a>
+		</div>
+	</div>
+</nav>
+
 <div class="container">
 	<div class="row">
-		<h2 class="header">Country</h2>
+		<h2 class="header">Landen</h2>
 		<button [routerLink]="['/admin/countries/add']" class="btn waves-effect waves-light">
-			Add <i class="material-icons right">add</i>
+			Toevoegen <i class="material-icons right">add</i>
 		</button>
 	</div>
 	<div class="row">
@@ -20,12 +29,12 @@
 
 <div id="modal-delete" class="modal">
 	<div class="modal-content">
-		<h4>Are you sure?</h4>
-		<p>Deleting this country, {{selectedCountry.name}}, will also delete all competitions and teams for this country.</p>
+		<h4>Zeker?</h4>
+		<p>Indien je dit land, {{selectedCountry.name}}, verwijdert zullen ook alle competities en teams voor het land gewist worden.</p>
 	</div>
 	<div class="modal-footer">
-		<a class="modal-action modal-close waves-effect btn-flat">Cancel</a>
-		<a (click)="confirmDelete(selectedCountry._id)" class="modal-action modal-close waves-effect btn-flat">Agree</a>
+		<a class="modal-action modal-close waves-effect btn-flat">Terug</a>
+		<a (click)="confirmDelete(selectedCountry._id)" class="modal-action modal-close waves-effect btn-flat">Ok</a>
 	</div>
 </div>
 

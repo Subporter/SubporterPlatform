@@ -33,6 +33,7 @@ import { SportsEdit } from "./components/admin/sports/edit/Edit";
 import { AdminCountries } from "./components/admin/countries/list/Countries";
 import { CountriesCreate } from "./components/admin/countries/create/Create";
 import { CountriesEdit } from "./components/admin/countries/edit/Edit";
+import { AdminCompetitions } from "./components/admin/competitions/list/Competitions";
 import { MaterializeDirective } from "angular2-materialize";
 import {HeaderAdmin} from "./components/admin/header/Header";
 
@@ -40,7 +41,7 @@ import { Routing } from "./modules/Routes";
 
 @NgModule({
     bootstrap: [App],
-    declarations: [App, Register, Login, Landing, Footer, Header, Topwedstrijd, Weekwedstrijd, Search, Evenement, Listing, Cart, AdminOverview, AdminSports, SportsCreate, SportsEdit,Offer,  AdminCountries, Profile, CountriesCreate, CountriesEdit, MaterializeDirective, HeaderAdmin],
+    declarations: [App, Register, Login, Landing, Footer, Header, Topwedstrijd, Weekwedstrijd, Search, Evenement, Listing, Cart, AdminOverview, AdminSports, SportsCreate, SportsEdit,Offer,  AdminCountries, Profile, CountriesCreate, CountriesEdit, AdminCompetitions, HeaderAdmin, MaterializeDirective],
     imports: [
         BrowserModule,
         HttpModule,

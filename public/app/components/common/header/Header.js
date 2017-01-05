@@ -41,4 +41,11 @@ Header = __decorate([
     __metadata("design:paramtypes", [router_1.Router, http_1.Http])
 ], Header);
 exports.Header = Header;
+var SideNav = (function () {
+    function SideNav() {
+        this.routeNames = ["Buttons", "Carousel", "Chips", "Collapsible", "Dialogs", "Dropdown", "Forms", "Tabs", "DatePicker", "ModelBindings"];
+    }
+    return SideNav;
+}());
+exports.SideNav = SideNav;
 //# sourceMappingURL=Header.js.map

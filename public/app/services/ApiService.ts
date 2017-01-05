@@ -30,6 +30,13 @@ export class ApiService {
         });
 	}
 
+	postWithFiles(url, body, files) {
+		url = this.baseUrl + url;
+		if (localStorage.getItem("id_token")) {
+            contentHeaders.set("Authorization", localStorage.getItem("id_token"));
+		}
+	}
+
     put(url, body) {
         url = this.baseUrl + url;
 		if (localStorage.getItem("id_token")) {
@@ -38,6 +45,13 @@ export class ApiService {
         return this.http.put(url, body, {
             headers: contentHeaders
         });
+    }
+
+    putWithFiles(url, body, files) {
+        url = this.baseUrl + url;
+        if (localStorage.getItem("id_token")) {
+            contentHeaders.set("Authorization", localStorage.getItem("id_token"));
+        }
     }
 
     delete(url) {

@@ -1,4 +1,5 @@
 const express = require('express'),
+    config = require('../../config/subporter.config'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
     formParser = require('../middleware/formParser'),
@@ -8,6 +9,18 @@ const express = require('express'),
     Team = require('../models/Teams'),
     Address = require('../models/Addresses'),
     User = require('../models/Users');
+
+let redis = config.redis_dev;
+
+if (process.env.NODE_ENV === 'production') {
+    redis = config.redis.prod;
+}
+
+const cache = require('express-redis-cache')({
+    host: redis.host,
+    port: redis.port,
+    expire: 60
+});
 
 let router = express.Router();
 
@@ -56,7 +69,7 @@ router.post("/teams", authenticate, admin, formParser, imageSaver, function(req,
 });
 
 /* Read (all teams) */
-router.get("/teams", function(req, res) {
+router.get("/teams", cache.route(), function(req, res) {
     Team.getTeams(function(err, teams) {
         if (err) {
             res.json({
@@ -80,7 +93,7 @@ router.get("/teams", function(req, res) {
 });
 
 
-router.get("/teams/competition/:competition", function(req, res) {
+router.get("/teams/competition/:competition", cache.route(), function(req, res) {
     Team.getTeamsByCompetition(req.params.competition, function(err, teams) {
         if (err) {
             res.json({
@@ -104,7 +117,7 @@ router.get("/teams/competition/:competition", function(req, res) {
 
 });
 
-router.get("/teams/country/:country", function(req, res) {
+router.get("/teams/country/:country", cache.route(), function(req, res) {
     Team.getTeamsByCountry(req.params.country, function(err, teams) {
         if (err) {
             res.json({
@@ -128,7 +141,7 @@ router.get("/teams/country/:country", function(req, res) {
 });
 
 /* Read (one team) */
-router.get("/teams/:id", function(req, res) {
+router.get("/teams/:id", cache.route(), function(req, res) {
     Team.getTeamById(req.params.id, function(err, team) {
         if (err) {
             res.json({
@@ -264,9 +277,9 @@ router.delete("/teams/:id", authenticate, admin, function(req, res) {
 });
 
 router.delete("/teams/references/:id", authenticate, admin, function(req, res) {
-	if (req.granted) {
-		Team.deleteTeamReferences(req.params.id, function(err) {
-			if (err) {
+    if (req.granted) {
+        Team.deleteTeamReferences(req.params.id, function(err) {
+            if (err) {
                 res.json({
                     info: "Error during deleting team references",
                     success: false,
@@ -278,8 +291,8 @@ router.delete("/teams/references/:id", authenticate, admin, function(req, res) {
                     success: true
                 });
             }
-		});
-	} else {
+        });
+    } else {
         res.status(403);
         res.json({
             info: "Unauthorized",

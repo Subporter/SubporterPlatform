@@ -11,6 +11,18 @@ const express = require('express'),
     User = require('../models/Users'),
     Address = require('../models/Addresses');
 
+let redis = config.redis_dev;
+
+if (process.env.NODE_ENV === 'production') {
+    redis = config.redis.prod;
+}
+
+const cache = require('express-redis-cache')({
+    host: redis.host,
+    port: redis.port,
+    expire: 60
+});
+
 let router = express.Router();
 
 /* Read (all users) */
@@ -46,7 +58,7 @@ router.get("/users/all", authenticate, admin, function(req, res) {
 });
 
 /* Read (one user) */
-router.get("/users", authenticate, function(req, res) {
+router.get("/users", authenticate, cache.route(), function(req, res) {
     if (req.granted) {
         User.getUserByEmail(req.jwtUser.email, function(err, user) {
             if (err) {
@@ -77,7 +89,7 @@ router.get("/users", authenticate, function(req, res) {
     }
 });
 
-router.get("/users/id/:id", authenticate, admin, function(req, res) {
+router.get("/users/id/:id", authenticate, admin, cache.route(), function(req, res) {
     if (req.granted) {
         User.getUserById(req.params.id, function(err, user) {
             if (err) {
@@ -108,7 +120,7 @@ router.get("/users/id/:id", authenticate, admin, function(req, res) {
     }
 });
 
-router.get("/users/email/:email", authenticate, admin, function(req, res) {
+router.get("/users/email/:email", authenticate, admin, cache.route(), function(req, res) {
     if (req.granted) {
         User.getUserByEmail(req.params.email, function(err, user) {
             if (err) {
@@ -139,7 +151,7 @@ router.get("/users/email/:email", authenticate, admin, function(req, res) {
     }
 });
 
-router.get("/users/username/:username", authenticate, function(req, res) {
+router.get("/users/username/:username", authenticate, cache.route(), function(req, res) {
     if (req.granted) {
         User.getUserByUsername(req.params.username, function(err, user) {
             if (err) {
@@ -229,7 +241,7 @@ router.put("/users", authenticate, formParser, imageSaver, function(req, res) {
     }
 });
 
-router.put("/users/:id", authenticate, admin, function(req, res) {
+router.put("/users/:id", authenticate, admin, formParser, imageSaver, function(req, res) {
     if (req.granted) {
         if (Object.keys(req.body).length !== 10 || bodyValidator(req.body.address, req.body.avatar, req.body.city, req.body.country, req.body.date_of_birth, req.body.national_registry_number, req.body.number, req.body.phone, req.body.postal, req.body.street)) {
             res.json({
