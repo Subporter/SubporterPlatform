@@ -1,6 +1,16 @@
 const mongoose = require('mongoose'),
+    config = require('../../config/subporter.config'),
+    cachegoose = require('cachegoose'),
     _ = require('lodash'),
     sportSchema = require('../schemas/Sports');
+
+let redis = config.redis_dev;
+
+if (process.env.NODE_ENV === 'production') {
+    redis = config.redis_prod;
+}
+
+cachegoose(mongoose, redis);
 
 let Sport = mongoose.model('Sport', sportSchema, 'Sports');
 
@@ -26,18 +36,20 @@ Sport.getSports = function(cb) {
             } else {
                 cb(null, docs);
             }
-        });
+        })
+        .cache();
 };
 
 /* Read (one sport) */
 Sport.getSportById = function(id, cb) {
     Sport.findById(id, function(err, docs) {
-        if (err) {
-            cb(err, null);
-        } else {
-            cb(null, docs);
-        }
-    });
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        })
+        .cache();
 };
 
 /* Update */
@@ -54,7 +66,7 @@ Sport.updateSport = function(sport, body, cb) {
 
 /* Delete */
 Sport.deleteSport = function(id, cb) {
-	Sport.findById(id, function (err, docs) {
+    Sport.findById(id, function(err, docs) {
         if (err || !docs) {
             cb(err);
         } else {

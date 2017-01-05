@@ -42,7 +42,7 @@ router.post("/games", authenticate, admin, formParser, imageSaver, function(req,
 });
 
 /* Read (all games) */
-router.get("/games", function(req, res) {
+router.get("/games", authenticate, admin, function(req, res) {
     Game.getGames(function(err, games) {
         if (err) {
             res.json({
@@ -90,6 +90,29 @@ router.get("/games/featured/:competition", function(req, res) {
 
 router.get("/games/competition/:competition", function(req, res) {
     Game.getGamesByCompetition(req.params.competition, function(err, games) {
+        if (err) {
+            res.json({
+                info: "Error during reading games",
+                success: false,
+                error: err
+            });
+        } else if (games) {
+            res.json({
+                info: "Games found succesfully",
+                success: true,
+                data: games
+            });
+        } else {
+            res.json({
+                info: "Games not found",
+                success: false
+            });
+        }
+    });
+});
+
+router.get("/games/week/:competition", function(req, res) {
+    Game.getGamesByCompetitionForThisWeek(req.params.competition, function(err, games) {
         if (err) {
             res.json({
                 info: "Error during reading games",
