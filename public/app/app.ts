@@ -23,13 +23,16 @@ import { Evenement } from "./components/evenement/Evenement";
 import { Listing } from "./components/listing/Listing";
 import { Cart } from "./components/cart/Cart";
 import { AdminOverview } from "./components/admin/overview/Overview";
+import { AdminSports } from "./components/admin/sports/list/Sports";
+import { SportsCreate } from "./components/admin/sports/create/Create";
+import { SportsEdit } from "./components/admin/sports/edit/Edit";
 import { MaterializeDirective } from "angular2-materialize";
 
 import { Routing } from "./modules/Routes";
 
 @NgModule({
     bootstrap: [App],
-    declarations: [App, Register, Login, Landing, Footer, Header, Topwedstrijd, Weekwedstrijd, Search, Evenement, Listing, Cart, AdminOverview, MaterializeDirective],
+    declarations: [App, Register, Login, Landing, Footer, Header, Topwedstrijd, Weekwedstrijd, Search, Evenement, Listing, Cart, AdminOverview, AdminSports, SportsCreate, SportsEdit, MaterializeDirective],
     imports: [
         BrowserModule,
         HttpModule,

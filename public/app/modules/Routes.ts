@@ -9,6 +9,9 @@ import { Listing } from "../components/listing/Listing";
 import { Evenement } from "../components/evenement/Evenement";
 import { Cart } from "../components/cart/Cart";
 import { AdminOverview } from "../components/admin/overview/Overview";
+import { AdminSports } from "../components/admin/sports/list/Sports";
+import { SportsCreate } from "../components/admin/sports/create/Create";
+import { SportsEdit } from "../components/admin/sports/edit/Edit";
 
 import { AuthGuard } from "../common/AuthGuard";
 import { AdminGuard } from "../common/AdminGuard";
@@ -30,9 +33,6 @@ export const SubporterRoutes: Routes = [
         path: 'register', component: Register
     },
     {
-        path: 'admin/overview', component: AdminOverview, canActivate: [AdminGuard]
-    },
-    {
         path: 'search', component: Search
     },
     {
@@ -44,6 +44,18 @@ export const SubporterRoutes: Routes = [
     {
         path: 'cart', component: Cart
     },
+    {
+        path: 'admin', component: AdminOverview, canActivate: [AdminGuard]
+    },
+	{
+		path: 'admin/sports', component: AdminSports, canActivate: [AdminGuard]
+	},
+	{
+		path: 'admin/sports/add', component: SportsCreate, canActivate: [AdminGuard]
+	},
+    {
+		path: 'admin/sports/edit/:id', component: SportsEdit, canActivate: [AdminGuard]
+	},
     {
         path: '**', component: Login
     }

@@ -1,0 +1,23 @@
+<navmenu>
+</navmenu>
+
+<div class="container">
+	<div class="row">
+		<h2 class="header">Add a sport</h2>
+	</div>
+	<div class="row">
+		<form (submit)="create($event)">
+			<div class="form-group">
+				<div class="input-field">
+					<input [(ngModel)]="name" type="text" class="form-control" name="name" id="name" length="100" required pattern="[A-zÀ-ÿ-\s]{2,100}">
+					<label for="name">Name</label>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-default">Save</button>
+		</form>
+		<a [routerLink]="['/admin/sports']">Back</a>
+	</div>
+</div>
+
+<subporterfooter>
+</subporterfooter>

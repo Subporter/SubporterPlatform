@@ -11,22 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var Auth_1 = require("../services/Auth");
-var ApiService_1 = require("../services/ApiService");
 var AdminGuard = (function () {
-    function AdminGuard(auth, router, apiService) {
+    function AdminGuard(auth, router) {
         this.auth = auth;
         this.router = router;
-        this.apiService = apiService;
     }
     AdminGuard.prototype.canActivate = function () {
-        if (this.auth.isLoggedIn()) {
-            if (this.auth.isAdmin()) {
-                return true;
-            }
-            else {
-                this.router.navigate(['/login']);
-                return false;
-            }
+        if (this.auth.isAdmin()) {
+            return true;
         }
         else {
             this.router.navigate(['/login']);
@@ -37,7 +29,7 @@ var AdminGuard = (function () {
 }());
 AdminGuard = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [Auth_1.Auth, router_1.Router, ApiService_1.ApiService])
+    __metadata("design:paramtypes", [Auth_1.Auth, router_1.Router])
 ], AdminGuard);
 exports.AdminGuard = AdminGuard;
 //# sourceMappingURL=AdminGuard.js.map

@@ -28,7 +28,8 @@ var Landing = (function () {
         this.loggedIn = !!localStorage.getItem('id_token');
     }
     Landing.prototype.ngOnInit = function () {
-        this._callApi("Anonymous", "api/teams/competition/" + this.compId);
+        //this._callApi("Anonymous", "api/teams/competition/"+ this.compId);
+        this._callApi("kek", "api/users");
     };
     Landing.prototype.useJwtHelper = function () {
         var token = localStorage.getItem("id_token");
@@ -39,7 +40,12 @@ var Landing = (function () {
     };
     Landing.prototype._callApi = function (type, url) {
         var _this = this;
-        this.apiService.get(url).subscribe(function (response) { return _this.getTeam(response.text()); }, function (error) { return _this.response = error.text; });
+        this.apiService.get(url).subscribe(
+        //response => this.getTeam(response.text()),
+        function (response) {
+            _this.response = response.text();
+            console.log(_this.response);
+        }, function (error) { return _this.response = error.text; });
     };
     Landing.prototype.getTeam = function (data) {
         var Data = data;

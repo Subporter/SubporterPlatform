@@ -41,7 +41,8 @@ export class Landing {
 
 ngOnInit() {
 
-  this._callApi("Anonymous", "api/teams/competition/"+ this.compId);
+  //this._callApi("Anonymous", "api/teams/competition/"+ this.compId);
+  this._callApi("kek", "api/users");
 
 
 
@@ -69,7 +70,12 @@ search(){
 
   _callApi(type, url) {
 		this.apiService.get(url).subscribe(
-			response => this.getTeam(response.text()),
+			//response => this.getTeam(response.text()),
+      response => {
+        this.response = response.text();
+        console.log(this.response);
+      }
+        ,
 			error => this.response = error.text
 		);
 

@@ -102,7 +102,6 @@ process.on('uncaughtException', function(err) {
         logger.errorLog.error("Error: ", err);
     } else {
         console.error(err);
-        throw err;
     }
 });
 
