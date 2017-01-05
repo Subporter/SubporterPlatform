@@ -107,7 +107,6 @@ ngOnInit(){
 
 	 }
 
-	 console.log(jsonData.data);
 
 	 this.home = jsonData.data[0].game.home.name;
 	 this.away = jsonData.data[0].game.away.name;
@@ -120,6 +119,8 @@ ngOnInit(){
 	 this.test = jsonData.data[0].game.home;
 
 	 this.size= this.loans.length;
+
+	 console.log(jsonData);
 
 	 this.lent = jsonData.count;
 	 this.lendable = this.loans.length;

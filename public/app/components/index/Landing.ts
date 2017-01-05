@@ -10,6 +10,8 @@ import { Header } from "../common/header/Header";
 import {Topwedstrijd} from "./Topwedstrijden";
 import {Weekwedstrijd} from "./Weekwedstrijden";
 import {ApiService} from '../../services/ApiService';
+import {MaterializeAction, MaterializeDirective} from 'angular2-materialize';
+
 
 
 @Component({
@@ -30,7 +32,7 @@ export class Landing {
   featuredGames: JSON;
   games:JSON;
      gameNames = [];
-
+countries:JSON;
 
  //default Belgium, I guess
   compId:String = "1";
@@ -64,6 +66,12 @@ ngOnInit() {
 		);
 
 
+    	this.apiService.get("api/countries/").subscribe(
+			response =>  this.showCountries(response.text()),
+			error => this.response = error.text
+		);
+
+
 
 
 }
@@ -80,6 +88,42 @@ ngOnInit() {
 			this.jwtHelper.isTokenExpired(token)
 		)
 	}
+
+showCountries(data){
+
+  let Data = data;
+  let jsonData = JSON.parse(Data);
+  this.countries = jsonData.data;
+}
+
+onChange(country) {
+
+  let Country = "api/games/featured/"+country;
+
+  		this.apiService.get(Country).subscribe(
+			response => this.getFeaturedGames(response.text()),
+     
+        
+			error => this.response = error.text
+		);
+
+
+  
+}
+
+onchange2(country){
+
+   let Country = "api/games/featured/"+country;
+
+  		this.apiService.get(Country).subscribe(
+			response => this.getFeaturedGames(response.text()),
+     
+        
+			error => this.response = error.text
+		);
+
+}
+
 
 
 

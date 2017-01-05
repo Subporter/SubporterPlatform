@@ -38,3 +38,10 @@ td i:hover {
 
 tfoot tr td {
   padding: 5px; }
+
+h2 {
+  margin: 0; }
+
+.empty {
+  padding-top: 30px;
+  padding-bottom: 30px; }

@@ -17,7 +17,6 @@ import { contentHeaders } from '../../../common/headers'
       <a [routerLink]="['/']"  class="brand-logo">Subporter</a>
 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="sass.html">Info</a></li>
         <li> <a  [routerLink]="['/search']">Zoeken</a></li>
         <li *ngIf="loggedIn"><a  [routerLink]="['/cart']">Winkelwagen</a></li>
 

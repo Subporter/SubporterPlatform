@@ -34,11 +34,27 @@ var Landing = (function () {
         // this._callApi("kek", "api/users");
         this.apiService.get("api/games/featured/1").subscribe(function (response) { return _this.getFeaturedGames(response.text()); }, function (error) { return _this.response = error.text; });
         this.apiService.get("api/games/").subscribe(function (response) { return _this.showGames(response.text()); }, function (error) { return _this.response = error.text; });
+        this.apiService.get("api/countries/").subscribe(function (response) { return _this.showCountries(response.text()); }, function (error) { return _this.response = error.text; });
     };
     Landing.prototype.useJwtHelper = function () {
         var token = localStorage.getItem("id_token");
         console.log("Token:", token);
         console.log(this.jwtHelper.decodeToken(token), this.jwtHelper.getTokenExpirationDate(token), this.jwtHelper.isTokenExpired(token));
+    };
+    Landing.prototype.showCountries = function (data) {
+        var Data = data;
+        var jsonData = JSON.parse(Data);
+        this.countries = jsonData.data;
+    };
+    Landing.prototype.onChange = function (country) {
+        var _this = this;
+        var Country = "api/games/featured/" + country;
+        this.apiService.get(Country).subscribe(function (response) { return _this.getFeaturedGames(response.text()); }, function (error) { return _this.response = error.text; });
+    };
+    Landing.prototype.onchange2 = function (country) {
+        var _this = this;
+        var Country = "api/games/featured/" + country;
+        this.apiService.get(Country).subscribe(function (response) { return _this.getFeaturedGames(response.text()); }, function (error) { return _this.response = error.text; });
     };
     Landing.prototype.showGames = function (data) {
         var Data = data;

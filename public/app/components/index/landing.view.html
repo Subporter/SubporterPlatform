@@ -99,15 +99,16 @@
 
 <h3>Topwedstrijden</h3>
 
+<select id="select"  materialize="material_select" (change)="onChange($event.target.value)" >
+      <option value="" disabled selected>Kies een land</option>
+      <option *ngFor="let country of countries" value="{{country._id}}">
+          {{country.name}}
+      </option>
+     
+    </select>
 
-<!--<div *ngFor="let game of games" class="row" >
-        <div *ngIf="count =< 9" class="col s3">
-          <div *ngIf="game.scale = 10" class="card">
-                <topwedstrijd home="{{game.home}}" away="{{game.away}}" date="{{game.date}}" id="{{game._id}}" gameImage="{{game.gameImage}}"></topwedstrijd>
-            </div>
-</div>
 
-  </div>-->
+
 
 
   <div class="row">
@@ -147,6 +148,14 @@
 <div class="container">
 
 <h3>Wedstrijden deze week</h3>
+
+<select id="select2"  materialize="material_select" (change)="onChange2($event.target.value)" >
+      <option value="" disabled selected>Kies een land</option>
+      <option *ngFor="let country of countries" value="{{country._id}}">
+          {{country.name}}
+      </option>
+     
+    </select>
 
 
 <div class="row">
