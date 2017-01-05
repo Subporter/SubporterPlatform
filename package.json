@@ -44,10 +44,7 @@
     "@angular/router": "^3.2.3",
     "@angular/router-deprecated": "^2.0.0-rc.2",
     "@angular/upgrade": "^2.2.3",
-<<<<<<< HEAD
-    "algoliasearch": "^3.20.3",
-=======
->>>>>>> refs/remotes/origin/Niels
+
     "angular-slick-carousel": "^3.1.7",
     "angular2-cookie": "^1.2.6",
     "angular2-jwt": "^0.1.25",
@@ -92,15 +89,27 @@
     "zone.js": "^0.7.2"
   },
   "devDependencies": {
-        "concurrently": "^3.1.0",
+   "assert": "^1.4.1",
+    "concurrently": "^3.1.0",
     "core-js": "^2.4.1",
     "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-clean-css": "^2.3.2",
+    "gulp-csslint": "^1.0.0",
+    "gulp-htmlhint": "^0.3.1",
+    "gulp-mocha": "^3.0.1",
+    "gulp-run": "^1.7.1",
     "gulp-sass": "^3.0.0",
+    "gulp-sourcemaps": "^1.9.1",
+    "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.8",
+    "mocha": "^3.2.0",
+    "request": "^2.79.0",
+    "run-sequence": "^1.2.2",
     "rxjs": "5.0.0-beta.12",
+    "sinon": "^1.17.7",
     "typescript": "^2.0.10",
     "typings": "^1.0.4",
-    "zone.js": "^0.6.26",
-    "mocha": "^3.2.0",
-
+    "zone.js": "^0.6.26"
   }
 }

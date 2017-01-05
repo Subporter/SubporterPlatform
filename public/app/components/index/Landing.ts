@@ -28,6 +28,9 @@ export class Landing {
   jsonDataData:JSON;
   count:number;
   featuredGames: JSON;
+  games:JSON;
+     gameNames = [];
+
 
  //default Belgium, I guess
   compId:String = "1";
@@ -55,6 +58,12 @@ ngOnInit() {
 		);
 
 
+    	this.apiService.get("api/games/").subscribe(
+			response =>  this.showGames(response.text()),
+			error => this.response = error.text
+		);
+
+
 
 
 }
@@ -74,9 +83,33 @@ ngOnInit() {
 
 
 
+showGames(data){
 
-search(){
-  }
+   let Data = data;
+     let jsonData = JSON.parse(Data);
+     this.games = jsonData.data;
+
+    
+
+
+
+
+    var obj = "{"
+for (let game of this.games) {
+  let home = game.home.name;
+  let away = game.away.name;
+  let gamename = "\"" +game._id + " " + home + " - " + away + "\"";
+  obj = obj + gamename + ": null,";
+
+}
+obj = obj.substring(0, obj.length - 1);
+obj = obj + "}";
+obj = JSON.parse(obj);
+
+this.gameNames = obj;
+ console.log(obj);
+
+}
 
   _callApi(type, url) {
 		this.apiService.get(url).subscribe(
@@ -136,6 +169,29 @@ scrollToDiv(){
   $('html, body').animate({
         scrollTop: $("#section1").offset().top
     }, 1000);
+
+}
+
+
+search(){
+
+
+    let game = $(".autocomplete").val();
+    let parts[]= game.split(" ");
+    let id = parts[0];
+
+
+
+    if(parseInt(id)){
+
+        id = parseInt(id);
+        let location = "evenement/"+id;
+
+        window.location.assign(location);
+
+    }
+
+
 
 }
 

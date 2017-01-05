@@ -9,3 +9,9 @@ section {
   padding: 20px;
   background-color: #fff;
   margin-bottom: 20px; }
+
+.bold {
+  font-weight: bold; }
+
+.pointer {
+  cursor: pointer; }

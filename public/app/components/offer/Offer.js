@@ -22,17 +22,42 @@ var Offer = (function () {
         this.http = http;
         this.authHttp = authHttp;
         this.apiService = apiService;
+        this.modalActions = new core_1.EventEmitter();
+        this.modalActions2 = new core_1.EventEmitter();
         this.jwtHelper = new angular2_jwt_1.JwtHelper();
         this.gameNames = [];
+        this.user = [];
+        this.show2 = false;
+        this.show3 = false;
+        this.show4 = true;
+        this.subscriptions = [];
+        this.sub = false;
+        this.used = false;
         this.loggedIn = false;
         this.loggedIn = !!localStorage.getItem('id_token');
     }
     Offer.prototype.ngOnInit = function () {
+        var _this = this;
+        this.sub = false;
         if (!this.loggedIn) {
             this.show = false;
         }
         else {
+            var user = "api/users/";
+            this.apiService.get(user).subscribe(function (response) { return _this.getSubscriptions(response.text()); }, function (error) { return _this.response = error.text; });
+        }
+    };
+    Offer.prototype.getSubscriptions = function (data) {
+        var Data = data;
+        var jsonData = JSON.parse(Data);
+        var user = jsonData.data;
+        this.user = user;
+        console.log(user);
+        if (!this.isEmpty(user.subscriptions)) {
             this._callApi("Anonymous", "api/games/");
+        }
+        else {
+            this.show2 = false;
         }
     };
     Offer.prototype.useJwtHelper = function () {
@@ -62,16 +87,131 @@ var Offer = (function () {
         this.gameNames = obj;
         console.log(obj);
     };
-    Offer.prototype.nextTab = function () {
+    Offer.prototype.isEmpty = function (obj) {
+        // null and undefined are "empty"
+        if (obj == null)
+            return true;
+        // Assume if it has a length property with a non-zero value
+        // that that property is correct.
+        if (obj.length > 0)
+            return false;
+        if (obj.length === 0)
+            return true;
+        // If it isn't an object at this point
+        // it is empty, but it can't be anything *but* empty
+        // Is it empty?  Depends on your application.
+        if (typeof obj !== "object")
+            return true;
+        // Otherwise, does it have any properties of its own?
+        // Note that this doesn't handle
+        // toString and valueOf enumeration bugs in IE < 9
+        for (var key in obj) {
+            if (hasOwnProperty.call(obj, key))
+                return false;
+        }
+        return true;
+    };
+    Offer.prototype.showAbbo = function () {
         var game = $(".autocomplete").val();
         var parts = game.split(" ");
         var id = parts[0];
         if (parseInt(id)) {
-            id = parseInt(id);
+            var selectedGame = void 0;
+            this.gameId = parseInt(id);
+            var gameId = this.gameId;
+            for (var _i = 0, _a = this.games; _i < _a.length; _i++) {
+                var game_1 = _a[_i];
+                if (gameId == game_1._id) {
+                    selectedGame = game_1;
+                }
+            }
+            console.log(selectedGame);
+            var user = this.user;
+            var subscriptions = user.subscriptions;
+            var counter = 0;
+            console.log(subscriptions);
+            if (selectedGame) {
+                this.selectedGame = selectedGame;
+                this.selectedGameLoans = selectedGame.loans;
+                this.teamHome = selectedGame.home.name;
+                this.teamAway = selectedGame.away.name;
+                this.gameDate = selectedGame.date;
+                for (var _b = 0, subscriptions_1 = subscriptions; _b < subscriptions_1.length; _b++) {
+                    var subscription = subscriptions_1[_b];
+                    if (subscription.team._id == selectedGame.home._id) {
+                        for (var _c = 0, _d = this.selectedGameLoans; _c < _d.length; _c++) {
+                            var loan = _d[_c];
+                            if (loan.subscription._id == subscription._id) {
+                                this.used = true;
+                            }
+                        }
+                        if (!this.used) {
+                            this.subscriptions[counter] = subscription;
+                            this.sub = true;
+                            counter++;
+                        }
+                        else {
+                            this.sub = true;
+                        }
+                    }
+                }
+                if (this.sub === false) {
+                    alert("Je hebt geen abonnement voor deze wedstrijd.");
+                }
+                else {
+                    this.show4 = false;
+                    this.show3 = false;
+                    this.show2 = true;
+                }
+            }
         }
         else {
             alert("Je hebt geen juiste wedstrijd geselecteerd.");
         }
+        if (this.isEmpty(selectedGame)) {
+            alert("Je hebt geen juiste wedstrijd geselecteerd.");
+        }
+    };
+    Offer.prototype.showWeds = function () {
+        this.show4 = true;
+        this.show3 = false;
+        this.show2 = false;
+    };
+    Offer.prototype.showAbbo2 = function () {
+        this.show4 = false;
+        this.show3 = false;
+        this.show2 = true;
+    };
+    Offer.prototype.showBeve = function (id) {
+        for (var _i = 0, _a = this.subscriptions; _i < _a.length; _i++) {
+            var subscription = _a[_i];
+            if (id == subscription._id) {
+                this.selectedSubscription = subscription;
+                this.place = subscription.place;
+            }
+        }
+        this.show4 = false;
+        this.show3 = true;
+        this.show2 = false;
+    };
+    Offer.prototype.offerSubscription = function () {
+        var _this = this;
+        var game = this.selectedGame._id;
+        var subscription = this.selectedSubscription._id;
+        var body = JSON.stringify({
+            game: game,
+            subscription: subscription
+        });
+        this.apiService.post("api/loans", body).subscribe(function (response) { return _this.showSuccess(); }, function (error) { return _this.response = error.text; });
+    };
+    Offer.prototype.showSuccess = function () {
+        this.modalActions2.emit({ action: "modal", params: ['open'] });
+    };
+    Offer.prototype.openModal = function () {
+        this.modalActions.emit({ action: "modal", params: ['open'] });
+    };
+    Offer.prototype.closeModal = function () {
+        this.modalActions.emit({ action: "modal", params: ['close'] });
     };
     return Offer;
 }());

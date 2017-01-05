@@ -11,7 +11,7 @@
         <li *ngIf="!loggedIn"><a  [routerLink]="['/login']">Login</a></li>
         <li *ngIf="loggedIn"><a  [routerLink]="['/profiel']">Profiel</a></li>
 
-        <li><a class="waves-effect waves-light btn" (click)="search()">Abonnement aanbieden</a></li>
+        <li><a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a></li>
       </ul>
     </div>
   </nav>
@@ -23,10 +23,8 @@
 
             <form>
             <div class="input-field">
-    <input type="search" id="search" placeholder="Zoek naar wedstrijden en teams"
-    required
-    name="q"
-    [(ngModel)]="q"/>
+               <input type="search" id="autocomplete-input search" class="autocomplete"  materialize="autocomplete" [materializeParams]="[{'data': gameNames}]" placeholder="Zoek naar wedstrijden en teams">
+  
           <label for="search"><i class="material-icons prefix">search</i></label>
 
 
