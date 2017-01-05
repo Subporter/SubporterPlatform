@@ -1,10 +1,23 @@
 const express = require('express'),
+    config = require('../../config/subporter.config'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
     formParser = require('../middleware/formParser'),
     imageSaver = require('../middleware/imageSaver'),
     bodyValidator = require('../helpers/bodyValidator'),
     Game = require('../models/Games');
+
+let redis = config.redis_dev;
+
+if (process.env.NODE_ENV === 'production') {
+    redis = config.redis.prod;
+}
+
+const cache = require('express-redis-cache')({
+    host: redis.host,
+    port: redis.port,
+    expire: 60
+});
 
 let router = express.Router();
 
@@ -42,7 +55,7 @@ router.post("/games", authenticate, admin, formParser, imageSaver, function(req,
 });
 
 /* Read (all games) */
-router.get("/games", authenticate, admin, function(req, res) {
+router.get("/games", authenticate, admin, cache.route(), function(req, res) {
     Game.getGames(function(err, games) {
         if (err) {
             res.json({
@@ -65,7 +78,7 @@ router.get("/games", authenticate, admin, function(req, res) {
     });
 });
 
-router.get("/games/featured/:competition", function(req, res) {
+router.get("/games/featured/:competition", cache.route(), function(req, res) {
     Game.getFeaturedGames(req.params.competition, function(err, games) {
         if (err) {
             res.json({
@@ -88,7 +101,7 @@ router.get("/games/featured/:competition", function(req, res) {
     });
 });
 
-router.get("/games/competition/:competition", function(req, res) {
+router.get("/games/competition/:competition", cache.route(), function(req, res) {
     Game.getGamesByCompetition(req.params.competition, function(err, games) {
         if (err) {
             res.json({
@@ -111,8 +124,8 @@ router.get("/games/competition/:competition", function(req, res) {
     });
 });
 
-router.get("/games/week/:competition", function(req, res) {
-    Game.getGamesByCompetitionForThisWeek(req.params.competition, function(err, games) {
+router.get("/games/week/:country", cache.route(), function(req, res) {
+    Game.getGamesByCountryForThisWeek(req.params.competition, function(err, games) {
         if (err) {
             res.json({
                 info: "Error during reading games",
@@ -134,7 +147,7 @@ router.get("/games/week/:competition", function(req, res) {
     });
 });
 
-router.get("/games/team/:team", function(req, res) {
+router.get("/games/team/:team", cache.route(), function(req, res) {
     Game.getGamesByTeam(req.params.team, function(err, games) {
         if (err) {
             res.json({
@@ -158,7 +171,7 @@ router.get("/games/team/:team", function(req, res) {
 });
 
 /* Read (one game) */
-router.get("/games/:id", function(req, res) {
+router.get("/games/:id", cache.route(), function(req, res) {
     Game.getGameById(req.params.id, function(err, game) {
         if (err) {
             res.json({

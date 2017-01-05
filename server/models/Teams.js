@@ -1,18 +1,8 @@
 const mongoose = require('mongoose'),
-    config = require('../../config/subporter.config'),
-    cachegoose = require('cachegoose'),
     _ = require('lodash'),
     teamSchema = require('../schemas/Teams'),
     Subscription = require('../models/Subscriptions'),
     Game = require('../models/Games');
-
-let redis = config.redis_dev;
-
-if (process.env.NODE_ENV === 'production') {
-    redis = config.redis_prod;
-}
-
-cachegoose(mongoose, redis);
 
 let Team = mongoose.model('Team', teamSchema, 'Teams');
 
@@ -60,8 +50,7 @@ Team.getTeams = function(cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 Team.getTeamsByCompetition = function(competition, cb) {
@@ -78,8 +67,7 @@ Team.getTeamsByCompetition = function(competition, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 /* Read (one team) */
@@ -92,8 +80,7 @@ Team.getTeamById = function(id, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 /* Update */

@@ -1,4 +1,5 @@
 const express = require('express'),
+    config = require('../../config/subporter.config'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
     formParser = require('../middleware/formParser'),
@@ -7,6 +8,18 @@ const express = require('express'),
     bodyValidator = require('../helpers/bodyValidator'),
     Subscription = require('../models/Subscriptions'),
     User = require('../models/Users');
+
+let redis = config.redis_dev;
+
+if (process.env.NODE_ENV === 'production') {
+    redis = config.redis.prod;
+}
+
+const cache = require('express-redis-cache')({
+    host: redis.host,
+    port: redis.port,
+    expire: 60
+});
 
 let router = express.Router();
 
@@ -56,7 +69,7 @@ router.post("/subscriptions", authenticate, formParser, imageSaver, loadUser, fu
 });
 
 /* Read (all subscriptions) */
-router.get("/subscriptions", authenticate, admin, function(req, res) {
+router.get("/subscriptions", authenticate, admin, cache.route(), function(req, res) {
     if (req.granted) {
         Subscription.getSubscriptions(function(err, subscriptions) {
             if (err) {
@@ -87,7 +100,7 @@ router.get("/subscriptions", authenticate, admin, function(req, res) {
     }
 });
 
-router.get("/subscriptions/team/:team", authenticate, admin, function(req, res) {
+router.get("/subscriptions/team/:team", authenticate, admin, cache.route(), function(req, res) {
     if (req.granted) {
         Subscription.getSubscriptionsByTeam(req.params.team, function(err, subscriptions) {
             if (err) {
@@ -118,7 +131,7 @@ router.get("/subscriptions/team/:team", authenticate, admin, function(req, res) 
     }
 });
 
-router.get("/subscriptions/user/:user", authenticate, admin, function(req, res) {
+router.get("/subscriptions/user/:user", authenticate, admin, cache.route(), function(req, res) {
     if (req.granted) {
         Subscription.getSubscriptionsByUser(req.params.user, function(err, subscriptions) {
             if (err) {
@@ -150,7 +163,7 @@ router.get("/subscriptions/user/:user", authenticate, admin, function(req, res) 
 });
 
 /* Read (one subscription) */
-router.get("/subscriptions/:id", authenticate, function(req, res) {
+router.get("/subscriptions/:id", authenticate, cache.route(), function(req, res) {
     if (req.granted) {
         Subscription.getSubscriptionById(req.params.id, function(err, subscription) {
             if (err) {

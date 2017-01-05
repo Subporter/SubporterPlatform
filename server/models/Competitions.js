@@ -1,16 +1,6 @@
 const mongoose = require('mongoose'),
-    config = require('../../config/subporter.config'),
-    cachegoose = require('cachegoose'),
     _ = require('lodash'),
     competitionSchema = require('../schemas/Competitions');
-
-let redis = config.redis_dev;
-
-if (process.env.NODE_ENV === 'production') {
-    redis = config.redis_prod;
-}
-
-cachegoose(mongoose, redis);
 
 let Competition = mongoose.model('Competition', competitionSchema, 'Competitions');
 
@@ -45,8 +35,7 @@ Competition.getCompetitions = function(cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 Competition.getCompetitionsByCountry = function(country, cb) {
@@ -65,8 +54,7 @@ Competition.getCompetitionsByCountry = function(country, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 Competition.getCompetitionsBySport = function(sport, cb) {
@@ -84,8 +72,7 @@ Competition.getCompetitionsBySport = function(sport, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 Competition.getCompetitionsByCountryAndSport = function(country, sport, cb) {
@@ -103,8 +90,7 @@ Competition.getCompetitionsByCountryAndSport = function(country, sport, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 /* Read (one competition) */
@@ -117,8 +103,7 @@ Competition.getCompetitionById = function(id, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 /* Update */

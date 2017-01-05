@@ -1,16 +1,6 @@
 const mongoose = require('mongoose'),
-    config = require('../../config/subporter.config'),
-    cachegoose = require('cachegoose'),
     _ = require('lodash'),
     userSchema = require('../schemas/Users');
-
-let redis = config.redis_dev;
-
-if (process.env.NODE_ENV === 'production') {
-    redis = config.redis_prod;
-}
-
-cachegoose(mongoose, redis);
 
 let User = mongoose.model('User', userSchema, 'Users');
 
@@ -92,8 +82,7 @@ User.getUsers = function(cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 /* Read (one user) */
@@ -159,7 +148,7 @@ User.getUserByEmailForLogin = function(email, cb) {
             email: email
         }, {
             password: 1,
-			      email: 1,
+            email: 1,
             id: 1
 
         })
@@ -209,7 +198,7 @@ User.getUserByUsernameForLogin = function(username, cb) {
             username: username
         }, {
             password: 1,
-			      email: 1,
+            email: 1,
             id: 1
         })
         .populate(populateSchema)

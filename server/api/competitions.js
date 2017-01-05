@@ -1,10 +1,23 @@
 const express = require('express'),
+    config = require('../../config/subporter.config'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
     formParser = require('../middleware/formParser'),
     imageSaver = require('../middleware/imageSaver'),
     bodyValidator = require('../helpers/bodyValidator'),
     Competition = require('../models/Competitions');
+
+let redis = config.redis_dev;
+
+if (process.env.NODE_ENV === 'production') {
+    redis = config.redis.prod;
+}
+
+const cache = require('express-redis-cache')({
+    host: redis.host,
+    port: redis.port,
+    expire: 60
+});
 
 let router = express.Router();
 
@@ -42,7 +55,7 @@ router.post("/competitions", authenticate, admin, formParser, imageSaver, functi
 });
 
 /* Read (all competitions) */
-router.get("/competitions", function(req, res) {
+router.get("/competitions", cache.route(), function(req, res) {
     Competition.getCompetitions(function(err, competitions) {
         if (err) {
             res.json({
@@ -65,7 +78,7 @@ router.get("/competitions", function(req, res) {
     });
 });
 
-router.get("/competitions/country/:country", function(req, res) {
+router.get("/competitions/country/:country", cache.route(), function(req, res) {
     Competition.getCompetitionsByCountry(req.params.country, function(err, competitions) {
         if (err) {
             res.json({
@@ -88,7 +101,7 @@ router.get("/competitions/country/:country", function(req, res) {
     });
 });
 
-router.get("/competitions/sport/:sport", function(req, res) {
+router.get("/competitions/sport/:sport", cache.route(), function(req, res) {
     Competition.getCompetitionsBySport(req.params.sport, function(err, competitions) {
         if (err) {
             res.json({
@@ -111,7 +124,7 @@ router.get("/competitions/sport/:sport", function(req, res) {
     });
 });
 
-router.get("/competitions/country/:country/sport/:sport", function(req, res) {
+router.get("/competitions/country/:country/sport/:sport", cache.route(), function(req, res) {
     Competition.getCompetitionsByCountryAndSport(req.params.country, req.params.sport, function(err, competitions) {
         if (err) {
             res.json({
@@ -135,7 +148,7 @@ router.get("/competitions/country/:country/sport/:sport", function(req, res) {
 });
 
 /* Read (one competition) */
-router.get("/competitions/:id", function(req, res) {
+router.get("/competitions/:id", cache.route(), function(req, res) {
     Competition.getCompetitionById(req.params.id, function(err, competition) {
         if (err) {
             res.json({
