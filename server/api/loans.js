@@ -96,10 +96,21 @@ router.get("/loans/game/:game", function(req, res) {
                 error: err.errmsg
             });
         } else if (loans) {
-            res.json({
-                info: "Loans found succesfully",
-                success: true,
-                data: loans
+            Loan.getAmountOfLoanedOutGames(req.params.game, function (err, count) {
+                if (err) {
+                    res.json({
+                        info: "Error during reading loans",
+                        success: false,
+                        error: err.errmsg
+                    });
+                } else {
+                    res.json({
+                        info: "Loans found succesfully",
+                        success: true,
+                        data: loans,
+                        count: count
+                    });
+                }
             });
         } else {
             res.json({
