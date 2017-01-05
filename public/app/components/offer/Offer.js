@@ -205,6 +205,7 @@ var Offer = (function () {
         this.apiService.post("api/loans", body).subscribe(function (response) { return _this.showSuccess(); }, function (error) { return _this.response = error.text; });
     };
     Offer.prototype.showSuccess = function () {
+        console.log("this does work");
         this.modalActions2.emit({ action: "modal", params: ['open'] });
     };
     Offer.prototype.openModal = function () {

@@ -89,6 +89,17 @@ export class Login {
             response => {
                 console.log(response.json());
                 if (response.json().success === true) {
+
+                    var socket = io.connect();
+                    console.log("arno");
+                    console.log(response.json().id);
+                    socket.emit("login", response.json().id)
+
+                    socket.on("NewLoanuser", function(){
+                        alert("someone accepted your loan");
+                    });
+
+
                     localStorage.setItem("id_token", response.json().token);
                     this.useJwtHelper();
                     this.router.navigate(['landing']);

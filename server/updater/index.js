@@ -10,7 +10,8 @@
             });
 
             socket.on("loanCreated", function(userid){
-                socket.broadcast.to(userid).emit("NewLoand");
+                console.log("loan afgerekend " + userid);
+                socket.broadcast.to(userid).emit("NewLoanuser");
             });
 
             socket.on("loanAdded", function(teamA, teamB){

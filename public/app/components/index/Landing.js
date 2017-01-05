@@ -60,27 +60,12 @@ var Landing = (function () {
     };
     Landing.prototype._callApi = function (type, url) {
         var _this = this;
-<<<<<<< HEAD
-        this.apiService.get(url).subscribe(
-        //response => this.getTeam(response.text()),
-        function (response) {
-            _this.response = response.text();
-            console.log(_this.response);
-            var jsonrespons = JSON.parse(_this.response);
-
-            var socket = io.connect();
-            socket.emit("login", jsonrespons["data"]["_id"]);
-            
-
-        }, function (error) { return _this.response = error.text; });
-=======
         this.apiService.get(url).subscribe(function (response) { return _this.getTeam(response.text()); }, function (error) { return _this.response = error.text; });
     };
     Landing.prototype.getFeaturedGames = function (data) {
         var Data = data;
         var jsonData = JSON.parse(Data);
         this.featuredGames = jsonData.data;
->>>>>>> refs/remotes/origin/Simon
     };
     Landing.prototype.getTeam = function (data) {
         var Data = data;

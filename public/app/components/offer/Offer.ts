@@ -342,8 +342,8 @@ offerSubscription(){
 }
 
 showSuccess(){
+  console.log("this does work");
    this.modalActions2.emit({action:"modal",params:['open']});
-
 }
 
 
