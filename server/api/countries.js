@@ -1,20 +1,8 @@
 const express = require('express'),
-    config = require('../../config/subporter.config'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
     bodyValidator = require('../helpers/bodyValidator'),
     Country = require('../models/Countries');
-
-let redis = config.redis_dev;
-
-if (process.env.NODE_ENV === 'production') {
-    redis = config.redis_prod;
-}
-
-const cache = require('express-redis-cache')({
-    host: redis.host,
-    port: redis.port
-});
 
 let router = express.Router();
 
@@ -53,7 +41,7 @@ router.post("/countries", authenticate, admin, function(req, res) {
 });
 
 /* Read (all countries) */
-router.get("/countries", cache.route(), function(req, res) {
+router.get("/countries", function(req, res) {
     Country.getCountries(function(err, countries) {
         if (err) {
             res.json({

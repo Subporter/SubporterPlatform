@@ -11,17 +11,6 @@ const express = require('express'),
     User = require('../models/Users'),
     Address = require('../models/Addresses');
 
-let redis = config.redis_dev;
-
-if (process.env.NODE_ENV === 'production') {
-    redis = config.redis_prod;
-}
-
-const cache = require('express-redis-cache')({
-    host: redis.host,
-    port: redis.port
-});
-
 let router = express.Router();
 
 /* Read (all users) */
@@ -57,7 +46,7 @@ router.get("/users/all", authenticate, admin, function(req, res) {
 });
 
 /* Read (one user) */
-router.get("/users", authenticate, cache.route(), function(req, res) {
+router.get("/users", authenticate, function(req, res) {
     if (req.granted) {
         User.getUserByEmail(req.jwtUser.email, function(err, user) {
             if (err) {

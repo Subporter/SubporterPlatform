@@ -42,7 +42,7 @@ router.post("/games", authenticate, admin, formParser, imageSaver, function(req,
 });
 
 /* Read (all games) */
-router.get("/games", function(req, res) {
+router.get("/games", authenticate, admin, function(req, res) {
     Game.getGames(function(err, games) {
         if (err) {
             res.json({

@@ -93,7 +93,7 @@ User.getUsers = function(cb) {
                 cb(null, docs);
             }
         })
-        .cache();
+		.cache();
 };
 
 /* Read (one user) */
@@ -122,8 +122,7 @@ User.getUserByIdForLogin = function(id, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 User.getUserByIdForAuth = function(id, cb) {
@@ -138,8 +137,7 @@ User.getUserByIdForAuth = function(id, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 User.getUserByEmail = function(email, cb) {
@@ -171,8 +169,7 @@ User.getUserByEmailForLogin = function(email, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 User.getUserByEmailForAuth = function(email, cb) {
@@ -189,8 +186,7 @@ User.getUserByEmailForAuth = function(email, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 User.getUserByUsername = function(username, cb) {
@@ -222,8 +218,7 @@ User.getUserByUsernameForLogin = function(username, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 User.getUserByUsernameForAuth = function(username, cb) {
@@ -240,8 +235,7 @@ User.getUserByUsernameForAuth = function(username, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 /* Favorites */
