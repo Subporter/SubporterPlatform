@@ -1,0 +1,31 @@
+
+$white : #fff;
+$bg-color-second : #F4F4F4;
+$bg-footer : #121415;
+
+
+.autocomplete-content {
+
+  position: absolute;
+}
+
+
+section{
+    background-color: $bg-color-second;
+    margin-top: 0;
+}
+
+.article{
+   padding: 20px;
+    background-color: $white;
+    margin-bottom: 20px;
+}
+
+
+.bold{
+    font-weight: bold;
+}
+
+.pointer{
+    cursor: pointer;
+}

@@ -1,6 +1,6 @@
 
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { Http } from '@angular/http';
 import { AuthHttp, JwtHelper } from 'angular2-jwt';
@@ -13,6 +13,8 @@ import "materialize-css";
 import "angular2-materialize";
 import {Location} from '@angular/common';
 import {CookieService} from 'angular2-cookie/core';
+import {MaterializeAction, MaterializeDirective} from 'angular2-materialize';
+
 
 
 
@@ -25,6 +27,14 @@ import {CookieService} from 'angular2-cookie/core';
 })
 
 export class Cart {
+
+  modalActions = new EventEmitter<string|MaterializeAction>();
+  modalActions2 = new EventEmitter<string|MaterializeAction>();
+  modalActions3 = new EventEmitter<string|MaterializeAction>();
+
+  params = []
+
+
 
   jwt: String;
 	decodedJwt: String;
@@ -58,11 +68,14 @@ show = true;
 	constructor(public router: Router, public http: Http, public authHttp: AuthHttp, public apiService: ApiService, private activatedRoute: ActivatedRoute, private _location: Location,  private _cookieService:CookieService) {
 
       this.loggedIn = !!localStorage.getItem('id_token');
+
 	}
 
 
 
 	ngOnInit() { 
+
+
 
          if(!this.loggedIn){
               this.router.navigateByUrl('#');
@@ -81,6 +94,7 @@ show = true;
 
 
 
+       
         console.log(x);
 
 }
@@ -101,10 +115,7 @@ for(var cook in cookie){
 
 }
 
-this.apiService.get("api/users").subscribe(
-	 		response =>  this.getUser(response.text()),
-	 		error => this.response = error.text
-	 	);
+
 
 
 
@@ -151,18 +162,10 @@ showEmpty(){
 
   }
 
-     _callApi2(type, url) {
-	 	this.apiService.get("api/users").subscribe(
-	 		response =>  this.getUser(response.text()),
-	 		error => this.response = error.text
-	 	);
-
-     }
+     
 
 
-   getUser(data){
-       console.log(data);
-   }
+   
 
   getLoan(data){
      let Data = data;
@@ -229,43 +232,47 @@ showEmpty(){
 
 pay(){
 
-    for (let loan of this.loans){
+
+
+
+
+     for (let loan of this.loans){
 
         
+        this._cookieService.remove(loan._id);
 
-        console.log(loan._id);
-
-        // this._cookieService.remove(loan._id);
-
-        let id= loan._id;
-
-        let paid = true;
-        let lent = true;
-        let lent_by = 3;
-
-		 let body = JSON.stringify({
-		 	paid,
-             lent,
-             lent_by
-		 });
-
-
-this.apiService.put("api/loans/"+id,body).subscribe(
-	 		response =>  console.log(response.text()),
-	 		error => this.response = error.text
-	 	);
-
-
-		//  contentHeaders.append("Authorization", localStorage.getItem("id_token"));
-		//  this.authHttp.put("http://localhost:1337/api/loans/"+id, body, {
-		//  	headers: contentHeaders
-		//  })
-		//  	.subscribe(
-		//  	response => this.response = response.text(),
-		//  	error => this.response = error.text
-		//  	);
+        
+        this.apiService.put("api/loans/lend/"+loan._id, null).subscribe(
+  	 		response =>  console.log(response.text()),
+  	 		error => this.response = error.text
+  	 	);
+        
 	}
 
+
+     
+         this.modalActions2.emit({action:"modal",params:['open']});
+
+
+
     }
+
+ 
+
+
+
+
+    openModal() {
+    this.modalActions.emit({action:"modal",params:['open']});
+  }
+  closeModal() {
+    this.modalActions.emit({action:"modal",params:['close']});
+  }
+
+  
+
+
+
+
 
 }
