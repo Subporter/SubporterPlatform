@@ -23,6 +23,7 @@ var Landing = (function () {
         this.apiService = apiService;
         this.jwtHelper = new angular2_jwt_1.JwtHelper();
         this.gameNames = [];
+        this.showWeek = true;
         //default Belgium, I guess
         this.compId = "1";
         this.loggedIn = false;
@@ -33,12 +34,29 @@ var Landing = (function () {
         this._callApi("Anonymous", "api/teams/competition/" + this.compId);
         // this._callApi("kek", "api/users");
         this.apiService.get("api/games/featured/1").subscribe(function (response) { return _this.getFeaturedGames(response.text()); }, function (error) { return _this.response = error.text; });
+        this.apiService.get("api/games/week/1").subscribe(function (response) { return _this.getWeeklyGames(response.text()); }, function (error) { return _this.response = error.text; });
         this.apiService.get("api/games/").subscribe(function (response) { return _this.showGames(response.text()); }, function (error) { return _this.response = error.text; });
+        this.apiService.get("api/countries/").subscribe(function (response) { return _this.showCountries(response.text()); }, function (error) { return _this.response = error.text; });
     };
     Landing.prototype.useJwtHelper = function () {
         var token = localStorage.getItem("id_token");
         console.log("Token:", token);
         console.log(this.jwtHelper.decodeToken(token), this.jwtHelper.getTokenExpirationDate(token), this.jwtHelper.isTokenExpired(token));
+    };
+    Landing.prototype.showCountries = function (data) {
+        var Data = data;
+        var jsonData = JSON.parse(Data);
+        this.countries = jsonData.data;
+    };
+    Landing.prototype.onChange = function (country) {
+        var _this = this;
+        var Country = "api/games/featured/" + country;
+        this.apiService.get(Country).subscribe(function (response) { return _this.getFeaturedGames(response.text()); }, function (error) { return _this.response = error.text; });
+    };
+    Landing.prototype.onChange2 = function (country) {
+        var _this = this;
+        var Country = "api/games/week/" + country;
+        this.apiService.get(Country).subscribe(function (response) { return _this.getWeeklyGames(response.text()); }, function (error) { return _this.response = error.text; });
     };
     Landing.prototype.showGames = function (data) {
         var Data = data;
@@ -66,6 +84,22 @@ var Landing = (function () {
         var Data = data;
         var jsonData = JSON.parse(Data);
         this.featuredGames = jsonData.data;
+    };
+    Landing.prototype.getWeeklyGames = function (data) {
+        var Data = data;
+        var jsonData = JSON.parse(Data);
+        var weekGames = jsonData.data;
+        var counter = 0;
+        for (var _i = 0, weekGames_1 = weekGames; _i < weekGames_1.length; _i++) {
+            var game = weekGames_1[_i];
+            if (game.loans.size != 0) {
+                this.weekGames[counter] = game;
+                counter++;
+            }
+        }
+        if (this.isEmpty(this.weekGames)) {
+            this.showWeek = false;
+        }
     };
     Landing.prototype.getTeam = function (data) {
         var Data = data;
@@ -99,6 +133,30 @@ var Landing = (function () {
             var location_1 = "evenement/" + id;
             window.location.assign(location_1);
         }
+    };
+    Landing.prototype.isEmpty = function (obj) {
+        // null and undefined are "empty"
+        if (obj == null)
+            return true;
+        // Assume if it has a length property with a non-zero value
+        // that that property is correct.
+        if (obj.length > 0)
+            return false;
+        if (obj.length === 0)
+            return true;
+        // If it isn't an object at this point
+        // it is empty, but it can't be anything *but* empty
+        // Is it empty?  Depends on your application.
+        if (typeof obj !== "object")
+            return true;
+        // Otherwise, does it have any properties of its own?
+        // Note that this doesn't handle
+        // toString and valueOf enumeration bugs in IE < 9
+        for (var key in obj) {
+            if (hasOwnProperty.call(obj, key))
+                return false;
+        }
+        return true;
     };
     return Landing;
 }());

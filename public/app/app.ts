@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpModule } from "@angular/http";
 import { FormsModule } from "@angular/forms";
+import {SimpleNotificationsModule, PushNotificationsModule} from 'angular2-notifications';
 
 import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { Auth } from './services/Auth';
@@ -34,17 +35,20 @@ import { CountriesCreate } from "./components/admin/countries/create/Create";
 import { CountriesEdit } from "./components/admin/countries/edit/Edit";
 import { AdminCompetitions } from "./components/admin/competitions/list/Competitions";
 import { MaterializeDirective } from "angular2-materialize";
+import {HeaderAdmin} from "./components/admin/header/Header";
 
 import { Routing } from "./modules/Routes";
 
 @NgModule({
     bootstrap: [App],
-    declarations: [App, Register, Login, Landing, Footer, Header, Topwedstrijd, Weekwedstrijd, Search, Evenement, Listing, Cart, AdminOverview, AdminSports, SportsCreate, SportsEdit,Offer,  AdminCountries, Profile, CountriesCreate, CountriesEdit, AdminCompetitions, MaterializeDirective],
+    declarations: [App, Register, Login, Landing, Footer, Header, Topwedstrijd, Weekwedstrijd, Search, Evenement, Listing, Cart, AdminOverview, AdminSports, SportsCreate, SportsEdit,Offer,  AdminCountries, Profile, CountriesCreate, CountriesEdit, AdminCompetitions, HeaderAdmin, MaterializeDirective],
     imports: [
         BrowserModule,
         HttpModule,
         FormsModule,
-        Routing
+        Routing,
+        SimpleNotificationsModule,
+        PushNotificationsModule
     ],
     providers: [
         Auth,

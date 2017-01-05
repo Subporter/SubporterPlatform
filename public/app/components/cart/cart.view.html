@@ -2,7 +2,6 @@
     <div class="nav-wrapper">
       <a [routerLink]="['/']" class="brand-logo">Subporter</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="sass.html">Info</a></li>
         <li> <a  [routerLink]="['/search']">Zoeken</a></li>
         <li *ngIf="loggedIn"><a  [routerLink]="['/cart']">Winkelwagen</a></li>
 
@@ -83,6 +82,20 @@
 </div>
 
     </div>
+
+</div>
+<div *ngIf="!show" class="empty">
+
+
+
+  <h2>Winkelwagen is leeg</h2>
+
+  Zoek snel abonnementen!
+
+      <a class="waves-effect waves-light btn"  [routerLink]="['/search']">Zoeken</a>
+
+
+
 
 </div>
 

@@ -48,6 +48,7 @@
     "angular2-cookie": "^1.2.6",
     "angular2-jwt": "^0.1.25",
     "angular2-materialize": "^6.3.0",
+    "angular2-notifications": "^0.4.49",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
     "cachegoose": "^3.0.1",
