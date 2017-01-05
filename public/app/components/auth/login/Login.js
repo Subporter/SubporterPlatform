@@ -19,6 +19,20 @@ var Login = (function () {
         this.router = router;
         this.http = http;
         this.apiService = apiService;
+        // public options = {
+        //     timeOut: 5000,
+        //     lastOnBottom: true,
+        //     clickToClose: true,
+        //     maxLength: 0,
+        //     maxStack: 7,
+        //     showProgressBar: true,
+        //     pauseOnHover: true,
+        //     preventDuplicates: false,
+        //     preventLastDuplicates: 'visible',
+        //     rtl: false,
+        //     animate: 'scale',
+        //     position: ['right', 'bottom']
+        // };
         this.jwtHelper = new angular2_jwt_1.JwtHelper();
     }
     Login.prototype.useJwtHelper = function () {
@@ -51,10 +65,10 @@ var Login = (function () {
                     console.log(error.text());
                 });
                 socket.on("NewLoanuser", function () {
-                    alert("socket.io laat weten dat iemand you loan heeft aanvaard");
+                    alert("Eén van jouw abonnementen is verhuurd!");
                 });
                 socket.on("loanAddedTeam", function () {
-                    alert("socket.io laat weten dat iemnand een wedstrijd voor je favoriete ploeg online heeft geplaatst");
+                    alert("Er is een abonnement voor een wedstrijd van jouw favoriete ploeg beschikbaar!");
                 });
                 localStorage.setItem("id_token", response.json().token);
                 _this.useJwtHelper();
@@ -74,7 +88,7 @@ var Login = (function () {
 Login = __decorate([
     core_1.Component({
         selector: 'login',
-        template: "\n\t\t<div class=\"login container\">\n\t<div class=\"login-section\">\n\t\t<h1>Login</h1>\n\t\t<form (submit)=\"login($event)\">\n\t\t\t<div class=\"form-group\">\n\t\t\t\t<div class=\"input-field\">\n\t\t\t\t\t<input [(ngModel)]=\"email\" type=\"email\" class=\"form-control validate\" name=\"email\" id=\"email\">\n\t\t\t\t\t<label for=\"email\">Email</label>\n\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"form-group\">\n\t\t\t\t<div class=\"input-field\">\n\n\t\t\t\t\t<input [(ngModel)]=\"password\" type=\"password\" class=\"form-control validate\" name=\"password\" id=\"password\">\n\t\t\t\t\t<label for=\"password\">Password</label>\n\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<button type=\"submit\" class=\"btn btn-default\">Submit</button>\n\t\t\t<a [routerLink]=\"['/']\">Click here to go landing</a>\n\t\t</form>\n\t</div>\n\t<div class=\"register-section\">\n\t\t<h1>Not a member?</h1>\n\t\t<p>If you're not yet registered, please register now to obtain full access.</p>\n\t\t<br/>\n\n\t\t<button class=\"btn\" [routerLink]=\"['/register']\"> Register now </button>\n\n\n\t</div>\n</div>\n\n\n\n\n\n\n\n\t",
+        template: "\n\t\t<div class=\"login container\">\n\t<div class=\"login-section\">\n\t\t<h1>Login</h1>\n\t\t<form (submit)=\"login($event)\">\n\t\t\t<div class=\"form-group\">\n\t\t\t\t<div class=\"input-field\">\n\t\t\t\t\t<input [(ngModel)]=\"email\" type=\"email\" class=\"form-control validate\" name=\"email\" id=\"email\">\n\t\t\t\t\t<label for=\"email\">Email</label>\n\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"form-group\">\n\t\t\t\t<div class=\"input-field\">\n\n\t\t\t\t\t<input [(ngModel)]=\"password\" type=\"password\" class=\"form-control validate\" name=\"password\" id=\"password\">\n\t\t\t\t\t<label for=\"password\">Password</label>\n\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<button type=\"submit\" class=\"btn btn-default\">Submit</button>\n\t\t\t<a [routerLink]=\"['/']\">Click here to go landing</a>\n\t\t</form>\n\t</div>\n\t<div class=\"register-section\">\n\t\t<h1>Not a member?</h1>\n\t\t<p>If you're not yet registered, please register now to obtain full access.</p>\n\t\t<br/>\n\n\t\t<button class=\"btn\" [routerLink]=\"['/register']\"> Register now </button>\n\n\n\t</div>\n</div>\n\n\n\n\n\n\n\n\n\n\t",
         styleUrls: ['../../../css/css/login.css']
     }),
     __metadata("design:paramtypes", [router_1.Router, http_1.Http, ApiService_1.ApiService])

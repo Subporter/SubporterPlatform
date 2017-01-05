@@ -12,6 +12,7 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var http_1 = require("@angular/http");
 var forms_1 = require("@angular/forms");
+var angular2_notifications_1 = require("angular2-notifications");
 var angular2_jwt_1 = require("angular2-jwt");
 var Auth_1 = require("./services/Auth");
 var AuthGuard_1 = require("./common/AuthGuard");
@@ -56,7 +57,9 @@ Subporter = __decorate([
             platform_browser_1.BrowserModule,
             http_1.HttpModule,
             forms_1.FormsModule,
-            Routes_1.Routing
+            Routes_1.Routing,
+            angular2_notifications_1.SimpleNotificationsModule,
+            angular2_notifications_1.PushNotificationsModule
         ],
         providers: [
             Auth_1.Auth,

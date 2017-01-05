@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpModule } from "@angular/http";
 import { FormsModule } from "@angular/forms";
+import {SimpleNotificationsModule, PushNotificationsModule} from 'angular2-notifications';
 
 import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { Auth } from './services/Auth';
@@ -44,7 +45,9 @@ import { Routing } from "./modules/Routes";
         BrowserModule,
         HttpModule,
         FormsModule,
-        Routing
+        Routing,
+        SimpleNotificationsModule,
+        PushNotificationsModule
     ],
     providers: [
         Auth,

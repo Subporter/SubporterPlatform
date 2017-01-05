@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { JwtHelper } from 'angular2-jwt';
 import { contentHeaders } from '../../../common/Headers'
 import { ApiService} from '../../../services/ApiService';
+
 
 @Component({
     selector: 'login',
@@ -48,6 +49,8 @@ import { ApiService} from '../../../services/ApiService';
 
 
 
+
+
 	`,
     styleUrls: ['../../../css/css/login.css']
 
@@ -59,6 +62,23 @@ export class Login {
 
     constructor(public router: Router, public http: Http, public apiService: ApiService) {
     }
+
+    // public options = {
+    //     timeOut: 5000,
+    //     lastOnBottom: true,
+    //     clickToClose: true,
+    //     maxLength: 0,
+    //     maxStack: 7,
+    //     showProgressBar: true,
+    //     pauseOnHover: true,
+    //     preventDuplicates: false,
+    //     preventLastDuplicates: 'visible',
+    //     rtl: false,
+    //     animate: 'scale',
+    //     position: ['right', 'bottom']
+    // };
+
+
 
     jwtHelper: JwtHelper = new JwtHelper();
 
@@ -111,11 +131,23 @@ export class Login {
 
 
                     socket.on("NewLoanuser", function(){
-                        alert("socket.io laat weten dat iemand you loan heeft aanvaard");
+
+
+                        alert("Eén van jouw abonnementen is verhuurd!");
+                        
+
+
+
+
+
+
+
                     });
 
                     socket.on("loanAddedTeam", function(){
-                        alert("socket.io laat weten dat iemnand een wedstrijd voor je favoriete ploeg online heeft geplaatst");
+                        alert("Er is een abonnement voor een wedstrijd van jouw favoriete ploeg beschikbaar!");
+                     
+
                     })
 
                     localStorage.setItem("id_token", response.json().token);
@@ -134,4 +166,14 @@ export class Login {
         event.preventDefault();
         this.router.navigate(['register']);
     }
+
+    // onCreate(event) {
+    //     console.log(event);
+    // }
+
+    // onDestroy(event) {
+    //     console.log(event);
+    // }
+
+
 }
