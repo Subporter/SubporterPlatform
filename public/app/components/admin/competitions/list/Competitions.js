@@ -40,21 +40,6 @@ var AdminCompetitions = (function () {
             materialize_css_1.Materialize.toast("Unable to load competitions at this time", 2000);
         });
     };
-    AdminCompetitions.prototype.delete = function (id) {
-        this.selectedCompetition = this.competitions.filter(function (country) { return country._id === id; })[0];
-    };
-    AdminCompetitions.prototype.confirmDelete = function (id) {
-        var _this = this;
-        this.apiService.delete("api/competitions/" + id).subscribe(function (response) {
-            var result = JSON.parse(response.text());
-            materialize_css_1.Materialize.toast(result.info, 2000);
-            if (result.success) {
-                _this.competitions = _this.competitions.filter(function (competition) { return competition._id !== id; });
-            }
-        }, function (error) {
-            materialize_css_1.Materialize.toast("Unable to delete competition at this time", 2000);
-        });
-    };
     return AdminCompetitions;
 }());
 AdminCompetitions = __decorate([

@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { Materialize } from 'materialize-css';
 import * as $ from 'jquery';
 
-import { Sport } from '../../../../modules/Sports';
-import { Country } from '../../../../modules/Countries';
 import { Competition } from '../../../../modules/Competitions';
 
 import { ApiService } from '../../../../services/ApiService';
@@ -45,7 +43,7 @@ export class AdminCompetitions {
         );
     }
 
-    delete(id: Number) {
+    /*delete(id: Number) {
         this.selectedCompetition = this.competitions.filter(country => country._id === id)[0];
     }
 
@@ -62,6 +60,6 @@ export class AdminCompetitions {
                 Materialize.toast("Unable to delete competition at this time", 2000);
             }
         )
-    }
+    }*/
 
 }
