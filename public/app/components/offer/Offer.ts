@@ -342,8 +342,12 @@ offerSubscription(){
 }
 
 showSuccess(){
-   this.modalActions2.emit({action:"modal",params:['open']});
 
+  console.log(this.selectedGame.home["_id"]);
+    var socket = io.connect();
+    socket.emit("offerAdded", this.selectedGame.home["_id"], this.selectedGame.away["_id"]);
+
+   this.modalActions2.emit({action:"modal",params:['open']});
 }
 
 
