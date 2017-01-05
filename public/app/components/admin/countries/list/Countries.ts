@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Materialize } from 'materialize-css';
 import * as $ from 'jquery';
 
-import { Country } from '../../../../modules/Countries'
+import { Country } from '../../../../modules/Countries';
 
 import { ApiService } from '../../../../services/ApiService';
 

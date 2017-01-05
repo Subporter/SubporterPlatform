@@ -14,6 +14,7 @@ var Edit_1 = require("../components/admin/sports/edit/Edit");
 var Countries_1 = require("../components/admin/countries/list/Countries");
 var Create_2 = require("../components/admin/countries/create/Create");
 var Edit_2 = require("../components/admin/countries/edit/Edit");
+var Competitions_1 = require("../components/admin/competitions/list/Competitions");
 var AdminGuard_1 = require("../common/AdminGuard");
 exports.SubporterRoutes = [
     {
@@ -63,6 +64,9 @@ exports.SubporterRoutes = [
     },
     {
         path: 'admin/countries/edit/:id', component: Edit_2.CountriesEdit, canActivate: [AdminGuard_1.AdminGuard]
+    },
+    {
+        path: 'admin/competitions', component: Competitions_1.AdminCompetitions, canActivate: [AdminGuard_1.AdminGuard]
     },
     {
         path: '**', component: Login_1.Login

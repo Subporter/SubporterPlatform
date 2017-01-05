@@ -1,6 +1,16 @@
 <navmenu>
 </navmenu>
 
+<nav>
+	<div class="nav-wrapper">
+		<div class="col s12">
+			<a [routerLink]="['/admin']" class="breadcrumb">Admin</a>
+			<a [routerLink]="['/admin/countries']" class="breadcrumb">Countries</a>
+			<a [routerLink]="['/admin/countries', id]" class="breadcrumb">Edit</a>
+		</div>
+	</div>
+</nav>
+
 <div class="container">
 	<div class="row">
 		<h2 class="header">Edit country: {{name}}</h2>

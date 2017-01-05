@@ -93,7 +93,7 @@ User.getUsers = function(cb) {
                 cb(null, docs);
             }
         })
-		.cache();
+        .cache();
 };
 
 /* Read (one user) */
@@ -106,8 +106,7 @@ User.getUserById = function(id, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 User.getUserByIdForLogin = function(id, cb) {
@@ -151,8 +150,7 @@ User.getUserByEmail = function(email, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 User.getUserByEmailForLogin = function(email, cb) {
@@ -200,8 +198,7 @@ User.getUserByUsername = function(username, cb) {
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 User.getUserByUsernameForLogin = function(username, cb) {
