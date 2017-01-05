@@ -45,6 +45,12 @@ var Landing = (function () {
         function (response) {
             _this.response = response.text();
             console.log(_this.response);
+            var jsonrespons = JSON.parse(_this.response);
+
+            var socket = io.connect();
+            socket.emit("login", jsonrespons["data"]["_id"]);
+            
+
         }, function (error) { return _this.response = error.text; });
     };
     Landing.prototype.getTeam = function (data) {
