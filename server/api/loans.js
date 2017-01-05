@@ -1,4 +1,5 @@
 const express = require('express'),
+    moment = require('moment'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
     loadUser = require('../middleware/loadUser'),
@@ -95,10 +96,21 @@ router.get("/loans/game/:game", function(req, res) {
                 error: err.errmsg
             });
         } else if (loans) {
-            res.json({
-                info: "Loans found succesfully",
-                success: true,
-                data: loans
+            Loan.getAmountOfLoanedOutGames(req.params.game, function (err, count) {
+                if (err) {
+                    res.json({
+                        info: "Error during reading loans",
+                        success: false,
+                        error: err.errmsg
+                    });
+                } else {
+                    res.json({
+                        info: "Loans found succesfully",
+                        success: true,
+                        data: loans,
+                        count: count
+                    });
+                }
             });
         } else {
             res.json({
@@ -232,7 +244,7 @@ router.put("/loans/lend/:id", authenticate, loadUser, function(req, res) {
         req.body.lent = true;
 		req.body.paid = true;
         req.body.lent_by = req.user._id;
-        req.body.lent_on = Date.now.toISOString();
+        req.body.lent_on = moment().toDate();
         Loan.getLoanById(req.params.id, function(err, loan) {
             if (err) {
                 res.json({
@@ -240,7 +252,7 @@ router.put("/loans/lend/:id", authenticate, loadUser, function(req, res) {
                     success: false,
                     error: err.errmsg
                 });
-            } else if (loan) {
+            } else if (loan && loan.lent_out_by !== req.body.lent_by) {
                 Loan.updateLoan(loan, req.body, function(err) {
                     if (err) {
                         res.json({
@@ -257,7 +269,7 @@ router.put("/loans/lend/:id", authenticate, loadUser, function(req, res) {
                 });
             } else {
                 res.json({
-                    info: "Loan not found",
+                    info: "Loan not found or user is trying to lend your own loan",
                     success: false,
                 });
             }

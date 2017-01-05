@@ -198,7 +198,8 @@ Loan.getLoans = function(cb) {
 
 Loan.getLoansByGame = function(game, cb) {
     Loan.find({
-            game: game
+            game: game,
+            lent: false
         })
         .populate(populateSchema)
         .exec(function(err, docs) {
@@ -206,6 +207,20 @@ Loan.getLoansByGame = function(game, cb) {
                 cb(err, null);
             } else {
                 cb(null, docs);
+            }
+        });
+};
+
+Loan.getAmountOfLoanedOutGames = function(game, cb) {
+    Loan.count({
+            game: game,
+            lent: true
+        })
+        .exec(function(err, count) {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, count);
             }
         });
 };
