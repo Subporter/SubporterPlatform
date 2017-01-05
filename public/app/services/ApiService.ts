@@ -13,8 +13,7 @@ export class ApiService {
     get(url) {
         url = this.baseUrl + url;
         if (localStorage.getItem("id_token")) {
-            contentHeaders.delete("Authorization");
-            contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+            v
         }
         return this.http.get(url, {
             headers: contentHeaders
@@ -24,8 +23,7 @@ export class ApiService {
 	post(url, body) {
 		url = this.baseUrl + url;
 		if (localStorage.getItem("id_token")) {
-            contentHeaders.delete("Authorization");
-			contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+            contentHeaders.set("Authorization", localStorage.getItem("id_token"));
 		}
         return this.http.post(url, body, {
             headers: contentHeaders
@@ -35,8 +33,7 @@ export class ApiService {
     put(url, body) {
         url = this.baseUrl + url;
 		if (localStorage.getItem("id_token")) {
-            contentHeaders.delete("Authorization");
-			contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+            contentHeaders.set("Authorization", localStorage.getItem("id_token"));
 		}
         return this.http.put(url, body, {
             headers: contentHeaders
@@ -46,8 +43,7 @@ export class ApiService {
     delete(url) {
         url = this.baseUrl + url;
 		if (localStorage.getItem("id_token")) {
-            contentHeaders.delete("Authorization");
-			contentHeaders.append("Authorization", localStorage.getItem("id_token"));
+            contentHeaders.set("Authorization", localStorage.getItem("id_token"));
 		}
         return this.http.delete(url, {
             headers: contentHeaders

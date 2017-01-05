@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var Rx_1 = require("rxjs/Rx");
 var router_1 = require("@angular/router");
 var Auth_1 = require("../services/Auth");
 var AdminGuard = (function () {
@@ -16,13 +17,25 @@ var AdminGuard = (function () {
         this.auth = auth;
         this.router = router;
     }
-    AdminGuard.prototype.canActivate = function () {
-        if (this.auth.isAdmin()) {
-            return true;
+    AdminGuard.prototype.canActivate = function (next, state) {
+        var _this = this;
+        if (this.auth.isLoggedIn()) {
+            return this.auth.isAdmin().map(function (success) {
+                if (success) {
+                    return true;
+                }
+                else {
+                    _this.router.navigate(['/landing']);
+                    return false;
+                }
+            }).catch(function () {
+                _this.router.navigate(['/landing']);
+                return Rx_1.Observable.of(false);
+            });
         }
         else {
             this.router.navigate(['/login']);
-            return false;
+            return Rx_1.Observable.of(false);
         }
     };
     return AdminGuard;
