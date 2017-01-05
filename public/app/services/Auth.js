@@ -10,7 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var angular2_jwt_1 = require("angular2-jwt");
 var core_1 = require("@angular/core");
-var Rx_1 = require("rxjs/Rx");
 var ApiService_1 = require("./ApiService");
 var Auth = (function () {
     function Auth(apiService) {
@@ -20,16 +19,7 @@ var Auth = (function () {
         return angular2_jwt_1.tokenNotExpired();
     };
     Auth.prototype.isAdmin = function () {
-        if (this.isLoggedIn()) {
-            return this.apiService.get("check/admin").map(function (response) {
-                return Rx_1.Observable.of(JSON.parse(response.text()).success);
-            }).catch(function (error) {
-                return Rx_1.Observable.of(false);
-            });
-        }
-        else {
-            return Rx_1.Observable.of(false);
-        }
+        return this.apiService.get("check/admin").map(function (response) { return JSON.parse(response.text()).success; });
     };
     return Auth;
 }());

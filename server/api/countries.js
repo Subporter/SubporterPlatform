@@ -1,4 +1,3 @@
-
 const express = require('express'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),

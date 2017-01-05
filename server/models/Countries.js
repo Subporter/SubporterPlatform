@@ -1,6 +1,16 @@
 const mongoose = require('mongoose'),
+    config = require('../../config/subporter.config'),
+    cachegoose = require('cachegoose'),
     _ = require('lodash'),
     countrySchema = require('../schemas/Countries');
+
+let redis = config.redis_dev;
+
+if (process.env.NODE_ENV === 'production') {
+    redis = config.redis_prod;
+}
+
+cachegoose(mongoose, redis);
 
 let Country = mongoose.model('Country', countrySchema, 'Countries');
 
@@ -26,18 +36,20 @@ Country.getCountries = function(cb) {
             } else {
                 cb(null, docs);
             }
-        });
+        })
+        .cache();
 };
 
 /* Read (one sport) */
 Country.getCountryById = function(id, cb) {
     Country.findById(id, function(err, docs) {
-        if (err) {
-            cb(err, null);
-        } else {
-            cb(null, docs);
-        }
-    });
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        })
+        .cache();
 };
 
 /* Update */
@@ -54,7 +66,7 @@ Country.updateCountry = function(country, body, cb) {
 
 /* Delete */
 Country.deleteCountry = function(id, cb) {
-    Country.findById(id, function (err, docs) {
+    Country.findById(id, function(err, docs) {
         if (err || !docs) {
             cb(err);
         } else {

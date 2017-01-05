@@ -143,7 +143,7 @@ router.put("/addresses/:id", authenticate, admin, function(req, res) {
                 success: false
             });
         } else {
-            Address.getAddressById(req.params.id, function (err, address) {
+            Address.getAddressById(req.params.id, function(err, address) {
                 if (err) {
                     res.json({
                         info: "Error during reading address",
@@ -151,7 +151,7 @@ router.put("/addresses/:id", authenticate, admin, function(req, res) {
                         error: err.errmsg
                     });
                 } else if (address) {
-                    Address.updateAddress(address, req.body, function (err) {
+                    Address.updateAddress(address, req.body, function(err) {
                         if (err) {
                             res.json({
                                 info: "Error during updating address",

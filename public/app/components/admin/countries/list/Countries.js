@@ -11,58 +11,59 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var materialize_css_1 = require("materialize-css");
 var $ = require("jquery");
-var Sports_1 = require("../../../../modules/Sports");
+var Countries_1 = require("../../../../modules/Countries");
 var ApiService_1 = require("../../../../services/ApiService");
-var AdminSports = (function () {
-    function AdminSports(apiService) {
+var AdminCountries = (function () {
+    function AdminCountries(apiService) {
         this.apiService = apiService;
-        this.sports = [];
-        this.selectedSport = new Sports_1.Sport(0, "");
+        this.countries = [];
+        this.selectedCountry = new Countries_1.Country(0, "");
     }
-    AdminSports.prototype.ngOnInit = function () {
+    AdminCountries.prototype.ngOnInit = function () {
         var _this = this;
         $('.modal').modal();
-        this.apiService.get("api/sports").subscribe(function (response) {
+        this.apiService.get("api/countries").subscribe(function (response) {
             var result = JSON.parse(response.text());
             if (result.success) {
                 var data = result.data;
                 if (data.length !== 0) {
                     data.forEach(function (i) {
-                        var sport = new Sports_1.Sport(i._id, i.name);
-                        _this.sports.push(sport);
+                        var country = new Countries_1.Country(i._id, i.name);
+                        _this.countries.push(country);
                     });
+                    console.log(_this.countries);
                 }
             }
             else {
-                materialize_css_1.Materialize.toast("Unable to load sports at this time", 2000);
+                materialize_css_1.Materialize.toast("Unable to load countries at this time", 2000);
             }
         }, function (error) {
-            materialize_css_1.Materialize.toast("Unable to load sports at this time", 2000);
+            materialize_css_1.Materialize.toast("Unable to load countries at this time", 2000);
         });
     };
-    AdminSports.prototype.delete = function (id) {
-        this.selectedSport = this.sports.filter(function (sport) { return sport._id === id; })[0];
+    AdminCountries.prototype.delete = function (id) {
+        this.selectedCountry = this.countries.filter(function (country) { return country._id === id; })[0];
     };
-    AdminSports.prototype.confirmDelete = function (id) {
+    AdminCountries.prototype.confirmDelete = function (id) {
         var _this = this;
-        this.apiService.delete("api/sports/" + id).subscribe(function (response) {
+        this.apiService.delete("api/countries/" + id).subscribe(function (response) {
             var result = JSON.parse(response.text());
             materialize_css_1.Materialize.toast(result.info, 2000);
             if (result.success) {
-                _this.sports = _this.sports.filter(function (sport) { return sport._id !== id; });
+                _this.countries = _this.countries.filter(function (country) { return country._id !== id; });
             }
         }, function (error) {
-            materialize_css_1.Materialize.toast("Unable to delete sport at this time", 2000);
+            materialize_css_1.Materialize.toast("Unable to delete country at this time", 2000);
         });
     };
-    return AdminSports;
+    return AdminCountries;
 }());
-AdminSports = __decorate([
+AdminCountries = __decorate([
     core_1.Component({
-        selector: 'admin-sports',
-        templateUrl: './app/components/admin/sports/list/sports.view.html'
+        selector: 'admin-countries',
+        templateUrl: './app/components/admin/countries/list/countries.view.html'
     }),
     __metadata("design:paramtypes", [ApiService_1.ApiService])
-], AdminSports);
-exports.AdminSports = AdminSports;
-//# sourceMappingURL=Sports.js.map
+], AdminCountries);
+exports.AdminCountries = AdminCountries;
+//# sourceMappingURL=Countries.js.map

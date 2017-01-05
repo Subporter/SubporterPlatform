@@ -1,7 +1,7 @@
 const express = require('express'),
+    config = require('../../config/subporter.config'),
     moment = require('moment'),
     jwt = require('jwt-simple'),
-    config = require('../../config/subporter.config'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
     formParser = require('../middleware/formParser'),
@@ -442,9 +442,9 @@ router.post("/users/update/password", authenticate, function(req, res) {
 });
 
 /* Delete */
-router.delete("/users", authenticate, loadUser, function (req, res) {
+router.delete("/users", authenticate, loadUser, function(req, res) {
     if (req.granted) {
-        User.deleteUser(req.user._id, function (err) {
+        User.deleteUser(req.user._id, function(err) {
             if (err) {
                 res.json({
                     info: "Error during deleting user",
