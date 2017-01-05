@@ -14,6 +14,13 @@
                 socket.broadcast.to(userid).emit("NewLoanuser");
             });
 
+            socket.on("addFav",function(data){
+                for(var fav in data){
+                    socket.join(fav);
+                    console.log("fav team toegevoegd" + fav);
+                }
+            });
+
             socket.on("loanAdded", function(teamA, teamB){
                 socket.broadcast.to(teamA).emit("loanAddedTeam");
                 socket.broadcast.to(teamB).emit("loanAddedTeam");

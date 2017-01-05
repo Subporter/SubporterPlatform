@@ -56,7 +56,7 @@ export class Login {
     email: String;
     password: String;
 
-    constructor(public router: Router, public http: Http) {
+    constructor(public router: Router, public http: Http, public apiService: apiService) {
     }
 
     jwtHelper: JwtHelper = new JwtHelper();
@@ -91,14 +91,28 @@ export class Login {
                 if (response.json().success === true) {
 
                     var socket = io.connect();
-                    console.log("arno");
-                    console.log(response.json().id);
                     socket.emit("login", response.json().id)
 
+                    
+
+                    this.apiService.get('/api/users').subscribe(
+                        response => {
+                            console.log("USER DATA");
+                            console.log(response);
+                        },
+                        error => {
+                            console.log(error.text());
+                        }
+                    )
+
+
                     socket.on("NewLoanuser", function(){
-                        alert("someone accepted your loan");
+                        alert("socket.io laat weten dat iemand you loan heeft aanvaard");
                     });
 
+                    socket.on("loanAdded", function(){
+                        alert("socket.io laat weten dat iemnand een wedstrijd voor je favoriete ploeg online heeft geplaatst");
+                    })
 
                     localStorage.setItem("id_token", response.json().token);
                     this.useJwtHelper();
