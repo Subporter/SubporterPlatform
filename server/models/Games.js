@@ -258,6 +258,28 @@ Game.getGamesByCompetition = function(competition, cb) {
         });
 };
 
+Game.getGamesByCompetitionForThisWeek = function(competition, cb) {
+    Game.find({
+            competition: competition,
+            date: {
+                $gt: moment().toDate(),
+                $lt: moment().add(7, 'days').toDate()
+            }
+        })
+        .populate(populateSchema)
+        .sort({
+            date: 1
+        })
+        .exec(function(err, docs) {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        });
+};
+
+
 Game.getGamesByTeam = function(team, cb) {
     Game.find({
             home: team,

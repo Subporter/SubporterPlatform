@@ -111,6 +111,29 @@ router.get("/games/competition/:competition", function(req, res) {
     });
 });
 
+router.get("/games/week/:competition", function(req, res) {
+    Game.getGamesByCompetitionForThisWeek(req.params.competition, function(err, games) {
+        if (err) {
+            res.json({
+                info: "Error during reading games",
+                success: false,
+                error: err
+            });
+        } else if (games) {
+            res.json({
+                info: "Games found succesfully",
+                success: true,
+                data: games
+            });
+        } else {
+            res.json({
+                info: "Games not found",
+                success: false
+            });
+        }
+    });
+});
+
 router.get("/games/team/:team", function(req, res) {
     Game.getGamesByTeam(req.params.team, function(err, games) {
         if (err) {
