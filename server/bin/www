@@ -22,15 +22,19 @@ let debug = require('debug')('subporterplatform:server');
 let port = normalizePort(process.env.PORT || '1337');
 app.set('port', port);
 
-/* Create HTTP server */
+/* Create HTTP(S) server */
 
 let server;
 
-const options = {
-    key: fs.readFileSync(path.resolve(__dirname, '../../config/key.pem')),
-    cert: fs.readFileSync(path.resolve(__dirname, '../../config/cert.pem'))
-};
-server = https.createServer(options, app);
+if (process.env.NODE_ENV === 'production') {
+    const options = {
+        key: fs.readFileSync(path.resolve(__dirname, '../../config/key.pem'), 'ascii'),
+        cert: fs.readFileSync(path.resolve(__dirname, '../../config/cert.pem'), 'ascii')
+    };
+    server = https.createServer(options, app);
+} else {
+    server = http.createServer(app);
+}
 
 /* Listen on provided port, on all network interfaces */
 

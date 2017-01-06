@@ -30,7 +30,7 @@ const PATHS = {
 
 gulp.task('default', function() {
     var htmlwatcher = gulp.watch(PATHS.HTML.SRC, ['html-validate']);
-    // var csswatcher = gulp.watch(PATHS.CSS.SRC, ['css']);
+    //var csswatcher = gulp.watch(PATHS.CSS.SRC, ['css']);
     var sasswatcher = gulp.watch(PATHS.SCSS.SRC, ['sass']);
 });
 
@@ -38,10 +38,10 @@ const AUTOPREFIXOPTIONS = {
     browsers: ['last 2 versions']
 };
 
-gulp.task('sass', function() {
-    gulp.src(PATHS.SCSS.SRC)
-        .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest(PATHS.SCSS.DEST));
+gulp.task('html-validate', function() {
+    gulp.src(PATHS.HTML.SRC)
+        .pipe(htmlhint('.htmlhintrc'))
+        .pipe(htmlhint.reporter("htmlhint-stylish"));
 });
 
 gulp.task('css', function() {
@@ -61,10 +61,10 @@ gulp.task('css', function() {
         .pipe(gulp.dest(PATHS.CSS.DEST));
 });
 
-gulp.task('html-validate', function() {
-    gulp.src(PATHS.HTML.SRC)
-        .pipe(htmlhint('.htmlhintrc'))
-        .pipe(htmlhint.reporter("htmlhint-stylish"));
+gulp.task('sass', function() {
+    gulp.src(PATHS.SCSS.SRC)
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest(PATHS.SCSS.DEST));
 });
 
 /* Copy externals */

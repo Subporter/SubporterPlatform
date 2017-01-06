@@ -3,25 +3,13 @@ const mocha = require('mocha'),
     request = require('request'),
     User = require('../../server/models/Users.js');
 
-describe('Users testing', function() {
-    it('should make an API call and return that a wrong password is used for an existing user', function(done) {
-        request.post({
-            url: 'http://localhost:1337/login',
-            form: {
-                email: 'admin@subporter.be',
-                password: 'wrongpassword'
-            }
-        }, function(err, res, body) {
-            if (err) {
-                console.log("Error: " + err.message);
-            } else {
-                let result = JSON.parse(body).info;
-                assert.equal(result, "Error during login, wrong password", "Wrong password");
-                done();
-            }
-        });
-    });
+let baseUrl = "http://localhost:1337/";
 
+if (process.env.NODE_ENV === 'production') {
+    baseUrl = "https://localhost:1337/";
+}
+
+describe('Users testing', function() {
     it('should get all users', function(done) {
         User.getUsers(function(err, users) {
             let result = users.length >= 1;
@@ -37,8 +25,26 @@ describe('Users testing', function() {
         });
     });
 
+    it('should make an API call and return that a wrong password is used for an existing user', function(done) {
+        request.post({
+            url: baseUrl + 'login',
+            form: {
+                email: 'admin@subporter.be',
+                password: 'wrongpassword'
+            }
+        }, function(err, res, body) {
+            if (err) {
+                console.log("Error: " + err.message);
+            } else {
+                let result = JSON.parse(body).info;
+                assert.equal(result, "Error during login, wrong password", "Wrong password");
+                done();
+            }
+        });
+    });
+
     it('should make an API call and check if a user with a certain email exists', function(done) {
-        request.get('http://localhost:1337/check/email/non.existing@email.com', function (err, res, body) {
+        request.get(baseUrl + 'check/email/non.existing@email.com', function (err, res, body) {
             if (err) {
                 console.log("Error: " + err.message);
             } else {
@@ -50,7 +56,7 @@ describe('Users testing', function() {
     });
 
     it('should make an API call and check if a user with a certain username exists', function(done) {
-        request.get('http://localhost:1337/check/username/admin', function (err, res, body) {
+        request.get(baseUrl + 'check/username/admin', function (err, res, body) {
             if (err) {
                 console.log("Error: " + err.message);
             } else {
