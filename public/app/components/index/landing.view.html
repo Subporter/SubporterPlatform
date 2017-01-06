@@ -28,15 +28,18 @@
           <label for="search"><i class="material-icons prefix">search</i></label>
 
 
-<select [(ngModel)]="s" id="searchBar" name="s">
+<!--<select [(ngModel)]="s" id="searchBar" name="s">
       <option value="" disabled selected>Choose your option</option>
       <option value="1">België</option>
       <option value="2">Nederland</option>
       <option value="3">Engeland</option>
-    </select>
+    </select>-->
 
 
     <button class="btn waves-effect waves-light"  (click)="search()"> ZOEKEN </button>
+
+
+
      </div>
 
     </form>
@@ -52,7 +55,7 @@
             <div class="section fp-auto-height" data-anchor="section2" id="section1">
 
 
-<div class="test" >
+<!--<div class="test" >
              <div class="carousel-class">
 
 
@@ -62,7 +65,7 @@
 
     </div>
 
-    </div>
+    </div>-->
 <!--
 <div><img src="../../img/gent.png"></div>
 <div><img src="../../img/oostemde.png"></div>
@@ -88,26 +91,27 @@
 <div><img src="../../img/oostemde.png"></div>
 <div><img src="../../img/genk.png"></div>-->
 
-
+<!--
 </div>
 
 
-             </div>
+             </div>-->
 
             <div class="container margintop">
 
 
 <h3>Topwedstrijden</h3>
 
+<select id="select"  materialize="material_select" (change)="onChange($event.target.value)" >
+      <option value="" disabled selected>Kies een land</option>
+      <option *ngFor="let country of countries" value="{{country._id}}">
+          {{country.name}}
+      </option>
+     
+    </select>
 
-<!--<div *ngFor="let game of games" class="row" >
-        <div *ngIf="count =< 9" class="col s3">
-          <div *ngIf="game.scale = 10" class="card">
-                <topwedstrijd home="{{game.home}}" away="{{game.away}}" date="{{game.date}}" id="{{game._id}}" gameImage="{{game.gameImage}}"></topwedstrijd>
-            </div>
-</div>
 
-  </div>-->
+
 
 
   <div class="row">
@@ -144,64 +148,47 @@
             </div>
             <div class="section  fp-auto-height" id="section3"  data-anchor="section3">
 
-<div class="container">
+<div *ngIf="showWeek" class="container">
 
 <h3>Wedstrijden deze week</h3>
+
+<select id="select2"  materialize="material_select" (change)="onChange2($event.target.value)" >
+      <option value="" disabled selected>Kies een land</option>
+      <option *ngFor="let country of countries" value="{{country._id}}">
+          {{country.name}}
+      </option>
+     
+    </select>
 
 
 <div class="row">
 
-<div class="col s6">
+  <div class="col s6">
 
+       <ul class="collection">
+    <li *ngFor="let game of weekGames" class="collection-item" (click)="goToEvenement(game._id)">
 
-              <ul class="collection">
-    <li class="collection-item " (click)="test()">
-
-      <span class="title">Club Brugge kv - RSC Anderlecht</span>
-      <p>Zaterdag 24 december 2017<br>
-         Jan Breydelstadion, Brugge
+       <span class="title">{{game.home.name}} - {{game.away.name}}</span>
+      <p>{{game.date}}<br>
+         {{game.home.stadion}}
       </p>
       <div class="secondary-content">
       <i class="fa fa-ticket fa-2x " aria-hidden="true"></i>
-      <span>12</span>
+      <span>{{game.loans.size}}</span>
       </div>
     </li>
-    <li class="collection-item ">
-      <span class="title">Club Brugge kv - RSC Anderlecht</span>
-      <p>Zaterdag 24 december 2017<br>
-         Jan Breydelstadion, Brugge
-      </p>
-       <div class="secondary-content">
-      <i class="fa fa-ticket fa-2x " aria-hidden="true"></i>
-      <span>12</span>
-      </div>
-    </li>
-    <li class="collection-item ">
-      <span class="title">Club Brugge kv - RSC Anderlecht</span>
-      <p>Zaterdag 24 december 2017<br>
-         Jan Breydelstadion, Brugge
-      </p>
-       <div class="secondary-content">
-      <i class="fa fa-ticket fa-2x " aria-hidden="true"></i>
-      <span>12</span>
-      </div>
+       </ul>
 
-    </li>
-    <li class="collection-item ">
-      <span class="title">Club Brugge kv - RSC Anderlecht</span>
-      <p>Zaterdag 24 december 2017<br>
-         Jan Breydelstadion, Brugge
-      </p>
-       <div class="secondary-content">
-      <i class="fa fa-ticket fa-2x " aria-hidden="true"></i>
-      <span>12</span>
-      </div>
-    </li>
-  </ul>
+
+
 
   </div>
 
-  <div class="col s6">
+</div>
+
+
+
+  <!--<div class="col s6">
 
          <ul class="collection">
     <li class="collection-item ">
@@ -248,7 +235,7 @@
     </li>
   </ul>
 
-</div>
+</div>-->
 
 <div class="center">
     <a class="btn waves-effect waves-light center-align" [routerLink]="['/search']"> Ontdek meer wedstrijden </a>
@@ -260,8 +247,7 @@
 
 </div>
 
-            </div>
-            <div class="section fp-auto-height" data-anchor="section4" id="section4">
+            <!--<div class="section fp-auto-height" data-anchor="section4" id="section4">
 
 
 <div class="container">
@@ -306,8 +292,8 @@
 
 </div>
 
-            </div>
-            <div class="section fp-auto-height" data-anchor="section5">
+            </div>-->
+            <!--<div class="section fp-auto-height" data-anchor="section5">-->
 
 
  <subporterfooter>
@@ -317,4 +303,4 @@
 
 
 
-            </div>
+            <!--</div>-->

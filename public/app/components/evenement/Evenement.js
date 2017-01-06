@@ -54,7 +54,6 @@ var Evenement = (function () {
         if (!this.game) {
             this.router.navigateByUrl('../');
         }
-        console.log(jsonData.data);
         this.home = jsonData.data[0].game.home.name;
         this.away = jsonData.data[0].game.away.name;
         this.date = jsonData.data[0].game.date;
@@ -64,6 +63,7 @@ var Evenement = (function () {
         this.price = jsonData.data[0].game.home.price;
         this.test = jsonData.data[0].game.home;
         this.size = this.loans.length;
+        console.log(jsonData);
         this.lent = jsonData.count;
         this.lendable = this.loans.length;
         //  for(let i = 0; i<this.loans.length; i++){

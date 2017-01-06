@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { AuthHttp, JwtHelper } from 'angular2-jwt';
@@ -10,6 +10,9 @@ import { Header } from "../common/header/Header";
 import {Topwedstrijd} from "./Topwedstrijden";
 import {Weekwedstrijd} from "./Weekwedstrijden";
 import {ApiService} from '../../services/ApiService';
+import {MaterializeAction, MaterializeDirective} from 'angular2-materialize';
+
+
 
 
 @Component({
@@ -30,7 +33,9 @@ export class Landing {
   featuredGames: JSON;
   games:JSON;
      gameNames = [];
-
+countries:JSON;
+weekGames:JSON;
+showWeek = true;
 
  //default Belgium, I guess
   compId:String = "1";
@@ -57,9 +62,22 @@ ngOnInit() {
 			error => this.response = error.text
 		);
 
+    	this.apiService.get("api/games/week/1").subscribe(
+			response => this.getWeeklyGames(response.text()),
+     
+        
+			error => this.response = error.text
+		);
+
 
     	this.apiService.get("api/games/").subscribe(
 			response =>  this.showGames(response.text()),
+			error => this.response = error.text
+		);
+
+
+    	this.apiService.get("api/countries/").subscribe(
+			response =>  this.showCountries(response.text()),
 			error => this.response = error.text
 		);
 
@@ -80,6 +98,42 @@ ngOnInit() {
 			this.jwtHelper.isTokenExpired(token)
 		)
 	}
+
+showCountries(data){
+
+  let Data = data;
+  let jsonData = JSON.parse(Data);
+  this.countries = jsonData.data;
+}
+
+onChange(country) {
+
+  let Country = "api/games/featured/"+country;
+
+  		this.apiService.get(Country).subscribe(
+			response => this.getFeaturedGames(response.text()),
+     
+        
+			error => this.response = error.text
+		);
+
+
+  
+}
+
+onChange2(country){
+
+   let Country = "api/games/week/"+country;
+
+  		this.apiService.get(Country).subscribe(
+			response => this.getWeeklyGames(response.text()),
+     
+        
+			error => this.response = error.text
+		);
+
+}
+
 
 
 
@@ -135,6 +189,32 @@ this.gameNames = obj;
 
   }
 
+  getWeeklyGames(data){
+    let Data = data;
+     let jsonData = JSON.parse(Data);
+     let weekGames = jsonData.data;
+     let counter = 0;
+
+
+     for(let game of weekGames){
+
+            if(game.loans.size != 0){
+
+              this.weekGames[counter]= game;
+              counter ++;
+
+            }
+
+
+     }
+
+     if(this.isEmpty(this.weekGames)){
+       this.showWeek = false;
+     }
+
+
+  }
+
    getTeam(data){
      let Data = data;
      let jsonData = JSON.parse(Data);
@@ -172,6 +252,7 @@ scrollToDiv(){
 
 }
 
+ 
 
 search(){
 
@@ -182,19 +263,52 @@ search(){
 
 
 
-    if(parseInt(id)){
+     if(parseInt(id)){
 
-        id = parseInt(id);
-        let location = "evenement/"+id;
+         id = parseInt(id);
+         let location = "evenement/"+id;
 
-        window.location.assign(location);
+         window.location.assign(location);
 
-    }
+     }
 
+
+ 
 
 
 }
 
+
+
+ 
+
+
+
+
+ isEmpty(obj) {
+
+    // null and undefined are "empty"
+    if (obj == null) return true;
+
+    // Assume if it has a length property with a non-zero value
+    // that that property is correct.
+    if (obj.length > 0)    return false;
+    if (obj.length === 0)  return true;
+
+    // If it isn't an object at this point
+    // it is empty, but it can't be anything *but* empty
+    // Is it empty?  Depends on your application.
+    if (typeof obj !== "object") return true;
+
+    // Otherwise, does it have any properties of its own?
+    // Note that this doesn't handle
+    // toString and valueOf enumeration bugs in IE < 9
+    for (var key in obj) {
+        if (hasOwnProperty.call(obj, key)) return false;
+    }
+
+    return true;
+}
 
 
 

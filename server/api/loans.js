@@ -11,7 +11,7 @@ const express = require('express'),
 let redis = config.redis_dev;
 
 if (process.env.NODE_ENV === 'production') {
-    redis = config.redis.prod;
+    redis = config.redis_prod;
 }
 
 const cache = require('express-redis-cache')({

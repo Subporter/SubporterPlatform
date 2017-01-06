@@ -33,7 +33,8 @@
             'materialize-css': 'npm:materialize-css',
             'angular2-materialize': 'npm:angular2-materialize',
             'angular2-cookie': 'npm:angular2-cookie',
-            'algoliasearch': 'npm:algoliasearch'
+            'angular2-notifications': 'npm:angular2-notifications'
+
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -57,10 +58,11 @@
                 main: './core.js',
                 defaultExtension: 'js'
             },
-            'algoliasearch':{
-                main:'./dist/algoliasearch',
-                defaultExtension: 'js'
-            }
+            'angular2-notifications': { 
+                main: 'components.js', 
+                defaultExtension: 'js' 
+        }
+
         }
 
     });
