@@ -3,6 +3,8 @@ subporter.config.js
 *.js.map
 typings/
 .npmrc
+key.pem
+cert.pem
 
 ### IDE ###
 

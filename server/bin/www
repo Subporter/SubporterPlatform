@@ -2,14 +2,15 @@
 
 const http = require('http'),
     https = require('https'),
+    path = require('path'),
     fs = require('fs'),
     passport = require('passport'),
     updater = require('../updater');
 
 /* Development or production */
 
-process.env.NODE_ENV = "development";
-//process.env.NODE_ENV = "production";
+//process.env.NODE_ENV = "development";
+process.env.NODE_ENV = "production";
 
 /* Module dependencies */
 
@@ -25,15 +26,11 @@ app.set('port', port);
 
 let server;
 
-if (process.env.NODE_ENV === 'production') {
-    const options = {
-        key: fs.readFileSync('../../config/key.pem'),
-        cert: fs.readFileSync('../../config/cert.pem')
-    };
-    server = https.createServer(options, app);
-} else {
-    server = http.createServer(app);
-}
+const options = {
+    key: fs.readFileSync(path.resolve(__dirname, '../../config/key.pem')),
+    cert: fs.readFileSync(path.resolve(__dirname, '../../config/cert.pem'))
+};
+server = https.createServer(options, app);
 
 /* Listen on provided port, on all network interfaces */
 
