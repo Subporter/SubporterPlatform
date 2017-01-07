@@ -2,6 +2,7 @@
 subporter.config.js
 *.js.map
 typings/
+public/vendor/
 .npmrc
 key.pem
 cert.pem

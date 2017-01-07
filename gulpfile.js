@@ -76,6 +76,10 @@ gulp.task('copy-externals', function() {
         .pipe(gulp.dest(PATHS.EXTERNALS.DEST + "/material-icons/css"));
     gulp.src(PATHS.EXTERNALS.SRC + "/jquery/dist/**")
         .pipe(gulp.dest(PATHS.EXTERNALS.DEST + "/jquery"));
+    gulp.src(PATHS.EXTERNALS.SRC + "/socket.io-client/dist/**")
+        .pipe(gulp.dest(PATHS.EXTERNALS.DEST + "/socket.io-client"));
+    gulp.src(PATHS.EXTERNALS.SRC + "/fullpage.js/dist/**")
+        .pipe(gulp.dest(PATHS.EXTERNALS.DEST + "/fullpage.js"));
     gulp.src(PATHS.EXTERNALS.SRC + "/font-awesome/css/**")
         .pipe(gulp.dest(PATHS.EXTERNALS.DEST + "/font-awesome/css"));
     gulp.src(PATHS.EXTERNALS.SRC + "/font-awesome/fonts/**")

@@ -6,13 +6,13 @@
   "private": true,
   "repository": "https://github.com/Subporter/SubporterPlatform.git",
   "scripts": {
-    "start": "nodemon ./server/bin/www",
-    "dev": "concurrently \"npm run tsc:w\" \"npm start\" ",
+    "start": "node ./server/bin/www",
+    "dev": "concurrently \"npm run tsc:w\" \"nodemon ./server/bin/www\" ",
     "prod": "forever start ./server/bin/www",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "typings": "typings",
-    "postinstall": "typings install"
+    "postinstall": "typings install && bower install && gulp copy-externals"
   },
   "keywords": [
     "MEAN",
