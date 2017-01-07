@@ -2,29 +2,29 @@ const mongoose = require('mongoose'),
     mongooseHidden = require('mongoose-hidden')({
         defaultHidden: {
             __v: true,
-			created_at: true,
+            created_at: true,
             updated_at: true
         }
     }),
     autoIncrement = require('mongoose-increment'),
-	Loan = require('../models/Loans');
+    Loan = require('../models/Loans');
 
 let gameSchema = new mongoose.Schema({
-	away: {
+    away: {
         type: Number,
         ref: 'Team',
         required: true
     },
-	banner: {
-		type: String,
-		required: true,
-		trim: true
-	},
-	competition: {
-		type: Number,
-		ref: 'Competition',
-		required: true
-	},
+    banner: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    competition: {
+        type: Number,
+        ref: 'Competition',
+        required: true
+    },
     date: {
         type: Date,
         required: true
@@ -40,10 +40,10 @@ let gameSchema = new mongoose.Schema({
         min: 1,
         max: 10
     },
-	loans: [{
-		type: Number,
-		ref: 'Loan'
-	}]
+    loans: [{
+        type: Number,
+        ref: 'Loan'
+    }]
 }, {
     _id: false,
     timestamps: {
@@ -52,20 +52,20 @@ let gameSchema = new mongoose.Schema({
     }
 });
 
-gameSchema.pre('remove', function (err, next){
-	let game = this;
-	Loan.deleteLoansByGame(game._id, function (err) {
-		if (err) {
-			return next(err);
-		} else {
-			return next(null);
-		}
-	});
+gameSchema.pre('remove', (next) => {
+    let game = this;
+    Loan.deleteLoansByGame(game._id, (err) => {
+        if (err) {
+            return next(err);
+        } else {
+            return next(null);
+        }
+    });
 });
 
 gameSchema.plugin(autoIncrement, {
-	modelName: 'Game',
-	fieldName: '_id'
+    modelName: 'Game',
+    fieldName: '_id'
 });
 gameSchema.plugin(mongooseHidden);
 

@@ -1,11 +1,12 @@
 const express = require('express'),
     config = require('../../config/subporter.config'),
+    mongoose = require('mongoose'),
     moment = require('moment'),
     jwt = require('jwt-simple'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
     bodyValidator = require('../helpers/bodyValidator'),
-    User = require('../models/Users');
+    User = mongoose.model('User');
 
 let redis = config.redis_dev;
 
@@ -22,14 +23,14 @@ const cache = require('express-redis-cache')({
 let router = express.Router();
 
 /* Register */
-router.post("/register", function(req, res) {
+router.post("/register", cache.route(), (req, res) => {
     if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.email, req.body.firstname, req.body.name, req.body.password, req.body.username)) {
         res.json({
             info: "Please supply all required fields",
             success: false
         });
     } else {
-        User.addUser(req.body, function(err, user) {
+        User.addUser(req.body, (err, user) => {
             if (err) {
                 res.json({
                     info: "Error during creating user, e-mail or username could be already in use or there might be some validation errors",
@@ -59,14 +60,14 @@ router.post("/register", function(req, res) {
 });
 
 /* Login */
-router.post("/login", cache.route(), function(req, res) {
+router.post("/login", cache.route(), (req, res) => {
     if (Object.keys(req.body).length !== 2 || bodyValidator(req.body.email, req.body.password)) {
         res.json({
             info: "Please supply all required fields",
             success: false
         });
     } else {
-        User.getUserByEmailForLogin(req.body.email, function(err, user) {
+        User.getUserByEmailForLogin(req.body.email, (err, user) => {
             if (err) {
                 res.json({
                     info: "Error during reading user",
@@ -74,7 +75,7 @@ router.post("/login", cache.route(), function(req, res) {
                     error: err.errmsg
                 });
             } else if (user) {
-                user.comparePassword(req.body.password, user.password, function(err, isMatch) {
+                user.comparePassword(req.body.password, user.password, (err, isMatch) => {
                     if (err || !isMatch) {
                         res.json({
                             info: "Error during login, wrong password",
@@ -106,8 +107,8 @@ router.post("/login", cache.route(), function(req, res) {
 });
 
 /* Check email */
-router.get("/check/email/:email", cache.route(), function(req, res) {
-    User.getUserByEmail(req.params.email, function(err, user) {
+router.get("/check/email/:email", cache.route(), (req, res) => {
+    User.getUserByEmail(req.params.email, (err, user) => {
         if (err) {
             res.json({
                 info: "Error during reading user",
@@ -131,8 +132,8 @@ router.get("/check/email/:email", cache.route(), function(req, res) {
 });
 
 /* Check username */
-router.get("/check/username/:username", cache.route(), function(req, res) {
-    User.getUserByUsername(req.params.username, function(err, user) {
+router.get("/check/username/:username", cache.route(), (req, res) => {
+    User.getUserByUsername(req.params.username, (err, user) => {
         if (err) {
             res.json({
                 info: "Error during reading user",
@@ -156,7 +157,7 @@ router.get("/check/username/:username", cache.route(), function(req, res) {
 });
 
 /* Check admin */
-router.get("/check/admin", authenticate, admin, cache.route(), function(req, res) {
+router.get("/check/admin", authenticate, admin, cache.route(), (req, res) => {
     if (req.granted) {
         res.status(200);
         res.json({

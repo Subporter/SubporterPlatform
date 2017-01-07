@@ -78,7 +78,7 @@ app.use((err, req, res, next) => {
 /* Development error handler: stacktrace */
 
 if (app.get('env') === "development") {
-    app.use(function(err, req, res, next) {
+    app.use((err, req, res, next) => {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
@@ -89,7 +89,7 @@ if (app.get('env') === "development") {
 
 /* Production error handler: no stacktrace */
 
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
@@ -99,7 +99,7 @@ app.use(function(err, req, res, next) {
 
 /* UncaughtException */
 
-process.on('uncaughtException', function(err) {
+process.on('uncaughtException', (err) => {
     if (app.get('env') !== "development") {
         logger.errorLog.error("Error: ", err);
     } else {

@@ -1,7 +1,8 @@
 const mocha = require('mocha'),
+    mongoose = require('mongoose'),
     assert = require('assert'),
     request = require('request'),
-    Country = require('../../server/models/Countries.js');
+    Country = mongoose.model('Country');
 
 let baseUrl = "http://localhost:1337/";
 
@@ -9,24 +10,24 @@ if (process.env.NODE_ENV === 'production') {
     baseUrl = "https://localhost:1337/";
 }
 
-describe('Countries testing', function() {
-    it('should get all countries', function(done) {
-        Country.getCountries(function(err, countries) {
+describe('Countries testing', () => {
+    it('should get all countries', (done) => {
+        Country.getCountries((err, countries) => {
             let result = countries.length >= 1;
             assert.equal(result, true, "One or more countries are found");
             done();
         });
     });
 
-    it('should get one country by id', function(done) {
-        Country.getCountryById(1, function(err, country) {
+    it('should get one country by id', (done) => {
+        Country.getCountryById(1, (err, country) => {
             assert.equal(country._id, 1);
             done();
         });
     });
 
-    it('should make an API call and get all countries', function(done) {
-        request.get(baseUrl + 'api/countries', function(err, res, body) {
+    it('should make an API call and get all countries', (done) => {
+        request.get(baseUrl + 'api/countries', (err, res, body) => {
             if (err) {
                 console.log("Error: " + err.message);
             } else {

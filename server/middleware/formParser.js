@@ -1,23 +1,23 @@
 const multiparty = require('multiparty');
 
-let formParser = function(req, res, next) {
+let formParser = (req, res, next) => {
     if (req.granted) {
         let form = new multiparty.Form();
-        form.parse(req, function(err, fields, files) {
+        form.parse(req, (err, fields, files) => {
             if (err) {
                 next();
             } else {
                 req.files = files;
                 if (req.url.startsWith("/competitions")) {
-                    competitions(req, fields);
+                    this.competitions(req, fields);
                 } else if (req.url.startsWith("/teams")) {
-                    teams(req, fields);
+                    this.teams(req, fields);
                 } else if (req.url.startsWith("/subscriptions")) {
-                    subscriptions(req, fields);
+                    this.subscriptions(req, fields);
                 } else if (req.url.startsWith("/games")) {
-                    games(req, fields);
+                    this.games(req, fields);
                 } else if (req.url.startsWith("/users")) {
-                    users(req, fields);
+                    this.users(req, fields);
                 }
                 next();
             }
@@ -27,7 +27,7 @@ let formParser = function(req, res, next) {
     }
 };
 
-let competitions = function(req, fields) {
+let competitions = (req, fields) => {
     if (fields.country && fields.country[0]) req.body.country = fields.country[0];
     if (fields.description && fields.description[0]) req.body.description = fields.description[0];
     if (fields.name && fields.name[0]) req.body.name = fields.name[0];
@@ -35,7 +35,7 @@ let competitions = function(req, fields) {
     if (fields.logo && fields.logo[0]) req.body.logo = fields.logo[0];
 };
 
-let teams = function(req, fields) {
+let teams = (req, fields) => {
     if (fields.city && fields.city[0]) req.body.city = fields.city[0];
     if (fields.competition && fields.competition[0]) req.body.competition = fields.competition[0];
     if (fields.country && fields.country[0]) req.body.country = fields.country[0];
@@ -54,13 +54,13 @@ let teams = function(req, fields) {
     }
 };
 
-let subscriptions = function(req, fields) {
+let subscriptions = (req, fields) => {
     if (fields.place && fields.place[0]) req.body.place = fields.place[0];
     if (fields.subscription && fields.subscription[0]) req.body.subscription = fields.subscription[0];
     if (fields.team && fields.team[0]) req.body.team = fields.team[0];
 };
 
-let games = function(req, fields) {
+let games = (req, fields) => {
     if (fields.away && fields.away[0]) req.body.away = fields.away[0];
 	if (fields.banner && fields.banner[0]) req.body.banner = fields.banner[0];
     if (fields.competition && fields.competition[0]) req.body.competition = fields.competition[0];
@@ -69,7 +69,7 @@ let games = function(req, fields) {
     if (fields.importance && fields.importance[0]) req.body.importance = fields.importance[0];
 };
 
-let users = function(req, fields) {
+let users = (req, fields) => {
     if (fields.city && fields.city[0]) req.body.city = fields.city[0];
     if (fields.country && fields.country[0]) req.body.country = fields.country[0];
     if (fields.date_of_birth && fields.date_of_birth[0]) req.body.date_of_birth = fields.date_of_birth[0];

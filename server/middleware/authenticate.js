@@ -2,10 +2,10 @@ const passport = require('passport'),
     jwt = require('jwt-simple'),
     config = require('../../config/subporter.config');
 
-let authenticate = function(req, res, next) {
+let authenticate = (req, res, next) => {
     if (passport.authenticate('jwt', { session: false })) {
 		try {
-			let token = getToken(req.headers);
+			let token = this.getToken(req.headers);
 			if (token) {
 				let user = jwt.decode(token, config.jwt_secret);
 				if (user) {
@@ -26,7 +26,7 @@ let authenticate = function(req, res, next) {
     next();
 };
 
-let getToken = function(headers) {
+let getToken = (headers) => {
     if (headers && headers.authorization) {
         return headers.authorization;
     } else {

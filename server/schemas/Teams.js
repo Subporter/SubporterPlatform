@@ -61,17 +61,17 @@ let teamSchema = new mongoose.Schema({
 });
 
 
-teamSchema.pre('remove', function (next) {
+teamSchema.pre('remove', (next) => {
     let team = this;
-    Address.deleteAddress(team.address, function (err) {
+    Address.deleteAddress(team.address, (err) => {
         if (err) {
             return next(err);
         } else {
-            Subscription.deleteSubscriptionsByTeam(team._id, function (err) {
+            Subscription.deleteSubscriptionsByTeam(team._id, (err) => {
                 if (err) {
                     return next(err);
                 } else {
-                    Game.deleteGamesByTeam(team._id, function (err) {
+                    Game.deleteGamesByTeam(team._id, (err) => {
                         if (err) {
                             return next(err);
                         } else {

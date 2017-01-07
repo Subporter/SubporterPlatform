@@ -93,14 +93,14 @@ let userSchema = new mongoose.Schema({
     }
 });
 
-userSchema.pre('save', function(next) {
+userSchema.pre('save', (next) => {
     let user = this;
     if (this.isModified('password') || this.isNew) {
-        bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.genSalt(10, (err, salt) => {
             if (err) {
                 return next(err);
             } else {
-                bcrypt.hash(user.password, salt, null, function(err, hash) {
+                bcrypt.hash(user.password, salt, null, (err, hash) => {
                     if (err) {
                         return next(err);
                     } else {
@@ -115,17 +115,17 @@ userSchema.pre('save', function(next) {
     }
 });
 
-userSchema.pre('remove', function(next) {
+userSchema.pre('remove', (next) => {
     let user = this;
-    Address.deleteAddress(user.address, function(err) {
+    Address.deleteAddress(user.address, (err) => {
         if (err) {
             return next(err);
         } else {
-            Subscription.deleteSubscriptionsByUser(user._id, function(err) {
+            Subscription.deleteSubscriptionsByUser(user._id, (err) => {
                 if (err) {
                     return next(err);
                 } else {
-                    Loan.deleteLoansByUser(user._id, function(err) {
+                    Loan.deleteLoansByUser(user._id, (err) => {
                         if (err) {
                             return next(err);
                         } else {
@@ -138,8 +138,8 @@ userSchema.pre('remove', function(next) {
     });
 });
 
-userSchema.methods.comparePassword = function(providedPassword, actualPassword, next) {
-    bcrypt.compare(providedPassword, actualPassword, function(err, isMatch) {
+userSchema.methods.comparePassword = (providedPassword, actualPassword, next) => {
+    bcrypt.compare(providedPassword, actualPassword, (err, isMatch) => {
         if (err) {
             return next(err, null);
         } else {
