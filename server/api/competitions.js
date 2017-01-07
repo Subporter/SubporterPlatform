@@ -22,7 +22,7 @@ const cache = require('express-redis-cache')({
 let router = express.Router();
 
 /* Create */
-router.post("/competitions", authenticate, admin, formParser, imageSaver, function(req, res) {
+router.post("/competitions", authenticate, admin, formParser, imageSaver, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.country, req.body.description, req.body.logo, req.body.name, req.body.sport)) {
             res.json({
@@ -30,7 +30,7 @@ router.post("/competitions", authenticate, admin, formParser, imageSaver, functi
                 success: false
             });
         } else {
-            Competition.addCompetition(req.body, function(err) {
+            Competition.addCompetition(req.body, (err) => {
                 if (err) {
                     res.json({
                         info: "Error during creating competition",
@@ -42,7 +42,7 @@ router.post("/competitions", authenticate, admin, formParser, imageSaver, functi
                         info: "Competition created succesfully",
                         success: true
                     });
-					cache.del('/api/competitions/*', (err, count) => {
+                    cache.del('/api/competitions/*', (err, count) => {
                         if (err) {
                             console.error(err);
                         } else {
@@ -62,8 +62,8 @@ router.post("/competitions", authenticate, admin, formParser, imageSaver, functi
 });
 
 /* Read (all competitions) */
-router.get("/competitions", cache.route('/api/competitions/all'), function(req, res) {
-    Competition.getCompetitions(function(err, competitions) {
+router.get("/competitions", cache.route('/api/competitions/all'), (req, res) => {
+    Competition.getCompetitions((err, competitions) => {
         if (err) {
             res.json({
                 info: "Error during reading competitions",
@@ -85,8 +85,8 @@ router.get("/competitions", cache.route('/api/competitions/all'), function(req, 
     });
 });
 
-router.get("/competitions/country/:country", cache.route(), function(req, res) {
-    Competition.getCompetitionsByCountry(req.params.country, function(err, competitions) {
+router.get("/competitions/country/:country", cache.route(), (req, res) => {
+    Competition.getCompetitionsByCountry(req.params.country, (err, competitions) => {
         if (err) {
             res.json({
                 info: "Error during reading competitions",
@@ -108,8 +108,8 @@ router.get("/competitions/country/:country", cache.route(), function(req, res) {
     });
 });
 
-router.get("/competitions/sport/:sport", cache.route(), function(req, res) {
-    Competition.getCompetitionsBySport(req.params.sport, function(err, competitions) {
+router.get("/competitions/sport/:sport", cache.route(), (req, res) => {
+    Competition.getCompetitionsBySport(req.params.sport, (err, competitions) => {
         if (err) {
             res.json({
                 info: "Error during reading competitions",
@@ -131,8 +131,8 @@ router.get("/competitions/sport/:sport", cache.route(), function(req, res) {
     });
 });
 
-router.get("/competitions/country/:country/sport/:sport", cache.route(), function(req, res) {
-    Competition.getCompetitionsByCountryAndSport(req.params.country, req.params.sport, function(err, competitions) {
+router.get("/competitions/country/:country/sport/:sport", cache.route(), (req, res) => {
+    Competition.getCompetitionsByCountryAndSport(req.params.country, req.params.sport, (err, competitions) => {
         if (err) {
             res.json({
                 info: "Error during reading competitions",
@@ -155,8 +155,8 @@ router.get("/competitions/country/:country/sport/:sport", cache.route(), functio
 });
 
 /* Read (one competition) */
-router.get("/competitions/:id", cache.route(), function(req, res) {
-    Competition.getCompetitionById(req.params.id, function(err, competition) {
+router.get("/competitions/:id", cache.route(), (req, res) => {
+    Competition.getCompetitionById(req.params.id, (err, competition) => {
         if (err) {
             res.json({
                 info: "Error during reading competition",
@@ -179,7 +179,7 @@ router.get("/competitions/:id", cache.route(), function(req, res) {
 });
 
 /* Update */
-router.put("/competitions/:id", authenticate, admin, formParser, imageSaver, function(req, res) {
+router.put("/competitions/:id", authenticate, admin, formParser, imageSaver, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.country, req.body.description, req.body.logo, req.body.name, req.body.sport)) {
             res.json({
@@ -187,7 +187,7 @@ router.put("/competitions/:id", authenticate, admin, formParser, imageSaver, fun
                 success: false
             });
         } else {
-            Competition.getCompetitionById(req.params.id, function(err, competition) {
+            Competition.getCompetitionById(req.params.id, (err, competition) => {
                 if (err) {
                     res.json({
                         info: "Error during reading competition",
@@ -195,7 +195,7 @@ router.put("/competitions/:id", authenticate, admin, formParser, imageSaver, fun
                         error: err.errmsg
                     });
                 } else if (competition) {
-                    Competition.updateCompetition(competition, req.body, function(err) {
+                    Competition.updateCompetition(competition, req.body, (err) => {
                         if (err) {
                             res.json({
                                 info: "Error during updating competition",
@@ -234,9 +234,9 @@ router.put("/competitions/:id", authenticate, admin, formParser, imageSaver, fun
 });
 
 /* Delete */
-router.delete("/competitions/:id", authenticate, admin, function(req, res) {
+router.delete("/competitions/:id", authenticate, admin, (req, res) => {
     if (req.granted) {
-        Competition.deleteCompetition(req.params.id, function(err) {
+        Competition.deleteCompetition(req.params.id, (err) => {
             if (err) {
                 res.json({
                     info: "Error during deleting competition",

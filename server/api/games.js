@@ -22,7 +22,7 @@ const cache = require('express-redis-cache')({
 let router = express.Router();
 
 /* Create */
-router.post("/games", authenticate, admin, formParser, imageSaver, function(req, res) {
+router.post("/games", authenticate, admin, formParser, imageSaver, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 6 || bodyValidator(req.body.away, req.body.banner, req.body.competition, req.body.date, req.body.home, req.body.importance)) {
             res.json({
@@ -30,7 +30,7 @@ router.post("/games", authenticate, admin, formParser, imageSaver, function(req,
                 success: false
             });
         } else {
-            Game.addGame(req.body, function(err) {
+            Game.addGame(req.body, (err) => {
                 if (err) {
                     res.json({
                         info: "Error during creating game",
@@ -42,7 +42,7 @@ router.post("/games", authenticate, admin, formParser, imageSaver, function(req,
                         info: "Game created succesfully",
                         success: true
                     });
-					cache.del('/api/games/*', (err, count) => {
+                    cache.del('/api/games/*', (err, count) => {
                         if (err) {
                             console.error(err);
                         } else {
@@ -62,8 +62,8 @@ router.post("/games", authenticate, admin, formParser, imageSaver, function(req,
 });
 
 /* Read (all games) */
-router.get("/games", authenticate, admin, cache.route('/api/games/all'), function(req, res) {
-    Game.getGames(function(err, games) {
+router.get("/games", authenticate, admin, cache.route('/api/games/all'), (req, res) => {
+    Game.getGames((err, games) => {
         if (err) {
             res.json({
                 info: "Error during reading games",
@@ -85,8 +85,8 @@ router.get("/games", authenticate, admin, cache.route('/api/games/all'), functio
     });
 });
 
-router.get("/games/featured/:competition", cache.route(), function(req, res) {
-    Game.getFeaturedGames(req.params.competition, function(err, games) {
+router.get("/games/featured/:competition", cache.route(), (req, res) => {
+    Game.getFeaturedGames(req.params.competition, (err, games) => {
         if (err) {
             res.json({
                 info: "Error during reading games",
@@ -108,8 +108,8 @@ router.get("/games/featured/:competition", cache.route(), function(req, res) {
     });
 });
 
-router.get("/games/competition/:competition", cache.route(), function(req, res) {
-    Game.getGamesByCompetition(req.params.competition, function(err, games) {
+router.get("/games/competition/:competition", cache.route(), (req, res) => {
+    Game.getGamesByCompetition(req.params.competition, (err, games) => {
         if (err) {
             res.json({
                 info: "Error during reading games",
@@ -131,8 +131,8 @@ router.get("/games/competition/:competition", cache.route(), function(req, res) 
     });
 });
 
-router.get("/games/week/:country", cache.route(), function(req, res) {
-    Game.getGamesByCountryForThisWeek(req.params.competition, function(err, games) {
+router.get("/games/week/:country", cache.route(), (req, res) => {
+    Game.getGamesByCountryForThisWeek(req.params.country, (err, games) => {
         if (err) {
             res.json({
                 info: "Error during reading games",
@@ -154,8 +154,31 @@ router.get("/games/week/:country", cache.route(), function(req, res) {
     });
 });
 
-router.get("/games/team/:team", cache.route(), function(req, res) {
-    Game.getGamesByTeam(req.params.team, function(err, games) {
+router.get("/games/week/:competition", cache.route(), (req, res) => {
+    Game.getGamesByCompetitionForThisWeek(req.params.competition, (err, games) => {
+        if (err) {
+            res.json({
+                info: "Error during reading games",
+                success: false,
+                error: err
+            });
+        } else if (games) {
+            res.json({
+                info: "Games found succesfully",
+                success: true,
+                data: games
+            });
+        } else {
+            res.json({
+                info: "Games not found",
+                success: false
+            });
+        }
+    });
+});
+
+router.get("/games/team/:team", cache.route(), (req, res) => {
+    Game.getGamesByTeam(req.params.team, (err, games) => {
         if (err) {
             res.json({
                 info: "Error during reading games",
@@ -178,8 +201,8 @@ router.get("/games/team/:team", cache.route(), function(req, res) {
 });
 
 /* Read (one game) */
-router.get("/games/:id", cache.route(), function(req, res) {
-    Game.getGameById(req.params.id, function(err, game) {
+router.get("/games/:id", cache.route(), (req, res) => {
+    Game.getGameById(req.params.id, (err, game) => {
         if (err) {
             res.json({
                 info: "Error during reading game",
@@ -202,7 +225,7 @@ router.get("/games/:id", cache.route(), function(req, res) {
 });
 
 /* Update */
-router.put("/games/:id", authenticate, admin, formParser, imageSaver, function(req, res) {
+router.put("/games/:id", authenticate, admin, formParser, imageSaver, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 6 || bodyValidator(req.body.away, req.body.banner, req.body.competition, req.body.date, req.body.home, req.body.importance)) {
             res.json({
@@ -210,7 +233,7 @@ router.put("/games/:id", authenticate, admin, formParser, imageSaver, function(r
                 success: false
             });
         } else {
-            Game.getGameById(req.params.id, function(err, game) {
+            Game.getGameById(req.params.id, (err, game) => {
                 if (err) {
                     res.json({
                         info: "Error during reading game",
@@ -218,7 +241,7 @@ router.put("/games/:id", authenticate, admin, formParser, imageSaver, function(r
                         error: err
                     });
                 } else if (game) {
-                    Game.updateGame(game, req.body, function(err) {
+                    Game.updateGame(game, req.body, (err) => {
                         if (err) {
                             res.json({
                                 info: "Error during updating game",
@@ -257,9 +280,9 @@ router.put("/games/:id", authenticate, admin, formParser, imageSaver, function(r
 });
 
 /* Delete */
-router.delete("/games/:id", authenticate, admin, function(req, res) {
+router.delete("/games/:id", authenticate, admin, (req, res) => {
     if (req.granted) {
-        Game.deleteGame(req.params.id, function(err) {
+        Game.deleteGame(req.params.id, (err) => {
             if (err) {
                 res.json({
                     info: "Error during deleting game",

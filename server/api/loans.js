@@ -23,7 +23,7 @@ const cache = require('express-redis-cache')({
 let router = express.Router();
 
 /* Create */
-router.post("/loans", authenticate, loadUser, function(req, res) {
+router.post("/loans", authenticate, loadUser, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 2 || bodyValidator(req.body.subscription, req.body.game)) {
             res.json({
@@ -32,7 +32,7 @@ router.post("/loans", authenticate, loadUser, function(req, res) {
             });
         } else {
             req.body.lent_out_by = req.user._id;
-            Loan.addLoan(req.body, function(err, id) {
+            Loan.addLoan(req.body, (err, id) => {
                 if (err || !id) {
                     res.json({
                         info: "Error during creating loan",
@@ -40,7 +40,7 @@ router.post("/loans", authenticate, loadUser, function(req, res) {
                         error: err.errmsg
                     });
                 } else {
-                    Game.getGameById(req.body.game, function(err, game) {
+                    Game.getGameById(req.body.game, (err, game) => {
                         if (err) {
                             res.json({
                                 info: "Error during creating loan",
@@ -48,7 +48,7 @@ router.post("/loans", authenticate, loadUser, function(req, res) {
                                 error: err.errmsg
                             });
                         } else {
-                            Game.toggleLoans(game, id, function(err) {
+                            Game.toggleLoans(game, id, (err) => {
                                 if (err) {
                                     res.json({
                                         info: "Error during creating loan",
@@ -60,13 +60,13 @@ router.post("/loans", authenticate, loadUser, function(req, res) {
                                         info: "Loan created succesfully",
                                         success: true
                                     });
-									cache.del('/api/loans/*', (err, count) => {
-					                    if (err) {
-					                        console.error(err);
-					                    } else {
-					                        console.log("Cache for /api/loans cleared");
-					                    }
-					                });
+                                    cache.del('/api/loans/*', (err, count) => {
+                                        if (err) {
+                                            console.error(err);
+                                        } else {
+                                            console.log("Cache for /api/loans cleared");
+                                        }
+                                    });
                                 }
                             });
                         }
@@ -84,8 +84,8 @@ router.post("/loans", authenticate, loadUser, function(req, res) {
 });
 
 /* Read (all games) */
-router.get("/loans", cache.route('/api/loans/all'), function(req, res) {
-    Loan.getLoans(function(err, loans) {
+router.get("/loans", cache.route('/api/loans/all'), (req, res) => {
+    Loan.getLoans((err, loans) => {
         if (err) {
             res.json({
                 info: "Error during reading loans",
@@ -107,9 +107,9 @@ router.get("/loans", cache.route('/api/loans/all'), function(req, res) {
     });
 });
 
-router.get("/loans/game/:game", cache.route(), function(req, res) {
+router.get("/loans/game/:game", cache.route(), (req, res) => {
     let game = req.params.game;
-    Loan.getLoansByGame(game, function(err, loans) {
+    Loan.getLoansByGame(game, (err, loans) => {
         if (err) {
             res.json({
                 info: "Error during reading loans",
@@ -117,7 +117,7 @@ router.get("/loans/game/:game", cache.route(), function(req, res) {
                 error: err.errmsg
             });
         } else if (loans) {
-            Loan.getAmountOfLoanedOutGames(game, function(err, count) {
+            Loan.getAmountOfLoanedOutGames(game, (err, count) => {
                 if (err) {
                     res.json({
                         info: "Error during reading loans",
@@ -142,8 +142,8 @@ router.get("/loans/game/:game", cache.route(), function(req, res) {
     });
 });
 
-router.get("/loans/lent_out_by/:lent_out_by", cache.route(), function(req, res) {
-    Loan.getLoansByLentOutBy(req.params.lent_out_by, function(err, loans) {
+router.get("/loans/lent_out_by/:lent_out_by", cache.route(), (req, res) => {
+    Loan.getLoansByLentOutBy(req.params.lent_out_by, (err, loans) => {
         if (err) {
             res.json({
                 info: "Error during reading loans",
@@ -165,8 +165,8 @@ router.get("/loans/lent_out_by/:lent_out_by", cache.route(), function(req, res) 
     });
 });
 
-router.get("/loans/lent_by/:lent_by", cache.route(), function(req, res) {
-    Loan.getLoansByGame(req.params.lent_by, function(err, loans) {
+router.get("/loans/lent_by/:lent_by", cache.route(), (req, res) => {
+    Loan.getLoansByGame(req.params.lent_by, (err, loans) => {
         if (err) {
             res.json({
                 info: "Error during reading loans",
@@ -189,8 +189,8 @@ router.get("/loans/lent_by/:lent_by", cache.route(), function(req, res) {
 });
 
 /* Read (one game) */
-router.get("/loans/:id", cache.route(), function(req, res) {
-    Loan.getLoanById(req.params.id, function(err, loan) {
+router.get("/loans/:id", cache.route(), (req, res) => {
+    Loan.getLoanById(req.params.id, (err, loan) => {
         if (err) {
             res.json({
                 info: "Error during reading loan",
@@ -213,7 +213,7 @@ router.get("/loans/:id", cache.route(), function(req, res) {
 });
 
 /* Update */
-router.put("/loans/:id", authenticate, loadUser, function(req, res) {
+router.put("/loans/:id", authenticate, loadUser, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 2 || bodyValidator(req.body.subscription, req.body.game)) {
             res.json({
@@ -221,7 +221,7 @@ router.put("/loans/:id", authenticate, loadUser, function(req, res) {
                 success: false
             });
         } else {
-            Loan.getLoanById(req.params.id, function(err, loan) {
+            Loan.getLoanById(req.params.id, (err, loan) => {
                 if (err) {
                     res.json({
                         info: "Error during reading loan",
@@ -229,7 +229,7 @@ router.put("/loans/:id", authenticate, loadUser, function(req, res) {
                         error: err.errmsg
                     });
                 } else if (loan) {
-                    Loan.updateLoan(loan, req.body, function(err) {
+                    Loan.updateLoan(loan, req.body, (err) => {
                         if (err) {
                             res.json({
                                 info: "Error during updating loan",
@@ -267,13 +267,13 @@ router.put("/loans/:id", authenticate, loadUser, function(req, res) {
     }
 });
 
-router.put("/loans/lend/:id", authenticate, loadUser, function(req, res) {
+router.put("/loans/lend/:id", authenticate, loadUser, (req, res) => {
     if (req.granted) {
         req.body.lent = true;
         req.body.paid = true;
         req.body.lent_by = req.user._id;
         req.body.lent_on = moment().toDate();
-        Loan.getLoanById(req.params.id, function(err, loan) {
+        Loan.getLoanById(req.params.id, (err, loan) => {
             if (err) {
                 res.json({
                     info: "Error during reading loan",
@@ -281,7 +281,7 @@ router.put("/loans/lend/:id", authenticate, loadUser, function(req, res) {
                     error: err.errmsg
                 });
             } else if (loan && loan.lent_out_by !== req.body.lent_by) {
-                Loan.updateLoan(loan, req.body, function(err) {
+                Loan.updateLoan(loan, req.body, (err) => {
                     if (err) {
                         res.json({
                             info: "Error during updating loan",
@@ -319,9 +319,9 @@ router.put("/loans/lend/:id", authenticate, loadUser, function(req, res) {
 });
 
 /* Delete */
-router.delete("/loans/:id", authenticate, admin, function(req, res) {
+router.delete("/loans/:id", authenticate, admin, (req, res) => {
     if (req.granted) {
-        Loan.deleteLoan(req.params.id, function(err) {
+        Loan.deleteLoan(req.params.id, (err) => {
             if (err) {
                 res.json({
                     info: "Error during deleting loan",

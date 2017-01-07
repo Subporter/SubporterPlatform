@@ -21,7 +21,7 @@ let router = express.Router();
 
 /* Create */
 
-router.post("/countries", authenticate, admin, function(req, res) {
+router.post("/countries", authenticate, admin, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 1 || bodyValidator(req.body.name)) {
             res.json({
@@ -29,7 +29,7 @@ router.post("/countries", authenticate, admin, function(req, res) {
                 success: false
             });
         } else {
-            Country.addCountry(req.body, function(err) {
+            Country.addCountry(req.body, (err) => {
                 if (err) {
                     res.json({
                         info: "Error during creating country",
@@ -41,7 +41,7 @@ router.post("/countries", authenticate, admin, function(req, res) {
                         info: "Country created succesfully",
                         success: true
                     });
-					cache.del('/api/countries/*', (err, count) => {
+                    cache.del('/api/countries/*', (err, count) => {
                         if (err) {
                             console.error(err);
                         } else {
@@ -61,8 +61,8 @@ router.post("/countries", authenticate, admin, function(req, res) {
 });
 
 /* Read (all countries) */
-router.get("/countries", cache.route('/api/countries/all'), function(req, res) {
-    Country.getCountries(function(err, countries) {
+router.get("/countries", cache.route('/api/countries/all'), (req, res) => {
+    Country.getCountries((err, countries) => {
         if (err) {
             res.json({
                 info: "Error during reading countries",
@@ -85,8 +85,8 @@ router.get("/countries", cache.route('/api/countries/all'), function(req, res) {
 });
 
 /* Read (one country) */
-router.get("/countries/:id", cache.route(), function(req, res) {
-    Country.getCountryById(req.params.id, function(err, country) {
+router.get("/countries/:id", cache.route(), (req, res) => {
+    Country.getCountryById(req.params.id, (err, country) => {
         if (err) {
             res.json({
                 info: "Error during reading country",
@@ -109,7 +109,7 @@ router.get("/countries/:id", cache.route(), function(req, res) {
 });
 
 /* Update */
-router.put("/countries/:id", authenticate, admin, function(req, res) {
+router.put("/countries/:id", authenticate, admin, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 1 || bodyValidator(req.body.name)) {
             res.json({
@@ -117,7 +117,7 @@ router.put("/countries/:id", authenticate, admin, function(req, res) {
                 success: false
             });
         } else {
-            Country.getCountryById(req.params.id, function(err, country) {
+            Country.getCountryById(req.params.id, (err, country) => {
                 if (err) {
                     res.json({
                         info: "Error during reading country",
@@ -125,7 +125,7 @@ router.put("/countries/:id", authenticate, admin, function(req, res) {
                         error: err.errmsg
                     });
                 } else if (country) {
-                    Country.updateCountry(country, req.body, function(err) {
+                    Country.updateCountry(country, req.body, (err) => {
                         if (err) {
                             res.json({
                                 info: "Error during updating country",
@@ -164,9 +164,9 @@ router.put("/countries/:id", authenticate, admin, function(req, res) {
 });
 
 /* Delete */
-router.delete("/countries/:id", authenticate, admin, function(req, res) {
+router.delete("/countries/:id", authenticate, admin, (req, res) => {
     if (req.granted) {
-        Country.deleteCountry(req.params.id, function(err) {
+        Country.deleteCountry(req.params.id, (err) => {
             if (err) {
                 res.json({
                     info: "Error during deleting country",

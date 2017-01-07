@@ -25,7 +25,7 @@ const cache = require('express-redis-cache')({
 let router = express.Router();
 
 /* Create */
-router.post("/teams", authenticate, admin, formParser, imageSaver, function(req, res) {
+router.post("/teams", authenticate, admin, formParser, imageSaver, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 12 || bodyValidator(req.body.address, req.body.background, req.body.city, req.body.competition, req.body.country, req.body.logo, req.body.name, req.body.number, req.body.postal, req.body.price, req.body.stadion, req.body.street)) {
             res.json({
@@ -33,7 +33,7 @@ router.post("/teams", authenticate, admin, formParser, imageSaver, function(req,
                 success: false
             });
         } else {
-            Address.addOrUpdateAddress(req.body.address, req.body, function(err, id) {
+            Address.addOrUpdateAddress(req.body.address, req.body, (err, id) => {
                 if (err || !id) {
                     res.json({
                         info: "Error during creating/updating address",
@@ -42,7 +42,7 @@ router.post("/teams", authenticate, admin, formParser, imageSaver, function(req,
                     });
                 } else {
                     req.body.address = id;
-                    Team.addTeam(req.body, function(err) {
+                    Team.addTeam(req.body, (err) => {
                         if (err) {
                             res.json({
                                 info: "Error during creating team",
@@ -54,13 +54,13 @@ router.post("/teams", authenticate, admin, formParser, imageSaver, function(req,
                                 info: "Team created succesfully",
                                 success: true
                             });
-							cache.del('/api/teams/*', (err, count) => {
-								if (err) {
-									console.error(err);
-								} else {
-									console.log("Cache for /api/teams cleared");
-								}
-							});
+                            cache.del('/api/teams/*', (err, count) => {
+                                if (err) {
+                                    console.error(err);
+                                } else {
+                                    console.log("Cache for /api/teams cleared");
+                                }
+                            });
                         }
                     });
                 }
@@ -76,8 +76,8 @@ router.post("/teams", authenticate, admin, formParser, imageSaver, function(req,
 });
 
 /* Read (all teams) */
-router.get("/teams", cache.route('/api/teams/all'), function(req, res) {
-    Team.getTeams(function(err, teams) {
+router.get("/teams", cache.route('/api/teams/all'), (req, res) => {
+    Team.getTeams((err, teams) => {
         if (err) {
             res.json({
                 info: "Error during reading teams",
@@ -100,8 +100,8 @@ router.get("/teams", cache.route('/api/teams/all'), function(req, res) {
 });
 
 
-router.get("/teams/competition/:competition", cache.route(), function(req, res) {
-    Team.getTeamsByCompetition(req.params.competition, function(err, teams) {
+router.get("/teams/competition/:competition", cache.route(), (req, res) => {
+    Team.getTeamsByCompetition(req.params.competition, (err, teams) => {
         if (err) {
             res.json({
                 info: "Error during reading teams",
@@ -124,8 +124,8 @@ router.get("/teams/competition/:competition", cache.route(), function(req, res) 
 
 });
 
-router.get("/teams/country/:country", cache.route(), function(req, res) {
-    Team.getTeamsByCountry(req.params.country, function(err, teams) {
+router.get("/teams/country/:country", cache.route(), (req, res) => {
+    Team.getTeamsByCountry(req.params.country, (err, teams) => {
         if (err) {
             res.json({
                 info: "Error during reading teams",
@@ -148,8 +148,8 @@ router.get("/teams/country/:country", cache.route(), function(req, res) {
 });
 
 /* Read (one team) */
-router.get("/teams/:id", cache.route(), function(req, res) {
-    Team.getTeamById(req.params.id, function(err, team) {
+router.get("/teams/:id", cache.route(), (req, res) => {
+    Team.getTeamById(req.params.id, (err, team) => {
         if (err) {
             res.json({
                 info: "Error during reading team",
@@ -172,7 +172,7 @@ router.get("/teams/:id", cache.route(), function(req, res) {
 });
 
 /* Update */
-router.put("/teams/:id", authenticate, admin, formParser, imageSaver, function(req, res) {
+router.put("/teams/:id", authenticate, admin, formParser, imageSaver, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 12 || bodyValidator(req.body.address, req.body.background, req.body.city, req.body.competition, req.body.country, req.body.logo, req.body.name, req.body.number, req.body.postal, req.body.price, req.body.stadion, req.body.street)) {
             res.json({
@@ -180,7 +180,7 @@ router.put("/teams/:id", authenticate, admin, formParser, imageSaver, function(r
                 success: false
             });
         } else {
-            Team.getTeamById(req.params.id, function(err, team) {
+            Team.getTeamById(req.params.id, (err, team) => {
                 if (err) {
                     res.json({
                         info: "Error during reading team",
@@ -188,7 +188,7 @@ router.put("/teams/:id", authenticate, admin, formParser, imageSaver, function(r
                         error: err.errmsg
                     });
                 } else if (team) {
-                    Address.addOrUpdateAddress(req.body.address, req.body, function(err, id) {
+                    Address.addOrUpdateAddress(req.body.address, req.body, (err, id) => {
                         if (err || !id) {
                             res.json({
                                 info: "Error during creating/updating address",
@@ -197,7 +197,7 @@ router.put("/teams/:id", authenticate, admin, formParser, imageSaver, function(r
                             });
                         } else {
                             req.body.address = id;
-                            Team.updateTeam(team, req.body, function(err) {
+                            Team.updateTeam(team, req.body, (err) => {
                                 if (err) {
                                     res.json({
                                         info: "Error during updating team",
@@ -210,12 +210,12 @@ router.put("/teams/:id", authenticate, admin, formParser, imageSaver, function(r
                                         success: true
                                     });
                                     cache.del('/api/teams/*', (err, count) => {
-        								if (err) {
-        									console.error(err);
-        								} else {
-        									console.log("Cache for /api/teams cleared");
-        								}
-        							});
+                                        if (err) {
+                                            console.error(err);
+                                        } else {
+                                            console.log("Cache for /api/teams cleared");
+                                        }
+                                    });
                                 }
                             });
                         }
@@ -238,9 +238,9 @@ router.put("/teams/:id", authenticate, admin, formParser, imageSaver, function(r
 });
 
 /* Favorite */
-router.post("/teams/favorite/:id", authenticate, loadUser, function(req, res) {
+router.post("/teams/favorite/:id", authenticate, loadUser, (req, res) => {
     if (req.granted) {
-        User.toggleFavorite(req.user, req.params.id, function(err, user) {
+        User.toggleFavorite(req.user, req.params.id, (err, user) => {
             if (err) {
                 res.json({
                     info: "Error during favoriting team",
@@ -252,7 +252,8 @@ router.post("/teams/favorite/:id", authenticate, loadUser, function(req, res) {
                     info: "Team favorited succesfully",
                     success: true,
                     data: user
-                });cache.del('/api/users/*', (err, count) => {
+                });
+                cache.del('/api/users/*', (err, count) => {
                     if (err) {
                         console.error(err);
                     } else {
@@ -271,9 +272,9 @@ router.post("/teams/favorite/:id", authenticate, loadUser, function(req, res) {
 });
 
 /* Delete */
-router.delete("/teams/:id", authenticate, admin, function(req, res) {
+router.delete("/teams/:id", authenticate, admin, (req, res) => {
     if (req.granted) {
-        Team.deleteTeam(req.params.id, function(err) {
+        Team.deleteTeam(req.params.id, (err) => {
             if (err) {
                 res.json({
                     info: "Error during deleting team",
@@ -303,9 +304,9 @@ router.delete("/teams/:id", authenticate, admin, function(req, res) {
     }
 });
 
-router.delete("/teams/references/:id", authenticate, admin, function(req, res) {
+router.delete("/teams/references/:id", authenticate, admin, (req, res) => {
     if (req.granted) {
-        Team.deleteTeamReferences(req.params.id, function(err) {
+        Team.deleteTeamReferences(req.params.id, (err) => {
             if (err) {
                 res.json({
                     info: "Error during deleting team references",
