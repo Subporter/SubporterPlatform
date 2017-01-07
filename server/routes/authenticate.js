@@ -8,22 +8,10 @@ const express = require('express'),
     bodyValidator = require('../helpers/bodyValidator'),
     User = mongoose.model('User');
 
-let redis = config.redis_dev;
-
-if (process.env.NODE_ENV === 'production') {
-    redis = config.redis_prod;
-}
-
-const cache = require('express-redis-cache')({
-    host: redis.host,
-    port: redis.port,
-    expire: 60
-});
-
 let router = express.Router();
 
 /* Register */
-router.post("/register", cache.route(), (req, res) => {
+router.post("/register", (req, res) => {
     if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.email, req.body.firstname, req.body.name, req.body.password, req.body.username)) {
         res.json({
             info: "Please supply all required fields",
@@ -60,7 +48,7 @@ router.post("/register", cache.route(), (req, res) => {
 });
 
 /* Login */
-router.post("/login", cache.route(), (req, res) => {
+router.post("/login", (req, res) => {
     if (Object.keys(req.body).length !== 2 || bodyValidator(req.body.email, req.body.password)) {
         res.json({
             info: "Please supply all required fields",
@@ -107,7 +95,7 @@ router.post("/login", cache.route(), (req, res) => {
 });
 
 /* Check email */
-router.get("/check/email/:email", cache.route(), (req, res) => {
+router.get("/check/email/:email", (req, res) => {
     User.getUserByEmail(req.params.email, (err, user) => {
         if (err) {
             res.json({
@@ -132,7 +120,7 @@ router.get("/check/email/:email", cache.route(), (req, res) => {
 });
 
 /* Check username */
-router.get("/check/username/:username", cache.route(), (req, res) => {
+router.get("/check/username/:username", (req, res) => {
     User.getUserByUsername(req.params.username, (err, user) => {
         if (err) {
             res.json({
@@ -157,7 +145,7 @@ router.get("/check/username/:username", cache.route(), (req, res) => {
 });
 
 /* Check admin */
-router.get("/check/admin", authenticate, admin, cache.route(), (req, res) => {
+router.get("/check/admin", authenticate, admin, (req, res) => {
     if (req.granted) {
         res.status(200);
         res.json({

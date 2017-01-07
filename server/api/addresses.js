@@ -40,6 +40,13 @@ router.post("/addresses", authenticate, admin, function(req, res) {
                         info: "Address created succesfully",
                         success: true
                     });
+                    cache.del('/api/addresses/*', (err, count) => {
+                        if (err) {
+                            console.error(err);
+                        } else {
+                            console.log("Cache for /api/addresses cleared");
+                        }
+                    });
                 }
             });
         }
@@ -53,7 +60,7 @@ router.post("/addresses", authenticate, admin, function(req, res) {
 });
 
 /* Read (all addresses) */
-router.get("/addresses", authenticate, admin, cache.route(), function(req, res) {
+router.get("/addresses", authenticate, admin, cache.route('/api/addresses/all'), function(req, res) {
     if (req.granted) {
         Address.getAddresses(function(err, addresses) {
             if (err) {
@@ -176,6 +183,13 @@ router.put("/addresses/:id", authenticate, admin, function(req, res) {
                                 info: "Address updated succesfully",
                                 success: true
                             });
+                            cache.del('/api/addresses/*', (err, count) => {
+                                if (err) {
+                                    console.error(err);
+                                } else {
+                                    console.log("Cache for /api/addresses cleared");
+                                }
+                            });
                         }
                     });
                 } else {
@@ -209,6 +223,13 @@ router.delete("/addresses/:id", authenticate, admin, function(req, res) {
                 res.json({
                     info: "Address deleted succesfully",
                     success: true
+                });
+                cache.del('/api/addresses/*', (err, count) => {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        console.log("Cache for /api/addresses cleared");
+                    }
                 });
             }
         });

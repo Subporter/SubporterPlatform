@@ -41,6 +41,13 @@ router.post("/countries", authenticate, admin, function(req, res) {
                         info: "Country created succesfully",
                         success: true
                     });
+					cache.del('/api/countries/*', (err, count) => {
+                        if (err) {
+                            console.error(err);
+                        } else {
+                            console.log("Cache for /api/countries cleared");
+                        }
+                    });
                 }
             });
         }
@@ -54,7 +61,7 @@ router.post("/countries", authenticate, admin, function(req, res) {
 });
 
 /* Read (all countries) */
-router.get("/countries", cache.route(), function(req, res) {
+router.get("/countries", cache.route('/api/countries/all'), function(req, res) {
     Country.getCountries(function(err, countries) {
         if (err) {
             res.json({
@@ -130,6 +137,13 @@ router.put("/countries/:id", authenticate, admin, function(req, res) {
                                 info: "Country updated succesfully",
                                 success: true
                             });
+                            cache.del('/api/countries/*', (err, count) => {
+                                if (err) {
+                                    console.error(err);
+                                } else {
+                                    console.log("Cache for /api/countries cleared");
+                                }
+                            });
                         }
                     });
                 } else {
@@ -163,6 +177,13 @@ router.delete("/countries/:id", authenticate, admin, function(req, res) {
                 res.json({
                     info: "Country deleted succesfully",
                     success: true
+                });
+                cache.del('/api/countries/*', (err, count) => {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        console.log("Cache for /api/countries cleared");
+                    }
                 });
             }
         });

@@ -54,6 +54,13 @@ router.post("/teams", authenticate, admin, formParser, imageSaver, function(req,
                                 info: "Team created succesfully",
                                 success: true
                             });
+							cache.del('/api/teams/*', (err, count) => {
+								if (err) {
+									console.error(err);
+								} else {
+									console.log("Cache for /api/teams cleared");
+								}
+							});
                         }
                     });
                 }
@@ -69,7 +76,7 @@ router.post("/teams", authenticate, admin, formParser, imageSaver, function(req,
 });
 
 /* Read (all teams) */
-router.get("/teams", cache.route(), function(req, res) {
+router.get("/teams", cache.route('/api/teams/all'), function(req, res) {
     Team.getTeams(function(err, teams) {
         if (err) {
             res.json({
@@ -202,6 +209,13 @@ router.put("/teams/:id", authenticate, admin, formParser, imageSaver, function(r
                                         info: "Team updated succesfully",
                                         success: true
                                     });
+                                    cache.del('/api/teams/*', (err, count) => {
+        								if (err) {
+        									console.error(err);
+        								} else {
+        									console.log("Cache for /api/teams cleared");
+        								}
+        							});
                                 }
                             });
                         }
@@ -238,6 +252,12 @@ router.post("/teams/favorite/:id", authenticate, loadUser, function(req, res) {
                     info: "Team favorited succesfully",
                     success: true,
                     data: user
+                });cache.del('/api/users/*', (err, count) => {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        console.log("Cache for /api/users cleared");
+                    }
                 });
             }
         });
@@ -265,6 +285,13 @@ router.delete("/teams/:id", authenticate, admin, function(req, res) {
                     info: "Team deleted succesfully",
                     success: true
                 });
+                cache.del('/api/teams/*', (err, count) => {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        console.log("Cache for /api/teams cleared");
+                    }
+                });
             }
         });
     } else {
@@ -289,6 +316,13 @@ router.delete("/teams/references/:id", authenticate, admin, function(req, res) {
                 res.json({
                     info: "Team references deleted succesfully",
                     success: true
+                });
+                cache.del('/api/teams/*', (err, count) => {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        console.log("Cache for /api/teams cleared");
+                    }
                 });
             }
         });

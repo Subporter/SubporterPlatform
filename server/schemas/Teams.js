@@ -61,7 +61,7 @@ let teamSchema = new mongoose.Schema({
 });
 
 
-teamSchema.pre('remove', (next) => {
+teamSchema.pre('remove', function(next) {
     let team = this;
     Address.deleteAddress(team.address, (err) => {
         if (err) {

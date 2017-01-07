@@ -52,7 +52,7 @@ let gameSchema = new mongoose.Schema({
     }
 });
 
-gameSchema.pre('remove', (next) => {
+gameSchema.pre('remove', function(next) {
     let game = this;
     Loan.deleteLoansByGame(game._id, (err) => {
         if (err) {

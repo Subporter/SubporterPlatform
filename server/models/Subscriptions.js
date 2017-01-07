@@ -85,9 +85,9 @@ let populateSchema = [{
 }];
 
 /* Create */
-Subscription.addSubscription = function(body, cb) {
+Subscription.addSubscription = (body, cb) => {
     let subscription = new Subscription(body);
-    subscription.save(function(err, docs) {
+    subscription.save((err, docs) => {
         if (err) {
             cb(err, null);
         } else {
@@ -97,7 +97,7 @@ Subscription.addSubscription = function(body, cb) {
 };
 
 /* Read (all subscriptions) */
-Subscription.getSubscriptions = function(cb) {
+Subscription.getSubscriptions = (cb) => {
     Subscription.find({})
         .populate(populateSchema)
         .sort({
@@ -105,7 +105,7 @@ Subscription.getSubscriptions = function(cb) {
             user: 1,
             place: 1
         })
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -114,7 +114,7 @@ Subscription.getSubscriptions = function(cb) {
         });
 };
 
-Subscription.getSubscriptionsByTeam = function(team, cb) {
+Subscription.getSubscriptionsByTeam = (team, cb) => {
     Subscription.find({
             team: team
         })
@@ -123,7 +123,7 @@ Subscription.getSubscriptionsByTeam = function(team, cb) {
             user: 1,
             place: 1
         })
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -132,7 +132,7 @@ Subscription.getSubscriptionsByTeam = function(team, cb) {
         });
 };
 
-Subscription.getSubscriptionsByUser = function(user, cb) {
+Subscription.getSubscriptionsByUser = (user, cb) => {
     Subscription.find({
             user: user
         })
@@ -141,7 +141,7 @@ Subscription.getSubscriptionsByUser = function(user, cb) {
             team: 1,
             place: 1
         })
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -151,10 +151,10 @@ Subscription.getSubscriptionsByUser = function(user, cb) {
 };
 
 /* Read (one subscription) */
-Subscription.getSubscriptionById = function(id, cb) {
+Subscription.getSubscriptionById = (id, cb) => {
     Subscription.findById(id)
         .populate(populateSchema)
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -164,9 +164,9 @@ Subscription.getSubscriptionById = function(id, cb) {
 };
 
 /* Update */
-Subscription.updateSubscription = function(subscription, body, cb) {
+Subscription.updateSubscription = (subscription, body, cb) => {
     _.merge(subscription, body);
-    subscription.save(function(err) {
+    subscription.save((err) => {
         if (err) {
             cb(err);
         } else {
@@ -176,8 +176,8 @@ Subscription.updateSubscription = function(subscription, body, cb) {
 };
 
 /* Delete */
-Subscription.deleteSubscription = function(id, user, cb) {
-    Subscription.findById(id, function(err, docs) {
+Subscription.deleteSubscription = (id, user, cb) => {
+    Subscription.findById(id, (err, docs) => {
         if (err || !docs || (user.admin === false && user._id !== docs.user)) {
             cb(err);
         } else {
@@ -186,28 +186,28 @@ Subscription.deleteSubscription = function(id, user, cb) {
     });
 };
 
-Subscription.deleteSubscriptionsByTeam = function(team, cb) {
+Subscription.deleteSubscriptionsByTeam = (team, cb) => {
     Subscription.find({
         team: team
-    }, function(err, docs) {
+    }, (err, docs) => {
         if (err || docs.length === 0) {
             cb(err);
         } else {
-            docs.forEach(function(doc) {
+            docs.forEach((doc) => {
                 doc.remove(cb);
             });
         }
     });
 };
 
-Subscription.deleteSubscriptionsByUser = function(user, cb) {
+Subscription.deleteSubscriptionsByUser = (user, cb) =>{
     Subscription.find({
         user: user
-    }, function(err, docs) {
+    }, (err, docs) => {
         if (err || docs.length === 0) {
             cb(err);
         } else {
-            docs.forEach(function(doc) {
+            docs.forEach((doc) => {
                 doc.remove(cb);
             });
         }

@@ -1,11 +1,11 @@
 const express = require('express'),
     path = require('path'),
+	passport = require('passport'),
     favicon = require('serve-favicon'),
     logger = require('../config/logger'),
 	responseTime = require('response-time'),
     cookieParser = require('cookie-parser'),
-    bodyParser = require('body-parser'),
-    passport = require('passport');
+    bodyParser = require('body-parser');
 
 /* Initialize app */
 

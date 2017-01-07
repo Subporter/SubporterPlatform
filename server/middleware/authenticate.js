@@ -1,11 +1,11 @@
 const passport = require('passport'),
-    jwt = require('jwt-simple'),
-    config = require('../../config/subporter.config');
+    config = require('../../config/subporter.config'),
+    jwt = require('jwt-simple');
 
 let authenticate = (req, res, next) => {
     if (passport.authenticate('jwt', { session: false })) {
 		try {
-			let token = this.getToken(req.headers);
+			let token = getToken(req.headers);
 			if (token) {
 				let user = jwt.decode(token, config.jwt_secret);
 				if (user) {

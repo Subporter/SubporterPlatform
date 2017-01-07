@@ -54,6 +54,13 @@ router.post("/subscriptions", authenticate, formParser, imageSaver, loadUser, fu
                                 success: true,
                                 data: user
                             });
+							cache.del('/api/subscriptions/*', (err, count) => {
+								if (err) {
+									console.error(err);
+								} else {
+									console.log("Cache for /api/subscriptions cleared");
+								}
+							});
                         }
                     });
                 }
@@ -69,7 +76,7 @@ router.post("/subscriptions", authenticate, formParser, imageSaver, loadUser, fu
 });
 
 /* Read (all subscriptions) */
-router.get("/subscriptions", authenticate, admin, cache.route(), function(req, res) {
+router.get("/subscriptions", authenticate, admin, cache.route('/api/subscriptions/all'), function(req, res) {
     if (req.granted) {
         Subscription.getSubscriptions(function(err, subscriptions) {
             if (err) {
@@ -223,6 +230,13 @@ router.put("/subscriptions/:id", authenticate, formParser, imageSaver, loadUser,
                                 info: "Subscription updated succesfully",
                                 success: true
                             });
+                            cache.del('/api/subscriptions/*', (err, count) => {
+								if (err) {
+									console.error(err);
+								} else {
+									console.log("Cache for /api/subscriptions cleared");
+								}
+							});
                         }
                     });
                 } else {
@@ -265,6 +279,13 @@ router.delete("/subscriptions/:id", authenticate, loadUser, function(req, res) {
                             info: "Subscription deleted succesfully",
                             success: true,
                             data: user
+                        });
+                        cache.del('/api/subscriptions/*', (err, count) => {
+                            if (err) {
+                                console.error(err);
+                            } else {
+                                console.log("Cache for /api/subscriptions cleared");
+                            }
                         });
                     }
                 });

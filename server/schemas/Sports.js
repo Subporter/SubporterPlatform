@@ -27,7 +27,7 @@ let sportSchema = new mongoose.Schema({
     }
 });
 
-sportSchema.pre('remove', (next) => {
+sportSchema.pre('remove', function(next) {
     let sport = this;
     Competition.deleteCompetitionsBySport(sport._id, (err) => {
         if (err) {

@@ -59,6 +59,6 @@ require('../server/models/Sports');
 require('../server/models/Countries');
 require('../server/models/Competitions');
 require('../server/models/Teams');
-require('../server/models/Games');
 require('../server/models/Subscriptions');
+require('../server/models/Games');
 require('../server/models/Loans');

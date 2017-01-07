@@ -1,4 +1,5 @@
-const User = require('../models/Users');
+const mongoose = require('mongoose'),
+    User = mongoose.model('User');
 
 let loadUser = (req, res, next) => {
     if (req.granted) {

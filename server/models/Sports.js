@@ -5,9 +5,9 @@ const mongoose = require('mongoose'),
 let Sport = mongoose.model('Sport', sportSchema, 'Sports');
 
 /* Create */
-Sport.addSport = function(body, cb) {
+Sport.addSport = (body, cb) => {
     let sport = new Sport(body);
-    sport.save(function(err) {
+    sport.save((err) => {
         if (err) {
             cb(err);
         } else {
@@ -17,10 +17,10 @@ Sport.addSport = function(body, cb) {
 };
 
 /* Read (all sports) */
-Sport.getSports = function(cb) {
+Sport.getSports = (cb) => {
     Sport.find({})
         .sort('name')
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -30,8 +30,8 @@ Sport.getSports = function(cb) {
 };
 
 /* Read (one sport) */
-Sport.getSportById = function(id, cb) {
-    Sport.findById(id, function(err, docs) {
+Sport.getSportById = (id, cb) => {
+    Sport.findById(id, (err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -41,9 +41,9 @@ Sport.getSportById = function(id, cb) {
 };
 
 /* Update */
-Sport.updateSport = function(sport, body, cb) {
+Sport.updateSport = (sport, body, cb) => {
     _.merge(sport, body);
-    sport.save(function(err) {
+    sport.save((err) => {
         if (err) {
             cb(err);
         } else {
@@ -53,8 +53,8 @@ Sport.updateSport = function(sport, body, cb) {
 };
 
 /* Delete */
-Sport.deleteSport = function(id, cb) {
-    Sport.findById(id, function(err, docs) {
+Sport.deleteSport = (id, cb) => {
+    Sport.findById(id, (err, docs) => {
         if (err || !docs) {
             cb(err);
         } else {

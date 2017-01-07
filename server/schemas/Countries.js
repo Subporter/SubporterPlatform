@@ -27,7 +27,7 @@ let countrySchema = new mongoose.Schema({
     }
 });
 
-countrySchema.pre('remove', (next) => {
+countrySchema.pre('remove', function(next) {
     let country = this;
     Competition.deleteCompetitionsByCountry(country._id, (err) => {
         if (err) {

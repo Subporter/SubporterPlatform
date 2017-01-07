@@ -60,6 +60,13 @@ router.post("/loans", authenticate, loadUser, function(req, res) {
                                         info: "Loan created succesfully",
                                         success: true
                                     });
+									cache.del('/api/loans/*', (err, count) => {
+					                    if (err) {
+					                        console.error(err);
+					                    } else {
+					                        console.log("Cache for /api/loans cleared");
+					                    }
+					                });
                                 }
                             });
                         }
@@ -77,7 +84,7 @@ router.post("/loans", authenticate, loadUser, function(req, res) {
 });
 
 /* Read (all games) */
-router.get("/loans", cache.route(), function(req, res) {
+router.get("/loans", cache.route('/api/loans/all'), function(req, res) {
     Loan.getLoans(function(err, loans) {
         if (err) {
             res.json({
@@ -234,6 +241,13 @@ router.put("/loans/:id", authenticate, loadUser, function(req, res) {
                                 info: "Loan updated succesfully",
                                 success: true
                             });
+                            cache.del('/api/loans/*', (err, count) => {
+                                if (err) {
+                                    console.error(err);
+                                } else {
+                                    console.log("Cache for /api/loans cleared");
+                                }
+                            });
                         }
                     });
                 } else {
@@ -279,6 +293,13 @@ router.put("/loans/lend/:id", authenticate, loadUser, function(req, res) {
                             info: "Loan updated succesfully",
                             success: true
                         });
+                        cache.del('/api/loans/*', (err, count) => {
+                            if (err) {
+                                console.error(err);
+                            } else {
+                                console.log("Cache for /api/loans cleared");
+                            }
+                        });
                     }
                 });
             } else {
@@ -311,6 +332,13 @@ router.delete("/loans/:id", authenticate, admin, function(req, res) {
                 res.json({
                     info: "Loan deleted succesfully",
                     success: true
+                });
+                cache.del('/api/loans/*', (err, count) => {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        console.log("Cache for /api/loans cleared");
+                    }
                 });
             }
         });

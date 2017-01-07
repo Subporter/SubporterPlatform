@@ -26,9 +26,9 @@ let populateSchema = [{
 }];
 
 /* Create */
-Team.addTeam = function(body, cb) {
+Team.addTeam = (body, cb) => {
     let team = new Team(body);
-    team.save(function(err) {
+    team.save((err) => {
         if (err) {
             cb(err);
         } else {
@@ -38,13 +38,13 @@ Team.addTeam = function(body, cb) {
 };
 
 /* Read (all teams) */
-Team.getTeams = function(cb) {
+Team.getTeams = (cb) => {
     Team.find({})
         .populate(populateSchema)
         .sort({
             name: 1
         })
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -53,7 +53,7 @@ Team.getTeams = function(cb) {
         });
 };
 
-Team.getTeamsByCompetition = function(competition, cb) {
+Team.getTeamsByCompetition = (competition, cb) => {
     Team.find({
             competition: competition
         })
@@ -61,7 +61,7 @@ Team.getTeamsByCompetition = function(competition, cb) {
         .sort({
             name: 1
         })
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -71,10 +71,10 @@ Team.getTeamsByCompetition = function(competition, cb) {
 };
 
 /* Read (one team) */
-Team.getTeamById = function(id, cb) {
+Team.getTeamById = (id, cb) => {
     Team.findById(id)
         .populate(populateSchema)
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -84,9 +84,9 @@ Team.getTeamById = function(id, cb) {
 };
 
 /* Update */
-Team.updateTeam = function(team, body, cb) {
+Team.updateTeam = (team, body, cb) => {
     _.merge(team, body);
-    team.save(function(err) {
+    team.save((err) => {
         if (err) {
             cb(err);
         } else {
@@ -96,8 +96,8 @@ Team.updateTeam = function(team, body, cb) {
 };
 
 /* Delete */
-Team.deleteTeam = function(id, cb) {
-    Team.findById(id, function(err, docs) {
+Team.deleteTeam = (id, cb) => {
+    Team.findById(id, (err, docs) => {
         if (err || !docs) {
             cb(err);
         } else {
@@ -106,16 +106,16 @@ Team.deleteTeam = function(id, cb) {
     });
 };
 
-Team.deleteTeamReferences = function(id, cb) {
-    Team.findById(id, function(err, docs) {
+Team.deleteTeamReferences = (id, cb) => {
+    Team.findById(id, (err, docs) => {
         if (err || !docs) {
             cb(err);
         } else {
-            Subscription.deleteSubscriptionsByTeam(docs._id, function(err) {
+            Subscription.deleteSubscriptionsByTeam(docs._id, (err) => {
                 if (err) {
                     cb(err);
                 } else {
-                    Game.deleteGamesByTeam(docs._id, function(err) {
+                    Game.deleteGamesByTeam(docs._id, (err) => {
                         if (err) {
                             cb(err);
                         } else {
@@ -128,14 +128,14 @@ Team.deleteTeamReferences = function(id, cb) {
     });
 };
 
-Team.deleteTeamsByCompetition = function(competition, cb) {
+Team.deleteTeamsByCompetition = (competition, cb) => {
     Team.find({
         competition: competition
-    }, function(err, docs) {
+    }, (err, docs) => {
         if (err || docs.length === 0) {
             cb(err);
         } else {
-            docs.forEach(function(doc) {
+            docs.forEach((doc) => {
                 doc.remove(cb);
             });
         }

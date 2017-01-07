@@ -93,7 +93,7 @@ let userSchema = new mongoose.Schema({
     }
 });
 
-userSchema.pre('save', (next) => {
+userSchema.pre('save', function(next) {
     let user = this;
     if (this.isModified('password') || this.isNew) {
         bcrypt.genSalt(10, (err, salt) => {
@@ -115,7 +115,7 @@ userSchema.pre('save', (next) => {
     }
 });
 
-userSchema.pre('remove', (next) => {
+userSchema.pre('remove', function(next) {
     let user = this;
     Address.deleteAddress(user.address, (err) => {
         if (err) {

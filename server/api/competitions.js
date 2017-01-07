@@ -42,6 +42,13 @@ router.post("/competitions", authenticate, admin, formParser, imageSaver, functi
                         info: "Competition created succesfully",
                         success: true
                     });
+					cache.del('/api/competitions/*', (err, count) => {
+                        if (err) {
+                            console.error(err);
+                        } else {
+                            console.log("Cache for /api/competitions cleared");
+                        }
+                    });
                 }
             });
         }
@@ -55,7 +62,7 @@ router.post("/competitions", authenticate, admin, formParser, imageSaver, functi
 });
 
 /* Read (all competitions) */
-router.get("/competitions", cache.route(), function(req, res) {
+router.get("/competitions", cache.route('/api/competitions/all'), function(req, res) {
     Competition.getCompetitions(function(err, competitions) {
         if (err) {
             res.json({
@@ -200,6 +207,13 @@ router.put("/competitions/:id", authenticate, admin, formParser, imageSaver, fun
                                 info: "Competition updated succesfully",
                                 success: true
                             });
+                            cache.del('/api/competitions/*', (err, count) => {
+                                if (err) {
+                                    console.error(err);
+                                } else {
+                                    console.log("Cache for /api/competitions cleared");
+                                }
+                            });
                         }
                     });
                 } else {
@@ -233,6 +247,13 @@ router.delete("/competitions/:id", authenticate, admin, function(req, res) {
                 res.json({
                     info: "Competition deleted succesfully",
                     success: true
+                });
+                cache.del('/api/competitions/*', (err, count) => {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        console.log("Cache for /api/competitions cleared");
+                    }
                 });
             }
         });

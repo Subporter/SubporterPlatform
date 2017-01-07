@@ -1,7 +1,7 @@
-let validate = function (...fields) {
+let validate = (...fields) => {
 	let invalid = false;
 
-	for (let i = 0, amount = fields.length; i < amount; i++) {
+	for (let i = 0, l = fields.length; i < l; i++) {
 		if (!fields[i]) {
 			invalid = true;
 		}

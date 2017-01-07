@@ -42,6 +42,13 @@ router.post("/games", authenticate, admin, formParser, imageSaver, function(req,
                         info: "Game created succesfully",
                         success: true
                     });
+					cache.del('/api/games/*', (err, count) => {
+                        if (err) {
+                            console.error(err);
+                        } else {
+                            console.log("Cache for /api/games cleared");
+                        }
+                    });
                 }
             });
         }
@@ -55,7 +62,7 @@ router.post("/games", authenticate, admin, formParser, imageSaver, function(req,
 });
 
 /* Read (all games) */
-router.get("/games", authenticate, admin, cache.route(), function(req, res) {
+router.get("/games", authenticate, admin, cache.route('/api/games/all'), function(req, res) {
     Game.getGames(function(err, games) {
         if (err) {
             res.json({
@@ -223,6 +230,13 @@ router.put("/games/:id", authenticate, admin, formParser, imageSaver, function(r
                                 info: "Game updated succesfully",
                                 success: true
                             });
+                            cache.del('/api/games/*', (err, count) => {
+                                if (err) {
+                                    console.error(err);
+                                } else {
+                                    console.log("Cache for /api/games cleared");
+                                }
+                            });
                         }
                     });
                 } else {
@@ -256,6 +270,13 @@ router.delete("/games/:id", authenticate, admin, function(req, res) {
                 res.json({
                     info: "Game deleted succesfully",
                     success: true
+                });
+                cache.del('/api/games/*', (err, count) => {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        console.log("Cache for /api/games cleared");
+                    }
                 });
             }
         });
