@@ -10,17 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var materialize_css_1 = require("materialize-css");
-var $ = require("jquery");
 var Competitions_1 = require("../../../../modules/Competitions");
 var ApiService_1 = require("../../../../services/ApiService");
 var AdminCompetitions = (function () {
     function AdminCompetitions(apiService) {
         this.apiService = apiService;
         this.competitions = [];
+        this.modalActions = new core_1.EventEmitter();
     }
     AdminCompetitions.prototype.ngOnInit = function () {
         var _this = this;
-        $('.modal').modal();
         this.apiService.get("api/competitions").subscribe(function (response) {
             var result = JSON.parse(response.text());
             if (result.success) {
@@ -30,7 +29,6 @@ var AdminCompetitions = (function () {
                         var competition = new Competitions_1.Competition(i._id, i.country, i.description, i.logo, i.name, i.sport);
                         _this.competitions.push(competition);
                     });
-                    console.log(_this.competitions);
                 }
             }
             else {
@@ -39,6 +37,26 @@ var AdminCompetitions = (function () {
         }, function (error) {
             materialize_css_1.Materialize.toast("Unable to load competitions at this time", 2000);
         });
+    };
+    AdminCompetitions.prototype.delete = function (id) {
+        this.selectedCompetition = this.competitions.filter(function (country) { return country._id === id; })[0];
+        this.modalActions.emit({ action: "modal", params: ['open'] });
+    };
+    AdminCompetitions.prototype.confirmDelete = function (id) {
+        var _this = this;
+        this.apiService.delete("api/competitions/" + id).subscribe(function (response) {
+            var result = JSON.parse(response.text());
+            materialize_css_1.Materialize.toast(result.info, 2000);
+            if (result.success) {
+                _this.competitions = _this.competitions.filter(function (competition) { return competition._id !== id; });
+            }
+        }, function (error) {
+            materialize_css_1.Materialize.toast("Unable to delete competition at this time", 2000);
+        });
+        this.modalActions.emit({ action: "modal", params: ['close'] });
+    };
+    AdminCompetitions.prototype.closeModal = function () {
+        this.modalActions.emit({ action: "modal", params: ['close'] });
     };
     return AdminCompetitions;
 }());

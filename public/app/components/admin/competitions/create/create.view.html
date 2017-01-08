@@ -1,0 +1,58 @@
+<navadmin></navadmin>
+
+<nav>
+	<div class="nav-wrapper">
+		<div class="col s8 offset-s2">
+			<a [routerLink]="['/admin']" class="breadcrumb">Admin</a>
+			<a [routerLink]="['/admin/competitions']" class="breadcrumb">Competities</a>
+			<a [routerLink]="['/admin/competitions/add']" class="breadcrumb">Toevoegen</a>
+		</div>
+	</div>
+</nav>
+
+<div class="container">
+	<div class="row">
+		<h2 class="header">Competitie toevoegen</h2>
+	</div>
+	<div class="row">
+		<form materialize (submit)="create($event)" enctype="multipart/form-data">
+			<div class="input-field">
+				<input [(ngModel)]="name" type="text" class="form-control" name="name" id="name" materialize="characterCounter" length="100" required pattern="[A-zÀ-ÿ-\s]{2,100}">
+				<label for="name">Naam</label>
+			</div>
+			<div class="input-field">
+				<textarea [(ngModel)]="description" class="materialize-textarea" name="description" id="description" materialize="characterCounter" length="1000" required pattern="A-zÀ-ÿ0-9-\s.,!'/]{2,1000}"></textarea>
+				<label for="description">Beschrijving</label>
+			</div>
+			<div class="input-field">
+				<select [(ngModel)]="sport" name="sport" materialize="material_select" [materializeSelectOptions]="sports">
+                	<option value="" disabled selected>Sport</option>
+                	<option *ngFor="let sport of sports" [value]="sport._id">{{sport.name}}</option>
+              	</select>
+				<label for="sport">Sport</label>
+			</div>
+			<div class="input-field">
+				<select [(ngModel)]="country" name="country" materialize="material_select" [materializeSelectOptions]="countries">
+					<option value="" disabled selected>Land</option>
+					<option *ngFor="let country of countries" [value]="country._id">{{country.name}}</option>
+				</select>
+				<label for="country">Land</label>
+			</div>
+			<div class="input-field file-field">
+				<div class="btn">
+					<span>Logo</span>
+					<input (change)="selectFile($event)" type="file" name="logo" id="logo">
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
+				</div>
+			</div>
+			<button type="submit" class="btn btn-default">Opslaan</button>
+		</form>
+	</div>
+	<div class="row">
+		<a [routerLink]="['/admin/competitions']">Terug</a>
+	</div>
+</div>
+
+<subporterfooter></subporterfooter>

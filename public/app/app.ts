@@ -2,15 +2,16 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpModule } from "@angular/http";
 import { FormsModule } from "@angular/forms";
-import {SimpleNotificationsModule, PushNotificationsModule} from 'angular2-notifications';
 
-import { AUTH_PROVIDERS } from 'angular2-jwt';
-import { Auth } from './services/Auth';
+import { SimpleNotificationsModule, PushNotificationsModule } from 'angular2-notifications';
+import { MaterializeDirective } from "angular2-materialize";
+
+import { AUTH_PROVIDERS } from "angular2-jwt";
+import { Auth } from "./services/Auth";
 import { AuthGuard } from "./common/AuthGuard";
 import { AdminGuard } from "./common/AdminGuard";
 import { ApiService } from "./services/ApiService";
-import { UploadService } from "./services/UploadService";
-import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { CookieService } from "angular2-cookie/services/cookies.service";
 
 import { App } from "./components/App";
 import { Register } from "./components/auth/register/Register";
@@ -18,6 +19,7 @@ import { Login } from "./components/auth/login/Login";
 import { Landing } from "./components/index/Landing";
 import { Footer } from "./components/common/footer/Footer";
 import { Header } from "./components/common/header/Header";
+import { HeaderAdmin } from "./components/admin/header/Header";
 import { Topwedstrijd } from "./components/index/Topwedstrijden/Topwedstrijd";
 import { Weekwedstrijd } from "./components/index/Weekwedstrijden/Weekwedstrijd";
 import { Search } from "./components/search/Search";
@@ -34,14 +36,13 @@ import { AdminCountries } from "./components/admin/countries/list/Countries";
 import { CountriesCreate } from "./components/admin/countries/create/Create";
 import { CountriesEdit } from "./components/admin/countries/edit/Edit";
 import { AdminCompetitions } from "./components/admin/competitions/list/Competitions";
-import { MaterializeDirective } from "angular2-materialize";
-import {HeaderAdmin} from "./components/admin/header/Header";
+import { CompetitionsCreate } from "./components/admin/competitions/create/Create";
 
 import { Routing } from "./modules/Routes";
 
 @NgModule({
     bootstrap: [App],
-    declarations: [App, Register, Login, Landing, Footer, Header, Topwedstrijd, Weekwedstrijd, Search, Evenement, Listing, Cart, AdminOverview, AdminSports, SportsCreate, SportsEdit,Offer,  AdminCountries, Profile, CountriesCreate, CountriesEdit, AdminCompetitions, HeaderAdmin, MaterializeDirective],
+    declarations: [App, Register, Login, Landing, Footer, Header, Topwedstrijd, Weekwedstrijd, Search, Evenement, Listing, Cart, AdminOverview, AdminSports, SportsCreate, SportsEdit, Offer, AdminCountries, Profile, CountriesCreate, CountriesEdit, AdminCompetitions, CompetitionsCreate, HeaderAdmin, MaterializeDirective],
     imports: [
         BrowserModule,
         HttpModule,
@@ -56,8 +57,7 @@ import { Routing } from "./modules/Routes";
         AdminGuard,
         AUTH_PROVIDERS,
         ApiService,
-        CookieService,
-        UploadService
+        CookieService
     ]
 })
 

@@ -17,7 +17,7 @@ var App = (function () {
 App = __decorate([
     core_1.Component({
         selector: 'subporter',
-        template: "\n\t\t<router-outlet>\n\t\t</router-outlet>\n\t"
+        template: "\n\t\t<router-outlet></router-outlet>\n\t"
     }),
     __metadata("design:paramtypes", [])
 ], App);

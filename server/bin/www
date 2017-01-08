@@ -5,7 +5,7 @@ const http = require('http'),
     path = require('path'),
     fs = require('fs'),
     passport = require('passport'),
-    updater = require('../sockets');
+    sockets = require('../sockets');
 
 /* Normalize a port into a number, string, or false */
 
@@ -97,4 +97,4 @@ server.on('listening', onListening);
 
 /* Socket.io */
 
-updater.init(server);
+sockets.init(server);

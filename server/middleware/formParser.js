@@ -9,15 +9,15 @@ let formParser = (req, res, next) => {
             } else {
                 req.files = files;
                 if (req.url.startsWith("/competitions")) {
-                    this.competitions(req, fields);
+                    competitions(req, fields);
                 } else if (req.url.startsWith("/teams")) {
-                    this.teams(req, fields);
+                    teams(req, fields);
                 } else if (req.url.startsWith("/subscriptions")) {
-                    this.subscriptions(req, fields);
+                    subscriptions(req, fields);
                 } else if (req.url.startsWith("/games")) {
-                    this.games(req, fields);
+                    games(req, fields);
                 } else if (req.url.startsWith("/users")) {
-                    this.users(req, fields);
+                    users(req, fields);
                 }
                 next();
             }
