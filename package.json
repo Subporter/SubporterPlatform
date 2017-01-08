@@ -7,9 +7,9 @@
   "repository": "https://github.com/Subporter/SubporterPlatform.git",
   "scripts": {
     "start": "node ./server/bin/www",
-    "dev": "set NODE_ENV=development && concurrently \"npm run tsc:w\" \"nodemon ./server/bin/www\" ",
-    "prod": "set NODE_ENV=production && forever start ./server/bin/www",
-    "testing": "set NODE_ENV=development && mocha ./testing/backend/testing",
+    "dev": "NODE_ENV=development concurrently \"npm run tsc:w\" \"nodemon ./server/bin/www\" ",
+    "prod": "NODE_ENV=production forever start ./server/bin/www",
+    "testing": "NODE_ENV=development mocha ./testing/backend/testing",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "typings": "typings",
