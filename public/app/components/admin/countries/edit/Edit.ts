@@ -11,30 +11,32 @@ import { ApiService } from '../../../../services/ApiService';
 
 export class CountriesEdit {
     id: Number;
-	name: String = "";
+    name: String = "";
     sub: any;
 
     constructor(public router: Router, public route: ActivatedRoute, public apiService: ApiService) {
-
+        this.sub = this.route.params.subscribe(params => {
+            this.id = +params['id'];
+            if (!this.id) {
+                this.router.navigate(['admin/countries']);
+            }
+        });
     }
 
     ngOnInit() {
-        this.sub = this.route.params.subscribe(params => {
-            this.id = +params["id"];
-            this.apiService.get(`api/countries/${this.id}`).subscribe(
-                response => {
-                    let result = JSON.parse(response.text());
-                    if (result.success) {
-                        this.name = result.data.name;
-                    } else {
-                        this.router.navigate(['admin/countries']);
-                    }
-                },
-                error => {
+        this.apiService.get(`api/countries/${this.id}`).subscribe(
+            response => {
+                let result = JSON.parse(response.text());
+                if (result.success) {
+                    this.name = result.data.name;
+                } else {
                     this.router.navigate(['admin/countries']);
                 }
-            )
-        });
+            },
+            error => {
+                this.router.navigate(['admin/countries']);
+            }
+        );
     }
 
     edit(event) {

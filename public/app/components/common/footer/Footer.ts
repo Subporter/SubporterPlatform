@@ -1,46 +1,51 @@
-import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
-import { Http } from '@angular/http';
-import { contentHeaders } from '../../../common/headers'
-
+import { Component } from '@angular/core';
 
 @Component({
-	selector: 'subporterfooter',
-	 template: `
-
-	 <footer class="page-footer">
-          <div class="container">
-            <div class="row">
-              <div class="col l6 s12">
-                <h5 class="white-text">Subporter</h5>
-                <p class="grey-text text-lighten-4">Subporter is het platform waar je jouw abonnement legaal kan uitlenen aan anderen.</p>
-                <p class="grey-text text-lighten-4">Neem gerust contact met ons op</p>
-              </div>
-              <div class="col l4 offset-l2 s12">
-                <h5 class="white-text">Links</h5>
-                <ul>
-                  <li><a class="grey-text text-lighten-3" href="#!">Home</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Zoeken</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Login</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Abonnement aanbieden</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="footer-copyright">
-            <div class="container">
-            © 2017 Subporter
-            <a class="grey-text text-lighten-4 right" href="#!"></a>
-            </div>
-          </div>
-        </footer>
-
+    selector: 'subporter-footer',
+    template: `
+    <footer class="page-footer">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col l4 s12">
+    				<h5 class="white-text">Subporter</h5>
+    				<ul>
+    					<li><a [routerLink]="['/']" class="grey-text">Home</a></li>
+    					<li><a [routerLink]="['/search']" class="grey-text">Zoeken</a></li>
+    					<li><a [routerLink]="['/login']" class="grey-text">Login</a></li>
+    					<li><a [routerLink]="['/register']" class="grey-text">Registreer</a></li>
+    				</ul>
+    			</div>
+    			<div class="col l4 s12">
+    				<h5 class="white-text">Hulp</h5>
+    				<ul>
+    					<li><a [routerLink]="['/about']" class="grey-text">Subporter</a></li>
+    					<li><a [routerLink]="['/faq']" class="grey-text">FAQ</a></li>
+    					<li><a [routerLink]="['/conditions']" class="grey-text">Voorwaarden</a></li>
+    					<li><a [routerLink]="['/privacy']" class="grey-text">Privacy</a></li>
+    				</ul>
+    			</div>
+    			<div class="col l4 s12">
+    				<h5 class="white-text">Contact</h5>
+    				<ul>
+    					<li><a class="grey-text">Graaf Karel de Goedelaan 5</a></li>
+    					<li><a class="grey-text">8500 Kortrijk</a></li>
+    					<li><a class="grey-text" href="mailto:info@subpoter.be">info@subporter.be</a></li>
+    					<li><a class="grey-text">+32 475 53 71 07</a></li>
+    				</ul>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="footer-copyright">
+    		<div class="container">
+    			<span>&copy; 2017 Subporter</span>
+    			<span class="right"><a [routerLink]="['/']" class="grey-text">www.subporter.be</a></span>
+    		</div>
+    	</div>
+    </footer>
 	 `,
-	  styleUrls: ['../../css/css/landing.css']
+    styleUrls: ['../../css/landing.css']
 })
 
 export class Footer {
-
-
-
+    constructor() { }
 }

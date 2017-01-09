@@ -40,7 +40,7 @@ import { contentHeaders } from '../../../common/Headers'
 		</div>
 		</div>
 	`,
-    styleUrls: ['../../../css/css/register.css']
+    styleUrls: ['../../../css/register.css']
 })
 
 export class Register {

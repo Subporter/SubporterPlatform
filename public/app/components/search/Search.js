@@ -49,7 +49,7 @@ Search = __decorate([
     core_1.Component({
         selector: 'search',
         templateUrl: './app/components/search/search.view.html',
-        styleUrls: ['../../css/css/search.css']
+        styleUrls: ['../../css/search.css']
     }),
     __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService])
 ], Search);

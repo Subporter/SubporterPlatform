@@ -16,7 +16,7 @@ import {MaterializeAction, MaterializeDirective} from 'angular2-materialize';
 @Component({
 	selector: 'profile',
 	 templateUrl: './app/components/profile/profile.view.html',
-	  styleUrls: ['../../css/css/profile.css']
+	  styleUrls: ['../../css/profile.css']
 })
 
 export class Profile {
@@ -77,7 +77,7 @@ export class Profile {
   this._callApi("Anonymous", "api/users");
 
 
-   
+
 
 
 
@@ -140,8 +140,8 @@ export class Profile {
 
 
 this.favoriteId = id;
-    
- 
+
+
   }
 
   removeFavoriteReal(){

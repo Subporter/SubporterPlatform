@@ -1,4 +1,4 @@
-import { UploadService } from "./UploadService";
+import { UploadService } from './UploadService';
 
 export class UploadItem {
     alias: string = "file";

@@ -21,12 +21,12 @@ var AdminGuard_1 = require("./common/AdminGuard");
 var ApiService_1 = require("./services/ApiService");
 var cookies_service_1 = require("angular2-cookie/services/cookies.service");
 var App_1 = require("./components/App");
-var Register_1 = require("./components/auth/register/Register");
-var Login_1 = require("./components/auth/login/Login");
-var Landing_1 = require("./components/index/Landing");
 var Footer_1 = require("./components/common/footer/Footer");
 var Header_1 = require("./components/common/header/Header");
 var Header_2 = require("./components/admin/header/Header");
+var Register_1 = require("./components/auth/register/Register");
+var Login_1 = require("./components/auth/login/Login");
+var Landing_1 = require("./components/index/Landing");
 var Topwedstrijd_1 = require("./components/index/Topwedstrijden/Topwedstrijd");
 var Weekwedstrijd_1 = require("./components/index/Weekwedstrijden/Weekwedstrijd");
 var Search_1 = require("./components/search/Search");
@@ -44,6 +44,7 @@ var Create_2 = require("./components/admin/countries/create/Create");
 var Edit_2 = require("./components/admin/countries/edit/Edit");
 var Competitions_1 = require("./components/admin/competitions/list/Competitions");
 var Create_3 = require("./components/admin/competitions/create/Create");
+var Edit_3 = require("./components/admin/competitions/edit/Edit");
 var Routes_1 = require("./modules/Routes");
 var Subporter = (function () {
     function Subporter() {
@@ -52,8 +53,37 @@ var Subporter = (function () {
 }());
 Subporter = __decorate([
     core_1.NgModule({
-        bootstrap: [App_1.App],
-        declarations: [App_1.App, Register_1.Register, Login_1.Login, Landing_1.Landing, Footer_1.Footer, Header_1.Header, Topwedstrijd_1.Topwedstrijd, Weekwedstrijd_1.Weekwedstrijd, Search_1.Search, Evenement_1.Evenement, Listing_1.Listing, Cart_1.Cart, Overview_1.AdminOverview, Sports_1.AdminSports, Create_1.SportsCreate, Edit_1.SportsEdit, Offer_1.Offer, Countries_1.AdminCountries, Profile_1.Profile, Create_2.CountriesCreate, Edit_2.CountriesEdit, Competitions_1.AdminCompetitions, Create_3.CompetitionsCreate, Header_2.HeaderAdmin, angular2_materialize_1.MaterializeDirective],
+        bootstrap: [
+            App_1.App
+        ],
+        declarations: [
+            App_1.App,
+            Footer_1.Footer,
+            Header_1.Header,
+            Header_2.HeaderAdmin,
+            Register_1.Register,
+            Login_1.Login,
+            Landing_1.Landing,
+            Topwedstrijd_1.Topwedstrijd,
+            Weekwedstrijd_1.Weekwedstrijd,
+            Search_1.Search,
+            Offer_1.Offer,
+            Profile_1.Profile,
+            Evenement_1.Evenement,
+            Listing_1.Listing,
+            Cart_1.Cart,
+            Overview_1.AdminOverview,
+            Sports_1.AdminSports,
+            Create_1.SportsCreate,
+            Edit_1.SportsEdit,
+            Countries_1.AdminCountries,
+            Create_2.CountriesCreate,
+            Edit_2.CountriesEdit,
+            Competitions_1.AdminCompetitions,
+            Create_3.CompetitionsCreate,
+            Edit_3.CompetitionsEdit,
+            angular2_materialize_1.MaterializeDirective
+        ],
         imports: [
             platform_browser_1.BrowserModule,
             http_1.HttpModule,

@@ -1,4 +1,4 @@
-  <navmenu header1="Profiel" header2="" image="/img/search_bg.jpg"></navmenu>
+  <subporter-header header1="Profiel" header2="" image="/img/search_bg.jpg"></subporter-header>
 
 
 <section>
@@ -45,7 +45,7 @@
 
       <input class="btn waves-effect waves-light " type="submit" value="Opslaan">
 
-    
+
     </form>
   </div>
   <div>
@@ -62,7 +62,7 @@
         </div>
       </div>
 
-    <div class="row">       
+    <div class="row">
         <div class="input-field col s12">
           <input id="password" type="password" class="validate">
           <label for="password">Nieuw wachtwoord</label>
@@ -123,7 +123,7 @@
                 <td>{{favorite.competition.name}}</td>
                 <td><i class="material-icons" (click)="removeFavorite(favorite._id)">delete</i></td>
             </tr>
-         
+
         </tbody>
       </table>
 
@@ -135,7 +135,7 @@
       <option *ngFor="let team of teams" value="{{team._id}}">
           {{team.name}}
       </option>
-     
+
     </select>
   </div>
   <button class="waves-effect waves-light btn" (click)="showFavoritesBack()">Ga terug</button>
@@ -145,7 +145,7 @@
       </div>
 
 
-    </div> 
+    </div>
 
 
 </div>
@@ -185,7 +185,7 @@
       <option *ngFor="let team of teams" value="team._id">
           {{team.name}}
       </option>
-     
+
     </select>
     <label>Materialize Select</label>
   </div>
@@ -199,5 +199,3 @@
 </div>
 
 </section>
-
-<subporterfooter></subporterfooter>

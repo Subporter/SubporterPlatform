@@ -1,4 +1,4 @@
-import { UploadItem } from "./UploadItem";
+import { UploadItem } from './UploadItem';
 
 export class UploadService {
     isHTML5: boolean = true;
@@ -38,7 +38,7 @@ export class UploadService {
             val = line.slice(i + 1).trim();
 
             if (key) {
-                parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+                parsed[key] = parsed[key] ? parsed[key] + ", " + val : val;
             }
         });
 

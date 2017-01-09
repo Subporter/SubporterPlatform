@@ -19,6 +19,7 @@ var Create_2 = require("../components/admin/countries/create/Create");
 var Edit_2 = require("../components/admin/countries/edit/Edit");
 var Competitions_1 = require("../components/admin/competitions/list/Competitions");
 var Create_3 = require("../components/admin/competitions/create/Create");
+var Edit_3 = require("../components/admin/competitions/edit/Edit");
 exports.SubporterRoutes = [
     {
         path: '', component: Landing_1.Landing
@@ -81,7 +82,13 @@ exports.SubporterRoutes = [
         path: 'admin/competitions/add', component: Create_3.CompetitionsCreate, canActivate: [AdminGuard_1.AdminGuard]
     },
     {
-        path: '**', component: Login_1.Login
+        path: 'admin/competitions/edit/:id', component: Edit_3.CompetitionsEdit, canActivate: [AdminGuard_1.AdminGuard]
+    },
+    {
+        path: '404', component: Login_1.Login
+    },
+    {
+        path: '**', redirectTo: '/404'
     }
 ];
 exports.Routing = router_1.RouterModule.forRoot(exports.SubporterRoutes);

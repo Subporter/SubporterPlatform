@@ -18,7 +18,7 @@ import {MaterializeAction, MaterializeDirective} from 'angular2-materialize';
 @Component({
 	selector: 'landing',
 	 templateUrl: './app/components/index/landing.view.html',
-	  styleUrls: ['../../css/css/landing.css']
+	  styleUrls: ['../../css/landing.css']
 })
 
 export class Landing {
@@ -57,15 +57,15 @@ ngOnInit() {
 
   	this.apiService.get("api/games/featured/1").subscribe(
 			response => this.getFeaturedGames(response.text()),
-     
-        
+
+
 			error => this.response = error.text
 		);
 
     	this.apiService.get("api/games/week/1").subscribe(
 			response => this.getWeeklyGames(response.text()),
-     
-        
+
+
 			error => this.response = error.text
 		);
 
@@ -112,13 +112,13 @@ onChange(country) {
 
   		this.apiService.get(Country).subscribe(
 			response => this.getFeaturedGames(response.text()),
-     
-        
+
+
 			error => this.response = error.text
 		);
 
 
-  
+
 }
 
 onChange2(country){
@@ -127,8 +127,8 @@ onChange2(country){
 
   		this.apiService.get(Country).subscribe(
 			response => this.getWeeklyGames(response.text()),
-     
-        
+
+
 			error => this.response = error.text
 		);
 
@@ -143,7 +143,7 @@ showGames(data){
      let jsonData = JSON.parse(Data);
      this.games = jsonData.data;
 
-    
+
 
 
 
@@ -168,8 +168,8 @@ this.gameNames = obj;
   _callApi(type, url) {
 		this.apiService.get(url).subscribe(
 			response => this.getTeam(response.text()),
-     
-        
+
+
 			error => this.response = error.text
 		);
 
@@ -252,7 +252,7 @@ scrollToDiv(){
 
 }
 
- 
+
 
 search(){
 
@@ -273,14 +273,14 @@ search(){
      }
 
 
- 
+
 
 
 }
 
 
 
- 
+
 
 
 

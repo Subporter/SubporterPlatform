@@ -37,8 +37,8 @@ __decorate([
 Topwedstrijd = __decorate([
     core_1.Component({
         selector: 'topwedstrijd',
-        template: "\n\t \n            <div class=\"card-image\">\n              <img src=\"{{gameImage}}\">\n            </div>\n            <div class=\"card-content\">\n            <h6>{{home}} - {{away}}</h6>\n              <p>{{date}}</p>\n            </div>\n            <div class=\"card-action\">\n                <a href=\"{{id}}\">Zoek abonnementen</a>\n            </div>\n\t \n\t ",
-        styleUrls: ['../../css/css/landing.css']
+        template: "\n\n            <div class=\"card-image\">\n              <img src=\"{{gameImage}}\">\n            </div>\n            <div class=\"card-content\">\n            <h6>{{home}} - {{away}}</h6>\n              <p>{{date}}</p>\n            </div>\n            <div class=\"card-action\">\n                <a href=\"{{id}}\">Zoek abonnementen</a>\n            </div>\n\n\t ",
+        styleUrls: ['../..css/landing.css']
     }),
     __metadata("design:paramtypes", [])
 ], Topwedstrijd);

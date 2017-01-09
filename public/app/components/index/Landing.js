@@ -164,7 +164,7 @@ Landing = __decorate([
     core_1.Component({
         selector: 'landing',
         templateUrl: './app/components/index/landing.view.html',
-        styleUrls: ['../../css/css/landing.css']
+        styleUrls: ['../../css/landing.css']
     }),
     __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService])
 ], Landing);

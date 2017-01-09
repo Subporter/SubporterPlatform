@@ -222,7 +222,7 @@ Offer = __decorate([
     core_1.Component({
         selector: 'offer',
         templateUrl: './app/components/offer/offer.view.html',
-        styleUrls: ['../../css/css/offer.css']
+        styleUrls: ['../../css/offer.css']
     }),
     __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService])
 ], Offer);

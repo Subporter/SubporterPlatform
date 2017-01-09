@@ -12,24 +12,24 @@ const gulp = require("gulp"),
     run = require('run-sequence');
 
 const PATHS = {
-    EXTERNALS: {
-        SRC: './bower_components',
-        DEST: './public/vendor'
-    },
+	HTML: {
+		SRC: './public/app/components/*.html'
+	},
     SCSS: {
-        SRC: './public/css/scss/*.scss',
-        DEST: './public/css/css'
-    },
-    HTML: {
-        SRC: './public/app/components/*.html'
+        SRC: './public/scss/*.scss',
+        DEST: './public/css'
     },
     CSS: {
-        SRC: './public/css/css/*.css',
-        DEST: './public/css/css'
+        SRC: './public/css/*.css',
+        DEST: './public/css'
     },
     JS: {
         BACKEND: './server/**/*.js'
-    }
+    },
+	EXTERNALS: {
+		SRC: './bower_components',
+		DEST: './public/vendor'
+	}
 };
 
 gulp.task('default', () => {

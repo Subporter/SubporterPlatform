@@ -7,7 +7,7 @@ import { contentHeaders } from '../../../common/headers'
 @Component({
 	selector: 'topwedstrijd',
 	 template: `
-	 
+
             <div class="card-image">
               <img src="{{gameImage}}">
             </div>
@@ -18,9 +18,9 @@ import { contentHeaders } from '../../../common/headers'
             <div class="card-action">
                 <a href="{{id}}">Zoek abonnementen</a>
             </div>
-	 
+
 	 `,
-	  styleUrls: ['../../css/css/landing.css']
+	  styleUrls: ['../..css/landing.css']
 })
 
 export class Topwedstrijd {

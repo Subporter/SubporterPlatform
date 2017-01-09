@@ -1,27 +1,28 @@
 import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthGuard } from "../common/AuthGuard";
-import { AdminGuard } from "../common/AdminGuard";
+import { AuthGuard } from '../common/AuthGuard';
+import { AdminGuard } from '../common/AdminGuard';
 
-import { Login } from "../components/auth/login/Login";
-import { Register } from "../components/auth/register/Register";
-import { Landing } from "../components/index/Landing";
-import { Search } from "../components/search/Search";
-import { Listing } from "../components/listing/Listing";
-import { Evenement } from "../components/evenement/Evenement";
-import { Cart } from "../components/cart/Cart";
-import { Offer } from "../components/offer/Offer";
-import { Profile } from "../components/profile/Profile";
-import { AdminOverview } from "../components/admin/overview/Overview";
-import { AdminSports } from "../components/admin/sports/list/Sports";
-import { SportsCreate } from "../components/admin/sports/create/Create";
-import { SportsEdit } from "../components/admin/sports/edit/Edit";
-import { AdminCountries } from "../components/admin/countries/list/Countries";
-import { CountriesCreate } from "../components/admin/countries/create/Create";
-import { CountriesEdit } from "../components/admin/countries/edit/Edit";
-import { AdminCompetitions } from "../components/admin/competitions/list/Competitions";
-import { CompetitionsCreate } from "../components/admin/competitions/create/Create";
+import { Login } from '../components/auth/login/Login';
+import { Register } from '../components/auth/register/Register';
+import { Landing } from '../components/index/Landing';
+import { Search } from '../components/search/Search';
+import { Listing } from '../components/listing/Listing';
+import { Evenement } from '../components/evenement/Evenement';
+import { Cart } from '../components/cart/Cart';
+import { Offer } from '../components/offer/Offer';
+import { Profile } from '../components/profile/Profile';
+import { AdminOverview } from '../components/admin/overview/Overview';
+import { AdminSports } from '../components/admin/sports/list/Sports';
+import { SportsCreate } from '../components/admin/sports/create/Create';
+import { SportsEdit } from '../components/admin/sports/edit/Edit';
+import { AdminCountries } from '../components/admin/countries/list/Countries';
+import { CountriesCreate } from '../components/admin/countries/create/Create';
+import { CountriesEdit } from '../components/admin/countries/edit/Edit';
+import { AdminCompetitions } from '../components/admin/competitions/list/Competitions';
+import { CompetitionsCreate } from '../components/admin/competitions/create/Create';
+import { CompetitionsEdit } from '../components/admin/competitions/edit/Edit';
 
 export const SubporterRoutes: Routes = [
     {
@@ -85,7 +86,13 @@ export const SubporterRoutes: Routes = [
         path: 'admin/competitions/add', component: CompetitionsCreate, canActivate: [AdminGuard]
     },
     {
-        path: '**', component: Login
+        path: 'admin/competitions/edit/:id', component: CompetitionsEdit, canActivate: [AdminGuard]
+    },
+    {
+        path: '404', component: Login
+    },
+    {
+        path: '**', redirectTo: '/404'
     }
 ]
 

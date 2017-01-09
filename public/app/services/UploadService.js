@@ -28,7 +28,7 @@ var UploadService = (function () {
             key = line.slice(0, i).trim().toLowerCase();
             val = line.slice(i + 1).trim();
             if (key) {
-                parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+                parsed[key] = parsed[key] ? parsed[key] + ", " + val : val;
             }
         });
         return parsed;
