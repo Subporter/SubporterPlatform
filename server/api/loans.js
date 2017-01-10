@@ -1,24 +1,12 @@
 const express = require('express'),
-    config = require('../../config/subporter.config'),
     moment = require('moment'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
     loadUser = require('../middleware/loadUser'),
     bodyValidator = require('../helpers/bodyValidator'),
+	cache = require('../helpers/caching'),
     Loan = require('../models/Loans'),
     Game = require('../models/Games');
-
-let redis = config.redis_dev;
-
-if (process.env.NODE_ENV === 'production') {
-    redis = config.redis_prod;
-}
-
-const cache = require('express-redis-cache')({
-    host: redis.host,
-    port: redis.port,
-    expire: 60
-});
 
 let router = express.Router();
 

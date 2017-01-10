@@ -1,7 +1,7 @@
 const mongoose = require('mongoose'),
     User = mongoose.model('User');
 
-let admin = (req, res, next) => {
+const admin = (req, res, next) => {
     if (req.granted) {
         User.getUserByEmailForAuth(req.jwtUser.email, (err, user) => {
             if (err) {

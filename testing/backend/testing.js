@@ -6,7 +6,8 @@ describe('Running all tests', () => {
     require('./userTesting');
     require('./sportTesting');
     require('./countryTesting');
-    require('./addressTesting');
+	require('./addressTesting');
+    require('./socketTesting');
 
     after(function() {
         setTimeout(() => {

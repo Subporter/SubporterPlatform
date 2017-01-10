@@ -24,7 +24,8 @@ const PATHS = {
         DEST: './public/css'
     },
     JS: {
-        BACKEND: './server/**/*.js'
+        BACKEND: './server/**/*.js',
+		TESTING: './testing/**/*.js'
     },
 	EXTERNALS: {
 		SRC: './bower_components',
@@ -36,7 +37,7 @@ gulp.task('default', () => {
     let htmlwatcher = gulp.watch(PATHS.HTML.SRC, ['html-validate']),
         //csswatcher = gulp.watch(PATHS.CSS.SRC, ['css']),
         sasswatcher = gulp.watch(PATHS.SCSS.SRC, ['sass']),
-        jswatcher = gulp.watch(PATHS.JS.BACKEND, ['js']);
+        jswatcher = gulp.watch([PATHS.JS.BACKEND, PATHS.JS.TESTING], ['js']);
 });
 
 /* Development */

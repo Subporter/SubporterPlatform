@@ -1,5 +1,4 @@
 const express = require('express'),
-    config = require('../../config/subporter.config'),
     moment = require('moment'),
     jwt = require('jwt-simple'),
     authenticate = require('../middleware/authenticate'),
@@ -8,6 +7,7 @@ const express = require('express'),
     imageSaver = require('../middleware/imageSaver'),
     loadUser = require('../middleware/loadUser'),
     bodyValidator = require('../helpers/bodyValidator'),
+    cache = require('../helpers/caching'),
     User = require('../models/Users'),
     Address = require('../models/Addresses');
 
