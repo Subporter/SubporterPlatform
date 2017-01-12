@@ -1,13 +1,13 @@
-const authenticate = require('./authenticate'),
-	path = require('path');
+const path = require('path'),
+    authenticate = require('./authenticate');
 
-let routesController = function (app) {
-	app.use('/', authenticate);
+let routesController = (app) => {
+    app.use('/', authenticate);
 
-	app.get('*', function (req, res) {
-		let index = path.resolve(__dirname, '../../public/index.html');
-		res.sendFile(index);
-	});
+    app.get('*', (req, res) => {
+        let index = path.resolve(__dirname, '../../public/index.html');
+        res.sendFile(index);
+    });
 };
 
 module.exports.routes = routesController;

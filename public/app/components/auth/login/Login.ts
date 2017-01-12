@@ -52,7 +52,7 @@ import { ApiService} from '../../../services/ApiService';
 
 
 	`,
-    styleUrls: ['../../../css/css/login.css']
+    styleUrls: ['../../../css/login.css']
 
 })
 
@@ -114,14 +114,14 @@ export class Login {
                     var socket = io.connect();
                     socket.emit("login", response.json().id)
 
-                    
+
 
                     this.apiService.get('api/users').subscribe(
                         response => {
                             console.log("USER DATA");
                             var jsonrespons = response.json().data;
                             console.log(jsonrespons["favorites"]);
-                            
+
                             socket.emit("addFav", jsonrespons["favorites"])
                         },
                         error => {
@@ -134,7 +134,7 @@ export class Login {
 
 
                         alert("Eén van jouw abonnementen is verhuurd!");
-                        
+
 
 
 
@@ -146,7 +146,7 @@ export class Login {
 
                     socket.on("loanAddedTeam", function(){
                         alert("Er is een abonnement voor een wedstrijd van jouw favoriete ploeg beschikbaar!");
-                     
+
 
                     })
 

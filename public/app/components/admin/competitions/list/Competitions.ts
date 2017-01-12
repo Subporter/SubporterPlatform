@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { Materialize } from 'materialize-css';
-import * as $ from 'jquery';
+import { MaterializeAction } from 'angular2-materialize';
 
 import { Competition } from '../../../../modules/Competitions';
 
@@ -14,13 +14,11 @@ import { ApiService } from '../../../../services/ApiService';
 export class AdminCompetitions {
     competitions: Array<Competition> = [];
     selectedCompetition: Competition;
+    modalActions = new EventEmitter<string | MaterializeAction>();
 
-    constructor(public apiService: ApiService) {
-
-    }
+    constructor(public apiService: ApiService) { }
 
     ngOnInit() {
-        $('.modal').modal();
         this.apiService.get("api/competitions").subscribe(
             response => {
                 let result = JSON.parse(response.text());
@@ -31,7 +29,6 @@ export class AdminCompetitions {
                             let competition: Competition = new Competition(i._id, i.country, i.description, i.logo, i.name, i.sport);
                             this.competitions.push(competition);
                         });
-                        console.log(this.competitions);
                     }
                 } else {
                     Materialize.toast("Unable to load competitions at this time", 2000);
@@ -43,8 +40,9 @@ export class AdminCompetitions {
         );
     }
 
-    /*delete(id: Number) {
+    delete(id: Number) {
         this.selectedCompetition = this.competitions.filter(country => country._id === id)[0];
+        this.modalActions.emit({ action: "modal", params: ['open'] })
     }
 
     confirmDelete(id: Number) {
@@ -59,7 +57,11 @@ export class AdminCompetitions {
             error => {
                 Materialize.toast("Unable to delete competition at this time", 2000);
             }
-        )
-    }*/
+        );
+        this.modalActions.emit({ action: "modal", params: ['close'] })
+    }
 
+    closeModal() {
+        this.modalActions.emit({ action: "modal", params: ['close'] })
+    }
 }

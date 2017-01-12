@@ -1,0 +1,26 @@
+<header class="header" [ngStyle]="{ 'background-image':  'url('+image+')' }">
+	<nav>
+		<div class="nav-wrapper">
+			<a [routerLink]="['/']" class="brand-logo">Subporter</a>
+			<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li> <a [routerLink]="['/search']">Zoeken</a></li>
+				<li *ngIf="isAdmin"><a [routerLink]="['/admin']">Admin</a></li>
+				<li *ngIf="isLoggedIn"><a [routerLink]="['/cart']">Winkelwagen</a></li>
+				<li *ngIf="!isLoggedIn"><a [routerLink]="['/login']">Login</a></li>
+				<li *ngIf="isLoggedIn"><a [routerLink]="['/profile']">Profiel</a></li>
+				<li *ngIf="isLoggedIn"><a (click)="logout()">Logout</a></li>
+				<li><a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a></li>
+			</ul>
+			<ul class="side-nav" id="mobile-demo">
+				<li><a href="sass.html">Sass</a></li>
+				<li><a href="badges.html">Components</a></li>
+				<li><a href="collapsible.html">JavaScript</a></li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container">
+		<h1>{{title}}</h1>
+		<h2>{{subtitle}}</h2>
+	</div>
+</header>

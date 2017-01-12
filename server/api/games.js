@@ -1,28 +1,16 @@
 const express = require('express'),
-    config = require('../../config/subporter.config'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
     formParser = require('../middleware/formParser'),
     imageSaver = require('../middleware/imageSaver'),
     bodyValidator = require('../helpers/bodyValidator'),
+	cache = require('../helpers/caching'),
     Game = require('../models/Games');
-
-let redis = config.redis_dev;
-
-if (process.env.NODE_ENV === 'production') {
-    redis = config.redis_prod;
-}
-
-const cache = require('express-redis-cache')({
-    host: redis.host,
-    port: redis.port,
-    expire: 60
-});
 
 let router = express.Router();
 
 /* Create */
-router.post("/games", authenticate, admin, formParser, imageSaver, function(req, res) {
+router.post("/games", authenticate, admin, formParser, imageSaver, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 6 || bodyValidator(req.body.away, req.body.banner, req.body.competition, req.body.date, req.body.home, req.body.importance)) {
             res.json({
@@ -30,7 +18,7 @@ router.post("/games", authenticate, admin, formParser, imageSaver, function(req,
                 success: false
             });
         } else {
-            Game.addGame(req.body, function(err) {
+            Game.addGame(req.body, (err) => {
                 if (err) {
                     res.json({
                         info: "Error during creating game",
@@ -41,6 +29,13 @@ router.post("/games", authenticate, admin, formParser, imageSaver, function(req,
                     res.json({
                         info: "Game created succesfully",
                         success: true
+                    });
+                    cache.del('/api/games/*', (err, count) => {
+                        if (err) {
+                            console.error(err);
+                        } else {
+                            console.log("Cache for /api/games cleared");
+                        }
                     });
                 }
             });
@@ -55,8 +50,8 @@ router.post("/games", authenticate, admin, formParser, imageSaver, function(req,
 });
 
 /* Read (all games) */
-router.get("/games", authenticate, admin, cache.route(), function(req, res) {
-    Game.getGames(function(err, games) {
+router.get("/games", authenticate, admin, cache.route('/api/games/all'), (req, res) => {
+    Game.getGames((err, games) => {
         if (err) {
             res.json({
                 info: "Error during reading games",
@@ -78,8 +73,8 @@ router.get("/games", authenticate, admin, cache.route(), function(req, res) {
     });
 });
 
-router.get("/games/featured/:competition", cache.route(), function(req, res) {
-    Game.getFeaturedGames(req.params.competition, function(err, games) {
+router.get("/games/featured/:competition", cache.route(), (req, res) => {
+    Game.getFeaturedGames(req.params.competition, (err, games) => {
         if (err) {
             res.json({
                 info: "Error during reading games",
@@ -101,8 +96,8 @@ router.get("/games/featured/:competition", cache.route(), function(req, res) {
     });
 });
 
-router.get("/games/competition/:competition", cache.route(), function(req, res) {
-    Game.getGamesByCompetition(req.params.competition, function(err, games) {
+router.get("/games/competition/:competition", cache.route(), (req, res) => {
+    Game.getGamesByCompetition(req.params.competition, (err, games) => {
         if (err) {
             res.json({
                 info: "Error during reading games",
@@ -124,8 +119,8 @@ router.get("/games/competition/:competition", cache.route(), function(req, res) 
     });
 });
 
-router.get("/games/week/:country", cache.route(), function(req, res) {
-    Game.getGamesByCountryForThisWeek(req.params.competition, function(err, games) {
+router.get("/games/week/:country", cache.route(), (req, res) => {
+    Game.getGamesByCountryForThisWeek(req.params.country, (err, games) => {
         if (err) {
             res.json({
                 info: "Error during reading games",
@@ -147,8 +142,31 @@ router.get("/games/week/:country", cache.route(), function(req, res) {
     });
 });
 
-router.get("/games/team/:team", cache.route(), function(req, res) {
-    Game.getGamesByTeam(req.params.team, function(err, games) {
+router.get("/games/week/:competition", cache.route(), (req, res) => {
+    Game.getGamesByCompetitionForThisWeek(req.params.competition, (err, games) => {
+        if (err) {
+            res.json({
+                info: "Error during reading games",
+                success: false,
+                error: err
+            });
+        } else if (games) {
+            res.json({
+                info: "Games found succesfully",
+                success: true,
+                data: games
+            });
+        } else {
+            res.json({
+                info: "Games not found",
+                success: false
+            });
+        }
+    });
+});
+
+router.get("/games/team/:team", cache.route(), (req, res) => {
+    Game.getGamesByTeam(req.params.team, (err, games) => {
         if (err) {
             res.json({
                 info: "Error during reading games",
@@ -171,8 +189,8 @@ router.get("/games/team/:team", cache.route(), function(req, res) {
 });
 
 /* Read (one game) */
-router.get("/games/:id", cache.route(), function(req, res) {
-    Game.getGameById(req.params.id, function(err, game) {
+router.get("/games/:id", cache.route(), (req, res) => {
+    Game.getGameById(req.params.id, (err, game) => {
         if (err) {
             res.json({
                 info: "Error during reading game",
@@ -195,7 +213,7 @@ router.get("/games/:id", cache.route(), function(req, res) {
 });
 
 /* Update */
-router.put("/games/:id", authenticate, admin, formParser, imageSaver, function(req, res) {
+router.put("/games/:id", authenticate, admin, formParser, imageSaver, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 6 || bodyValidator(req.body.away, req.body.banner, req.body.competition, req.body.date, req.body.home, req.body.importance)) {
             res.json({
@@ -203,7 +221,7 @@ router.put("/games/:id", authenticate, admin, formParser, imageSaver, function(r
                 success: false
             });
         } else {
-            Game.getGameById(req.params.id, function(err, game) {
+            Game.getGameById(req.params.id, (err, game) => {
                 if (err) {
                     res.json({
                         info: "Error during reading game",
@@ -211,7 +229,7 @@ router.put("/games/:id", authenticate, admin, formParser, imageSaver, function(r
                         error: err
                     });
                 } else if (game) {
-                    Game.updateGame(game, req.body, function(err) {
+                    Game.updateGame(game, req.body, (err) => {
                         if (err) {
                             res.json({
                                 info: "Error during updating game",
@@ -222,6 +240,13 @@ router.put("/games/:id", authenticate, admin, formParser, imageSaver, function(r
                             res.json({
                                 info: "Game updated succesfully",
                                 success: true
+                            });
+                            cache.del('/api/games/*', (err, count) => {
+                                if (err) {
+                                    console.error(err);
+                                } else {
+                                    console.log("Cache for /api/games cleared");
+                                }
                             });
                         }
                     });
@@ -243,9 +268,9 @@ router.put("/games/:id", authenticate, admin, formParser, imageSaver, function(r
 });
 
 /* Delete */
-router.delete("/games/:id", authenticate, admin, function(req, res) {
+router.delete("/games/:id", authenticate, admin, (req, res) => {
     if (req.granted) {
-        Game.deleteGame(req.params.id, function(err) {
+        Game.deleteGame(req.params.id, (err) => {
             if (err) {
                 res.json({
                     info: "Error during deleting game",
@@ -256,6 +281,13 @@ router.delete("/games/:id", authenticate, admin, function(req, res) {
                 res.json({
                     info: "Game deleted succesfully",
                     success: true
+                });
+                cache.del('/api/games/*', (err, count) => {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        console.log("Cache for /api/games cleared");
+                    }
                 });
             }
         });

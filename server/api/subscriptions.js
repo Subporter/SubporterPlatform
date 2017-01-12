@@ -1,30 +1,18 @@
 const express = require('express'),
-    config = require('../../config/subporter.config'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
     formParser = require('../middleware/formParser'),
     imageSaver = require('../middleware/imageSaver'),
     loadUser = require('../middleware/loadUser'),
     bodyValidator = require('../helpers/bodyValidator'),
+	cache = require('../helpers/caching'),
     Subscription = require('../models/Subscriptions'),
     User = require('../models/Users');
-
-let redis = config.redis_dev;
-
-if (process.env.NODE_ENV === 'production') {
-    redis = config.redis_prod;
-}
-
-const cache = require('express-redis-cache')({
-    host: redis.host,
-    port: redis.port,
-    expire: 60
-});
 
 let router = express.Router();
 
 /* Create */
-router.post("/subscriptions", authenticate, formParser, imageSaver, loadUser, function(req, res) {
+router.post("/subscriptions", authenticate, formParser, imageSaver, loadUser, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 3 || bodyValidator(req.body.place, req.body.subscription, req.body.team)) {
             res.json({
@@ -33,7 +21,7 @@ router.post("/subscriptions", authenticate, formParser, imageSaver, loadUser, fu
             });
         } else {
             req.body.user = req.user._id;
-            Subscription.addSubscription(req.body, function(err, id) {
+            Subscription.addSubscription(req.body, (err, id) => {
                 if (err || !id) {
                     res.json({
                         info: "Error during creating subscription",
@@ -41,7 +29,7 @@ router.post("/subscriptions", authenticate, formParser, imageSaver, loadUser, fu
                         error: err.errmsg
                     });
                 } else {
-                    User.toggleSubscription(req.user, id, function(err, user) {
+                    User.toggleSubscription(req.user, id, (err, user) => {
                         if (err) {
                             res.json({
                                 info: "Error during adding subscription",
@@ -53,6 +41,13 @@ router.post("/subscriptions", authenticate, formParser, imageSaver, loadUser, fu
                                 info: "Subscription created succesfully",
                                 success: true,
                                 data: user
+                            });
+                            cache.del('/api/subscriptions/*', (err, count) => {
+                                if (err) {
+                                    console.error(err);
+                                } else {
+                                    console.log("Cache for /api/subscriptions cleared");
+                                }
                             });
                         }
                     });
@@ -69,9 +64,9 @@ router.post("/subscriptions", authenticate, formParser, imageSaver, loadUser, fu
 });
 
 /* Read (all subscriptions) */
-router.get("/subscriptions", authenticate, admin, cache.route(), function(req, res) {
+router.get("/subscriptions", authenticate, admin, cache.route('/api/subscriptions/all'), (req, res) => {
     if (req.granted) {
-        Subscription.getSubscriptions(function(err, subscriptions) {
+        Subscription.getSubscriptions((err, subscriptions) => {
             if (err) {
                 res.json({
                     info: "Error during reading subscriptions",
@@ -100,9 +95,9 @@ router.get("/subscriptions", authenticate, admin, cache.route(), function(req, r
     }
 });
 
-router.get("/subscriptions/team/:team", authenticate, admin, cache.route(), function(req, res) {
+router.get("/subscriptions/team/:team", authenticate, admin, cache.route(), (req, res) => {
     if (req.granted) {
-        Subscription.getSubscriptionsByTeam(req.params.team, function(err, subscriptions) {
+        Subscription.getSubscriptionsByTeam(req.params.team, (err, subscriptions) => {
             if (err) {
                 res.json({
                     info: "Error during reading subscriptions",
@@ -131,9 +126,9 @@ router.get("/subscriptions/team/:team", authenticate, admin, cache.route(), func
     }
 });
 
-router.get("/subscriptions/user/:user", authenticate, admin, cache.route(), function(req, res) {
+router.get("/subscriptions/user/:user", authenticate, admin, cache.route(), (req, res) => {
     if (req.granted) {
-        Subscription.getSubscriptionsByUser(req.params.user, function(err, subscriptions) {
+        Subscription.getSubscriptionsByUser(req.params.user, (err, subscriptions) => {
             if (err) {
                 res.json({
                     info: "Error during reading subscriptions",
@@ -163,9 +158,9 @@ router.get("/subscriptions/user/:user", authenticate, admin, cache.route(), func
 });
 
 /* Read (one subscription) */
-router.get("/subscriptions/:id", authenticate, cache.route(), function(req, res) {
+router.get("/subscriptions/:id", authenticate, cache.route(), (req, res) => {
     if (req.granted) {
-        Subscription.getSubscriptionById(req.params.id, function(err, subscription) {
+        Subscription.getSubscriptionById(req.params.id, (err, subscription) => {
             if (err) {
                 res.json({
                     info: "Error during reading subscription",
@@ -195,7 +190,7 @@ router.get("/subscriptions/:id", authenticate, cache.route(), function(req, res)
 });
 
 /* Update */
-router.put("/subscriptions/:id", authenticate, formParser, imageSaver, loadUser, function(req, res) {
+router.put("/subscriptions/:id", authenticate, formParser, imageSaver, loadUser, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 3 || bodyValidator(req.body.place, req.body.subscription, req.body.team)) {
             res.json({
@@ -203,7 +198,7 @@ router.put("/subscriptions/:id", authenticate, formParser, imageSaver, loadUser,
                 success: false
             });
         } else {
-            Subscription.getSubscriptionById(req.params.id, function(err, subscription) {
+            Subscription.getSubscriptionById(req.params.id, (err, subscription) => {
                 if (err || (req.user.admin === false && req.user._id !== subscription.user)) {
                     res.json({
                         info: "Error during reading subscription",
@@ -211,7 +206,7 @@ router.put("/subscriptions/:id", authenticate, formParser, imageSaver, loadUser,
                         error: err.errmsg
                     });
                 } else if (subscription) {
-                    Subscription.updateSubscription(subscription, req.body, function(err) {
+                    Subscription.updateSubscription(subscription, req.body, (err) => {
                         if (err) {
                             res.json({
                                 info: "Error during updating subscription",
@@ -222,6 +217,13 @@ router.put("/subscriptions/:id", authenticate, formParser, imageSaver, loadUser,
                             res.json({
                                 info: "Subscription updated succesfully",
                                 success: true
+                            });
+                            cache.del('/api/subscriptions/*', (err, count) => {
+                                if (err) {
+                                    console.error(err);
+                                } else {
+                                    console.log("Cache for /api/subscriptions cleared");
+                                }
                             });
                         }
                     });
@@ -243,9 +245,9 @@ router.put("/subscriptions/:id", authenticate, formParser, imageSaver, loadUser,
 });
 
 /* Delete */
-router.delete("/subscriptions/:id", authenticate, loadUser, function(req, res) {
+router.delete("/subscriptions/:id", authenticate, loadUser, (req, res) => {
     if (req.granted) {
-        Subscription.deleteSubscription(req.params.id, req.user, function(err) {
+        Subscription.deleteSubscription(req.params.id, req.user, (err) => {
             if (err) {
                 res.json({
                     info: "Error during deleting subscription",
@@ -253,7 +255,7 @@ router.delete("/subscriptions/:id", authenticate, loadUser, function(req, res) {
                     error: err.errmsg
                 });
             } else {
-                User.toggleSubscription(req.user, req.params.id, function(err, user) {
+                User.toggleSubscription(req.user, req.params.id, (err, user) => {
                     if (err) {
                         res.json({
                             info: "Error during deleting subscription",
@@ -265,6 +267,13 @@ router.delete("/subscriptions/:id", authenticate, loadUser, function(req, res) {
                             info: "Subscription deleted succesfully",
                             success: true,
                             data: user
+                        });
+                        cache.del('/api/subscriptions/*', (err, count) => {
+                            if (err) {
+                                console.error(err);
+                            } else {
+                                console.log("Cache for /api/subscriptions cleared");
+                            }
                         });
                     }
                 });

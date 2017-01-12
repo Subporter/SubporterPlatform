@@ -13,7 +13,7 @@ import {Subscription } from 'rxjs';
 @Component({
 	selector: 'evenement',
 	 templateUrl: './app/components/evenement/evenement.view.html',
-	  styleUrls: ['../../css/css/evenement.css']
+	  styleUrls: ['../../css/evenement.css']
 })
 
 export class Evenement {

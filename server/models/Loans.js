@@ -172,9 +172,9 @@ let populateSchema = [{
 }];
 
 /* Create */
-Loan.addLoan = function(body, cb) {
+Loan.addLoan = (body, cb) => {
     let loan = new Loan(body);
-    loan.save(function(err, docs) {
+    loan.save((err, docs) => {
         if (err || !docs) {
             cb(err, null);
         } else {
@@ -184,10 +184,10 @@ Loan.addLoan = function(body, cb) {
 };
 
 /* Read (all subscriptions) */
-Loan.getLoans = function(cb) {
+Loan.getLoans = (cb) => {
     Loan.find({})
         .populate(populateSchema)
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -196,13 +196,13 @@ Loan.getLoans = function(cb) {
         });
 };
 
-Loan.getLoansByGame = function(game, cb) {
+Loan.getLoansByGame = (game, cb) => {
     Loan.find({
             game: game,
             lent: false
         })
         .populate(populateSchema)
-        .exec(function(err, docs) {
+        .exec((err, docs) =>  {
             if (err) {
                 cb(err, null);
             } else {
@@ -211,12 +211,12 @@ Loan.getLoansByGame = function(game, cb) {
         });
 };
 
-Loan.getAmountOfLoanedOutGames = function(game, cb) {
+Loan.getAmountOfLoanedOutGames = (game, cb) => {
     Loan.count({
             game: game,
             lent: true
         })
-        .exec(function(err, count) {
+        .exec((err, count) =>  {
             if (err) {
                 cb(err, null);
             } else {
@@ -225,12 +225,12 @@ Loan.getAmountOfLoanedOutGames = function(game, cb) {
         });
 };
 
-Loan.getLoansByLentOutBy = function(user, cb) {
+Loan.getLoansByLentBy = (user, cb) => {
     Loan.find({
-            lent_out_by: user
+            lent_by: user
         })
         .populate(populateSchema)
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -239,12 +239,12 @@ Loan.getLoansByLentOutBy = function(user, cb) {
         });
 };
 
-Loan.getLoansByLentBy = function(user, cb) {
+Loan.getLoansByLentOutBy = (user, cb) => {
     Loan.find({
-            lent_by: user
+            lent_out_by: user
         })
         .populate(populateSchema)
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -254,10 +254,10 @@ Loan.getLoansByLentBy = function(user, cb) {
 };
 
 /* Read (one subscription) */
-Loan.getLoanById = function(id, cb) {
+Loan.getLoanById = (id, cb) => {
     Loan.findById(id)
         .populate(populateSchema)
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -267,9 +267,9 @@ Loan.getLoanById = function(id, cb) {
 };
 
 /* Update */
-Loan.updateLoan = function(loan, body, cb) {
+Loan.updateLoan = (loan, body, cb) => {
     _.merge(loan, body);
-    loan.save(function(err) {
+    loan.save((err) => {
         if (err) {
             cb(err);
         }
@@ -278,8 +278,8 @@ Loan.updateLoan = function(loan, body, cb) {
 };
 
 /* Delete */
-Loan.deleteLoan = function(id, cb) {
-    Loan.findById(id, function(err, docs) {
+Loan.deleteLoan = (id, cb) => {
+    Loan.findById(id, (err, docs) => {
         if (err || !docs) {
             cb(err);
         } else {
@@ -288,28 +288,28 @@ Loan.deleteLoan = function(id, cb) {
     });
 };
 
-Loan.deleteLoansByGame = function(game, cb) {
+Loan.deleteLoansByGame = (game, cb) => {
     Loan.find({
         game: game
-    }, function(err, docs) {
+    }, (err, docs) => {
         if (err || docs.length === 0) {
             cb(err);
         } else {
-            docs.forEach(function(doc) {
+            docs.forEach((doc) => {
                 doc.remove(cb);
             });
         }
     });
 };
 
-Loan.deleteLoansByUser = function(user, cb) {
+Loan.deleteLoansByUser = (user, cb) => {
     Loan.find({
         lent_out_by: user
-    }, function(err, docs) {
+    }, (err, docs) => {
         if (err || docs.length === 0) {
             cb(err);
         } else {
-            docs.forEach(function(doc) {
+            docs.forEach((doc) => {
                 doc.remove(cb);
             });
         }

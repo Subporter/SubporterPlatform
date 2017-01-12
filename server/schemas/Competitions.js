@@ -10,7 +10,7 @@ const mongoose = require('mongoose'),
 	Team = require('../models/Teams');
 
 let regExp = /^[A-zÀ-ÿ0-9-\s]{2,100}$/;
-let descriptionRegExp = /^[A-zÀ-ÿ0-9-\s.,!"'/]{2,1000}$/;
+let descriptionRegExp = /^[A-zÀ-ÿ0-9-\s.,!'/]{2,1000}$/;
 
 let competitionSchema = new mongoose.Schema({
     country: {
@@ -48,9 +48,9 @@ let competitionSchema = new mongoose.Schema({
     }
 });
 
-competitionSchema.pre('remove', function (next) {
+competitionSchema.pre('remove', function(next) {
     let competition = this;
-    Team.deleteTeamsByCompetition(competition._id, function (err) {
+    Team.deleteTeamsByCompetition(competition._id, (err) => {
         if (err) {
             return next(err);
         } else {

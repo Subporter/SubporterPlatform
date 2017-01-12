@@ -1,53 +1,107 @@
 "use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var core_1 = require("@angular/core");
-var Rx_1 = require("rxjs/Rx");
 var UploadService = (function () {
-    function UploadService() {
-        var _this = this;
-        this.progress$ = Rx_1.Observable.create(function (observer) {
-            _this.progressObserver = observer;
-        }).share();
+    function UploadService(options) {
+        this.isHTML5 = true;
+        this.isUploading = false;
+        this.progress = 0;
+        this.timeout = 10000;
+        this.url = options.url;
+        this.token = options.token;
     }
-    UploadService.prototype.makeFileRequest = function (url, params, files) {
-        var _this = this;
-        return Rx_1.Observable.create(function (observer) {
-            var formData = new FormData(), xhr = new XMLHttpRequest();
-            for (var i = 0; i < files.length; i++) {
-                formData.append("uploads[]", files[i], files[i].name);
+    UploadService.prototype.uploadItem = function (item) {
+        if (this.isUploading) {
+            return;
+        }
+        this.isUploading = true;
+        this._xhrTransport(item);
+    };
+    UploadService.prototype._onBeforeUploadItem = function (item) {
+        item._onBeforeUpload();
+    };
+    UploadService.prototype._parseHeaders = function (headers) {
+        var parsed = {}, key, val, i;
+        if (!headers) {
+            return parsed;
+        }
+        headers.split('\n').map(function (line) {
+            i = line.indexOf(':');
+            key = line.slice(0, i).trim().toLowerCase();
+            val = line.slice(i + 1).trim();
+            if (key) {
+                parsed[key] = parsed[key] ? parsed[key] + ", " + val : val;
             }
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        observer.next(JSON.parse(xhr.response));
-                        observer.complete();
-                    }
-                    else {
-                        observer.error(xhr.response);
-                    }
-                }
-            };
-            xhr.upload.onprogress = function (event) {
-                _this.progress = Math.round(event.loaded / event.total * 100);
-                _this.progressObserver.next(_this.progress);
-            };
-            xhr.open('POST', url, true);
-            xhr.send(formData);
         });
+        return parsed;
+    };
+    UploadService.prototype._transformResponse = function (response, headers) {
+        return response;
+    };
+    UploadService.prototype._isSuccessCode = function (status) {
+        return (status >= 200 && status < 300) || status === 304;
+    };
+    UploadService.prototype._render = function () { };
+    UploadService.prototype._xhrTransport = function (item) {
+        var _this = this;
+        var xhr = item._xhr = new XMLHttpRequest();
+        xhr.timeout = this.timeout;
+        this._onBeforeUploadItem(item);
+        xhr.upload.onprogress = function (event) { };
+        xhr.onload = function () {
+            var headers = _this._parseHeaders(xhr.getAllResponseHeaders());
+            var response = _this._transformResponse(xhr.response, headers);
+            var gist = _this._isSuccessCode(xhr.status) ? 'Success' : 'Error';
+            var method = '_on' + gist + 'Item';
+            _this[method](item, response, xhr.status, headers);
+            _this._onCompleteItem(item, response, xhr.status, headers);
+        };
+        xhr.onerror = function () {
+            var headers = _this._parseHeaders(xhr.getAllResponseHeaders());
+            var response = _this._transformResponse(xhr.response, headers);
+            _this._onErrorItem(item, response, xhr.status, headers);
+        };
+        xhr.ontimeout = function () {
+            var headers = _this._parseHeaders(xhr.getAllResponseHeaders());
+            var response = _this._transformResponse(xhr.response, headers);
+            _this._onErrorItem(item, response, xhr.status, headers);
+        };
+        xhr.onabort = function () {
+            var headers = _this._parseHeaders(xhr.getAllResponseHeaders());
+            var response = _this._transformResponse(xhr.response, headers);
+            _this._onCompleteItem(item, response, xhr.status, headers);
+        };
+        xhr.open(item.method, this.url, true);
+        xhr.withCredentials = item.withCredentials;
+        if (this.token) {
+            xhr.setRequestHeader('Authorization', this.token);
+        }
+        xhr.send(item.formData);
+        this._render();
+    };
+    UploadService.prototype.onSuccessItem = function (item, response, status, headers) { };
+    UploadService.prototype.onErrorItem = function (item, response, status, headers) {
+        this.isUploading = false;
+    };
+    UploadService.prototype.onCancelItem = function (item, response, status, headers) { };
+    UploadService.prototype.onCompleteItem = function (item, response, status, headers) { };
+    UploadService.prototype._onSuccessItem = function (item, response, status, headers) {
+        item._onSuccess(response, status, headers);
+        this.onSuccessItem(item, response, status, headers);
+    };
+    UploadService.prototype._onErrorItem = function (item, response, status, headers) {
+        item._onError(response, status, headers);
+        this.onErrorItem(item, response, status, headers);
+    };
+    UploadService.prototype._onCancelItem = function (item, response, status, headers) {
+        item._onCancel(response, status, headers);
+        this.onCancelItem(item, response, status, headers);
+    };
+    UploadService.prototype._onCompleteItem = function (item, response, status, headers) {
+        item._onComplete(response, status, headers);
+        this.onCompleteItem(item, response, status, headers);
+        this.isUploading = false;
+        this._render();
     };
     return UploadService;
 }());
-UploadService = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [])
-], UploadService);
 exports.UploadService = UploadService;
 //# sourceMappingURL=UploadService.js.map

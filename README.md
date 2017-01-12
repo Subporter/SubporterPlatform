@@ -20,6 +20,9 @@ Dit project wordt gerealiseerd door:
 * [Niels Bril][5]
 * [Simon Gemmel][6]
 
+**Installatie**
+
+Zie README.md onder /docs.
 
 [1]: http://www.nmct.be
 [2]: https://www.subporter.be

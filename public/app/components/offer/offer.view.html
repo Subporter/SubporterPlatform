@@ -1,13 +1,13 @@
-  <navmenu header1="Abonnement verhuren" header2="" image="/img/search_bg.jpg"></navmenu>
+  <subporter-header header1="Abonnement verhuren" header2="" image="/img/search_bg.jpg"></subporter-header>
 
 <section>
-    <div class="container"> 
+    <div class="container">
 
 
         <div *ngIf="show4" class="wedstrijd article">
 
             <h2>1. Wedstrijd</h2>
- 
+
 <form (submit)="showAbbo()">
             <div class="input-field col s12">
           <i class="material-icons prefix">textsms</i>
@@ -43,11 +43,11 @@
             <td>{{subscription.team.name}}
             </td>
             <td>{{subscription.place}}</td>
-           
+
           </tr>
 
            </tbody>
-           
+
       </table>
 
 
@@ -78,7 +78,7 @@
             </td>
             <td>{{place}}</td>
           </tr>
-         
+
         </tbody>
       </table>
 
@@ -93,7 +93,7 @@
     </div>
 
 
-    
+
         <div id="modal1" class="modal " materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
   <div class="modal-content">
     <h4>Ben je zeker?</h4>
@@ -117,9 +117,3 @@
 </div>
 
 </section>
-
-
-
-
-
-<subporterfooter></subporterfooter>

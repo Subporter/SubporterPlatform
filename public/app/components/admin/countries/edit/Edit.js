@@ -14,26 +14,30 @@ var materialize_css_1 = require("materialize-css");
 var ApiService_1 = require("../../../../services/ApiService");
 var CountriesEdit = (function () {
     function CountriesEdit(router, route, apiService) {
+        var _this = this;
         this.router = router;
         this.route = route;
         this.apiService = apiService;
         this.name = "";
+        this.sub = this.route.params.subscribe(function (params) {
+            _this.id = +params['id'];
+            if (!_this.id) {
+                _this.router.navigate(['admin/countries']);
+            }
+        });
     }
     CountriesEdit.prototype.ngOnInit = function () {
         var _this = this;
-        this.sub = this.route.params.subscribe(function (params) {
-            _this.id = +params["id"];
-            _this.apiService.get("api/countries/" + _this.id).subscribe(function (response) {
-                var result = JSON.parse(response.text());
-                if (result.success) {
-                    _this.name = result.data.name;
-                }
-                else {
-                    _this.router.navigate(['admin/countries']);
-                }
-            }, function (error) {
+        this.apiService.get("api/countries/" + this.id).subscribe(function (response) {
+            var result = JSON.parse(response.text());
+            if (result.success) {
+                _this.name = result.data.name;
+            }
+            else {
                 _this.router.navigate(['admin/countries']);
-            });
+            }
+        }, function (error) {
+            _this.router.navigate(['admin/countries']);
         });
     };
     CountriesEdit.prototype.edit = function (event) {

@@ -7,7 +7,7 @@ import { contentHeaders } from '../../../common/headers'
 @Component({
 	selector: 'weekwedstrijd',
 	 template: `
-	 
+
       <span class="title">{{home}} - {{away}}</span>
       <p>{{date}}<br>
          {{location}}
@@ -16,9 +16,9 @@ import { contentHeaders } from '../../../common/headers'
       <i class="fa fa-ticket fa-2x " aria-hidden="true"></i>
       <span>{{amount}}</span>
       </div>
-	 
+
 	 `,
-	  styleUrls: ['../../css/css/landing.css']
+	  styleUrls: ['../../css/landing.css']
 })
 
 export class Weekwedstrijd {

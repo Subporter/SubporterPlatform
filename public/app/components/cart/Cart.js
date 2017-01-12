@@ -150,7 +150,7 @@ Cart = __decorate([
     core_1.Component({
         selector: 'cart',
         templateUrl: './app/components/cart/cart.view.html',
-        styleUrls: ['../../css/css/cart.css']
+        styleUrls: ['../../css/cart.css']
     }),
     __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService, router_1.ActivatedRoute, common_1.Location, core_2.CookieService])
 ], Cart);

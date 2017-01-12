@@ -1,26 +1,14 @@
 const express = require('express'),
-    config = require('../../config/subporter.config'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
     bodyValidator = require('../helpers/bodyValidator'),
+    cache = require('../helpers/caching'),
     Address = require('../models/Addresses');
-
-let redis = config.redis_dev;
-
-if (process.env.NODE_ENV === 'production') {
-    redis = config.redis_prod;
-}
-
-const cache = require('express-redis-cache')({
-    host: redis.host,
-    port: redis.port,
-    expire: 60
-});
 
 let router = express.Router();
 
 /* Create */
-router.post("/addresses", authenticate, admin, function(req, res) {
+router.post("/addresses", authenticate, admin, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.city, req.body.country, req.body.number, req.body.postal, req.body.street)) {
             res.json({
@@ -28,7 +16,7 @@ router.post("/addresses", authenticate, admin, function(req, res) {
                 success: false
             });
         } else {
-            Address.addAddress(req.body, function(err) {
+            Address.addAddress(req.body, (err) => {
                 if (err) {
                     res.json({
                         info: "Error during creating address",
@@ -39,6 +27,13 @@ router.post("/addresses", authenticate, admin, function(req, res) {
                     res.json({
                         info: "Address created succesfully",
                         success: true
+                    });
+                    cache.del('/api/addresses/*', (err, count) => {
+                        if (err) {
+                            console.error(err);
+                        } else {
+                            console.log("Cache for /api/addresses cleared");
+                        }
                     });
                 }
             });
@@ -53,9 +48,9 @@ router.post("/addresses", authenticate, admin, function(req, res) {
 });
 
 /* Read (all addresses) */
-router.get("/addresses", authenticate, admin, cache.route(), function(req, res) {
+router.get("/addresses", authenticate, admin, cache.route('/api/addresses/all'), (req, res) => {
     if (req.granted) {
-        Address.getAddresses(function(err, addresses) {
+        Address.getAddresses((err, addresses) => {
             if (err) {
                 res.json({
                     info: "Error during reading addresses",
@@ -84,9 +79,9 @@ router.get("/addresses", authenticate, admin, cache.route(), function(req, res) 
     }
 });
 
-router.get("/addresses/country/:country", authenticate, admin, cache.route(), function(req, res) {
+router.get("/addresses/country/:country", authenticate, admin, cache.route(), (req, res) => {
     if (req.granted) {
-        Address.getAddressesByCountry(req.params.country, function(err, addresses) {
+        Address.getAddressesByCountry(req.params.country, (err, addresses) => {
             if (err) {
                 res.json({
                     info: "Error during reading addresses",
@@ -116,9 +111,9 @@ router.get("/addresses/country/:country", authenticate, admin, cache.route(), fu
 });
 
 /* Read (one address) */
-router.get("/addresses/:id", authenticate, admin, cache.route(), function(req, res) {
+router.get("/addresses/:id", authenticate, admin, cache.route(), (req, res) => {
     if (req.granted) {
-        Address.getAddressById(req.params.id, function(err, address) {
+        Address.getAddressById(req.params.id, (err, address) => {
             if (err) {
                 res.json({
                     info: "Error during reading address",
@@ -148,7 +143,7 @@ router.get("/addresses/:id", authenticate, admin, cache.route(), function(req, r
 });
 
 /* Update */
-router.put("/addresses/:id", authenticate, admin, function(req, res) {
+router.put("/addresses/:id", authenticate, admin, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.city, req.body.country, req.body.number, req.body.postal, req.body.street)) {
             res.json({
@@ -156,7 +151,7 @@ router.put("/addresses/:id", authenticate, admin, function(req, res) {
                 success: false
             });
         } else {
-            Address.getAddressById(req.params.id, function(err, address) {
+            Address.getAddressById(req.params.id, (err, address) => {
                 if (err) {
                     res.json({
                         info: "Error during reading address",
@@ -164,7 +159,7 @@ router.put("/addresses/:id", authenticate, admin, function(req, res) {
                         error: err.errmsg
                     });
                 } else if (address) {
-                    Address.updateAddress(address, req.body, function(err) {
+                    Address.updateAddress(address, req.body, (err) => {
                         if (err) {
                             res.json({
                                 info: "Error during updating address",
@@ -175,6 +170,13 @@ router.put("/addresses/:id", authenticate, admin, function(req, res) {
                             res.json({
                                 info: "Address updated succesfully",
                                 success: true
+                            });
+                            cache.del('/api/addresses/*', (err, count) => {
+                                if (err) {
+                                    console.error(err);
+                                } else {
+                                    console.log("Cache for /api/addresses cleared");
+                                }
                             });
                         }
                     });
@@ -196,9 +198,9 @@ router.put("/addresses/:id", authenticate, admin, function(req, res) {
 });
 
 /* Delete */
-router.delete("/addresses/:id", authenticate, admin, function(req, res) {
+router.delete("/addresses/:id", authenticate, admin, (req, res) => {
     if (req.granted) {
-        Address.deleteAddress(req.params.id, function(err) {
+        Address.deleteAddress(req.params.id, (err) => {
             if (err) {
                 res.json({
                     info: "Error during deleting address",
@@ -209,6 +211,13 @@ router.delete("/addresses/:id", authenticate, admin, function(req, res) {
                 res.json({
                     info: "Address deleted succesfully",
                     success: true
+                });
+                cache.del('/api/addresses/*', (err, count) => {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        console.log("Cache for /api/addresses cleared");
+                    }
                 });
             }
         });

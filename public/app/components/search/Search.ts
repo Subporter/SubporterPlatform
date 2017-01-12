@@ -13,7 +13,7 @@ import "angular2-materialize";
 @Component({
 	selector: 'search',
 	 templateUrl: './app/components/search/search.view.html',
-	  styleUrls: ['../../css/css/search.css']
+	  styleUrls: ['../../css/search.css']
 })
 
 export class Search {

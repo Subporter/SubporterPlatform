@@ -1,13 +1,19 @@
-let validate = function (...fields) {
-	let invalid = false;
+const bodyValidator = (() => {
+	const validate = (...fields) => {
+		let invalid = false;
 
-	for (let i = 0, amount = fields.length; i < amount; i++) {
-		if (!fields[i]) {
-			invalid = true;
+		for (let i = 0, l = fields.length; i < l; i++) {
+			if (!fields[i]) {
+				invalid = true;
+			}
 		}
-	}
 
-	return invalid;
-};
+		return invalid;
+	};
 
-module.exports = validate;
+	return {
+		validate: validate
+	};
+})();
+
+module.exports = bodyValidator.validate;

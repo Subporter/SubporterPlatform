@@ -1,5 +1,4 @@
 const express = require('express'),
-    config = require('../../config/subporter.config'),
     moment = require('moment'),
     jwt = require('jwt-simple'),
     authenticate = require('../middleware/authenticate'),
@@ -8,27 +7,16 @@ const express = require('express'),
     imageSaver = require('../middleware/imageSaver'),
     loadUser = require('../middleware/loadUser'),
     bodyValidator = require('../helpers/bodyValidator'),
+    cache = require('../helpers/caching'),
     User = require('../models/Users'),
     Address = require('../models/Addresses');
-
-let redis = config.redis_dev;
-
-if (process.env.NODE_ENV === 'production') {
-    redis = config.redis_prod;
-}
-
-const cache = require('express-redis-cache')({
-    host: redis.host,
-    port: redis.port,
-    expire: 60
-});
 
 let router = express.Router();
 
 /* Read (all users) */
-router.get("/users/all", authenticate, admin, function(req, res) {
+router.get("/users/all", authenticate, admin, (req, res) => {
     if (req.granted) {
-        User.getUsers(function(err, users) {
+        User.getUsers((err, users) => {
             if (err) {
                 res.json({
                     info: "Error during reading users",
@@ -58,9 +46,9 @@ router.get("/users/all", authenticate, admin, function(req, res) {
 });
 
 /* Read (one user) */
-router.get("/users", authenticate, cache.route(), function(req, res) {
+router.get("/users", authenticate, (req, res) => {
     if (req.granted) {
-        User.getUserByEmail(req.jwtUser.email, function(err, user) {
+        User.getUserByEmail(req.jwtUser.email, (err, user) => {
             if (err) {
                 res.json({
                     info: "Error during reading user",
@@ -89,9 +77,9 @@ router.get("/users", authenticate, cache.route(), function(req, res) {
     }
 });
 
-router.get("/users/id/:id", authenticate, admin, cache.route(), function(req, res) {
+router.get("/users/id/:id", authenticate, admin, (req, res) => {
     if (req.granted) {
-        User.getUserById(req.params.id, function(err, user) {
+        User.getUserById(req.params.id, (err, user) => {
             if (err) {
                 res.json({
                     info: "Error during reading user",
@@ -120,9 +108,9 @@ router.get("/users/id/:id", authenticate, admin, cache.route(), function(req, re
     }
 });
 
-router.get("/users/email/:email", authenticate, admin, cache.route(), function(req, res) {
+router.get("/users/email/:email", authenticate, admin, (req, res) => {
     if (req.granted) {
-        User.getUserByEmail(req.params.email, function(err, user) {
+        User.getUserByEmail(req.params.email, (err, user) => {
             if (err) {
                 res.json({
                     info: "Error during reading user",
@@ -151,9 +139,9 @@ router.get("/users/email/:email", authenticate, admin, cache.route(), function(r
     }
 });
 
-router.get("/users/username/:username", authenticate, cache.route(), function(req, res) {
+router.get("/users/username/:username", authenticate, (req, res) => {
     if (req.granted) {
-        User.getUserByUsername(req.params.username, function(err, user) {
+        User.getUserByUsername(req.params.username, (err, user) => {
             if (err) {
                 res.json({
                     info: "Error during reading user",
@@ -183,7 +171,7 @@ router.get("/users/username/:username", authenticate, cache.route(), function(re
 });
 
 /* Update */
-router.put("/users", authenticate, formParser, imageSaver, function(req, res) {
+router.put("/users", authenticate, formParser, imageSaver, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 10 || bodyValidator(req.body.address, req.body.avatar, req.body.city, req.body.country, req.body.date_of_birth, req.body.national_registry_number, req.body.number, req.body.phone, req.body.postal, req.body.street)) {
             res.json({
@@ -191,7 +179,7 @@ router.put("/users", authenticate, formParser, imageSaver, function(req, res) {
                 success: false
             });
         } else {
-            User.getUserByEmail(req.jwtUser.email, function(err, user) {
+            User.getUserByEmail(req.jwtUser.email, (err, user) => {
                 if (err) {
                     res.json({
                         info: "Error during reading user",
@@ -199,7 +187,7 @@ router.put("/users", authenticate, formParser, imageSaver, function(req, res) {
                         error: err.errmsg
                     });
                 } else if (user) {
-                    Address.addOrUpdateAddress(req.body.address, req.body, function(err, id) {
+                    Address.addOrUpdateAddress(req.body.address, req.body, (err, id) => {
                         if (err || !id) {
                             res.json({
                                 info: "Error during creating/updating address",
@@ -208,7 +196,7 @@ router.put("/users", authenticate, formParser, imageSaver, function(req, res) {
                             });
                         } else {
                             req.body.address = id;
-                            User.updateUser(user, req.body, function(err) {
+                            User.updateUser(user, req.body, (err) => {
                                 if (err) {
                                     res.json({
                                         info: "Error during updating user",
@@ -241,7 +229,7 @@ router.put("/users", authenticate, formParser, imageSaver, function(req, res) {
     }
 });
 
-router.put("/users/:id", authenticate, admin, formParser, imageSaver, function(req, res) {
+router.put("/users/:id", authenticate, admin, formParser, imageSaver, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 10 || bodyValidator(req.body.address, req.body.avatar, req.body.city, req.body.country, req.body.date_of_birth, req.body.national_registry_number, req.body.number, req.body.phone, req.body.postal, req.body.street)) {
             res.json({
@@ -249,7 +237,7 @@ router.put("/users/:id", authenticate, admin, formParser, imageSaver, function(r
                 success: false
             });
         } else {
-            User.getUserById(req.params.id, function(err, user) {
+            User.getUserById(req.params.id, (err, user) => {
                 if (err) {
                     res.json({
                         info: "Error during reading user",
@@ -257,7 +245,7 @@ router.put("/users/:id", authenticate, admin, formParser, imageSaver, function(r
                         error: err.errmsg
                     });
                 } else if (user) {
-                    Address.addOrUpdateAddress(req.body.address, req.body, function(err, id) {
+                    Address.addOrUpdateAddress(req.body.address, req.body, (err, id) => {
                         if (err || !id) {
                             res.json({
                                 info: "Error during creating/updating address",
@@ -266,7 +254,7 @@ router.put("/users/:id", authenticate, admin, formParser, imageSaver, function(r
                             });
                         } else {
                             req.body.address = id;
-                            User.updateUser(user, req.body, function(err) {
+                            User.updateUser(user, req.body, (err) => {
                                 if (err) {
                                     res.json({
                                         info: "Error during updating user",
@@ -300,7 +288,7 @@ router.put("/users/:id", authenticate, admin, formParser, imageSaver, function(r
 });
 
 /* Update username */
-router.post("/users/update/username", authenticate, function(req, res) {
+router.post("/users/update/username", authenticate, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 1 || bodyValidator(req.body.username)) {
             res.json({
@@ -308,7 +296,7 @@ router.post("/users/update/username", authenticate, function(req, res) {
                 success: false
             });
         } else {
-            User.getUserByEmail(req.jwtUser.email, function(err, user) {
+            User.getUserByEmail(req.jwtUser.email, (err, user) => {
                 if (err) {
                     res.json({
                         info: "Error during reading user",
@@ -316,7 +304,7 @@ router.post("/users/update/username", authenticate, function(req, res) {
                         error: err.errmsg
                     });
                 } else if (user) {
-                    User.updateCrucial(user, req.body, function(err) {
+                    User.updateCrucial(user, req.body, (err) => {
                         if (err) {
                             res.json({
                                 info: "Error during updating username",
@@ -348,7 +336,7 @@ router.post("/users/update/username", authenticate, function(req, res) {
 });
 
 /* Update email */
-router.post("/users/update/email", authenticate, function(req, res) {
+router.post("/users/update/email", authenticate, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 1 || bodyValidator(req.body.email)) {
             res.json({
@@ -356,7 +344,7 @@ router.post("/users/update/email", authenticate, function(req, res) {
                 success: false
             });
         } else {
-            User.getUserByEmail(req.jwtUser.email, function(err, user) {
+            User.getUserByEmail(req.jwtUser.email, (err, user) => {
                 if (err) {
                     res.json({
                         info: "Error during reading user",
@@ -364,7 +352,7 @@ router.post("/users/update/email", authenticate, function(req, res) {
                         error: err.errmsg
                     });
                 } else if (user) {
-                    User.updateCrucial(user, req.body, function(err) {
+                    User.updateCrucial(user, req.body, (err) => {
                         if (err) {
                             res.json({
                                 info: "Error during updating email",
@@ -396,7 +384,7 @@ router.post("/users/update/email", authenticate, function(req, res) {
 });
 
 /* Update password */
-router.post("/users/update/password", authenticate, function(req, res) {
+router.post("/users/update/password", authenticate, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 2 || bodyValidator(req.body.old_password, req.body.new_password)) {
             res.json({
@@ -404,7 +392,7 @@ router.post("/users/update/password", authenticate, function(req, res) {
                 success: false
             });
         } else {
-            User.getUserByEmailForLogin(req.jwtUser.email, function(err, user) {
+            User.getUserByEmailForLogin(req.jwtUser.email, (err, user) => {
                 if (err) {
                     res.json({
                         info: "Error during reading user",
@@ -412,7 +400,7 @@ router.post("/users/update/password", authenticate, function(req, res) {
                         error: err.errmsg
                     });
                 } else if (user) {
-                    user.comparePassword(req.body.old_password, user.password, function(err) {
+                    user.comparePassword(req.body.old_password, user.password, (err) => {
                         if (err) {
                             res.json({
                                 info: "Error during updating password, wrong old password",
@@ -420,7 +408,7 @@ router.post("/users/update/password", authenticate, function(req, res) {
                             });
                         } else {
                             req.body.password = req.body.new_password;
-                            User.updateCrucial(user, req.body, function(err) {
+                            User.updateCrucial(user, req.body, (err) => {
                                 if (err) {
                                     res.json({
                                         info: "Error during updating password",
@@ -454,9 +442,9 @@ router.post("/users/update/password", authenticate, function(req, res) {
 });
 
 /* Delete */
-router.delete("/users", authenticate, loadUser, function(req, res) {
+router.delete("/users", authenticate, loadUser, (req, res) => {
     if (req.granted) {
-        User.deleteUser(req.user._id, function(err) {
+        User.deleteUser(req.user._id, (err) => {
             if (err) {
                 res.json({
                     info: "Error during deleting user",
@@ -479,9 +467,9 @@ router.delete("/users", authenticate, loadUser, function(req, res) {
     }
 });
 
-router.delete("/users/:id", authenticate, admin, function(req, res) {
+router.delete("/users/:id", authenticate, admin, (req, res) => {
     if (req.granted) {
-        User.deleteUser(req.params.id, function(err) {
+        User.deleteUser(req.params.id, (err) => {
             if (err) {
                 res.json({
                     info: "Error during deleting user",

@@ -1,5 +1,4 @@
-<navmenu header1="{{home}} - {{away}}" header2="{{date}} - {{stadion}}" image="{{banner}}"></navmenu>
-
+<subporter-header title="{{home}} - {{away}}" subtitle="{{date}} - {{stadion}}" image="{{banner}}"></subporter-header>
 
 
 <section>
@@ -21,7 +20,7 @@
 
 
 <ul *ngFor="let loan of loans" class="collection">
-    
+
     <a [routerLink]="['../../listing', loan._id]">
 <li class="collection-item" >
   <span class="title">  {{home}} - {{away}}    </span>
@@ -51,8 +50,4 @@
 
 </section>
 
-
-
-
-<subporterfooter></subporterfooter>
 

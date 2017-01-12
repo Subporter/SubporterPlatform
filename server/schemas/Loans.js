@@ -57,11 +57,11 @@ let loanSchema = new mongoose.Schema({
 
 loanSchema.pre('remove', function(next) {
     let loan = this;
-    Game.getGameById(loan.game, function (err, game) {
+    Game.getGameById(loan.game, (err, game) => {
         if (err) {
             return next(err);
         } else {
-            Game.toggleLoans(game, loan._id, function (err) {
+            Game.toggleLoans(game, loan._id, (err) => {
                 if (err) {
                     return next(err);
                 } else {

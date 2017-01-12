@@ -37,8 +37,8 @@ __decorate([
 Weekwedstrijd = __decorate([
     core_1.Component({
         selector: 'weekwedstrijd',
-        template: "\n\t \n      <span class=\"title\">{{home}} - {{away}}</span>\n      <p>{{date}}<br>\n         {{location}}\n      </p>\n      <div class=\"secondary-content\">\n      <i class=\"fa fa-ticket fa-2x \" aria-hidden=\"true\"></i>\n      <span>{{amount}}</span>\n      </div>\n\t \n\t ",
-        styleUrls: ['../../css/css/landing.css']
+        template: "\n\n      <span class=\"title\">{{home}} - {{away}}</span>\n      <p>{{date}}<br>\n         {{location}}\n      </p>\n      <div class=\"secondary-content\">\n      <i class=\"fa fa-ticket fa-2x \" aria-hidden=\"true\"></i>\n      <span>{{amount}}</span>\n      </div>\n\n\t ",
+        styleUrls: ['../../css/landing.css']
     }),
     __metadata("design:paramtypes", [])
 ], Weekwedstrijd);

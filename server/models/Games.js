@@ -184,9 +184,9 @@ let populateSchema = [{
 }];
 
 /* Create */
-Game.addGame = function(body, cb) {
+Game.addGame = (body, cb) => {
     let game = new Game(body);
-    game.save(function(err) {
+    game.save((err) => {
         if (err) {
             cb(err);
         } else {
@@ -196,7 +196,7 @@ Game.addGame = function(body, cb) {
 };
 
 /* Read (all games) */
-Game.getGames = function(cb) {
+Game.getGames = (cb) => {
     Game.find({
             date: {
                 $gt: moment().toDate()
@@ -209,7 +209,7 @@ Game.getGames = function(cb) {
             home: 1,
             away: 1
         })
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -218,7 +218,7 @@ Game.getGames = function(cb) {
         });
 };
 
-Game.getFeaturedGames = function(competition, cb) {
+Game.getFeaturedGames = (competition, cb) => {
     Game.find({
             competition: competition,
             date: {
@@ -230,7 +230,7 @@ Game.getFeaturedGames = function(competition, cb) {
         .sort({
             date: 1
         })
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -239,7 +239,7 @@ Game.getFeaturedGames = function(competition, cb) {
         });
 };
 
-Game.getGamesByCompetition = function(competition, cb) {
+Game.getGamesByCompetition = (competition, cb) => {
     Game.find({
             competition: competition,
             date: {
@@ -259,12 +259,12 @@ Game.getGamesByCompetition = function(competition, cb) {
         });
 };
 
-Game.getGamesByCountryForThisWeek = function(competition, cb) {
-    Competition.getCompetitionsByCountry(competition, function(err, docs) {
+Game.getGamesByCountryForThisWeek = (country, cb) => {
+    Competition.getCompetitionsByCountry(country, (err, docs) => {
         if (err || !docs) {
             cb(err);
         } else {
-            let ids = docs.map(function(doc) {
+            let ids = docs.map((doc) => {
                 return doc._id;
             });
 
@@ -281,7 +281,7 @@ Game.getGamesByCountryForThisWeek = function(competition, cb) {
                 .sort({
                     date: 1
                 })
-                .exec(function(err, docs) {
+                .exec((err, docs) => {
                     if (err) {
                         cb(err, null);
                     } else {
@@ -292,8 +292,28 @@ Game.getGamesByCountryForThisWeek = function(competition, cb) {
     });
 };
 
+Game.getGamesByCompetitionForThisWeek = (competition, cb) => {
+    Game.find({
+            competition: competition,
+            date: {
+                $gt: moment().toDate(),
+                $lt: moment().add(7, 'days').toDate()
+            }
+        })
+        .populate(populateSchema)
+        .sort({
+            date: 1
+        })
+        .exec((err, docs) => {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        });
+};
 
-Game.getGamesByTeam = function(team, cb) {
+Game.getGamesByTeam = (team, cb) => {
     Game.find({
             home: team,
             date: {
@@ -304,7 +324,7 @@ Game.getGamesByTeam = function(team, cb) {
         .sort({
             date: 1
         })
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -314,10 +334,10 @@ Game.getGamesByTeam = function(team, cb) {
 };
 
 /* Read (one game) */
-Game.getGameById = function(id, cb) {
+Game.getGameById = (id, cb) => {
     Game.findById(id)
         .populate(populateSchema)
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -327,9 +347,9 @@ Game.getGameById = function(id, cb) {
 };
 
 /* Loans */
-Game.toggleLoans = function(game, loan, cb) {
+Game.toggleLoans = (game, loan, cb) => {
     game.loans.toggleAndSort(loan);
-    game.save(function(err) {
+    game.save((err) => {
         if (err) {
             cb(err);
         } else {
@@ -339,7 +359,7 @@ Game.toggleLoans = function(game, loan, cb) {
 };
 
 /* Helper */
-Array.prototype.toggleAndSort = function(value) {
+Array.prototype.toggleAndSort = (value) => {
     let i = this.findIndex(item => item._id === value);
 
     if (i === -1) {
@@ -348,15 +368,15 @@ Array.prototype.toggleAndSort = function(value) {
         this.splice(i, 1);
     }
 
-    this.sort(function(a, b) {
+    this.sort((a, b) => {
         return a - b;
     });
 };
 
 /* Update */
-Game.updateGame = function(game, body, cb) {
+Game.updateGame = (game, body, cb) => {
     _.merge(game, body);
-    game.save(function(err) {
+    game.save((err) => {
         if (err) {
             cb(err);
         } else {
@@ -366,8 +386,8 @@ Game.updateGame = function(game, body, cb) {
 };
 
 /* Delete */
-Game.deleteGame = function(id, user, cb) {
-    Game.findById(id, function(err, docs) {
+Game.deleteGame = (id, cb) => {
+    Game.findById(id, (err, docs) => {
         if (err || !docs) {
             cb(err);
         } else {
@@ -376,15 +396,15 @@ Game.deleteGame = function(id, user, cb) {
     });
 };
 
-Game.deleteGamesByTeam = function(team, cb) {
+Game.deleteGamesByTeam = (team, cb) => {
     Game.find({
             home: team
         })
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err || docs.length === 0) {
                 cb(err);
             } else {
-                docs.forEach(function(doc) {
+                docs.forEach((doc) => {
                     doc.remove(cb);
                 });
             }

@@ -1,6 +1,6 @@
 <div class="section " id="section0">
 
- <nav>
+	<nav>
     <div class="nav-wrapper">
       <a [routerLink]="['/']" class="brand-logo">Subporter</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -16,6 +16,7 @@
     </div>
   </nav>
 
+
             <div class="container landingContainer " >
 
 
@@ -24,7 +25,7 @@
             <form>
             <div class="input-field">
                <input type="search" id="autocomplete-input search" class="autocomplete"  materialize="autocomplete" [materializeParams]="[{'data': gameNames}]" placeholder="Zoek naar wedstrijden en teams">
-  
+
           <label for="search"><i class="material-icons prefix">search</i></label>
 
 
@@ -107,7 +108,7 @@
       <option *ngFor="let country of countries" value="{{country._id}}">
           {{country.name}}
       </option>
-     
+
     </select>
 
 
@@ -157,7 +158,7 @@
       <option *ngFor="let country of countries" value="{{country._id}}">
           {{country.name}}
       </option>
-     
+
     </select>
 
 
@@ -296,10 +297,6 @@
             <!--<div class="section fp-auto-height" data-anchor="section5">-->
 
 
- <subporterfooter>
-
-
- </subporterfooter>
 
 
 

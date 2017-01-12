@@ -5,9 +5,9 @@ const mongoose = require('mongoose'),
 let Country = mongoose.model('Country', countrySchema, 'Countries');
 
 /* Create */
-Country.addCountry = function(body, cb) {
+Country.addCountry = (body, cb) => {
     let country = new Country(body);
-    country.save(function(err) {
+    country.save((err) => {
         if (err) {
             cb(err);
         } else {
@@ -17,10 +17,10 @@ Country.addCountry = function(body, cb) {
 };
 
 /* Read (all countries) */
-Country.getCountries = function(cb) {
+Country.getCountries = (cb) => {
     Country.find({})
         .sort('name')
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -30,8 +30,8 @@ Country.getCountries = function(cb) {
 };
 
 /* Read (one sport) */
-Country.getCountryById = function(id, cb) {
-    Country.findById(id, function(err, docs) {
+Country.getCountryById = (id, cb) => {
+    Country.findById(id, (err, docs) => {
         if (err) {
             cb(err, null);
         } else {
@@ -41,9 +41,9 @@ Country.getCountryById = function(id, cb) {
 };
 
 /* Update */
-Country.updateCountry = function(country, body, cb) {
+Country.updateCountry = (country, body, cb) => {
     _.merge(country, body);
-    country.save(function(err) {
+    country.save((err) => {
         if (err) {
             cb(err);
         } else {
@@ -53,8 +53,8 @@ Country.updateCountry = function(country, body, cb) {
 };
 
 /* Delete */
-Country.deleteCountry = function(id, cb) {
-    Country.findById(id, function(err, docs) {
+Country.deleteCountry = (id, cb) => {
+    Country.findById(id, (err, docs) => {
         if (err || !docs) {
             cb(err);
         } else {
