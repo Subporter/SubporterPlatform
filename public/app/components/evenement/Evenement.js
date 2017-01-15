@@ -85,7 +85,7 @@ Evenement = __decorate([
     core_1.Component({
         selector: 'evenement',
         templateUrl: './app/components/evenement/evenement.view.html',
-        styleUrls: ['../../css/css/evenement.css']
+        styleUrls: ['../../css/evenement.css']
     }),
     __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService, router_1.ActivatedRoute])
 ], Evenement);

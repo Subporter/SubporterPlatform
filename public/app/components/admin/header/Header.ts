@@ -5,7 +5,7 @@ import { contentHeaders } from '../../../common/headers'
 
 
 @Component({
-	selector: 'navadmin',
+	selector: 'subporter-header-admin',
 	 template: `
 
 
@@ -25,11 +25,11 @@ import { contentHeaders } from '../../../common/headers'
     </div>
   </nav>
 
-	 
 
-	 
+
+
 	 `,
-	  styleUrls: ['../../../css/css/headerAdmin.css']
+	  styleUrls: ['../../../css/headerAdmin.css']
 })
 
 export class HeaderAdmin {
@@ -43,13 +43,13 @@ constructor(public router: Router, public http: Http) {
 
 
 }
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+
+
+
+
+
+
+
+
+
+

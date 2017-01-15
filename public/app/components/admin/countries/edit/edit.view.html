@@ -1,8 +1,16 @@
-<navadmin></navadmin>
+<nav>
+	<div class="nav-wrapper">
+		<div class="col s12">
+			<a [routerLink]="['/admin']" class="breadcrumb">Admin</a>
+			<a [routerLink]="['/admin/countries']" class="breadcrumb">Landen</a>
+			<a [routerLink]="['/admin/countries/edit', id]" class="breadcrumb">Bewerken</a>
+		</div>
+	</div>
+</nav>
 
 <div class="container">
 	<div class="row">
-		<h2 class="header">Edit country: {{name}}</h2>
+		<h2 class="header">Land bewerken: {{name}}</h2>
 	</div>
 	<div class="row">
 		<form (submit)="edit($event)">
@@ -12,11 +20,8 @@
 					<input [(ngModel)]="name" type="text" class="form-control" name="name" id="name" required pattern="[A-zÀ-ÿ-\s]{2,100}">
 				</div>
 			</div>
-			<button type="submit" class="btn btn-default">Save</button>
+			<button type="submit" class="btn btn-default">Opslaan</button>
 		</form>
-		<a [routerLink]="['/admin/countries']">Back</a>
+		<a [routerLink]="['/admin/countries']">Terug</a>
 	</div>
 </div>
-
-<subporterfooter>
-</subporterfooter>

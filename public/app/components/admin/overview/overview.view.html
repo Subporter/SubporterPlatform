@@ -1,2 +1,17 @@
-<navadmin></navadmin>
-<subporterfooter></subporterfooter>
+<nav>
+	<div class="nav-wrapper">
+		<div class="col s12">
+			<a [routerLink]="['/admin']" class="breadcrumb">Admin</a>
+		</div>
+	</div>
+</nav>
+
+<div class="container">
+	<div class="row">
+		<div class="collection">
+			<a [routerLink]="['/admin/sports']" class="collection-item">Sporten</a>
+			<a [routerLink]="['/admin/countries']" class="collection-item">Landen</a>
+			<a [routerLink]="['/admin/competitions']" class="collection-item">Competities</a>
+		</div>
+	</div>
+</div>

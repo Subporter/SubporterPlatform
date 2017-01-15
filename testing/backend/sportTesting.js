@@ -1,12 +1,18 @@
 const mocha = require('mocha'),
+	mongoose = require('mongoose'),
     assert = require('assert'),
-    sinon = require('sinon'),
     request = require('request'),
-    Sport = require('../../server/models/Sports.js');
+    Sport = mongoose.model('Sport');
 
-describe('Sports testing', function() {
-    it('should get all sports', function(done) {
-        Sport.getSports(function(err, sports) {
+let baseUrl = "http://localhost:1337/";
+
+if (process.env.NODE_ENV === 'production') {
+    baseUrl = "https://localhost:1337/";
+}
+
+describe('Sports testing', () => {
+    it('should get all sports', (done) => {
+        Sport.getSports((err, sports) => {
             if (err) {
                 console.log("Error: " + err.errmsg);
             } else {
@@ -17,8 +23,19 @@ describe('Sports testing', function() {
         });
     });
 
-    it('should make an API call and get all sports', function(done) {
-        request.get('http://localhost:1337/api/sports', function(err, res, body) {
+    it('should get one sport by id', (done) => {
+        Sport.getSportById(1, (err, sport) => {
+            if (err) {
+                console.log("Error: " + err.errmsg);
+            } else {
+                assert.equal(sport._id, 1);
+            }
+            done();
+        });
+    });
+
+    it('should make an API call and get all sports', (done) => {
+        request.get(baseUrl + 'api/sports', (err, res, body) => {
             if (err) {
                 console.log("Error: " + err.message);
             } else {
@@ -27,17 +44,6 @@ describe('Sports testing', function() {
                 assert.equal(result, true, "One or more sports are found");
                 done();
             }
-        });
-    });
-
-    it('should get one sport by id', function(done) {
-        Sport.getSportById(1, function(err, sport) {
-            if (err) {
-                console.log("Error: " + err.errmsg);
-            } else {
-                assert.equal(sport._id, 1);
-            }
-            done();
         });
     });
 });

@@ -1,23 +1,24 @@
 const express = require('express'),
+    config = require('../../config/subporter.config'),
+    mongoose = require('mongoose'),
     moment = require('moment'),
     jwt = require('jwt-simple'),
-    config = require('../../config/subporter.config'),
     authenticate = require('../middleware/authenticate'),
     admin = require('../middleware/admin'),
     bodyValidator = require('../helpers/bodyValidator'),
-    User = require('../models/Users');
+    User = mongoose.model('User');
 
 let router = express.Router();
 
 /* Register */
-router.post("/register", function(req, res) {
+router.post("/register", (req, res) => {
     if (Object.keys(req.body).length !== 5 || bodyValidator(req.body.email, req.body.firstname, req.body.name, req.body.password, req.body.username)) {
         res.json({
             info: "Please supply all required fields",
             success: false
         });
     } else {
-        User.addUser(req.body, function(err, user) {
+        User.addUser(req.body, (err, user) => {
             if (err) {
                 res.json({
                     info: "Error during creating user, e-mail or username could be already in use or there might be some validation errors",
@@ -47,14 +48,14 @@ router.post("/register", function(req, res) {
 });
 
 /* Login */
-router.post("/login", function(req, res) {
+router.post("/login", (req, res) => {
     if (Object.keys(req.body).length !== 2 || bodyValidator(req.body.email, req.body.password)) {
         res.json({
             info: "Please supply all required fields",
             success: false
         });
     } else {
-        User.getUserByEmailForLogin(req.body.email, function(err, user) {
+        User.getUserByEmailForLogin(req.body.email, (err, user) => {
             if (err) {
                 res.json({
                     info: "Error during reading user",
@@ -62,7 +63,7 @@ router.post("/login", function(req, res) {
                     error: err.errmsg
                 });
             } else if (user) {
-                user.comparePassword(req.body.password, user.password, function(err, isMatch) {
+                user.comparePassword(req.body.password, user.password, (err, isMatch) => {
                     if (err || !isMatch) {
                         res.json({
                             info: "Error during login, wrong password",
@@ -94,8 +95,8 @@ router.post("/login", function(req, res) {
 });
 
 /* Check email */
-router.get("/check/email/:email", function(req, res) {
-    User.getUserByEmail(req.params.email, function(err, user) {
+router.get("/check/email/:email", (req, res) => {
+    User.getUserByEmail(req.params.email, (err, user) => {
         if (err) {
             res.json({
                 info: "Error during reading user",
@@ -119,8 +120,8 @@ router.get("/check/email/:email", function(req, res) {
 });
 
 /* Check username */
-router.get("/check/username/:username", function(req, res) {
-    User.getUserByUsername(req.params.username, function(err, user) {
+router.get("/check/username/:username", (req, res) => {
+    User.getUserByUsername(req.params.username, (err, user) => {
         if (err) {
             res.json({
                 info: "Error during reading user",
@@ -144,7 +145,7 @@ router.get("/check/username/:username", function(req, res) {
 });
 
 /* Check admin */
-router.get("/check/admin", authenticate, admin, function(req, res) {
+router.get("/check/admin", authenticate, admin, (req, res) => {
     if (req.granted) {
         res.status(200);
         res.json({

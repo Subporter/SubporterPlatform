@@ -19,7 +19,7 @@ import {CookieService} from 'angular2-cookie/core';
 @Component({
 	selector: 'listings',
 	 templateUrl: './app/components/listing/listing.view.html',
-	  styleUrls: ['../../css/css/listing.css']
+	  styleUrls: ['../../css/listing.css']
 })
 
 export class Listing {

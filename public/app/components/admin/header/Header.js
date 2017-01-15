@@ -20,9 +20,9 @@ var HeaderAdmin = (function () {
 }());
 HeaderAdmin = __decorate([
     core_1.Component({
-        selector: 'navadmin',
-        template: "\n\n\n    <nav>\n    <div class=\"nav-wrapper\">\n      <a [routerLink]=\"['/']\" class=\"brand-logo\">Subporter</a>\n      <ul id=\"nav-mobile\" class=\"right hide-on-med-and-down\">\n        <li> <a  [routerLink]=\"['/search']\">Zoeken</a></li>\n        <li><a  [routerLink]=\"['/cart']\">Winkelwagen</a></li>\n\n        <li><a  [routerLink]=\"['/profile']\">Profiel</a></li>\n\n        <li><a  [routerLink]=\"['/admin']\">Admin</a></li>\n\n        <li><a class=\"waves-effect waves-light btn\" [routerLink]=\"['/offer']\" >Abonnement aanbieden</a></li>\n      </ul>\n    </div>\n  </nav>\n\n\t \n\n\t \n\t ",
-        styleUrls: ['../../../css/css/headerAdmin.css']
+        selector: 'subporter-header-admin',
+        template: "\n\n\n    <nav>\n    <div class=\"nav-wrapper\">\n      <a [routerLink]=\"['/']\" class=\"brand-logo\">Subporter</a>\n      <ul id=\"nav-mobile\" class=\"right hide-on-med-and-down\">\n        <li> <a  [routerLink]=\"['/search']\">Zoeken</a></li>\n        <li><a  [routerLink]=\"['/cart']\">Winkelwagen</a></li>\n\n        <li><a  [routerLink]=\"['/profile']\">Profiel</a></li>\n\n        <li><a  [routerLink]=\"['/admin']\">Admin</a></li>\n\n        <li><a class=\"waves-effect waves-light btn\" [routerLink]=\"['/offer']\" >Abonnement aanbieden</a></li>\n      </ul>\n    </div>\n  </nav>\n\n\n\n\n\t ",
+        styleUrls: ['../../../css/headerAdmin.css']
     }),
     __metadata("design:paramtypes", [router_1.Router, http_1.Http])
 ], HeaderAdmin);

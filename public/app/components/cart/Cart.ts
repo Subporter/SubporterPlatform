@@ -23,7 +23,7 @@ import {MaterializeAction, MaterializeDirective} from 'angular2-materialize';
 @Component({
 	selector: 'cart',
 	 templateUrl: './app/components/cart/cart.view.html',
-	  styleUrls: ['../../css/css/cart.css']
+	  styleUrls: ['../../css/cart.css']
 })
 
 export class Cart {
@@ -73,7 +73,7 @@ show = true;
 
 
 
-	ngOnInit() { 
+	ngOnInit() {
 
 
 
@@ -94,7 +94,7 @@ show = true;
 
 
 
-       
+
         console.log(x);
 
 }
@@ -109,7 +109,7 @@ showCart(){
 for(var cook in cookie){
 
     this._callApi("Anonymous", "api/loans/"+cook);
-    
+
 
 
 
@@ -155,10 +155,10 @@ showEmpty(){
 
   }
 
-     
 
 
-   
+
+
 
   getLoan(data){
      let Data = data;
@@ -231,19 +231,19 @@ pay(){
 
      for (let loan of this.loans){
 
-        
+
         this._cookieService.remove(loan._id);
 
-        
+
         this.apiService.put("api/loans/lend/"+loan._id, null).subscribe(
   	 		response => this.paySuccess(response, loan) ,
   	 		error => this.response = error.text
   	 	);
-        
+
 	}
 
 
-     
+
          this.modalActions2.emit({action:"modal",params:['open']});
 
 
@@ -259,7 +259,7 @@ pay(){
         socket.emit("loanCreated", loan.lent_out_by._id);
     }
 
- 
+
 
 
 
@@ -271,7 +271,7 @@ pay(){
     this.modalActions.emit({action:"modal",params:['close']});
   }
 
-  
+
 
 
 

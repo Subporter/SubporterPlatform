@@ -1,16 +1,6 @@
 const mongoose = require('mongoose'),
-    config = require('../../config/subporter.config'),
-    cachegoose = require('cachegoose'),
     _ = require('lodash'),
     userSchema = require('../schemas/Users');
-
-let redis = config.redis_dev;
-
-if (process.env.NODE_ENV === 'production') {
-    redis = config.redis_prod;
-}
-
-cachegoose(mongoose, redis);
 
 let User = mongoose.model('User', userSchema, 'Users');
 
@@ -70,9 +60,9 @@ let populateSchema = [{
 }];
 
 /* Create */
-User.addUser = function(body, cb) {
+User.addUser = (body, cb) => {
     let user = new User(body);
-    user.save(function(err, docs) {
+    user.save((err, docs) =>{
         if (err) {
             cb(err, null);
         } else {
@@ -82,42 +72,40 @@ User.addUser = function(body, cb) {
 };
 
 /* Read (all users) */
-User.getUsers = function(cb) {
+User.getUsers = (cb) => {
     User.find({})
         .populate(populateSchema)
         .sort('username')
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
                 cb(null, docs);
             }
-        })
-		.cache();
+        });
 };
 
 /* Read (one user) */
-User.getUserById = function(id, cb) {
+User.getUserById = (id, cb) => {
     User.findById(id)
         .populate(populateSchema)
-        .exec(function(err, docs) {
+        .exec((err, docs) =>{
             if (err) {
                 cb(err, null);
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
-User.getUserByIdForLogin = function(id, cb) {
+User.getUserByIdForLogin = (id, cb) => {
     User.findById(id, {
             password: 1,
             email: 1,
             id: 1
         })
         .populate(populateSchema)
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -126,13 +114,13 @@ User.getUserByIdForLogin = function(id, cb) {
         });
 };
 
-User.getUserByIdForAuth = function(id, cb) {
+User.getUserByIdForAuth = (id, cb) => {
     User.findById(id, {
             admin: 1,
             email: 1
         })
         .populate(populateSchema)
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -141,32 +129,31 @@ User.getUserByIdForAuth = function(id, cb) {
         });
 };
 
-User.getUserByEmail = function(email, cb) {
+User.getUserByEmail = (email, cb) => {
     User.findOne({
             email: email
         })
         .populate(populateSchema)
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
-User.getUserByEmailForLogin = function(email, cb) {
+User.getUserByEmailForLogin = (email, cb) => {
     User.findOne({
             email: email
         }, {
             password: 1,
-			      email: 1,
+            email: 1,
             id: 1
 
         })
         .populate(populateSchema)
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -175,7 +162,7 @@ User.getUserByEmailForLogin = function(email, cb) {
         });
 };
 
-User.getUserByEmailForAuth = function(email, cb) {
+User.getUserByEmailForAuth = (email, cb) => {
     User.findOne({
             email: email
         }, {
@@ -183,7 +170,7 @@ User.getUserByEmailForAuth = function(email, cb) {
             email: 1
         })
         .populate(populateSchema)
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -192,31 +179,30 @@ User.getUserByEmailForAuth = function(email, cb) {
         });
 };
 
-User.getUserByUsername = function(username, cb) {
+User.getUserByUsername = (username, cb) => {
     User.findOne({
             username: username
         })
         .populate(populateSchema)
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
-User.getUserByUsernameForLogin = function(username, cb) {
+User.getUserByUsernameForLogin = (username, cb) => {
     User.findOne({
             username: username
         }, {
             password: 1,
-			      email: 1,
+            email: 1,
             id: 1
         })
         .populate(populateSchema)
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -225,7 +211,7 @@ User.getUserByUsernameForLogin = function(username, cb) {
         });
 };
 
-User.getUserByUsernameForAuth = function(username, cb) {
+User.getUserByUsernameForAuth = (username, cb) => {
     User.findOne({
             username: username
         }, {
@@ -233,7 +219,7 @@ User.getUserByUsernameForAuth = function(username, cb) {
             email: 1
         })
         .populate(populateSchema)
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
@@ -243,13 +229,13 @@ User.getUserByUsernameForAuth = function(username, cb) {
 };
 
 /* Favorites */
-User.toggleFavorite = function(user, favorite, cb) {
+User.toggleFavorite = (user, favorite, cb) => {
     user.favorites.toggleAndSort(favorite);
-    user.save(function(err, docs) {
+    user.save((err, docs) =>{
         if (err || !docs) {
             cb(err, null);
         } else {
-            User.populate(docs, populateSchema, function(err, docs) {
+            User.populate(docs, populateSchema, (err, docs) => {
                 if (err || !docs) {
                     cb(err, null);
                 } else {
@@ -261,13 +247,13 @@ User.toggleFavorite = function(user, favorite, cb) {
 };
 
 /* Subscriptions */
-User.toggleSubscription = function(user, subscription, cb) {
+User.toggleSubscription = (user, subscription, cb) => {
     user.subscriptions.toggleAndSort(subscription);
-    user.save(function(err, docs) {
+    user.save((err, docs) => {
         if (err || !docs) {
             cb(err, null);
         } else {
-            User.populate(docs, populateSchema, function(err, docs) {
+            User.populate(docs, populateSchema, (err, docs) => {
                 if (err || !docs) {
                     cb(err, null);
                 } else {
@@ -279,7 +265,7 @@ User.toggleSubscription = function(user, subscription, cb) {
 };
 
 /* Helper */
-Array.prototype.toggleAndSort = function(value) {
+Array.prototype.toggleAndSort = (value) => {
     let i = this.findIndex(item => item._id === value);
 
     if (i === -1) {
@@ -288,18 +274,17 @@ Array.prototype.toggleAndSort = function(value) {
         this.splice(i, 1);
     }
 
-    this.sort(function(a, b) {
+    this.sort((a, b) => {
         return a - b;
     });
 };
 
 /* Update */
-User.updateUser = function(user, body, cb) {
+User.updateUser = (user, body, cb) => {
     body.email = user.email;
     body.username = user.username;
     _.merge(user, body);
-    user.admin = false;
-    user.save(function(err) {
+    user.save((err) => {
         if (err) {
             cb(err);
         } else {
@@ -308,10 +293,10 @@ User.updateUser = function(user, body, cb) {
     });
 };
 
-User.updateCrucial = function(user, body, cb) {
+User.updateCrucial = (user, body, cb) => {
     _.merge(user, body);
     user.admin = false;
-    user.save(function(err) {
+    user.save((err) => {
         if (err) {
             cb(err);
         } else {
@@ -321,8 +306,8 @@ User.updateCrucial = function(user, body, cb) {
 };
 
 /* Delete */
-User.deleteUser = function(id, cb) {
-    User.findById(id, function(err, docs) {
+User.deleteUser = (id, cb) => {
+    User.findById(id, (err, docs) => {
         if (err) {
             cb(err);
         } else {

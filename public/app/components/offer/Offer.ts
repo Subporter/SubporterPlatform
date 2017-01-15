@@ -17,7 +17,7 @@ import {MaterializeAction, MaterializeDirective} from 'angular2-materialize';
 @Component({
 	selector: 'offer',
 	 templateUrl: './app/components/offer/offer.view.html',
-	  styleUrls: ['../../css/css/offer.css']
+	  styleUrls: ['../../css/offer.css']
 })
 
 export class Offer {
@@ -52,7 +52,7 @@ export class Offer {
 
   private loggedIn = false;
 
-  
+
 
 
 	constructor(public router: Router, public http: Http, public authHttp: AuthHttp, public apiService: ApiService) {
@@ -78,7 +78,7 @@ export class Offer {
 	    	 );
 
 
-         
+
 
 
          }
@@ -96,7 +96,7 @@ getSubscriptions(data){
      console.log(user);
 
 
-     
+
      if(!this.isEmpty(user.subscriptions)){
 
        this._callApi("Anonymous", "api/games/");
@@ -142,7 +142,7 @@ getSubscriptions(data){
      let jsonData = JSON.parse(Data);
      this.games = jsonData.data;
 
-    
+
 
 
 
@@ -164,7 +164,7 @@ this.gameNames = obj;
 
   }
 
-  
+
 
 
 
@@ -232,7 +232,7 @@ showAbbo(){
               this.teamAway = selectedGame.away.name;
               this.gameDate = selectedGame.date;
 
-             
+
 
             for(let subscription of subscriptions){
 
@@ -257,8 +257,8 @@ showAbbo(){
                 this.sub = true;
 
               }
-               
-              
+
+
 
 
              }
@@ -276,7 +276,7 @@ showAbbo(){
            }
 
            }
-          
+
 
     }else{
         alert("Je hebt geen juiste wedstrijd geselecteerd.");
@@ -307,13 +307,13 @@ showAbbo2(){
 }
 
 showBeve(id){
-  
+
 
   for(let subscription of this.subscriptions){
     if (id == subscription._id){
         this.selectedSubscription = subscription;
         this.place = subscription.place;
-        
+
     }
   }
 

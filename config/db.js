@@ -1,5 +1,4 @@
 const mongoose = require('mongoose'),
-	autoIncrement = require('mongoose-auto-increment'),
     config = require('./subporter.config');
 
 let gracefulShutdown,
@@ -29,10 +28,10 @@ mongoose.connection.on('disconnected', () => {
 /* Restart events */
 /* On restart/termination */
 
-gracefulShutdown = (message, callback) => {
+gracefulShutdown = (message, cb) => {
     mongoose.connection.close(() => {
         console.log("Mongoose disconnected through " + message);
-        callback();
+        cb();
     });
 };
 
@@ -46,7 +45,7 @@ process.once('SIGUSR2', () => {
 
 /* Termination */
 
-process.on('SIGINT', function() {
+process.on('SIGINT', () => {
     gracefulShutdown("App termination", () => {
         process.exit(0);
     });
@@ -54,12 +53,12 @@ process.on('SIGINT', function() {
 
 /* Schemas and models */
 
-require('../server/models/Countries');
-require('../server/models/Competitions');
+require('../server/models/Addresses');
 require('../server/models/Users');
 require('../server/models/Sports');
+require('../server/models/Countries');
+require('../server/models/Competitions');
 require('../server/models/Teams');
-require('../server/models/Loans');
-require('../server/models/Addresses');
 require('../server/models/Subscriptions');
 require('../server/models/Games');
+require('../server/models/Loans');

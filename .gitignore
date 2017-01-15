@@ -1,8 +1,12 @@
 ### Custom ###
-subporter.config.js
-*.js.map
-typings/
+/config/subporter.config.js
+/config/key.pem
+/config/cert.pem
+/docs/README.md
+/public/vendor/
+/typings/
 .npmrc
+*.js.map
 
 ### IDE ###
 

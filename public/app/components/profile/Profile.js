@@ -164,7 +164,7 @@ Profile = __decorate([
     core_1.Component({
         selector: 'profile',
         templateUrl: './app/components/profile/profile.view.html',
-        styleUrls: ['../../css/css/profile.css']
+        styleUrls: ['../../css/profile.css']
     }),
     __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService, UploadService_1.UploadService])
 ], Profile);

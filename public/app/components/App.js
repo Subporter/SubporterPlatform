@@ -9,17 +9,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
+var common_1 = require("@angular/common");
 var App = (function () {
-    function App() {
+    function App(location, router) {
+        var _this = this;
+        this.location = location;
+        this.router = router;
+        this.hideFooter = false;
+        router.events.subscribe(function (url) {
+            _this.footer();
+        });
     }
+    App.prototype.footer = function () {
+        var routes = ['/login', '/register', '/404'], route = this.location.path(), inArray = routes.indexOf(route) > -1;
+        this.hideFooter = inArray;
+    };
     return App;
 }());
 App = __decorate([
     core_1.Component({
         selector: 'subporter',
-        template: "\n\t\t<router-outlet>\n\t\t</router-outlet>\n\t"
+        template: "\n        <main>\n            <router-outlet></router-outlet>\n        </main>\n\t\t<subporter-footer [hidden]=\"hideFooter\"></subporter-footer>\n\t"
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [common_1.Location, router_1.Router])
 ], App);
 exports.App = App;
 ;

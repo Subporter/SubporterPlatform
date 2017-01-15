@@ -1,16 +1,7 @@
 const mongoose = require('mongoose'),
-	config = require('../../config/subporter.config'),
-	cachegoose = require('cachegoose'),
     _ = require('lodash'),
     addressSchema = require('../schemas/Addresses');
 
-let redis = config.redis_dev;
-
-if (process.env.NODE_ENV === 'production') {
-    redis = config.redis_prod;
-}
-
-cachegoose(mongoose, redis);
 let Address = mongoose.model('Address', addressSchema, 'Addresses');
 
 let populateSchema = {
@@ -18,9 +9,9 @@ let populateSchema = {
 };
 
 /* Create */
-Address.addAddress = function(body, cb) {
+Address.addAddress = (body, cb) => {
     let address = new Address(body);
-    address.save(function(err) {
+    address.save((err) => {
         if (err) {
             cb(err);
         } else {
@@ -30,7 +21,7 @@ Address.addAddress = function(body, cb) {
 };
 
 /* Read (all addresses) */
-Address.getAddresses = function(cb) {
+Address.getAddresses = (cb) => {
     Address.find({})
         .populate(populateSchema)
         .sort({
@@ -40,17 +31,16 @@ Address.getAddresses = function(cb) {
             street: 1,
             number: 1
         })
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
-Address.getAddressesByCountry = function(country, cb) {
+Address.getAddressesByCountry = (country, cb) => {
     Address.find({
             country: country
         })
@@ -61,34 +51,32 @@ Address.getAddressesByCountry = function(country, cb) {
             street: 1,
             number: 1
         })
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 /* Read (one address) */
-Address.getAddressById = function(id, cb) {
+Address.getAddressById = (id, cb) => {
     Address.findById(id)
         .populate(populateSchema)
-        .exec(function(err, docs) {
+        .exec((err, docs) => {
             if (err) {
                 cb(err, null);
             } else {
                 cb(null, docs);
             }
-        })
-        .cache();
+        });
 };
 
 /* Update */
-Address.updateAddress = function(address, body, cb) {
+Address.updateAddress = (address, body, cb) => {
     _.merge(address, body);
-    address.save(function(err) {
+    address.save((err) => {
         if (err) {
             cb(err);
         } else {
@@ -98,8 +86,8 @@ Address.updateAddress = function(address, body, cb) {
 };
 
 /* Delete */
-Address.deleteAddress = function(id, cb) {
-    Address.findById(id, function(err, docs) {
+Address.deleteAddress = (id, cb) => {
+    Address.findById(id, (err, docs) => {
         if (err || !docs) {
             cb(err);
         } else {
@@ -109,10 +97,10 @@ Address.deleteAddress = function(id, cb) {
 };
 
 /* Create or update */
-Address.addOrUpdateAddress = function(id, body, cb) {
+Address.addOrUpdateAddress = (id, body, cb) => {
     if (id === -1) {
         let address = new Address(body);
-        address.save(function(err, docs) {
+        address.save((err, docs) => {
             if (err || !docs) {
                 cb(err, null);
             } else {
@@ -120,12 +108,12 @@ Address.addOrUpdateAddress = function(id, body, cb) {
             }
         });
     } else {
-        Address.findById(id, function(err, docs) {
+        Address.findById(id, (err, docs) => {
             if (err || !docs) {
                 cb(err, null);
             } else {
                 _.merge(docs, body);
-                docs.save(function(err, docs) {
+                docs.save((err, docs) => {
                     if (err || !docs) {
                         cb(err, null);
                     } else {

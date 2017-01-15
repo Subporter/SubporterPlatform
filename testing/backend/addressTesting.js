@@ -1,13 +1,13 @@
 const mocha = require('mocha'),
+    mongoose = require('mongoose'),
     assert = require('assert'),
-    sinon = require('sinon'),
     request = require('request'),
-    Address = require('../../server/models/Addresses.js');
+    Address = mongoose.model('Address');
 
-describe('Address testing', function() {
+describe('Address testing', () => {
     let newAddress;
 
-    it('should add an address', function(done) {
+    it('should add an address', (done) => {
         let body = {
             country: 1,
             city: "Kortrijk",
@@ -16,7 +16,7 @@ describe('Address testing', function() {
             number: 5
         };
 
-        Address.addOrUpdateAddress(-1, body, function(err, id) {
+        Address.addOrUpdateAddress(-1, body, (err, id) => {
             if (err) {
                 console.log("Error: " + err.errmsg);
             } else {
@@ -27,8 +27,8 @@ describe('Address testing', function() {
         });
     });
 
-    it('should get one address by id', function (done) {
-        Address.getAddressById(newAddress, function (err, address) {
+    it('should get one address by id', (done) => {
+        Address.getAddressById(newAddress, (err, address) => {
             if (err) {
                 console.log("Error: " + err.errmsg);
             } else {
@@ -38,8 +38,8 @@ describe('Address testing', function() {
         });
     });
 
-    it('should delete an address', function(done) {
-        Address.deleteAddress(newAddress, function(err) {
+    it('should delete an address', (done) => {
+        Address.deleteAddress(newAddress, (err) => {
             if (err) {
                 console.log("Error: " + err.errmsg);
             } else {
