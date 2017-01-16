@@ -73,6 +73,29 @@ router.get("/countries", cache.route('/api/countries/all'), (req, res) => {
     });
 });
 
+router.get("/countries/featured", cache.route('/api/countries/featured'), (req, res) => {
+	Country.getFeaturedCountries((err, countries) => {
+		if (err) {
+            res.json({
+                info: "Error during reading countries",
+                success: false,
+                error: err.errmsg
+            });
+        } else if (countries) {
+            res.json({
+                info: "Countries found succesfully",
+                success: true,
+                data: countries
+            });
+        } else {
+            res.json({
+                info: "Countries not found",
+                success: false
+            });
+        }
+	});
+});
+
 /* Read (one country) */
 router.get("/countries/:id", cache.route(), (req, res) => {
     Country.getCountryById(req.params.id, (err, country) => {

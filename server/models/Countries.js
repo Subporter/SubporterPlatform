@@ -19,7 +19,26 @@ Country.addCountry = (body, cb) => {
 /* Read (all countries) */
 Country.getCountries = (cb) => {
     Country.find({})
-        .sort('name')
+        .sort({
+			featured: 1,
+			name: 1
+		})
+        .exec((err, docs) => {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        });
+};
+
+Country.getFeaturedCountries = (cb) => {
+    Country.find({
+            featured: true
+        })
+        .sort({
+            name: 1
+        })
         .exec((err, docs) => {
             if (err) {
                 cb(err, null);

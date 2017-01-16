@@ -71,6 +71,29 @@ router.get("/sports", cache.route('/api/sports/all'), (req, res) => {
     });
 });
 
+router.get("/sports/featured", cache.route('/api/sports/featured'), (req, res) => {
+	Sport.getFeaturedSports((err, sports) => {
+		if (err) {
+            res.json({
+                info: "Error during reading sports",
+                success: false,
+                error: err.errmsg
+            });
+        } else if (sports) {
+            res.json({
+                info: "Sports found succesfully",
+                success: true,
+                data: sports
+            });
+        } else {
+            res.json({
+                info: "Sports not found",
+                success: false
+            });
+        }
+	});
+});
+
 /* Read (one sport) */
 router.get("/sports/:id", cache.route(), (req, res) => {
     Sport.getSportById(req.params.id, (err, sport) => {
