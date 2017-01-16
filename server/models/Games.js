@@ -359,7 +359,7 @@ Game.toggleLoans = (game, loan, cb) => {
 };
 
 /* Helper */
-Array.prototype.toggleAndSort = (value) => {
+Array.prototype.toggleAndSort = function(value) {
     let i = this.findIndex(item => item._id === value);
 
     if (i === -1) {
