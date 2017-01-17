@@ -23,6 +23,9 @@ import { CountriesEdit } from '../components/admin/countries/edit/Edit';
 import { AdminCompetitions } from '../components/admin/competitions/list/Competitions';
 import { CompetitionsCreate } from '../components/admin/competitions/create/Create';
 import { CompetitionsEdit } from '../components/admin/competitions/edit/Edit';
+import { AdminTeams } from '../components/admin/teams/list/Teams';
+import { TeamsCreate } from '../components/admin/teams/create/Create';
+import { TeamsEdit } from '../components/admin/teams/edit/Edit';
 
 export const SubporterRoutes: Routes = [
     {
@@ -82,11 +85,32 @@ export const SubporterRoutes: Routes = [
     {
         path: 'admin/competitions', component: AdminCompetitions, canActivate: [AdminGuard]
     },
+	{
+        path: 'admin/competitions/country/:country', component: AdminCompetitions, canActivate: [AdminGuard]
+    },
+	{
+        path: 'admin/competitions/sport/:sport', component: AdminCompetitions, canActivate: [AdminGuard]
+    },
+	{
+        path: 'admin/competitions/country/:country/sport/:sport', component: AdminCompetitions, canActivate: [AdminGuard]
+    },
     {
         path: 'admin/competitions/add', component: CompetitionsCreate, canActivate: [AdminGuard]
     },
     {
         path: 'admin/competitions/edit/:id', component: CompetitionsEdit, canActivate: [AdminGuard]
+    },
+    {
+        path: 'admin/teams', component: AdminTeams, canActivate: [AdminGuard]
+    },
+    {
+        path: 'admin/teams/competition/:competition', component: AdminTeams, canActivate: [AdminGuard]
+    },
+    {
+        path: 'admin/teams/add', component: TeamsCreate, canActivate: [AdminGuard]
+    },
+    {
+        path: 'admin/teams/edit/:id', component: TeamsEdit, canActivate: [AdminGuard]
     },
     {
         path: '404', component: Login

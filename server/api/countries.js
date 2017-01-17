@@ -12,7 +12,7 @@ let router = express.Router();
 
 router.post("/countries", authenticate, admin, (req, res) => {
     if (req.granted) {
-        if (Object.keys(req.body).length !== 1 || bodyValidator(req.body.name)) {
+        if (Object.keys(req.body).length !== 2 || bodyValidator(req.body.name, req.body.featured)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false
@@ -73,6 +73,29 @@ router.get("/countries", cache.route('/api/countries/all'), (req, res) => {
     });
 });
 
+router.get("/countries/featured", cache.route('/api/countries/featured'), (req, res) => {
+	Country.getFeaturedCountries((err, countries) => {
+		if (err) {
+            res.json({
+                info: "Error during reading countries",
+                success: false,
+                error: err.errmsg
+            });
+        } else if (countries) {
+            res.json({
+                info: "Countries found succesfully",
+                success: true,
+                data: countries
+            });
+        } else {
+            res.json({
+                info: "Countries not found",
+                success: false
+            });
+        }
+	});
+});
+
 /* Read (one country) */
 router.get("/countries/:id", cache.route(), (req, res) => {
     Country.getCountryById(req.params.id, (err, country) => {
@@ -100,7 +123,7 @@ router.get("/countries/:id", cache.route(), (req, res) => {
 /* Update */
 router.put("/countries/:id", authenticate, admin, (req, res) => {
     if (req.granted) {
-        if (Object.keys(req.body).length !== 1 || bodyValidator(req.body.name)) {
+        if (Object.keys(req.body).length !== 2 || bodyValidator(req.body.name, req.body.featured)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false

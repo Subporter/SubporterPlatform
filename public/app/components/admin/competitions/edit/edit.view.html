@@ -3,7 +3,7 @@
 		<div class="col s8 offset-s2">
 			<a [routerLink]="['/admin']" class="breadcrumb">Admin</a>
 			<a [routerLink]="['/admin/competitions']" class="breadcrumb">Competities</a>
-			<a [routerLink]="['/admin/competitions/add']" class="breadcrumb">Toevoegen</a>
+			<a [routerLink]="['/admin/competitions/edit', id]" class="breadcrumb">Bewerken</a>
 		</div>
 	</div>
 </nav>
@@ -31,7 +31,7 @@
 			</div>
 			<div class="input-field">
 				<select [(ngModel)]="country" name="country" materialize="material_select" [materializeSelectOptions]="countries">
-					<option value="" disabled>Land</option>
+					<option value="" disabled selected>Land</option>
 					<option *ngFor="let c of countries" [selected]="c._id === country" [value]="c._id">{{c.name}}</option>
 				</select>
 				<label for="country">Land</label>

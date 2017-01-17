@@ -19,7 +19,26 @@ Sport.addSport = (body, cb) => {
 /* Read (all sports) */
 Sport.getSports = (cb) => {
     Sport.find({})
-        .sort('name')
+        .sort({
+            featured: -1,
+            name: 1
+        })
+        .exec((err, docs) => {
+            if (err) {
+                cb(err, null);
+            } else {
+                cb(null, docs);
+            }
+        });
+};
+
+Sport.getFeaturedSports = (cb) => {
+    Sport.find({
+            featured: true
+        })
+        .sort({
+            name: 1
+        })
         .exec((err, docs) => {
             if (err) {
                 cb(err, null);
@@ -32,12 +51,12 @@ Sport.getSports = (cb) => {
 /* Read (one sport) */
 Sport.getSportById = (id, cb) => {
     Sport.findById(id, (err, docs) => {
-            if (err) {
-                cb(err, null);
-            } else {
-                cb(null, docs);
-            }
-        });
+        if (err) {
+            cb(err, null);
+        } else {
+            cb(null, docs);
+        }
+    });
 };
 
 /* Update */

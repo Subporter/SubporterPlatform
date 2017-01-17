@@ -20,6 +20,12 @@
 					<label for="name">Naam</label>
 				</div>
 			</div>
+			<div class="form-group">
+				<div class="input-field">
+					<input [(ngModel)]="featured" type="checkbox" class="filled-in" name="featured" id="featured">
+					<label for="featured">Featured</label>
+				</div>
+			</div>
 			<button type="submit" class="btn btn-default">Opslaan</button>
 		</form>
 		<a [routerLink]="['/admin/sports']">Terug</a>

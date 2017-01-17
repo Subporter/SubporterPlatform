@@ -20,6 +20,9 @@ var Edit_2 = require("../components/admin/countries/edit/Edit");
 var Competitions_1 = require("../components/admin/competitions/list/Competitions");
 var Create_3 = require("../components/admin/competitions/create/Create");
 var Edit_3 = require("../components/admin/competitions/edit/Edit");
+var Teams_1 = require("../components/admin/teams/list/Teams");
+var Create_4 = require("../components/admin/teams/create/Create");
+var Edit_4 = require("../components/admin/teams/edit/Edit");
 exports.SubporterRoutes = [
     {
         path: '', component: Landing_1.Landing
@@ -79,10 +82,31 @@ exports.SubporterRoutes = [
         path: 'admin/competitions', component: Competitions_1.AdminCompetitions, canActivate: [AdminGuard_1.AdminGuard]
     },
     {
+        path: 'admin/competitions/country/:country', component: Competitions_1.AdminCompetitions, canActivate: [AdminGuard_1.AdminGuard]
+    },
+    {
+        path: 'admin/competitions/sport/:sport', component: Competitions_1.AdminCompetitions, canActivate: [AdminGuard_1.AdminGuard]
+    },
+    {
+        path: 'admin/competitions/country/:country/sport/:sport', component: Competitions_1.AdminCompetitions, canActivate: [AdminGuard_1.AdminGuard]
+    },
+    {
         path: 'admin/competitions/add', component: Create_3.CompetitionsCreate, canActivate: [AdminGuard_1.AdminGuard]
     },
     {
         path: 'admin/competitions/edit/:id', component: Edit_3.CompetitionsEdit, canActivate: [AdminGuard_1.AdminGuard]
+    },
+    {
+        path: 'admin/teams', component: Teams_1.AdminTeams, canActivate: [AdminGuard_1.AdminGuard]
+    },
+    {
+        path: 'admin/teams/competition/:competition', component: Teams_1.AdminTeams, canActivate: [AdminGuard_1.AdminGuard]
+    },
+    {
+        path: 'admin/teams/add', component: Create_4.TeamsCreate, canActivate: [AdminGuard_1.AdminGuard]
+    },
+    {
+        path: 'admin/teams/edit/:id', component: Edit_4.TeamsEdit, canActivate: [AdminGuard_1.AdminGuard]
     },
     {
         path: '404', component: Login_1.Login

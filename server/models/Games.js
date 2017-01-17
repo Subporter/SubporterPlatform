@@ -359,7 +359,7 @@ Game.toggleLoans = (game, loan, cb) => {
 };
 
 /* Helper */
-Array.prototype.toggleAndSort = (value) => {
+Array.prototype.toggleAndSort = function(value) {
     let i = this.findIndex(item => item._id === value);
 
     if (i === -1) {
@@ -401,12 +401,14 @@ Game.deleteGamesByTeam = (team, cb) => {
             home: team
         })
         .exec((err, docs) => {
-            if (err || docs.length === 0) {
+            if (err) {
                 cb(err);
-            } else {
+            } else if (docs.length !== 0) {
                 docs.forEach((doc) => {
                     doc.remove(cb);
                 });
+            } else {
+                cb(null);
             }
         });
 };

@@ -13,7 +13,7 @@ import { ApiService } from '../../../../services/ApiService';
 
 export class AdminCountries {
     countries: Array<Country> = [];
-    selectedCountry: Country = new Country(0, "");
+    selectedCountry: Country;
 
     constructor(public apiService: ApiService) {
 
@@ -28,7 +28,7 @@ export class AdminCountries {
                     let data = result.data;
                     if (data.length !== 0) {
                         data.forEach((i: any) => {
-                            let country: Country = new Country(i._id, i.name);
+                            let country: Country = new Country(i._id, i.name, i.featured);
                             this.countries.push(country);
                         });
                         console.log(this.countries);

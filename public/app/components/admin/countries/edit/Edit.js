@@ -32,6 +32,7 @@ var CountriesEdit = (function () {
             var result = JSON.parse(response.text());
             if (result.success) {
                 _this.name = result.data.name;
+                _this.featured = result.data.featured;
             }
             else {
                 _this.router.navigate(['admin/countries']);
@@ -42,12 +43,14 @@ var CountriesEdit = (function () {
     };
     CountriesEdit.prototype.edit = function (event) {
         var _this = this;
-        var name = this.name;
+        var name = this.name, featured = this.featured;
         var body = JSON.stringify({
-            name: name
+            name: name,
+            featured: featured
         });
         this.apiService.put("api/countries/" + this.id, body).subscribe(function (response) {
             var result = JSON.parse(response.text());
+            console.log(result);
             if (result.success) {
                 _this.router.navigate(['admin/countries']);
             }

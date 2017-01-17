@@ -18,7 +18,12 @@ let countrySchema = new mongoose.Schema({
 		unique: true,
 		trim: true,
         match: regExp
-    }
+    },
+	featured: {
+		type: Boolean,
+		required: true,
+		default: false
+	}
 }, {
     _id: false,
     timestamps: {

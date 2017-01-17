@@ -10,7 +10,7 @@ let router = express.Router();
 /* Create */
 router.post("/sports", authenticate, admin, (req, res) => {
     if (req.granted) {
-        if (Object.keys(req.body).length !== 1 || bodyValidator(req.body.name)) {
+        if (Object.keys(req.body).length !== 2 || bodyValidator(req.body.name, req.body.featured)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false
@@ -71,6 +71,29 @@ router.get("/sports", cache.route('/api/sports/all'), (req, res) => {
     });
 });
 
+router.get("/sports/featured", cache.route('/api/sports/featured'), (req, res) => {
+	Sport.getFeaturedSports((err, sports) => {
+		if (err) {
+            res.json({
+                info: "Error during reading sports",
+                success: false,
+                error: err.errmsg
+            });
+        } else if (sports) {
+            res.json({
+                info: "Sports found succesfully",
+                success: true,
+                data: sports
+            });
+        } else {
+            res.json({
+                info: "Sports not found",
+                success: false
+            });
+        }
+	});
+});
+
 /* Read (one sport) */
 router.get("/sports/:id", cache.route(), (req, res) => {
     Sport.getSportById(req.params.id, (err, sport) => {
@@ -98,7 +121,7 @@ router.get("/sports/:id", cache.route(), (req, res) => {
 /* Update */
 router.put("/sports/:id", authenticate, admin, (req, res) => {
     if (req.granted) {
-        if (Object.keys(req.body).length !== 1 || bodyValidator(req.body.name)) {
+        if (Object.keys(req.body).length !== 2 || bodyValidator(req.body.name, req.body.featured)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false

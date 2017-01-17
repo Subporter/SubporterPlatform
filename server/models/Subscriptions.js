@@ -190,13 +190,15 @@ Subscription.deleteSubscriptionsByTeam = (team, cb) => {
     Subscription.find({
         team: team
     }, (err, docs) => {
-        if (err || docs.length === 0) {
+        if (err) {
             cb(err);
-        } else {
+        } else if (docs.length !== 0) {
             docs.forEach((doc) => {
                 doc.remove(cb);
             });
-        }
+        } else {
+			cb(null);
+		}
     });
 };
 

@@ -32,7 +32,7 @@ var CompetitionsCreate = (function () {
                 if (data.length != 0) {
                     var sports_1 = [];
                     data.forEach(function (i) {
-                        var sport = new Sports_1.Sport(i._id, i.name);
+                        var sport = new Sports_1.Sport(i._id, i.name, i.featured);
                         sports_1.push(sport);
                     });
                     setTimeout(function () {
@@ -53,7 +53,7 @@ var CompetitionsCreate = (function () {
                 if (data.length != 0) {
                     var countries_1 = [];
                     data.forEach(function (i) {
-                        var country = new Countries_1.Country(i._id, i.name);
+                        var country = new Countries_1.Country(i._id, i.name, i.featured);
                         countries_1.push(country);
                     });
                     setTimeout(function () {
@@ -85,12 +85,6 @@ var CompetitionsCreate = (function () {
                 Materialize.toast("Unable to add a competition at this time", 2000);
             }
         });
-    };
-    CompetitionsCreate.prototype.selectSport = function (value) {
-        this.sport = value;
-    };
-    CompetitionsCreate.prototype.selectCountry = function (value) {
-        this.country = value;
     };
     CompetitionsCreate.prototype.selectFile = function (event) {
         var input = event.target;

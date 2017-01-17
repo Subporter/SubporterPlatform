@@ -17,12 +17,14 @@ var SportsCreate = (function () {
         this.router = router;
         this.apiService = apiService;
         this.name = "";
+        this.featured = false;
     }
     SportsCreate.prototype.create = function (event) {
         var _this = this;
-        var name = this.name;
+        var name = this.name, featured = this.featured;
         var body = JSON.stringify({
-            name: name
+            name: name,
+            featured: featured
         });
         this.apiService.post("api/sports", body).subscribe(function (response) {
             var result = JSON.parse(response.text());
