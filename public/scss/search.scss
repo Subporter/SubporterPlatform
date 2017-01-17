@@ -51,3 +51,16 @@ $bg-color-second : #F4F4F4;
         background-color: $bg-color-second ;
 
 }
+
+// .keyword{
+//     background: url(images/icon-clock.gif) no-repeat right center;
+// }
+
+.keyword > i{
+    margin-left: 10px;
+}
+
+
+.keyword:hover{
+    cursor:pointer;
+}

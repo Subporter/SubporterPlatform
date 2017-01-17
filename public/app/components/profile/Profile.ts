@@ -8,7 +8,6 @@ import { Header } from "../common/header/Header";
 import {ApiService} from '../../services/ApiService';
 import "materialize-css";
 import "angular2-materialize";
-import {UploadService} from '../../services/UploadService';
 import {MaterializeAction, MaterializeDirective} from 'angular2-materialize';
 
 
@@ -37,12 +36,13 @@ export class Profile {
     showNew = false;
     favoriteId:number;
     teams = [];
+    user = [];;
 
 
   private loggedIn = false;
 
 
-	constructor(public router: Router, public http: Http, public authHttp: AuthHttp, public apiService: ApiService, private service:UploadService) {
+	constructor(public router: Router, public http: Http, public authHttp: AuthHttp, public apiService: ApiService) {
 
       this.loggedIn = !!localStorage.getItem('id_token');
 
@@ -119,11 +119,11 @@ export class Profile {
      let Data = data;
      let jsonData = JSON.parse(Data);
      this.user = jsonData.data;
-     this.favorites = this.user.favorites;
+     this.favorites = jsonData.data.favorites;
 
-     if (!this.isEmpty(this.favorites){
+     if (!this.isEmpty(this.favorites)){
          this.showFavorites = true;
-     })
+     }
 
      this.apiService.get("api/teams").subscribe(
 			response =>  this.getTeams(response.text()),
@@ -225,11 +225,15 @@ getTeams(data){
 
 updateFavorite(){
      let select = document.getElementById('select');
-     let select = select.value;
+     select = select.options[select.selectedIndex].value;
 
-     this.apiService.post("api/teams/favorite/"+select, null).subscribe(
-  	 		response =>  this.showFavoritesBack(),
-  	 		error => this.response = error.text
+     console.log(select);
+
+     let apiString = "api/teams/favorite/"+select;
+
+     this.apiService.post(apiString, null).subscribe(
+  	 		response =>  console.log(response.text()),
+  	 		error => console.log(error.text)
   	 	);
 
 }

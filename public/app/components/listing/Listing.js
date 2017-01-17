@@ -51,6 +51,7 @@ var Listing = (function () {
         var Data = data;
         var jsonData = JSON.parse(Data);
         this.loan = jsonData.data;
+        console.log(this.loan);
         if (!this.loan) {
             this.router.navigateByUrl('../');
         }
@@ -63,7 +64,9 @@ var Listing = (function () {
         this.avatar = jsonData.data.lent_out_by.avatar;
         this.name = jsonData.data.lent_out_by.name;
         this.firstname = jsonData.data.lent_out_by.firstname;
-        this.city = jsonData.data.lent_out_by.address.city;
+        if (("address" in jsonData.data.lent_out_by)) {
+            this.city = jsonData.data.lent_out_by.address.city;
+        }
         this.price = jsonData.data.game.home.price;
         console.log(this.profile);
     };

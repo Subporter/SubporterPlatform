@@ -30,3 +30,9 @@
 
 .row .col .collection .collection-item:hover {
   background-color: #F4F4F4; }
+
+.keyword > i {
+  margin-left: 10px; }
+
+.keyword:hover {
+  cursor: pointer; }

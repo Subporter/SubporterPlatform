@@ -32,8 +32,7 @@ export class Offer {
 	api: String;
 	jwtHelper: JwtHelper = new JwtHelper();
   games:JSON;
-  show:true;
-  show2:true;
+  show=true;
    gameNames = [];
    user = [];
    show2 = false;

@@ -15,14 +15,12 @@ var angular2_jwt_1 = require("angular2-jwt");
 var ApiService_1 = require("../../services/ApiService");
 require("materialize-css");
 require("angular2-materialize");
-var UploadService_1 = require("../../services/UploadService");
 var Profile = (function () {
-    function Profile(router, http, authHttp, apiService, service) {
+    function Profile(router, http, authHttp, apiService) {
         this.router = router;
         this.http = http;
         this.authHttp = authHttp;
         this.apiService = apiService;
-        this.service = service;
         this.modalActions = new core_1.EventEmitter();
         this.modalActions2 = new core_1.EventEmitter();
         this.modalActions3 = new core_1.EventEmitter();
@@ -30,6 +28,7 @@ var Profile = (function () {
         this.showFavorites = false;
         this.showNew = false;
         this.teams = [];
+        this.user = [];
         this.loggedIn = false;
         this.loggedIn = !!localStorage.getItem('id_token');
         //    this.service.progress$.subscribe(
@@ -37,6 +36,7 @@ var Profile = (function () {
         //     console.log('progress = '+data);
         //   });
     }
+    ;
     // changePass(event) {
     //     console.log('onChange');
     //     var files = event.srcElement.files;
@@ -70,7 +70,7 @@ var Profile = (function () {
         var Data = data;
         var jsonData = JSON.parse(Data);
         this.user = jsonData.data;
-        this.favorites = this.user.favorites;
+        this.favorites = jsonData.data.favorites;
         if (!this.isEmpty(this.favorites)) {
             this.showFavorites = true;
         }
@@ -129,10 +129,11 @@ var Profile = (function () {
         console.log(this.teams);
     };
     Profile.prototype.updateFavorite = function () {
-        var _this = this;
         var select = document.getElementById('select');
-        var select = select.value;
-        this.apiService.post("api/teams/favorite/" + select, null).subscribe(function (response) { return _this.showFavoritesBack(); }, function (error) { return _this.response = error.text; });
+        select = select.options[select.selectedIndex].value;
+        console.log(select);
+        var apiString = "api/teams/favorite/" + select;
+        this.apiService.post(apiString, null).subscribe(function (response) { return console.log(response.text()); }, function (error) { return console.log(error.text); });
     };
     Profile.prototype.isEmpty = function (obj) {
         // null and undefined are "empty"
@@ -166,7 +167,7 @@ Profile = __decorate([
         templateUrl: './app/components/profile/profile.view.html',
         styleUrls: ['../../css/profile.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService, UploadService_1.UploadService])
+    __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService])
 ], Profile);
 exports.Profile = Profile;
 //# sourceMappingURL=Profile.js.map

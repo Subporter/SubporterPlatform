@@ -25,6 +25,7 @@ var Offer = (function () {
         this.modalActions = new core_1.EventEmitter();
         this.modalActions2 = new core_1.EventEmitter();
         this.jwtHelper = new angular2_jwt_1.JwtHelper();
+        this.show = true;
         this.gameNames = [];
         this.user = [];
         this.show2 = false;

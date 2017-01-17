@@ -68,6 +68,15 @@ h2{
 }
 
 .empty{
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding: 20px;
+    // background-color: $white;
+    text-align: center;
 }
+
+
+.empty > h2{
+        text-align: center;
+        font-size: 2.5em;
+
+}
+
