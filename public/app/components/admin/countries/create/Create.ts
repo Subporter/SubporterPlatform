@@ -10,17 +10,20 @@ import { ApiService } from '../../../../services/ApiService';
 })
 
 export class CountriesCreate {
-	name: String = "";
+    name: String = "";
+    featured: Boolean = false;
 
     constructor(public router: Router, public apiService: ApiService) {
 
     }
 
     create(event) {
-        let name = this.name;
+        let name = this.name,
+            featured = this.name;
 
         let body = JSON.stringify({
-            name
+            name,
+            featured
         });
 
         this.apiService.post("api/countries", body).subscribe(

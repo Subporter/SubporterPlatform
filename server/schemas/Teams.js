@@ -8,8 +8,7 @@ const mongoose = require('mongoose'),
     }),
     autoIncrement = require('mongoose-increment'),
 	Address = require('../models/Addresses'),
-    Subscription = require('../models/Subscriptions'),
-	Game = require('../models/Games');
+    Subscription = require('../models/Subscriptions');
 
 let regExp = /^[A-zÀ-ÿ0-9-\s]{2,100}$/;
 
@@ -71,6 +70,8 @@ teamSchema.pre('remove', function(next) {
                 if (err) {
                     return next(err);
                 } else {
+                    const Game = require('../models/Games');
+                    console.log(Game);
                     Game.deleteGamesByTeam(team._id, (err) => {
                         if (err) {
                             return next(err);

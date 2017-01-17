@@ -17,12 +17,14 @@ var CountriesCreate = (function () {
         this.router = router;
         this.apiService = apiService;
         this.name = "";
+        this.featured = false;
     }
     CountriesCreate.prototype.create = function (event) {
         var _this = this;
-        var name = this.name;
+        var name = this.name, featured = this.name;
         var body = JSON.stringify({
-            name: name
+            name: name,
+            featured: featured
         });
         this.apiService.post("api/countries", body).subscribe(function (response) {
             var result = JSON.parse(response.text());

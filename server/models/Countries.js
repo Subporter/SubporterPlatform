@@ -20,7 +20,7 @@ Country.addCountry = (body, cb) => {
 Country.getCountries = (cb) => {
     Country.find({})
         .sort({
-			featured: 1,
+			featured: -1,
 			name: 1
 		})
         .exec((err, docs) => {

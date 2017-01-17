@@ -38,6 +38,9 @@ import { CountriesEdit } from './components/admin/countries/edit/Edit';
 import { AdminCompetitions } from './components/admin/competitions/list/Competitions';
 import { CompetitionsCreate } from './components/admin/competitions/create/Create';
 import { CompetitionsEdit } from './components/admin/competitions/edit/Edit';
+import { AdminTeams } from './components/admin/teams/list/Teams';
+import { TeamsCreate } from './components/admin/teams/create/Create';
+import { TeamsEdit } from './components/admin/teams/edit/Edit';
 
 import { Routing } from './modules/Routes';
 
@@ -71,6 +74,9 @@ import { Routing } from './modules/Routes';
         AdminCompetitions,
         CompetitionsCreate,
         CompetitionsEdit,
+        AdminTeams,
+        TeamsCreate,
+        TeamsEdit,
         MaterializeDirective
     ],
     imports: [

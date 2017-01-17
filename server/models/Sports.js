@@ -20,7 +20,7 @@ Sport.addSport = (body, cb) => {
 Sport.getSports = (cb) => {
     Sport.find({})
         .sort({
-            featured: 1,
+            featured: -1,
             name: 1
         })
         .exec((err, docs) => {

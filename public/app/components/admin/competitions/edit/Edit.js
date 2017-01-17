@@ -60,7 +60,7 @@ var CompetitionsEdit = (function () {
                 if (data.length != 0) {
                     var sports_1 = [];
                     data.forEach(function (i) {
-                        var sport = new Sports_1.Sport(i._id, i.name);
+                        var sport = new Sports_1.Sport(i._id, i.name, i.featured);
                         sports_1.push(sport);
                     });
                     setTimeout(function () {
@@ -81,7 +81,7 @@ var CompetitionsEdit = (function () {
                 if (data.length != 0) {
                     var countries_1 = [];
                     data.forEach(function (i) {
-                        var country = new Countries_1.Country(i._id, i.name);
+                        var country = new Countries_1.Country(i._id, i.name, i.featured);
                         countries_1.push(country);
                     });
                     setTimeout(function () {

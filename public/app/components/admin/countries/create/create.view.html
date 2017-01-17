@@ -1,6 +1,3 @@
-
-
-
 <nav>
 	<div class="nav-wrapper">
 		<div class="col s8 offset-s2">
@@ -21,6 +18,12 @@
 				<div class="input-field">
 					<input [(ngModel)]="name" type="text" class="form-control" name="name" id="name" length="100" required pattern="[A-zÀ-ÿ-\s]{2,100}">
 					<label for="name">Naam</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-field">
+					<input [(ngModel)]="featured" type="checkbox" class="filled-in" name="featured" id="featured">
+					<label for="featured">Featured</label>
 				</div>
 			</div>
 			<button type="submit" class="btn btn-default">Opslaan</button>

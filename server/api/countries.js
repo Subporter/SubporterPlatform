@@ -12,7 +12,7 @@ let router = express.Router();
 
 router.post("/countries", authenticate, admin, (req, res) => {
     if (req.granted) {
-        if (Object.keys(req.body).length !== 1 || bodyValidator(req.body.name)) {
+        if (Object.keys(req.body).length !== 2 || bodyValidator(req.body.name, req.body.featured)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false
@@ -123,7 +123,7 @@ router.get("/countries/:id", cache.route(), (req, res) => {
 /* Update */
 router.put("/countries/:id", authenticate, admin, (req, res) => {
     if (req.granted) {
-        if (Object.keys(req.body).length !== 1 || bodyValidator(req.body.name)) {
+        if (Object.keys(req.body).length !== 2 || bodyValidator(req.body.name, req.body.featured)) {
             res.json({
                 info: "Please supply all required fields",
                 success: false

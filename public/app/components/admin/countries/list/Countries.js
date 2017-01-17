@@ -17,7 +17,6 @@ var AdminCountries = (function () {
     function AdminCountries(apiService) {
         this.apiService = apiService;
         this.countries = [];
-        this.selectedCountry = new Countries_1.Country(0, "");
     }
     AdminCountries.prototype.ngOnInit = function () {
         var _this = this;
@@ -28,7 +27,7 @@ var AdminCountries = (function () {
                 var data = result.data;
                 if (data.length !== 0) {
                     data.forEach(function (i) {
-                        var country = new Countries_1.Country(i._id, i.name);
+                        var country = new Countries_1.Country(i._id, i.name, i.featured);
                         _this.countries.push(country);
                     });
                     console.log(_this.countries);

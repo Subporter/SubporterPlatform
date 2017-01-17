@@ -1,8 +1,9 @@
 "use strict";
 var Country = (function () {
-    function Country(_id, name) {
+    function Country(_id, name, featured) {
         this._id = _id;
         this.name = name;
+        this.featured = featured;
     }
     return Country;
 }());

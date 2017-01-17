@@ -35,7 +35,7 @@ export class CompetitionsCreate {
                     if (data.length != 0) {
                         let sports: Array<Sport> = [];
                         data.forEach((i: any) => {
-                            let sport: Sport = new Sport(i._id, i.name);
+                            let sport: Sport = new Sport(i._id, i.name, i.featured);
                             sports.push(sport);
                         });
                         setTimeout(() => {
@@ -59,7 +59,7 @@ export class CompetitionsCreate {
                     if (data.length != 0) {
                         let countries: Array<Country> = [];
                         data.forEach((i: any) => {
-                            let country: Country = new Country(i._id, i.name);
+                            let country: Country = new Country(i._id, i.name, i.featured);
                             countries.push(country);
                         });
                         setTimeout(() => {
@@ -92,14 +92,6 @@ export class CompetitionsCreate {
                 Materialize.toast("Unable to add a competition at this time", 2000);
             }
         });
-    }
-
-    selectSport(value) {
-        this.sport = value;
-    }
-
-    selectCountry(value) {
-        this.country = value;
     }
 
     selectFile(event) {

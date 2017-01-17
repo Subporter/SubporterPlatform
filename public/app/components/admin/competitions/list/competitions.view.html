@@ -7,19 +7,45 @@
 	</div>
 </nav>
 
-
 <div class="container">
 	<div class="row">
 		<h2 class="header">Competities</h2>
 		<button [routerLink]="['/admin/competitions/add']" class="btn waves-effect waves-light">
-			Toevoegen <i class="material-icons right">add</i>
+			Toevoegen
+			<i class="material-icons right">add</i>
 		</button>
+	</div>
+	<div class="row">
+		<div class="form-group">
+			<div class="input-field col s2">
+				<label for="">Filter competitions:</label>
+			</div>
+			<div class="input-field col s5">
+				<select [(ngModel)]="sport" name="sport" materialize="material_select" [materializeSelectOptions]="sports" (ngModelChange)="filterValues()">
+					<option value="" selected>Sport</option>
+					<option *ngFor="let sport of sports" [value]="sport._id">{{sport.name}}</option>
+				</select>
+			</div>
+			<div class="input-field col s5">
+				<select [(ngModel)]="country" name="country" materialize="material_select" [materializeSelectOptions]="countries" (ngModelChange)="filterValues()">
+					<option value="" selected>Country</option>
+					<option *ngFor="let country of countries" [value]="country._id">{{country.name}}</option>
+				</select>
+			</div>
+		</div>
 	</div>
 	<div class="row">
 		<ul class="collection">
 			<li *ngFor="let competition of competitions" class="collection-item">
 				<div>
-					{{competition.name}} ({{competition.country.name}} - {{competition.sport.name}}) <span class="secondary-content"><i [routerLink]="['/admin/competitions/edit', competition._id]" class="material-icons">mode_edit</i><i (click)="delete(competition._id)" data-target="modal-delete" class="modal-trigger material-icons">delete</i></span>
+					<a [routerLink]="['/admin/teams/competition', competition._id]">{{competition.name}}
+						({{competition.country.name}}
+						-
+						{{competition.sport.name}})</a>
+					<span class="secondary-content">
+						<i [routerLink]="['/admin/competitions/edit', competition._id]" class="material-icons">mode_edit</i>
+						<i (click)="delete(competition._id)" data-target="modal-delete" class="modal-trigger material-icons">delete</i>
+					</span>
 				</div>
 			</li>
 		</ul>
@@ -29,7 +55,8 @@
 <div materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions" class="modal" id="modal-delete">
 	<div class="modal-content">
 		<h4>Zeker?</h4>
-		<p>Indien je deze competitie, {{selectedCompetition ? selectedCompetition.name : 'Competitie'}},, verwijdert zullen ook alle teams en wedstrijden voor de competitie gewist worden.</p>
+		<p>Indien je deze competitie,
+			{{selectedCompetition ? selectedCompetition.name : 'Competitie'}}, verwijdert zullen ook alle teams en wedstrijden voor de competitie gewist worden.</p>
 	</div>
 	<div class="modal-footer">
 		<a (click)="closeModal()" class="modal-action modal-close waves-effect btn-flat">Cancel</a>

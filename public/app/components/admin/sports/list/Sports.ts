@@ -13,7 +13,7 @@ import { ApiService } from '../../../../services/ApiService';
 
 export class AdminSports {
     sports: Array<Sport> = [];
-    selectedSport: Sport = new Sport(0, "");
+    selectedSport: Sport;
 
     constructor(public apiService: ApiService) {
 
@@ -28,7 +28,7 @@ export class AdminSports {
                     let data = result.data;
                     if (data.length !== 0) {
                         data.forEach((i: any) => {
-                            let sport: Sport = new Sport(i._id, i.name);
+                            let sport: Sport = new Sport(i._id, i.name, i.featured);
                             this.sports.push(sport);
                         });
                     }
