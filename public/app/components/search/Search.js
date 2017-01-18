@@ -199,23 +199,14 @@ var Search = (function () {
         console.log(this.games);
     };
     Search.prototype.isEmpty = function (obj) {
-        // null and undefined are "empty"
         if (obj == null)
             return true;
-        // Assume if it has a length property with a non-zero value
-        // that that property is correct.
         if (obj.length > 0)
             return false;
         if (obj.length === 0)
             return true;
-        // If it isn't an object at this point
-        // it is empty, but it can't be anything *but* empty
-        // Is it empty?  Depends on your application.
         if (typeof obj !== "object")
             return true;
-        // Otherwise, does it have any properties of its own?
-        // Note that this doesn't handle
-        // toString and valueOf enumeration bugs in IE < 9
         for (var key in obj) {
             if (hasOwnProperty.call(obj, key))
                 return false;
@@ -224,30 +215,30 @@ var Search = (function () {
     };
     Search.prototype.getMonday = function () {
         var d = new Date();
-        var day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+        var day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6 : 1);
         return new Date(d.setDate(diff));
     };
     Search.prototype.getFriday = function () {
         var d = new Date();
-        var day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+        var day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6 : 1);
         diff += 4;
         return new Date(d.setDate(diff));
     };
     Search.prototype.getSunday = function () {
         var d = new Date();
-        var day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+        var day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6 : 1);
         diff += 6;
         return new Date(d.setDate(diff));
     };
     Search.prototype.getMondayNext = function () {
         var d = new Date();
-        var day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+        var day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6 : 1);
         diff += 7;
         return new Date(d.setDate(diff));
     };
     Search.prototype.getSundayNext = function () {
         var d = new Date();
-        var day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+        var day = d.getDay(), diff = d.getDate() - day + (day == 0 ? -6 : 1);
         diff += 13;
         return new Date(d.setDate(diff));
     };

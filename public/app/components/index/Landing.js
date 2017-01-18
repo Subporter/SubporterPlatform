@@ -95,15 +95,6 @@ var Landing = (function () {
         var jsonData = JSON.parse(Data);
         this.weekGames = jsonData.data;
         var counter = 0;
-        //  for(let game of weekGames){
-        //         if(game.loans.size != 0){
-        //           this.weekGames[counter]= game;
-        //           counter ++;
-        //         }
-        //  }
-        //  if(this.isEmpty(this.weekGames)){
-        //    this.showWeek = false;
-        //  }
     };
     Landing.prototype.getTeam = function (data) {
         var Data = data;
@@ -112,17 +103,11 @@ var Landing = (function () {
         this.displayCarousel();
     };
     Landing.prototype.displayCarousel = function () {
-        /*$('.carousel-class').slick({
-          infinite: true, autoplay: true, arrows: false,
-          slidesToShow: 12,
-          slidesToScroll: 1
-        });*/
     };
     Landing.prototype.test = function () {
         console.log("test");
     };
     Landing.prototype.goToTeamPage = function (id) {
-        //route to teampage
         alert(id);
     };
     Landing.prototype.scrollToDiv = function () {
@@ -148,23 +133,14 @@ var Landing = (function () {
         this.router.navigate(['/landing']);
     };
     Landing.prototype.isEmpty = function (obj) {
-        // null and undefined are "empty"
         if (obj == null)
             return true;
-        // Assume if it has a length property with a non-zero value
-        // that that property is correct.
         if (obj.length > 0)
             return false;
         if (obj.length === 0)
             return true;
-        // If it isn't an object at this point
-        // it is empty, but it can't be anything *but* empty
-        // Is it empty?  Depends on your application.
         if (typeof obj !== "object")
             return true;
-        // Otherwise, does it have any properties of its own?
-        // Note that this doesn't handle
-        // toString and valueOf enumeration bugs in IE < 9
         for (var key in obj) {
             if (hasOwnProperty.call(obj, key))
                 return false;

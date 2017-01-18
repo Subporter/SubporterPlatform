@@ -1,4 +1,4 @@
-const gulp = require("gulp"),
+const gulp = require('gulp'),
     sass = require('gulp-sass'),
     htmlhint = require('gulp-htmlhint'),
     sourcemaps = require('gulp-sourcemaps'),
@@ -9,6 +9,7 @@ const gulp = require("gulp"),
     jshint = require('gulp-jshint'),
     mocha = require('gulp-mocha'),
     util = require('gulp-util'),
+    concat = require('gulp-concat'),
     run = require('run-sequence');
 
 const PATHS = {
@@ -35,7 +36,7 @@ const PATHS = {
 
 gulp.task('default', () => {
     let htmlwatcher = gulp.watch(PATHS.HTML.SRC, ['html-validate']),
-        //csswatcher = gulp.watch(PATHS.CSS.SRC, ['css']),
+        csswatcher = gulp.watch(PATHS.CSS.SRC, ['css']),
         sasswatcher = gulp.watch(PATHS.SCSS.SRC, ['sass']),
         jswatcher = gulp.watch([PATHS.JS.BACKEND, PATHS.JS.TESTING], ['js']);
 });
@@ -56,6 +57,7 @@ gulp.task('css', () => {
     gulp.src(PATHS.CSS.SRC)
         .pipe(sourcemaps.init())
         .pipe(autoprefixer(AUTOPREFIXOPTIONS))
+        .pipe(concat("main.min.css"))
         .pipe(csslint())
         .pipe(csslint.formatter())
         .pipe(cleancss({
