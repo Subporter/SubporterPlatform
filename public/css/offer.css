@@ -1,8 +1,10 @@
 .autocomplete-content {
   position: absolute; }
 
+h2 {
+  font-size: 2.5em; }
+
 section {
-  background-color: #F4F4F4;
   margin-top: 0; }
 
 .article {

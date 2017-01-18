@@ -40,6 +40,9 @@ exports.SubporterRoutes = [
         path: 'search', component: Search_1.Search
     },
     {
+        path: 'search/:id', component: Search_1.Search
+    },
+    {
         path: 'cart', component: Cart_1.Cart
     },
     {

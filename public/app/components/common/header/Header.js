@@ -18,11 +18,11 @@ var Header = (function () {
         this.auth = auth;
         this.apiService = apiService;
         this.isAdmin = false;
-        this.isLoggedIn = false;
+        this.loggedIn = false;
     }
     Header.prototype.ngOnInit = function () {
         var _this = this;
-        this.isLoggedIn = this.auth.isLoggedIn();
+        this.loggedIn = this.auth.isLoggedIn();
         this.apiService.get('check/admin').subscribe(function (response) {
             var result = JSON.parse(response.text()).success;
             _this.isAdmin = result;
@@ -51,7 +51,7 @@ __decorate([
 Header = __decorate([
     core_1.Component({
         selector: 'subporter-header',
-        template: "\n    <header class=\"header\" [ngStyle]=\"{ 'background-image':  'url('+image+')' }\">\n    \t<nav>\n    \t\t<div class=\"nav-wrapper\">\n    \t\t\t<a [routerLink]=\"['/']\" class=\"brand-logo\">Subporter</a>\n    \t\t\t<a href=\"#\" data-activates=\"mobile-demo\" class=\"button-collapse\"><i class=\"material-icons\">menu</i></a>\n    \t\t\t<ul id=\"nav-mobile\" class=\"right hide-on-med-and-down\">\n    \t\t\t\t<li> <a [routerLink]=\"['/search']\">Zoeken</a></li>\n    \t\t\t\t<li *ngIf=\"isAdmin\"><a [routerLink]=\"['/admin']\">Admin</a></li>\n    \t\t\t\t<li *ngIf=\"isLoggedIn\"><a [routerLink]=\"['/cart']\">Winkelwagen</a></li>\n    \t\t\t\t<li *ngIf=\"!isLoggedIn\"><a [routerLink]=\"['/login']\">Login</a></li>\n    \t\t\t\t<li *ngIf=\"isLoggedIn\"><a [routerLink]=\"['/profile']\">Profiel</a></li>\n    \t\t\t\t<li *ngIf=\"isLoggedIn\"><a (click)=\"logout()\">Logout</a></li>\n    \t\t\t\t<li><a class=\"waves-effect waves-light btn\" [routerLink]=\"['/offer']\">Abonnement aanbieden</a></li>\n    \t\t\t</ul>\n    \t\t\t<ul class=\"side-nav\" id=\"mobile-demo\">\n    \t\t\t\t<li><a href=\"sass.html\">Sass</a></li>\n    \t\t\t\t<li><a href=\"badges.html\">Components</a></li>\n    \t\t\t\t<li><a href=\"collapsible.html\">JavaScript</a></li>\n    \t\t\t</ul>\n    \t\t</div>\n    \t</nav>\n    \t<div class=\"container\">\n    \t\t<h1>{{title}}</h1>\n    \t\t<h2>{{subtitle}}</h2>\n    \t</div>\n    </header>\n\t",
+        template: "\n   <header class=\"header\" [ngStyle]=\"{ 'background-image':  'url('+image+')' }\">\n\t<nav>\n   <div class=\"nav-wrapper\">\n\t\t\t<a [routerLink]=\"['/']\" class=\"brand-logo\">Subporter</a>\n\t\t\t<a materialize=\"sideNav\" href=\"#\" data-activates=\"slide-out\" class=\"button-collapse\"><i class=\"material-icons\">menu</i></a>\n\t\t\t<ul id=\"nav-mobile\" class=\"right hide-on-med-and-down\">\n\t\t\t\t<li> <a [routerLink]=\"['/search']\">Zoeken</a></li>\n\t\t\t\t<li *ngIf=\"isAdmin\"><a [routerLink]=\"['/admin']\">Admin</a></li>\n\t\t\t\t<li *ngIf=\"loggedIn\"><a [routerLink]=\"['/cart']\">Winkelwagen</a></li>\n\t\t\t\t<li *ngIf=\"!loggedIn\"><a [routerLink]=\"['/login']\">Login</a></li>\n\t\t\t\t<li *ngIf=\"loggedIn\"><a [routerLink]=\"['/profile']\">Profiel</a></li>\n\t\t\t\t<li *ngIf=\"loggedIn\"><a (click)=\"logout()\">Logout</a></li>\n\t\t\t\t<li><a class=\"waves-effect waves-light btn\" [routerLink]=\"['/offer']\">Abonnement aanbieden</a></li>\n\t\t\t</ul>\n\t\t\t<ul class=\"side-nav\" id=\"slide-out\">\n\t\t\t\t<li> <a [routerLink]=\"['/search']\">Zoeken</a></li>\n\t\t\t\t<li *ngIf=\"isAdmin\"><a [routerLink]=\"['/admin']\">Admin</a></li>\n\t\t\t\t<li *ngIf=\"loggedIn\"><a [routerLink]=\"['/cart']\">Winkelwagen</a></li>\n\t\t\t\t<li *ngIf=\"!loggedIn\"><a [routerLink]=\"['/login']\">Login</a></li>\n\t\t\t\t<li *ngIf=\"loggedIn\"><a [routerLink]=\"['/profile']\">Profiel</a></li>\n\t\t\t\t<li *ngIf=\"loggedIn\"><a (click)=\"logout()\">Logout</a></li>\n\t\t\t\t<li><a class=\"waves-effect waves-light btn\" [routerLink]=\"['/offer']\">Abonnement aanbieden</a></li>\n\t\t\t</ul>\n\t\t</div>\n  </nav>\n\t<div class=\"container\">\n\t\t<h1>{{title}}</h1>\n\t\t<h2>{{subtitle}}</h2>\n\t</div>\n</header>\n\t",
         styles: ['.header .container{ text-align: center;} .header .container h1{color: #fff;font-weight: 600; font-size:3em;} .header .container h2{color:#fff;font-size:2em;} .header{background-size: cover; height: 300px;}nav{background: none; -webkit-box-shadow: none; -moz-box-shadow: none;	box-shadow: none;}.brand-logo{margin-left: 10px;}']
     }),
     __metadata("design:paramtypes", [router_1.Router, Auth_1.Auth, ApiService_1.ApiService])

@@ -37,12 +37,20 @@ var Cart = (function () {
         this.counter = 0;
         this.show = true;
         this.loggedIn = false;
+        this.isAdmin = false;
         this.loggedIn = !!localStorage.getItem('id_token');
     }
     Cart.prototype.ngOnInit = function () {
+        var _this = this;
         if (!this.loggedIn) {
             this.router.navigateByUrl('/');
         }
+        this.apiService.get('check/admin').subscribe(function (response) {
+            var result = JSON.parse(response.text()).success;
+            _this.isAdmin = result;
+        }, function (error) {
+            _this.isAdmin = false;
+        });
         var x = this._cookieService.getAll();
         this.cookie = x;
         if (this.isEmpty(x)) {
@@ -53,6 +61,10 @@ var Cart = (function () {
             this.showCart();
         }
         console.log(x);
+    };
+    Cart.prototype.logout = function () {
+        localStorage.removeItem('id_token');
+        this.router.navigate(['/landing']);
     };
     Cart.prototype.showCart = function () {
         var cookie = this.cookie;
@@ -133,10 +145,6 @@ var Cart = (function () {
     };
     Cart.prototype.paySuccess = function (response, loan) {
         console.log(response.text());
-        var socket = io.connect();
-        console.log("Arno!!!2");
-        console.log(loan.lent_out_by._id);
-        socket.emit("loanCreated", loan.lent_out_by._id);
     };
     Cart.prototype.openModal = function () {
         this.modalActions.emit({ action: "modal", params: ['open'] });

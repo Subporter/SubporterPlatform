@@ -44,6 +44,9 @@ export const SubporterRoutes: Routes = [
         path: 'search', component: Search
     },
     {
+        path: 'search/:id', component: Search
+    },
+    {
         path: 'cart', component: Cart
     },
     {

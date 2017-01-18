@@ -24,7 +24,7 @@ router.post("/subscriptions", authenticate, formParser, imageSaver, loadUser, (r
             Subscription.addSubscription(req.body, (err, id) => {
                 if (err || !id) {
                     res.json({
-                        info: "Error during creating subscription",
+                        info: "Error during creating subscription" + err,
                         success: false,
                         error: err.errmsg
                     });

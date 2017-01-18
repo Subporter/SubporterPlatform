@@ -30,3 +30,18 @@
 
 .row .col .collection .collection-item:hover {
   background-color: #F4F4F4; }
+
+.keyword > i {
+  margin-left: 10px; }
+
+.keyword:hover {
+  cursor: pointer; }
+
+.keyword {
+  font-weight: bold; }
+
+.collapsible-body {
+  padding: 5px; }
+
+ul > li {
+  cursor: pointer; }

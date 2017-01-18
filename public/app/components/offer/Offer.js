@@ -25,6 +25,7 @@ var Offer = (function () {
         this.modalActions = new core_1.EventEmitter();
         this.modalActions2 = new core_1.EventEmitter();
         this.jwtHelper = new angular2_jwt_1.JwtHelper();
+        this.show = true;
         this.gameNames = [];
         this.user = [];
         this.show2 = false;
@@ -57,7 +58,7 @@ var Offer = (function () {
             this._callApi("Anonymous", "api/games/");
         }
         else {
-            this.show2 = false;
+            this.show = false;
         }
     };
     Offer.prototype.useJwtHelper = function () {
@@ -149,6 +150,7 @@ var Offer = (function () {
                             this.subscriptions[counter] = subscription;
                             this.sub = true;
                             counter++;
+                            console.log("adasdas");
                         }
                         else {
                             this.sub = true;
@@ -205,9 +207,8 @@ var Offer = (function () {
         this.apiService.post("api/loans", body).subscribe(function (response) { return _this.showSuccess(); }, function (error) { return _this.response = error.text; });
     };
     Offer.prototype.showSuccess = function () {
-        console.log(this.selectedGame.home["_id"]);
         var socket = io.connect();
-        socket.emit("offerAdded", this.selectedGame.home["_id"], this.selectedGame.away["_id"]);
+        socket.emit("newLoanClient", this.selectedGame._id);
         this.modalActions2.emit({ action: "modal", params: ['open'] });
     };
     Offer.prototype.openModal = function () {
