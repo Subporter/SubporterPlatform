@@ -58,7 +58,7 @@ var Offer = (function () {
             this._callApi("Anonymous", "api/games/");
         }
         else {
-            this.show2 = false;
+            this.show = false;
         }
     };
     Offer.prototype.useJwtHelper = function () {

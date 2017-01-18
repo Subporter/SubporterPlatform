@@ -102,7 +102,9 @@ getSubscriptions(data){
 
 
      }else{
-       this.show2 = false;
+       
+       this.show = false;
+      
 
      }
 

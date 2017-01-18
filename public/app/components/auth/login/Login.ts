@@ -24,20 +24,20 @@ import { ApiService} from '../../../services/ApiService';
 				<div class="input-field">
 
 					<input [(ngModel)]="password" type="password" class="form-control validate" name="password" id="password">
-					<label for="password">Password</label>
+					<label for="password">Wachtwoord</label>
 
 				</div>
 			</div>
-			<button type="submit" class="btn btn-default">Submit</button>
-			<a [routerLink]="['/']">Click here to go landing</a>
+			<button type="submit" class="btn btn-default">Log in</button>
+			<a [routerLink]="['/']">Terug naar home</a>
 		</form>
 	</div>
 	<div class="register-section">
-		<h1>Not a member?</h1>
-		<p>If you're not yet registered, please register now to obtain full access.</p>
+		<h1>Nog geen account?</h1>
+		<p>Registreer snel om volledige toegang te verkrijgen.</p>
 		<br/>
 
-		<button class="btn" [routerLink]="['/register']"> Register now </button>
+		<button class="btn" [routerLink]="['/register']"> Registreer </button>
 
 
 	</div>
@@ -130,25 +130,7 @@ export class Login {
                     )
 
 
-                    socket.on("NewLoanuser", function(){
-
-
-                        alert("Eén van jouw abonnementen is verhuurd!");
-
-
-
-
-
-
-
-
-                    });
-
-                    socket.on("loanAddedTeam", function(){
-                        alert("Er is een abonnement voor een wedstrijd van jouw favoriete ploeg beschikbaar!");
-
-
-                    })
+                   
 
                     localStorage.setItem("id_token", response.json().token);
                     this.useJwtHelper();

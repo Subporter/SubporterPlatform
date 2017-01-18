@@ -8,7 +8,7 @@ import { contentHeaders } from '../../../common/Headers'
 	template: `
 	<div class="register container">
 		<div class="register-section">
-			<h1>Create an account</h1>
+			<h1>Maak een account</h1>
 			<form (submit)="register($event)">
 				<div class="form-group one">
 					<div class="input-field">
@@ -46,8 +46,8 @@ import { contentHeaders } from '../../../common/Headers'
 						<input [(ngModel)]="confirmPassword" type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Confirm password">
 					</div>
 				</div>
-				<button type="submit" class="btn btn-default">Register</button>
-				<a [routerLink]="['/login']">Click here to go back</a>
+				<button type="submit" class="btn btn-default">Registreer</button>
+				<a [routerLink]="['/login']">Terug</a>
 			</form>
 		</div>
 	</div>
