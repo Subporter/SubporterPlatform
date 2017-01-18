@@ -4,23 +4,20 @@ const mongoose = require('mongoose'),
             __v: true,
             created_at: true,
             updated_at: true,
-			admin: true,
-			password: true
+            admin: true,
+            password: true
         }
     }),
     autoIncrement = require('mongoose-increment'),
-    bcrypt = require('bcrypt-nodejs'),
-    Address = require('../models/Addresses'),
-    Subscription = require('../models/Subscriptions'),
-    Loan = require('../models/Loans');
+    bcrypt = require('bcrypt-nodejs');
 
-let regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
-let emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-let usernameRegExp = /^[A-Za-z0-9]{3,20}$/;
-let phoneRegExp = /^((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
-let registryRegExp = /^[0-9]{2}.[0-9]{2}.[0-9]{2}-[0-9]{3}.[0-9]{2}$/;
+const regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
+const emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const usernameRegExp = /^[A-Za-z0-9]{3,20}$/;
+const phoneRegExp = /^((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/;
+const registryRegExp = /^[0-9]{2}.[0-9]{2}.[0-9]{2}-[0-9]{3}.[0-9]{2}$/;
 
-let userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     address: {
         type: Number,
         ref: 'Address'
@@ -116,6 +113,10 @@ userSchema.pre('save', function(next) {
 });
 
 userSchema.pre('remove', function(next) {
+    const Address = require('../models/Addresses'),
+        Subscription = require('../models/Subscriptions'),
+        Loan = require('../models/Loans');
+
     let user = this;
     Address.deleteAddress(user.address, (err) => {
         if (err) {

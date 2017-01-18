@@ -4,9 +4,7 @@
     "browser": true,
     "undef": true,
     "unused": false,
-    "predef": [
-        "MY_GLOBAL"
-    ],
+    "predef": ["MY_GLOBAL"],
     "globals": {
         "describe": false,
         "it": false,

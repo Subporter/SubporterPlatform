@@ -8,7 +8,7 @@ const mongoose = require('mongoose'),
     }),
     autoIncrement = require('mongoose-increment');
 
-let subscriptionSchema = new mongoose.Schema({
+const subscriptionSchema = new mongoose.Schema({
     place: {
         type: String,
         required: true,

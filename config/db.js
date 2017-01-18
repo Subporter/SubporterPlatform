@@ -1,7 +1,7 @@
 const mongoose = require('mongoose'),
     config = require('./subporter.config');
 
-(function() {
+(() => {
     let gracefulShutdown,
         db = config.db_dev;
 

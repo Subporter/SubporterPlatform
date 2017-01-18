@@ -8,9 +8,9 @@ const mongoose = require('mongoose'),
     }),
     autoIncrement = require('mongoose-increment');
 
-let regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
+const regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
 
-let addressSchema = new mongoose.Schema({
+const addressSchema = new mongoose.Schema({
     city: {
         type: String,
         required: true,

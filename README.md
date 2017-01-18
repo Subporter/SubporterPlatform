@@ -8,17 +8,18 @@ Wanneer dit project volledig afgewerkt is, zal het te bezichtigen zijn op [https
 
 **Projectbeschrijving**
 
-Kort samengevat zorgt Subporter voor een platform waarop abonnementen uitgeleend worden tussen drie betrokken partijen: de voetbalploeg, de persoon met het abonnement, genaamd Rudy, en de persoon zonder, genaamd Tim. Rudy biedt zijn abonnement te leen aan bij de voetbalploeg en krijgt daarvoor een compensatie. Tim kan dan op zijn beurt dit abonnement “lenen” en ontvangt in ruil voor een klein bedrag een ticket voor de wedstrijd. De voetbalploeg ontvangt dit bedrag en creeërt zo, naast extra omzet, ook meer controle over aanwezige supporters tijdens de wedstrijd.
+Kort samengevat zorgt Subporter voor een platform waarop abonnementen uitgeleend worden tussen drie betrokken partijen: de voetbalploeg, de persoon met het abonnement, genaamd Rudy, en de persoon zonder, genaamd Tim. Rudy biedt zijn abonnement te leen aan bij de voetbalploeg en krijgt daarvoor een compensatie. Tim kan dan op zijn beurt dit abonnement "lenen" en ontvangt in ruil voor een klein bedrag een ticket voor de wedstrijd. De voetbalploeg ontvangt dit bedrag en creeërt zo, naast extra omzet, ook meer controle over aanwezige supporters tijdens de wedstrijd.
 
-De naam Subporter is redelijk eenvoudig te ontleden: “substituting the supporter”.
+De naam Subporter is redelijk eenvoudig te ontleden: "substituting the supporter".
 
 **Teamleden**
 
 Dit project wordt gerealiseerd door:
-* [Alexander Leplae][3]
-* [Arno Vande Cappelle][4]
-* [Niels Bril][5]
-* [Simon Gemmel][6]
+
+- [Alexander Leplae][3]
+- [Arno Vande Cappelle][4]
+- [Niels Bril][5]
+- [Simon Gemmel][6]
 
 **Installatie**
 

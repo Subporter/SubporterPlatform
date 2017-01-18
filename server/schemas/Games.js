@@ -6,10 +6,9 @@ const mongoose = require('mongoose'),
             updated_at: true
         }
     }),
-    autoIncrement = require('mongoose-increment'),
-    Loan = require('../models/Loans');
+    autoIncrement = require('mongoose-increment');
 
-let gameSchema = new mongoose.Schema({
+const gameSchema = new mongoose.Schema({
     away: {
         type: Number,
         ref: 'Team',
@@ -53,6 +52,8 @@ let gameSchema = new mongoose.Schema({
 });
 
 gameSchema.pre('remove', function(next) {
+    const Loan = require('../models/Loans');
+
     let game = this;
     Loan.deleteLoansByGame(game._id, (err) => {
         if (err) {

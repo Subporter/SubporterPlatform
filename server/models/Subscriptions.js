@@ -4,7 +4,7 @@ const mongoose = require('mongoose'),
 
 let Subscription = mongoose.model('Subscription', subscriptionSchema, 'Subscriptions');
 
-let populateSchema = [{
+const populateSchema = [{
     path: 'team',
     model: 'Team',
     populate: [{

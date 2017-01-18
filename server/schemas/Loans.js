@@ -6,10 +6,9 @@ const mongoose = require('mongoose'),
             updated_at: true
         }
     }),
-    autoIncrement = require('mongoose-increment'),
-	Game = require('../models/Games');
+    autoIncrement = require('mongoose-increment');
 
-let loanSchema = new mongoose.Schema({
+const loanSchema = new mongoose.Schema({
     game: {
         type: Number,
         ref: 'Game',
@@ -56,6 +55,8 @@ let loanSchema = new mongoose.Schema({
 });
 
 loanSchema.pre('remove', function(next) {
+    const Game = require('../models/Games');
+
     let loan = this;
     Game.getGameById(loan.game, (err, game) => {
         if (err) {

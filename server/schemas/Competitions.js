@@ -6,13 +6,12 @@ const mongoose = require('mongoose'),
             updated_at: true
         }
     }),
-    autoIncrement = require('mongoose-increment'),
-	Team = require('../models/Teams');
+    autoIncrement = require('mongoose-increment');
 
-let regExp = /^[A-zÀ-ÿ0-9-\s]{2,100}$/;
-let descriptionRegExp = /^[A-zÀ-ÿ0-9-\s.,!'/]{2,1000}$/;
+const regExp = /^[A-zÀ-ÿ0-9-\s]{2,100}$/;
+const descriptionRegExp = /^[A-zÀ-ÿ0-9-\s.,!'/]{2,1000}$/;
 
-let competitionSchema = new mongoose.Schema({
+const competitionSchema = new mongoose.Schema({
     country: {
         type: Number,
         ref: 'Country',
@@ -49,6 +48,8 @@ let competitionSchema = new mongoose.Schema({
 });
 
 competitionSchema.pre('remove', function(next) {
+    const Team = require('../models/Teams');
+
     let competition = this;
     Team.deleteTeamsByCompetition(competition._id, (err) => {
         if (err) {
