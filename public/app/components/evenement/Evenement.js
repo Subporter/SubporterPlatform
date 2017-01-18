@@ -31,6 +31,12 @@ var Evenement = (function () {
         var _this = this;
         this.subscription = this.activatedRoute.params.subscribe(function (param) {
             var id = param['id'];
+            var socket = io.connect();
+            socket.on("newLoanServer", function (dataS) {
+                console.log("socket new loan: " + dataS);
+                location.reload();
+            });
+            socket.emit("eventRoomClient", id);
             _this.gameId = id;
             _this._callApi("Anonymous", "api/loans/game/" + id);
         });
@@ -71,7 +77,8 @@ var Evenement = (function () {
             this.loans = jsonData.data;
         }
     };
-    Evenement.prototype.goHome = function () {
+    Evenement.prototype.goToOffer = function () {
+        this.router.navigateByUrl("/offer");
     };
     Evenement.prototype.getUserId = function (loans) {
         var _this = this;

@@ -270,10 +270,7 @@ export class Cart {
     paySuccess(response, loan) {
 
         console.log(response.text());
-        var socket = io.connect();
-        console.log("Arno!!!2");
-        console.log(loan.lent_out_by._id);
-        socket.emit("loanCreated", loan.lent_out_by._id);
+       
     }
 
 

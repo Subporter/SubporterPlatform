@@ -53,9 +53,19 @@ export class Evenement {
 
 
 	ngOnInit() {
+
+
 		this.subscription = this.activatedRoute.params.subscribe(
 			(param: any) => {
 				let id = param['id'];
+				var socket = io.connect();
+
+				socket.on("newLoanServer", (dataS) => {
+					console.log("socket new loan: " + dataS);
+					location.reload();
+				});
+
+				socket.emit("eventRoomClient", id);
 				this.gameId = id;
 				this._callApi("Anonymous", "api/loans/game/" + id);
 
@@ -107,9 +117,6 @@ export class Evenement {
 
 		}
 
-
-
-
 		this.home = jsonData.data[0].game.home.name;
 		this.away = jsonData.data[0].game.away.name;
 		this.date = jsonData.data[0].game.date;
@@ -124,28 +131,23 @@ export class Evenement {
 
 		this.lent = jsonData.count;
 
-	
+
 		let loansRaw = jsonData.data;
 
 
-		if(this.loggedIn){
-		this.getUserId(loansRaw);
+		if (this.loggedIn) {
+			this.getUserId(loansRaw);
 
-		}else{
-				 this.loans = jsonData.data;
+		} else {
+			this.loans = jsonData.data;
 
 		}
 
 
-
-
-
-
-
-
 	}
 
-	goHome() {
+	goToOffer(){
+		this.router.navigateByUrl("/offer");
 	}
 
 	getUserId(loans) {

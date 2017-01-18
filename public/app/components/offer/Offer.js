@@ -198,9 +198,8 @@ var Offer = (function () {
         this.apiService.post("api/loans", body).subscribe(function (response) { return _this.showSuccess(); }, function (error) { return _this.response = error.text; });
     };
     Offer.prototype.showSuccess = function () {
-        console.log(this.selectedGame.home["_id"]);
         var socket = io.connect();
-        socket.emit("offerAdded", this.selectedGame.home["_id"], this.selectedGame.away["_id"]);
+        socket.emit("newLoanClient", this.selectedGame._id);
         this.modalActions2.emit({ action: "modal", params: ['open'] });
     };
     Offer.prototype.openModal = function () {
