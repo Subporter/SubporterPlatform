@@ -3,11 +3,11 @@ var customMatchers = {
         return {
             compare: function (actual, expectedType) {
                 var str = actual.constructor.toString();
-                var typeOfActual = str.substring(9, str.indexOf("("));
+                var typeOfActual = str.substring(9, str.indexOf('('));
                 var isOk = typeOfActual === expectedType;
                 return {
                     pass: isOk,
-                    message: isOk ? "Expected " + actual + ' to be a ' + expectedType : "Expected " + actual + ' not to be a ' + expectedType
+                    message: isOk ? "Expected " + actual + " to be a " + expectedType : "Expected " + actual + " not to be a " + expectedType
                 };
             }
         };
