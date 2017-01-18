@@ -14,9 +14,9 @@ const apiController = (app) => {
     app.use('/api', users);
     app.use('/api', countries);
     app.use('/api', competitions);
-    app.use('/api', teams);
     app.use('/api', subscriptions);
     app.use('/api', games);
+    app.use('/api', teams);
     app.use('/api', loans);
 
     app.all('/api/*', (req, res) => {

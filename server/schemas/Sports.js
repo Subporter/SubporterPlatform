@@ -8,9 +8,9 @@ const mongoose = require('mongoose'),
     }),
     autoIncrement = require('mongoose-increment');
 
-let regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
+const regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
 
-let sportSchema = new mongoose.Schema({
+const sportSchema = new mongoose.Schema({
     featured: {
         type: Boolean,
         required: true,

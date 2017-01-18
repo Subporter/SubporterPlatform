@@ -1,57 +1,55 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-	<title>Subporter</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<base href="/">
-	<!-- Stylesheets -->
-	<link rel="stylesheet" href="/vendor/materialize/css/materialize.min.css">
-	<link rel="stylesheet" href="/vendor/material-icons/css/material-icons.min.css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
-	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css" />
-	<link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
-	<link rel="stylesheet" type="text/css" href="/css/main.css">
+	<head>
+		<title>Subporter</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<base href="/">
+		<!-- Fonts -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-	<!-- Scripts -->
-	<script src="/vendor/socket.io-client/socket.io.min.js"></script>
-	<script src="/vendor/jquery/jquery.min.js"></script>
-	<script src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
-	<script src="/public/scripts.js"></script>
+		<!-- Stylesheets -->
+		<link rel="stylesheet" href="/vendor/materialize/css/materialize.min.css">
+		<link rel="stylesheet" href="/vendor/material-icons/css/material-icons.min.css">
+		<link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="/css/main.min.css">
 
-	<!-- Angular / Polyfill(s) for older browsers -->
-	<script src="/lib/core-js/client/shim.min.js"></script>
-	<script src="/lib/zone.js/dist/zone.js"></script>
-	<script src="/lib/reflect-metadata/Reflect.js"></script>
-	<script src="/lib/systemjs/dist/system.src.js"></script>
-	<script src="/public/systemjs.config.js"></script>
-	<script>
-		System.defaultJSExtensions = true;
-		System.import('app').catch(function(err) {
-			console.error(err);
-		});
-	</script>
-</head>
+		<!-- Scripts -->
+		<script src="/vendor/socket.io-client/socket.io.min.js"></script>
+		<script src="/vendor/jquery/jquery.min.js"></script>
+		<script src="/public/scripts.js"></script>
 
-<body>
-	<subporter class="subporter">
-		<div class="preloader-wrapper big active">
-			<div class="spinner-layer">
-				<div class="circle-clipper left">
-					<div class="circle"></div>
-				</div>
-				<div class="gap-patch">
-					<div class="circle"></div>
-				</div>
-				<div class="circle-clipper right">
-					<div class="circle"></div>
+		<!-- Angular / Polyfill(s) for older browsers -->
+		<script src="/lib/core-js/client/shim.min.js"></script>
+		<script src="/lib/zone.js/dist/zone.js"></script>
+		<script src="/lib/reflect-metadata/Reflect.js"></script>
+		<script src="/lib/systemjs/dist/system.src.js"></script>
+		<script src="/public/systemjs.config.js"></script>
+		<script>
+			System.defaultJSExtensions = true;
+			System.import('app').catch(function (err) {
+				console.error(err);
+			});
+		</script>
+	</head>
+
+	<body>
+		<subporter class="subporter">
+			<div class="preloader-wrapper big active">
+				<div class="spinner-layer">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="gap-patch">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
 				</div>
 			</div>
-		</div>
-	</subporter>
-</body>
+		</subporter>
+	</body>
 
 </html>

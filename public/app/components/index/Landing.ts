@@ -4,7 +4,6 @@ import { Http } from '@angular/http';
 import { AuthHttp, JwtHelper } from 'angular2-jwt';
 import { contentHeaders } from '../../common/Headers'
 import * as $ from 'jquery';
-import 'slick';
 import { Footer } from "../common/footer/Footer";
 import { Header } from "../common/header/Header";
 import { ApiService } from '../../services/ApiService';
@@ -235,11 +234,11 @@ export class Landing {
   }
 
   displayCarousel() {
-    $('.carousel-class').slick({
+    /*$('.carousel-class').slick({
       infinite: true, autoplay: true, arrows: false,
       slidesToShow: 12,
       slidesToScroll: 1
-    });
+    });*/
   }
 
 
