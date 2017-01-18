@@ -54,12 +54,10 @@ var Login = (function () {
             .subscribe(function (response) {
             console.log(response.json());
             if (response.json().success === true) {
-                socketLogin(response.json().id);
                 _this.apiService.get('api/users').subscribe(function (response) {
                     console.log("USER DATA");
                     var jsonrespons = response.json().data;
                     console.log(jsonrespons["favorites"]);
-                    socketFav(jsonrespons["favorites"]);
                 }, function (error) {
                     console.log(error.text());
                 });

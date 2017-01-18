@@ -145,9 +145,6 @@ var Cart = (function () {
     };
     Cart.prototype.paySuccess = function (response, loan) {
         console.log(response.text());
-        console.log("Arno!!!2");
-        console.log(loan.lent_out_by._id);
-        socketLoan(loan.lent_out_by._id);
     };
     Cart.prototype.openModal = function () {
         this.modalActions.emit({ action: "modal", params: ['open'] });

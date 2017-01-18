@@ -271,9 +271,6 @@ export class Cart {
 
         console.log(response.text());
        
-        console.log("Arno!!!2");
-        console.log(loan.lent_out_by._id);
-        socketLoan(loan.lent_out_by._id);
     }
 
 

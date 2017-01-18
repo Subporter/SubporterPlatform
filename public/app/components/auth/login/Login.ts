@@ -110,8 +110,6 @@ export class Login {
                 console.log(response.json());
                 if (response.json().success === true) {
 
-                    
-                    socketLogin(response.json().id);
 
 
                     this.apiService.get('api/users').subscribe(
@@ -119,8 +117,6 @@ export class Login {
                             console.log("USER DATA");
                             var jsonrespons = response.json().data;
                             console.log(jsonrespons["favorites"]);
-
-                            socketFav(jsonrespons["favorites"]);
 
                            
                         },

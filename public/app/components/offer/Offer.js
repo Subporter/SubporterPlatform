@@ -209,6 +209,13 @@ var Offer = (function () {
     Offer.prototype.showSuccess = function () {
         var socket = io.connect();
         socket.emit("newLoanClient", this.selectedGame._id);
+        this.modalActions2.emit({ action: "modal", params: ['open'] });
+    };
+    Offer.prototype.openModal = function () {
+        this.modalActions.emit({ action: "modal", params: ['open'] });
+    };
+    Offer.prototype.closeModal = function () {
+        this.modalActions.emit({ action: "modal", params: ['close'] });
     };
     return Offer;
 }());
@@ -221,10 +228,4 @@ Offer = __decorate([
     __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService])
 ], Offer);
 exports.Offer = Offer;
-//openModal() {
-//  this.modalActions.emit({ action: "modal", params: ['open'] });
-//}
-//closeModal() {
-// this.modalActions.emit({ action: "modal", params: ['close'] });
-//}
 //# sourceMappingURL=Offer.js.map
