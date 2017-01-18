@@ -83,7 +83,8 @@ var Evenement = (function () {
             this.loans = jsonData.data;
         }
     };
-    Evenement.prototype.goHome = function () {
+    Evenement.prototype.goToOffer = function () {
+        this.router.navigateByUrl("/offer");
     };
     Evenement.prototype.getUserId = function (loans) {
         var _this = this;

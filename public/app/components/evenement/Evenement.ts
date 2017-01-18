@@ -125,9 +125,6 @@ export class Evenement {
 
 		}
 
-
-
-
 		this.home = jsonData.data[0].game.home.name;
 		this.away = jsonData.data[0].game.away.name;
 		this.date = jsonData.data[0].game.date;
@@ -155,15 +152,10 @@ export class Evenement {
 		}
 
 
-
-
-
-
-
-
 	}
 
-	goHome() {
+	goToOffer(){
+		this.router.navigateByUrl("/offer");
 	}
 
 	getUserId(loans) {
