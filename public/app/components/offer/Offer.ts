@@ -32,8 +32,7 @@ export class Offer {
 	api: String;
 	jwtHelper: JwtHelper = new JwtHelper();
   games:JSON;
-  show:true;
-  show2:true;
+  show=true;
    gameNames = [];
    user = [];
    show2 = false;
@@ -103,7 +102,9 @@ getSubscriptions(data){
 
 
      }else{
-       this.show2 = false;
+       
+       this.show = false;
+      
 
      }
 
@@ -251,6 +252,7 @@ showAbbo(){
                this.sub = true;
 
                counter ++;
+                 console.log("adasdas");
 
 
               }else{

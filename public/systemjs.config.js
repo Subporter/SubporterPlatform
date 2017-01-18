@@ -31,7 +31,7 @@
             'jquery': 'npm:jquery/dist/jquery.js',
             'slick': 'npm:slick-carousel/slick/slick.js',
             'angular-slick': 'npm:angular-slick-carousel/dist/angular-slick.js',
-            'materialize-css': 'npm:materialize-css',
+            'materialize-css': 'npm:materialize-css'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {

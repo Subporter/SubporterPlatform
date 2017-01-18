@@ -26,6 +26,7 @@ var Listing = (function () {
         this.activatedRoute = activatedRoute;
         this._location = _location;
         this._cookieService = _cookieService;
+        this.modalActions = new core_1.EventEmitter();
         this.jwtHelper = new angular2_jwt_1.JwtHelper();
         this.loggedIn = false;
         this.loggedIn = !!localStorage.getItem('id_token');
@@ -51,8 +52,9 @@ var Listing = (function () {
         var Data = data;
         var jsonData = JSON.parse(Data);
         this.loan = jsonData.data;
-        if (!this.loan) {
-            this.router.navigateByUrl('../');
+        console.log(this.loan);
+        if (this.isEmpty(this.loan)) {
+            this.router.navigateByUrl('/landing');
         }
         this.home = jsonData.data.game.home.name;
         this.away = jsonData.data.game.away.name;
@@ -63,8 +65,11 @@ var Listing = (function () {
         this.avatar = jsonData.data.lent_out_by.avatar;
         this.name = jsonData.data.lent_out_by.name;
         this.firstname = jsonData.data.lent_out_by.firstname;
-        this.city = jsonData.data.lent_out_by.address.city;
+        if (("address" in jsonData.data.lent_out_by)) {
+            this.city = jsonData.data.lent_out_by.address.city;
+        }
         this.price = jsonData.data.game.home.price;
+        this.place = jsonData.data.subscription.place;
         console.log(this.profile);
     };
     Listing.prototype.back = function () {
@@ -73,12 +78,41 @@ var Listing = (function () {
     Listing.prototype.huurAbbo = function () {
         if (this.loggedIn) {
             this._cookieService.put(this.id.toString(), this.id.toString());
-            this.router.navigateByUrl('../cart');
+            this.router.navigateByUrl('/cart');
         }
         else {
-            alert("Gelieve eerst in te loggen");
-            this.router.navigateByUrl('../login/' + this.id);
+            this.openModal();
         }
+    };
+    Listing.prototype.openModal = function () {
+        this.modalActions.emit({ action: "modal", params: ['open'] });
+    };
+    Listing.prototype.closeModal = function () {
+        this.modalActions.emit({ action: "modal", params: ['close'] });
+    };
+    Listing.prototype.isEmpty = function (obj) {
+        // null and undefined are "empty"
+        if (obj == null)
+            return true;
+        // Assume if it has a length property with a non-zero value
+        // that that property is correct.
+        if (obj.length > 0)
+            return false;
+        if (obj.length === 0)
+            return true;
+        // If it isn't an object at this point
+        // it is empty, but it can't be anything *but* empty
+        // Is it empty?  Depends on your application.
+        if (typeof obj !== "object")
+            return true;
+        // Otherwise, does it have any properties of its own?
+        // Note that this doesn't handle
+        // toString and valueOf enumeration bugs in IE < 9
+        for (var key in obj) {
+            if (hasOwnProperty.call(obj, key))
+                return false;
+        }
+        return true;
     };
     return Listing;
 }());

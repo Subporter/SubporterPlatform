@@ -5,7 +5,6 @@ import { JwtHelper } from 'angular2-jwt';
 import { contentHeaders } from '../../../common/Headers'
 import { ApiService} from '../../../services/ApiService';
 
-
 @Component({
     selector: 'login',
     template: `
@@ -24,20 +23,20 @@ import { ApiService} from '../../../services/ApiService';
 				<div class="input-field">
 
 					<input [(ngModel)]="password" type="password" class="form-control validate" name="password" id="password">
-					<label for="password">Password</label>
+					<label for="password">Wachtwoord</label>
 
 				</div>
 			</div>
-			<button type="submit" class="btn btn-default">Submit</button>
-			<a [routerLink]="['/']">Click here to go landing</a>
+			<button type="submit" class="btn btn-default">Log in</button>
+			<a [routerLink]="['/']">Terug naar home</a>
 		</form>
 	</div>
 	<div class="register-section">
-		<h1>Not a member?</h1>
-		<p>If you're not yet registered, please register now to obtain full access.</p>
+		<h1>Nog geen account?</h1>
+		<p>Registreer snel om volledige toegang te verkrijgen.</p>
 		<br/>
 
-		<button class="btn" [routerLink]="['/register']"> Register now </button>
+		<button class="btn" [routerLink]="['/register']"> Registreer </button>
 
 
 	</div>
@@ -111,9 +110,8 @@ export class Login {
                 console.log(response.json());
                 if (response.json().success === true) {
 
-                    var socket = io.connect();
-                    socket.emit("login", response.json().id)
-
+                    
+                    socketLogin(response.json().id);
 
 
                     this.apiService.get('api/users').subscribe(
@@ -122,7 +120,9 @@ export class Login {
                             var jsonrespons = response.json().data;
                             console.log(jsonrespons["favorites"]);
 
-                            socket.emit("addFav", jsonrespons["favorites"])
+                            socketFav(jsonrespons["favorites"]);
+
+                           
                         },
                         error => {
                             console.log(error.text());
@@ -130,25 +130,7 @@ export class Login {
                     )
 
 
-                    socket.on("NewLoanuser", function(){
-
-
-                        alert("Eén van jouw abonnementen is verhuurd!");
-
-
-
-
-
-
-
-
-                    });
-
-                    socket.on("loanAddedTeam", function(){
-                        alert("Er is een abonnement voor een wedstrijd van jouw favoriete ploeg beschikbaar!");
-
-
-                    })
+                   
 
                     localStorage.setItem("id_token", response.json().token);
                     this.useJwtHelper();

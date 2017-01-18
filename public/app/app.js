@@ -27,8 +27,6 @@ var Header_2 = require("./components/admin/header/Header");
 var Register_1 = require("./components/auth/register/Register");
 var Login_1 = require("./components/auth/login/Login");
 var Landing_1 = require("./components/index/Landing");
-var Topwedstrijd_1 = require("./components/index/Topwedstrijden/Topwedstrijd");
-var Weekwedstrijd_1 = require("./components/index/Weekwedstrijden/Weekwedstrijd");
 var Search_1 = require("./components/search/Search");
 var Evenement_1 = require("./components/evenement/Evenement");
 var Listing_1 = require("./components/listing/Listing");
@@ -67,8 +65,6 @@ Subporter = __decorate([
             Register_1.Register,
             Login_1.Login,
             Landing_1.Landing,
-            Topwedstrijd_1.Topwedstrijd,
-            Weekwedstrijd_1.Weekwedstrijd,
             Search_1.Search,
             Offer_1.Offer,
             Profile_1.Profile,

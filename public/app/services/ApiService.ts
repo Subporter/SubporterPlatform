@@ -27,6 +27,7 @@ export class ApiService {
         if (localStorage.getItem('id_token')) {
             contentHeaders.set('Authorization', localStorage.getItem('id_token'));
         }
+        
         return this.http.post(url, body, {
             headers: contentHeaders
         });

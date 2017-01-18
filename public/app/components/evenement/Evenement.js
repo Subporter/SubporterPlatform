@@ -21,6 +21,7 @@ var Evenement = (function () {
         this.apiService = apiService;
         this.activatedRoute = activatedRoute;
         this.jwtHelper = new angular2_jwt_1.JwtHelper();
+        this.loans = [];
         this.lent = 0;
         this.lendable = 0;
         this.loggedIn = false;
@@ -51,33 +52,76 @@ var Evenement = (function () {
         var Data = data;
         var jsonData = JSON.parse(Data);
         this.game = jsonData.data;
-        if (!this.game) {
-            this.router.navigateByUrl('../');
+        if (this.isEmpty(this.game)) {
+            this.router.navigateByUrl('/landing');
         }
         this.home = jsonData.data[0].game.home.name;
         this.away = jsonData.data[0].game.away.name;
         this.date = jsonData.data[0].game.date;
         this.stadion = jsonData.data[0].game.home.stadion;
         this.banner = jsonData.data[0].game.banner;
-        this.loans = jsonData.data;
         this.price = jsonData.data[0].game.home.price;
         this.test = jsonData.data[0].game.home;
-        this.size = this.loans.length;
         console.log(jsonData);
         this.lent = jsonData.count;
-        this.lendable = this.loans.length;
-        //  for(let i = 0; i<this.loans.length; i++){
-        // 	 if(this.loans.paid == true){
-        // 		 this.lent ++ ;
-        // 		 this.loans.splice(i,1);
-        // 	 }else{
-        // 		 this.lendable ++ ;
-        // 	 }
-        //  }
-        console.log(this.lendable);
-        console.log(this.lent);
+        var loansRaw = jsonData.data;
+        if (this.loggedIn) {
+            this.getUserId(loansRaw);
+        }
+        else {
+            this.loans = jsonData.data;
+        }
     };
     Evenement.prototype.goHome = function () {
+    };
+    Evenement.prototype.getUserId = function (loans) {
+        var _this = this;
+        this.apiService.get("api/users").subscribe(function (response) { return _this.filterLoans(response.text(), loans); }, function (error) { return _this.goHome(); });
+    };
+    Evenement.prototype.filterLoans = function (data, loans) {
+        var Data = data;
+        var jsonData = JSON.parse(Data);
+        var user = jsonData.data;
+        var userId = user._id;
+        var loansRaw = loans;
+        var counter = 0;
+        for (var _i = 0, loansRaw_1 = loansRaw; _i < loansRaw_1.length; _i++) {
+            var loan = loansRaw_1[_i];
+            console.log(loan.lent_out_by._id);
+            console.log(this.loggedIn);
+            if (loan.lent_out_by._id != userId) {
+                this.loans[counter] = loan;
+                counter++;
+            }
+        }
+        if (!this.isEmpty(this.loans)) {
+            this.size = this.loans.length;
+            this.lendable = this.loans.length;
+        }
+    };
+    Evenement.prototype.isEmpty = function (obj) {
+        // null and undefined are "empty"
+        if (obj == null)
+            return true;
+        // Assume if it has a length property with a non-zero value
+        // that that property is correct.
+        if (obj.length > 0)
+            return false;
+        if (obj.length === 0)
+            return true;
+        // If it isn't an object at this point
+        // it is empty, but it can't be anything *but* empty
+        // Is it empty?  Depends on your application.
+        if (typeof obj !== "object")
+            return true;
+        // Otherwise, does it have any properties of its own?
+        // Note that this doesn't handle
+        // toString and valueOf enumeration bugs in IE < 9
+        for (var key in obj) {
+            if (hasOwnProperty.call(obj, key))
+                return false;
+        }
+        return true;
     };
     return Evenement;
 }());
