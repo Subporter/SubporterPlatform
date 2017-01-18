@@ -13,7 +13,6 @@ var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
 var angular2_jwt_1 = require("angular2-jwt");
 var $ = require("jquery");
-require("slick");
 var ApiService_1 = require("../../services/ApiService");
 var Landing = (function () {
     function Landing(router, http, authHttp, apiService) {
@@ -113,11 +112,11 @@ var Landing = (function () {
         this.displayCarousel();
     };
     Landing.prototype.displayCarousel = function () {
-        $('.carousel-class').slick({
-            infinite: true, autoplay: true, arrows: false,
-            slidesToShow: 12,
-            slidesToScroll: 1
-        });
+        /*$('.carousel-class').slick({
+          infinite: true, autoplay: true, arrows: false,
+          slidesToShow: 12,
+          slidesToScroll: 1
+        });*/
     };
     Landing.prototype.test = function () {
         console.log("test");
