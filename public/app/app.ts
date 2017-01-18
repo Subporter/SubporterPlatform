@@ -6,13 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { SimpleNotificationsModule, PushNotificationsModule } from 'angular2-notifications';
 import { MaterializeDirective } from 'angular2-materialize';
 
-import { AUTH_PROVIDERS } from 'angular2-jwt';
-import { Auth } from './services/Auth';
-import { AuthGuard } from './common/AuthGuard';
-import { AdminGuard } from './common/AdminGuard';
-import { ApiService } from './services/ApiService';
-import { CookieService } from 'angular2-cookie/services/cookies.service';
-
 import { App } from './components/App';
 import { Footer } from './components/common/footer/Footer';
 import { Header } from './components/common/header/Header';
@@ -39,6 +32,13 @@ import { CompetitionsEdit } from './components/admin/competitions/edit/Edit';
 import { AdminTeams } from './components/admin/teams/list/Teams';
 import { TeamsCreate } from './components/admin/teams/create/Create';
 import { TeamsEdit } from './components/admin/teams/edit/Edit';
+
+import { AUTH_PROVIDERS } from 'angular2-jwt';
+import { Auth } from './services/Auth';
+import { AuthGuard } from './common/AuthGuard';
+import { AdminGuard } from './common/AdminGuard';
+import { ApiService } from './services/ApiService';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 import { Routing } from './modules/Routes';
 
