@@ -345,23 +345,21 @@ export class Offer {
 
   showSuccess() {
 
-    console.log(this.selectedGame.home["_id"]);
+    var socket = io.connect();
+    socket.emit("newLoanClient",this.selectedGame._id);
 
-    socketOffer(this.selectedGame.home["_id"], this.selectedGame.away["_id"]);
   }
     
 
-   this.modalActions2.emit({ action: "modal", params: ['open'] });
+   //this.modalActions2.emit({ action: "modal", params: ['open'] });
 }
 
 
-openModal() {
-  this.modalActions.emit({ action: "modal", params: ['open'] });
-}
-closeModal() {
-  this.modalActions.emit({ action: "modal", params: ['close'] });
-}
+//openModal() {
+//  this.modalActions.emit({ action: "modal", params: ['open'] });
+//}
+//closeModal() {
+ // this.modalActions.emit({ action: "modal", params: ['close'] });
+//}
 
-
-}
 

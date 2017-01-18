@@ -53,9 +53,27 @@ export class Evenement {
 
 
 	ngOnInit() {
+
+		var socket = io.connect();
+
+
+		socket.on("new loan", (dataS) =>{
+			console.log("socket new loan: "+ dataS);
+			this.subscription = this.activatedRoute.params.subscribe(
+			(param: any) => {
+				let id = param['id'];
+				socket.emit("eventRoomClient", id);
+				this.gameId = id;
+				this._callApi("Anonymous", "api/loans/game/" + id);
+
+			});
+		});
+
+
 		this.subscription = this.activatedRoute.params.subscribe(
 			(param: any) => {
 				let id = param['id'];
+				socket.emit("eventRoomClient", id);
 				this.gameId = id;
 				this._callApi("Anonymous", "api/loans/game/" + id);
 

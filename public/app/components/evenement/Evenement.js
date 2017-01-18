@@ -29,8 +29,19 @@ var Evenement = (function () {
     }
     Evenement.prototype.ngOnInit = function () {
         var _this = this;
+        var socket = io.connect();
+        socket.on("new loan", function (dataS) {
+            console.log("socket new loan: " + dataS);
+            _this.subscription = _this.activatedRoute.params.subscribe(function (param) {
+                var id = param['id'];
+                socket.emit("eventRoomClient", id);
+                _this.gameId = id;
+                _this._callApi("Anonymous", "api/loans/game/" + id);
+            });
+        });
         this.subscription = this.activatedRoute.params.subscribe(function (param) {
             var id = param['id'];
+            socket.emit("eventRoomClient", id);
             _this.gameId = id;
             _this._callApi("Anonymous", "api/loans/game/" + id);
         });

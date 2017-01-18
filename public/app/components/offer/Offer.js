@@ -207,16 +207,8 @@ var Offer = (function () {
         this.apiService.post("api/loans", body).subscribe(function (response) { return _this.showSuccess(); }, function (error) { return _this.response = error.text; });
     };
     Offer.prototype.showSuccess = function () {
-        console.log(this.selectedGame.home["_id"]);
         var socket = io.connect();
-        socket.emit("offerAdded", this.selectedGame.home["_id"], this.selectedGame.away["_id"]);
-        this.modalActions2.emit({ action: "modal", params: ['open'] });
-    };
-    Offer.prototype.openModal = function () {
-        this.modalActions.emit({ action: "modal", params: ['open'] });
-    };
-    Offer.prototype.closeModal = function () {
-        this.modalActions.emit({ action: "modal", params: ['close'] });
+        socket.emit("newLoanClient", this.selectedGame._id);
     };
     return Offer;
 }());
@@ -229,4 +221,10 @@ Offer = __decorate([
     __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService])
 ], Offer);
 exports.Offer = Offer;
+//openModal() {
+//  this.modalActions.emit({ action: "modal", params: ['open'] });
+//}
+//closeModal() {
+// this.modalActions.emit({ action: "modal", params: ['close'] });
+//}
 //# sourceMappingURL=Offer.js.map
