@@ -9,7 +9,6 @@ const express = require('express'),
 let router = express.Router();
 
 /* Create */
-
 router.post("/countries", authenticate, admin, (req, res) => {
     if (req.granted) {
         if (Object.keys(req.body).length !== 2 || bodyValidator(req.body.name, req.body.featured)) {

@@ -1,7 +1,7 @@
 const multiparty = require('multiparty'),
     formFields = require('../helpers/formFields');
 
-let formParser = (req, res, next) => {
+const formParser = (req, res, next) => {
     if (req.granted) {
         let form = new multiparty.Form();
         form.parse(req, (err, fields, files) => {

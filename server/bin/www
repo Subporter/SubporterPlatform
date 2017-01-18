@@ -9,7 +9,7 @@ const http = require('http'),
 
 /* Normalize a port into a number, string, or false */
 
-let normalizePort = (val) => {
+const normalizePort = (val) => {
     let port = parseInt(val, 10);
 
     if (isNaN(port)) {
@@ -25,7 +25,7 @@ let normalizePort = (val) => {
 
 /* Event listener for HTTP server "error" event */
 
-let onError = (error) => {
+const onError = (error) => {
     if (error.syscall !== 'listen') {
         throw error;
     }
@@ -50,7 +50,7 @@ let onError = (error) => {
 
 /* Event listener for HTTP server "listening" event */
 
-let onListening = () => {
+const onListening = () => {
     let addr = server.address();
     let host = addr.address;
     let bind = typeof addr === 'string' ?
