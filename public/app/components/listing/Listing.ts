@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Http } from '@angular/http';
 import { AuthHttp, JwtHelper } from 'angular2-jwt';
@@ -11,6 +11,7 @@ import "materialize-css";
 import "angular2-materialize";
 import { Location } from '@angular/common';
 import { CookieService } from 'angular2-cookie/core';
+import { MaterializeAction, MaterializeDirective } from 'angular2-materialize';
 
 
 
@@ -23,6 +24,9 @@ import { CookieService } from 'angular2-cookie/core';
 })
 
 export class Listing {
+
+	    modalActions = new EventEmitter<string | MaterializeAction>();
+
 
 	jwt: String;
 	decodedJwt: String;
@@ -42,6 +46,7 @@ export class Listing {
 	city: String;
 	price: String;
 	id: number;
+	place:String;
 
 	private loggedIn = false;
 	private subscription: Subscription;
@@ -129,6 +134,7 @@ export class Listing {
 
 
 		this.price = jsonData.data.game.home.price;
+		this.place = jsonData.data.subscription.place;
 
 		console.log(this.profile);
 
@@ -146,17 +152,26 @@ export class Listing {
 
 			this._cookieService.put(this.id.toString(), this.id.toString());
 
-			this.router.navigateByUrl('../cart');
+			this.router.navigateByUrl('/cart');
 
 
 
 
 
 		} else {
-			alert("Gelieve eerst in te loggen");
-			this.router.navigateByUrl('../login/' + this.id);
+			this.openModal();
 		}
 	}
+
+	openModal(){
+                this.modalActions.emit({ action: "modal", params: ['open'] });
+
+    }
+
+	closeModal(){
+                this.modalActions.emit({ action: "modal", params: ['close'] });
+
+    }
 
 
 	isEmpty(obj) {

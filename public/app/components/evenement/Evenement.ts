@@ -127,7 +127,14 @@ export class Evenement {
 	
 		let loansRaw = jsonData.data;
 
+
+		if(this.loggedIn){
 		this.getUserId(loansRaw);
+
+		}else{
+				 this.loans = jsonData.data;
+
+		}
 
 
 

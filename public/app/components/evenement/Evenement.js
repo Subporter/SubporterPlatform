@@ -65,7 +65,12 @@ var Evenement = (function () {
         console.log(jsonData);
         this.lent = jsonData.count;
         var loansRaw = jsonData.data;
-        this.getUserId(loansRaw);
+        if (this.loggedIn) {
+            this.getUserId(loansRaw);
+        }
+        else {
+            this.loans = jsonData.data;
+        }
     };
     Evenement.prototype.goHome = function () {
     };

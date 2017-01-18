@@ -26,6 +26,7 @@ var Listing = (function () {
         this.activatedRoute = activatedRoute;
         this._location = _location;
         this._cookieService = _cookieService;
+        this.modalActions = new core_1.EventEmitter();
         this.jwtHelper = new angular2_jwt_1.JwtHelper();
         this.loggedIn = false;
         this.loggedIn = !!localStorage.getItem('id_token');
@@ -68,6 +69,7 @@ var Listing = (function () {
             this.city = jsonData.data.lent_out_by.address.city;
         }
         this.price = jsonData.data.game.home.price;
+        this.place = jsonData.data.subscription.place;
         console.log(this.profile);
     };
     Listing.prototype.back = function () {
@@ -76,12 +78,17 @@ var Listing = (function () {
     Listing.prototype.huurAbbo = function () {
         if (this.loggedIn) {
             this._cookieService.put(this.id.toString(), this.id.toString());
-            this.router.navigateByUrl('../cart');
+            this.router.navigateByUrl('/cart');
         }
         else {
-            alert("Gelieve eerst in te loggen");
-            this.router.navigateByUrl('../login/' + this.id);
+            this.openModal();
         }
+    };
+    Listing.prototype.openModal = function () {
+        this.modalActions.emit({ action: "modal", params: ['open'] });
+    };
+    Listing.prototype.closeModal = function () {
+        this.modalActions.emit({ action: "modal", params: ['close'] });
     };
     Listing.prototype.isEmpty = function (obj) {
         // null and undefined are "empty"

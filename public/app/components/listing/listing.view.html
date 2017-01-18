@@ -17,7 +17,9 @@
 </aside>
 <article>
 
-    <p>€{{price}}</p>
+    <p> <span class="bold">Prijs: </span> €{{price}}</p>
+        <p> <span class="bold">Plaats: </span> {{place}}</p>
+
 
 <button class="waves-effect waves-light btn" (click)="huurAbbo()">Huur abonnement</button>
 
@@ -26,6 +28,15 @@
 
 </div>
 
+<div id="modal" class="modal " materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
+		<div class="modal-content">
+			<h4>Niet ingelogd</h4>
+			<p>Je bent nog niet ingelogd. Gelieve eerst in te loggen.</p>
+		</div>
+		<div class="modal-footer">
+			<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="closeModal()">Sluiten</a>
+		</div>
+	</div>
 
 
 </section>
