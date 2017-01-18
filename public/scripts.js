@@ -12,6 +12,14 @@ function socketFav(id){
  socket.emit("addFav", id);
 };
 
+function socketOffer(id1, id2){
+    socket.emit("offerAdded", id1, id2 );
+};
+
+function socketLoan(id){
+    socket.emit("loanCreated", id);
+};
+
 socket.on("NewLoanuser", function () {
     alert("Eén van jouw abonnementen is verhuurd!");
 });
