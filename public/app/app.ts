@@ -20,8 +20,6 @@ import { HeaderAdmin } from "./components/admin/header/Header";
 import { Register } from './components/auth/register/Register';
 import { Login } from './components/auth/login/Login';
 import { Landing } from './components/index/Landing';
-import { Topwedstrijd } from './components/index/Topwedstrijden/Topwedstrijd';
-import { Weekwedstrijd } from './components/index/Weekwedstrijden/Weekwedstrijd';
 import { Search } from './components/search/Search';
 import { Evenement } from './components/evenement/Evenement';
 import { Listing } from './components/listing/Listing';
@@ -56,8 +54,6 @@ import { Routing } from './modules/Routes';
         Register,
         Login,
         Landing,
-        Topwedstrijd,
-        Weekwedstrijd,
         Search,
         Offer,
         Profile,

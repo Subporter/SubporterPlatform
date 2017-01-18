@@ -36,3 +36,12 @@
 
 .keyword:hover {
   cursor: pointer; }
+
+.keyword {
+  font-weight: bold; }
+
+.collapsible-body {
+  padding: 5px; }
+
+ul > li {
+  cursor: pointer; }

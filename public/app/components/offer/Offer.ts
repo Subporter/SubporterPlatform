@@ -250,6 +250,7 @@ showAbbo(){
                this.sub = true;
 
                counter ++;
+                 console.log("adasdas");
 
 
               }else{

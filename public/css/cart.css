@@ -15,7 +15,6 @@ nav {
   font-weight: bold; }
 
 #section0 {
-  background-color: #F4F4F4;
   margin-top: 0; }
 
 .winkelwagen {
@@ -34,13 +33,17 @@ td i:hover {
   color: #212121; }
 
 #section0 .container h1 {
-  margin-top: 0; }
+  margin-top: 0;
+  padding-top: 20px;
+  font-size: 3em;
+  text-align: center; }
 
 tfoot tr td {
   padding: 5px; }
 
 h2 {
-  margin: 0; }
+  margin: 0;
+  font-size: 2.5em; }
 
 .empty {
   padding: 20px;

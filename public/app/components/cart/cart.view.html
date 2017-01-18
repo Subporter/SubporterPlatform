@@ -1,21 +1,29 @@
-
-
+<header>
 <nav>
-    <div class="nav-wrapper">
-      <a [routerLink]="['/']" class="brand-logo">Subporter</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="sass.html">Info</a></li>
-        <li> <a  [routerLink]="['/search']">Zoeken</a></li>
-        <li *ngIf="loggedIn"><a  [routerLink]="['/cart']">Winkelwagen</a></li>
-
-        <li *ngIf="!loggedIn"><a  [routerLink]="['/login']">Login</a></li>
-        <li *ngIf="loggedIn"><a  [routerLink]="['/profile']">Profiel</a></li>
-
-        <li><a class="waves-effect waves-light btn" [routerLink]="['/offer']" >Abonnement aanbieden</a></li>
-      </ul>
-    </div>
+   <div class="nav-wrapper">
+			<a [routerLink]="['/']" class="brand-logo">Subporter</a>
+			<a materialize="sideNav" href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li> <a [routerLink]="['/search']">Zoeken</a></li>
+				<li *ngIf="isAdmin"><a [routerLink]="['/admin']">Admin</a></li>
+				<li *ngIf="loggedIn"><a [routerLink]="['/cart']">Winkelwagen</a></li>
+				<li *ngIf="!loggedIn"><a [routerLink]="['/login']">Login</a></li>
+				<li *ngIf="loggedIn"><a [routerLink]="['/profile']">Profiel</a></li>
+				<li *ngIf="loggedIn"><a (click)="logout()">Logout</a></li>
+				<li><a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a></li>
+			</ul>
+			<ul class="side-nav" id="slide-out">
+				<li> <a [routerLink]="['/search']">Zoeken</a></li>
+				<li *ngIf="isAdmin"><a [routerLink]="['/admin']">Admin</a></li>
+				<li *ngIf="loggedIn"><a [routerLink]="['/cart']">Winkelwagen</a></li>
+				<li *ngIf="!loggedIn"><a [routerLink]="['/login']">Login</a></li>
+				<li *ngIf="loggedIn"><a [routerLink]="['/profile']">Profiel</a></li>
+				<li *ngIf="loggedIn"><a (click)="logout()">Logout</a></li>
+				<li><a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a></li>
+			</ul>
+		</div>
   </nav>
-
+</header>
 <section id="section0">
 
 <div class="container">
@@ -41,7 +49,7 @@
             <td>{{loan.lent_out_by.firstname}} {{loan.lent_out_by.name}}</td>
             <td><span class="bold">{{loan.game.home.name}} - {{loan.game.away.name}}</span>
                 <br/>
-                {{loan.game.date}}, {{loan.game.home.stadion}}
+                {{loan.game.date | date: 'medium'}}, {{loan.game.home.stadion}}
             </td>
             <td>€ {{loan.game.home.price}}</td>
             <td>
@@ -69,7 +77,6 @@
 
     </div>
     <div class="winkelwagen ">
-        <h2>Betalen</h2>
         <button class="btn waves-effect waves-light modal-trigger" (click)="openModal()">Afrekenen</button>
 
         <div id="modal1" class="modal " materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">

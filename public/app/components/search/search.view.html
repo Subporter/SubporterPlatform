@@ -10,28 +10,28 @@
 
 <ul materialize="collapsible" class="collapsible" data-collapsible="Expandable">
     <li>
-        <div class="collapsible-header active"><i class="material-icons">filter_drama</i>Zoekwoorden</div>
+        <div class="collapsible-header active"><i class="material-icons">search</i>Zoekwoorden</div>
     <!--<h3>Zoekwoorden</h3>-->
     <!--<span *ngIf="{{search}}">{{search}}</span>-->
           <div class="collapsible-body">
               <span class="keyword" *ngIf="keyword" (click)="removeKeyword()">{{keyword}}<i class="fa fa-times" aria-hidden="true"></i></span>
-    <input type="search" class="filterSearch" placeholder="Zoek"><button (click)="filterKeyword()">Zoek</button></div>
+    <input type="search" class="filterSearch" placeholder="Geef een zoekwoord in"><button class="waves-effect waves-light btn" (click)="filterKeyword()">Zoek</button></div>
 
 
 </li>
 <li>
-     <div class="collapsible-header active"><i class="material-icons">filter_drama</i>Datum</div>
+     <div class="collapsible-header active"><i class="material-icons">today</i>Datum</div>
     <!--<h3>Datum</h3>-->
           <div class="collapsible-body">
                             <span class="keyword" *ngIf="date" (click)="removeDate()">{{date}}<i class="fa fa-times" aria-hidden="true"></i></span>
 
     <ul>
-        <li><span (click)="filterDate('today')">Vandaag</span></li>
-        <li><span (click)="filterDate('tomorrow')">Morgen</span></li>
-        <li><span (click)="filterDate('weekend')">Dit weekend</span></li>
-        <li><span (click)="filterDate('week')">Deze week</span></li>
-        <li><span (click)="filterDate('nextWeek')">Volgende week</span></li>
-        <li><span (click)="filterDate('month')">Deze maand</span></li>
+        <li><span (click)="filterDate('Vandaag')">Vandaag</span></li>
+        <li><span (click)="filterDate('Morgen')">Morgen</span></li>
+        <li><span (click)="filterDate('Dit weekend')">Dit weekend</span></li>
+        <li><span (click)="filterDate('Deze week')">Deze week</span></li>
+        <li><span (click)="filterDate('Volgende week')">Volgende week</span></li>
+        <li><span (click)="filterDate('Deze maand')">Deze maand</span></li>
 
 
     </ul>
@@ -42,20 +42,17 @@
 
 
 <li>
- <div class="collapsible-header"><i class="material-icons">filter_drama</i>Land</div>
+ <div class="collapsible-header"><i class="material-icons">room</i>Land</div>
            <div class="collapsible-body">
 
               <span class="keyword" *ngIf="country" (click)="removeCountry()">{{country}}<i class="fa fa-times" aria-hidden="true"></i></span>
 
 <ul >
-<li><span (click)="filterCountry('1')">Belgie</span></li>
-<li><span (click)="filterCountry('8')">Nederland</span></li>
-<li><span (click)="filterCountry()">Engeland</span></li>
-<li><span (click)="filterCountry('6')">Duitsland</span></li>
-<li><span (click)="filterCountry()">Spanje</span></li>
-<li><span (click)="filterCountry('2')">Frankrijk</span></li>
 
-<input type="search" class="filterCountrySearch" placeholder="Zoek"><button (click)="filterCountryKeyword()">Zoek</button>
+    <li *ngFor="let country of featuredCountries"> <span (click)="filterCountry(country._id)">{{country.name}}</span> </li>
+
+
+<input type="search" class="filterCountrySearch " placeholder="Zoek een land"><button class="waves-effect waves-light btn" (click)="filterCountryKeyword()">Zoek</button>
 </ul>
 
 </div>
@@ -76,12 +73,12 @@
 
 
     <ul *ngFor="let game of games" class="collection">
-        <a [routerLink]="['../evenement', game._id]">
+        <a [routerLink]="['/evenement', game._id]">
         <li class="collection-item" >
 
             <span class="title"> {{game.home.name}} - {{game.away.name}}  </span>
             <br/>
-            <p>{{game.date}}, {{game.home.stadion}}</p>
+            <p>{{game.date | date: 'medium'}}, {{game.home.stadion}}</p>
             <div class="secondary-content">
             <i class="fa fa-ticket fa-2x " aria-hidden="true"></i>
             <span>{{game.loans.length}}</span>

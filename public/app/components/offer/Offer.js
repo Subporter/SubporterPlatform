@@ -150,6 +150,7 @@ var Offer = (function () {
                             this.subscriptions[counter] = subscription;
                             this.sub = true;
                             counter++;
+                            console.log("adasdas");
                         }
                         else {
                             this.sub = true;

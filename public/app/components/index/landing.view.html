@@ -1,19 +1,28 @@
 <div class="section " id="section0">
 
 	<nav>
-    <div class="nav-wrapper">
-      <a [routerLink]="['/']" class="brand-logo">Subporter</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="sass.html">Info</a></li>
-        <li><a  [routerLink]="['/search']">Zoeken</a></li>
-        <li *ngIf="loggedIn"><a  [routerLink]="['/cart']">Winkelwagen</a></li>
-
-        <li *ngIf="!loggedIn"><a  [routerLink]="['/login']">Login</a></li>
-        <li *ngIf="loggedIn"><a  [routerLink]="['/profile']">Profiel</a></li>
-
-        <li><a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a></li>
-      </ul>
-    </div>
+   <div class="nav-wrapper">
+			<a [routerLink]="['/']" class="brand-logo">Subporter</a>
+			<a materialize="sideNav" href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li> <a [routerLink]="['/search']">Zoeken</a></li>
+				<li *ngIf="isAdmin"><a [routerLink]="['/admin']">Admin</a></li>
+				<li *ngIf="isLoggedIn"><a [routerLink]="['/cart']">Winkelwagen</a></li>
+				<li *ngIf="!isLoggedIn"><a [routerLink]="['/login']">Login</a></li>
+				<li *ngIf="isLoggedIn"><a [routerLink]="['/profile']">Profiel</a></li>
+				<li *ngIf="isLoggedIn"><a (click)="logout()">Logout</a></li>
+				<li><a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a></li>
+			</ul>
+			<ul class="side-nav" id="slide-out">
+				<li> <a [routerLink]="['/search']">Zoeken</a></li>
+				<li *ngIf="isAdmin"><a [routerLink]="['/admin']">Admin</a></li>
+				<li *ngIf="isLoggedIn"><a [routerLink]="['/cart']">Winkelwagen</a></li>
+				<li *ngIf="!isLoggedIn"><a [routerLink]="['/login']">Login</a></li>
+				<li *ngIf="isLoggedIn"><a [routerLink]="['/profile']">Profiel</a></li>
+				<li *ngIf="isLoggedIn"><a (click)="logout()">Logout</a></li>
+				<li><a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a></li>
+			</ul>
+		</div>
   </nav>
 
 
@@ -28,13 +37,6 @@
 
           <label for="search"><i class="material-icons prefix">search</i></label>
 
-
-<!--<select [(ngModel)]="s" id="searchBar" name="s">
-      <option value="" disabled selected>Choose your option</option>
-      <option value="1">België</option>
-      <option value="2">Nederland</option>
-      <option value="3">Engeland</option>
-    </select>-->
 
 
     <button class="btn waves-effect waves-light"  (click)="search()"> ZOEKEN </button>
@@ -101,9 +103,9 @@
             <div class="container margintop">
 
 
-<h3>Topwedstrijden</h3>
+<h3 >Topwedstrijden</h3>
 
-<select id="select"  materialize="material_select" (change)="onChange($event.target.value)" >
+<select  id="select"  materialize="material_select" (change)="onChange($event.target.value)" >
       <option value="" disabled selected>Kies een land</option>
       <option *ngFor="let country of countries" value="{{country._id}}">
           {{country.name}}
@@ -115,7 +117,7 @@
 
 
 
-  <div class="row">
+<div *ngIf="!isEmpty(featuredGames)" class="row">
 
     <div *ngFor="let game of featuredGames" class="col s4">
 
@@ -140,6 +142,11 @@
   </div>
 
 
+<div *ngIf="isEmpty(featuredGames)" class="center-align">
+  <p>Er zijn geen topwedstrijden beschikbaar.</p>
+</div>
+
+
 
     <div class="center">
     <a class="btn waves-effect waves-light center-align" [routerLink]="['/search']"> Ontdek meer wedstrijden </a>
@@ -149,7 +156,7 @@
             </div>
             <div class="section  fp-auto-height" id="section3"  data-anchor="section3">
 
-<div *ngIf="showWeek" class="container">
+<div class="container">
 
 <h3>Wedstrijden deze week</h3>
 
@@ -162,10 +169,10 @@
     </select>
 
 
-<div class="row">
+<div *ngIf="!isEmpty(weekGames)" class="row">
 
   <div class="col s6">
-
+    
        <ul class="collection">
     <li *ngFor="let game of weekGames" class="collection-item" (click)="goToEvenement(game._id)">
 
@@ -179,14 +186,16 @@
       </div>
     </li>
        </ul>
-
-
-
-
-  </div>
-
 </div>
 
+
+
+  
+
+</div>
+<div *ngIf="isEmpty(weekGames)" class="center-align">
+  <p>Er zijn geen wedstrijden beschikbaar deze week.</p>
+</div>
 
 
   <!--<div class="col s6">

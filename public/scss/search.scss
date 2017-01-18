@@ -64,3 +64,15 @@ $bg-color-second : #F4F4F4;
 .keyword:hover{
     cursor:pointer;
 }
+
+.keyword{
+    font-weight: bold;
+}
+
+.collapsible-body{
+    padding: 5px;
+}
+
+ul>li{
+    cursor: pointer;
+}

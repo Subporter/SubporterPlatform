@@ -25,7 +25,6 @@ nav {
 }
 
 #section0{
-    background-color: $bg-color-second;
     margin-top: 0;
 }
 
@@ -55,7 +54,9 @@ td i:hover{
 
 #section0 .container h1{
     margin-top:0;
-    
+    padding-top: 20px;
+    font-size: 3em;
+    text-align: center;
 }
 
 tfoot tr td{
@@ -65,7 +66,10 @@ tfoot tr td{
 
 h2{
     margin: 0;
+    font-size: 2.5em;
 }
+
+
 
 .empty{
     padding: 20px;

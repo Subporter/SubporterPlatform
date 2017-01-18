@@ -16,7 +16,14 @@ td i:hover {
 
 h2 {
   display: inline-block;
-  float: left; }
+  float: left;
+  font-size: 2.5em; }
+
+h3 {
+  font-size: 2em; }
 
 .btn-floating {
   float: right; }
+
+.favos {
+  margin-bottom: 0; }

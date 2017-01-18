@@ -102,8 +102,8 @@ export class Evenement {
 		let jsonData = JSON.parse(Data);
 		this.game = jsonData.data;
 
-		if (!this.game) {
-			this.router.navigateByUrl('../');
+		if (this.isEmpty(this.game)) {
+			this.router.navigateByUrl('/landing');
 
 		}
 
@@ -124,15 +124,7 @@ export class Evenement {
 
 		this.lent = jsonData.count;
 
-		//  for(let i = 0; i<this.loans.length; i++){
-		// 	 if(this.loans.paid == true){
-		// 		 this.lent ++ ;
-		// 		 this.loans.splice(i,1);
-		// 	 }else{
-		// 		 this.lendable ++ ;
-
-		// 	 }
-		//  }
+	
 		let loansRaw = jsonData.data;
 
 		this.getUserId(loansRaw);
@@ -149,22 +141,22 @@ export class Evenement {
 	goHome() {
 	}
 
-	getUserId(loans){
+	getUserId(loans) {
 
 
 		this.apiService.get("api/users").subscribe(
-			response => this.filterLoans(response.text(),loans),
+			response => this.filterLoans(response.text(), loans),
 			error => this.goHome()
 		);
 
-		
-		
+
+
 
 	}
 
 
-	filterLoans(data, loans){
-let Data = data;
+	filterLoans(data, loans) {
+		let Data = data;
 		let jsonData = JSON.parse(Data);
 		let user = jsonData.data;
 		let userId = user._id;
@@ -181,7 +173,7 @@ let Data = data;
 			console.log(this.loggedIn);
 			if (loan.lent_out_by._id != userId) {
 				this.loans[counter] = loan;
-				counter ++;
+				counter++;
 			}
 		}
 

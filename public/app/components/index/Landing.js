@@ -23,16 +23,22 @@ var Landing = (function () {
         this.apiService = apiService;
         this.jwtHelper = new angular2_jwt_1.JwtHelper();
         this.gameNames = [];
+        this.weekGames = [];
         this.showWeek = true;
-        //default Belgium, I guess
+        this.isAdmin = false;
         this.compId = "1";
-        this.loggedIn = false;
-        this.loggedIn = !!localStorage.getItem('id_token');
+        this.isLoggedIn = false;
+        this.isLoggedIn = !!localStorage.getItem('id_token');
     }
     Landing.prototype.ngOnInit = function () {
         var _this = this;
         this._callApi("Anonymous", "api/teams/competition/" + this.compId);
-        // this._callApi("kek", "api/users");
+        this.apiService.get('check/admin').subscribe(function (response) {
+            var result = JSON.parse(response.text()).success;
+            _this.isAdmin = result;
+        }, function (error) {
+            _this.isAdmin = false;
+        });
         this.apiService.get("api/games/featured/1").subscribe(function (response) { return _this.getFeaturedGames(response.text()); }, function (error) { return _this.response = error.text; });
         this.apiService.get("api/games/week/1").subscribe(function (response) { return _this.getWeeklyGames(response.text()); }, function (error) { return _this.response = error.text; });
         this.apiService.get("api/games/").subscribe(function (response) { return _this.showGames(response.text()); }, function (error) { return _this.response = error.text; });
@@ -88,18 +94,17 @@ var Landing = (function () {
     Landing.prototype.getWeeklyGames = function (data) {
         var Data = data;
         var jsonData = JSON.parse(Data);
-        var weekGames = jsonData.data;
+        this.weekGames = jsonData.data;
         var counter = 0;
-        for (var _i = 0, weekGames_1 = weekGames; _i < weekGames_1.length; _i++) {
-            var game = weekGames_1[_i];
-            if (game.loans.size != 0) {
-                this.weekGames[counter] = game;
-                counter++;
-            }
-        }
-        if (this.isEmpty(this.weekGames)) {
-            this.showWeek = false;
-        }
+        //  for(let game of weekGames){
+        //         if(game.loans.size != 0){
+        //           this.weekGames[counter]= game;
+        //           counter ++;
+        //         }
+        //  }
+        //  if(this.isEmpty(this.weekGames)){
+        //    this.showWeek = false;
+        //  }
     };
     Landing.prototype.getTeam = function (data) {
         var Data = data;
@@ -108,9 +113,11 @@ var Landing = (function () {
         this.displayCarousel();
     };
     Landing.prototype.displayCarousel = function () {
-        $('.carousel-class').slick({ infinite: true, autoplay: true, arrows: false,
+        $('.carousel-class').slick({
+            infinite: true, autoplay: true, arrows: false,
             slidesToShow: 12,
-            slidesToScroll: 1 });
+            slidesToScroll: 1
+        });
     };
     Landing.prototype.test = function () {
         console.log("test");
@@ -131,8 +138,15 @@ var Landing = (function () {
         if (parseInt(id)) {
             id = parseInt(id);
             var location_1 = "evenement/" + id;
-            window.location.assign(location_1);
+            this.router.navigate(['/evenement/', id]);
         }
+        else {
+            this.router.navigate(['/search/', game]);
+        }
+    };
+    Landing.prototype.logout = function () {
+        localStorage.removeItem('id_token');
+        this.router.navigate(['/landing']);
     };
     Landing.prototype.isEmpty = function (obj) {
         // null and undefined are "empty"

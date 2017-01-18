@@ -1,13 +1,15 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Http } from '@angular/http';
 import { AuthHttp, JwtHelper } from 'angular2-jwt';
 import { contentHeaders } from '../../common/Headers'
 import { Footer } from "../common/footer/Footer";
 import { Header } from "../common/header/Header";
 import { ApiService } from '../../services/ApiService';
+import { Subscription } from 'rxjs';
 import "materialize-css";
 import "angular2-materialize";
+import { Location } from '@angular/common';
 import * as $ from 'jquery';
 import { AfterViewInit } from '@angular/core';
 
@@ -29,11 +31,14 @@ export class Search  {
 	public keyword: String;
 	country: String;
 	date:String;
+	featuredCountries =[];
+	searchKeyword:String;
 
 	private loggedIn = false;
+	private subscription: Subscription;
 
 
-	constructor(public router: Router, public http: Http, public authHttp: AuthHttp, public apiService: ApiService) {
+	constructor(public router: Router, public http: Http, public authHttp: AuthHttp, public apiService: ApiService,private activatedRoute: ActivatedRoute, private _location: Location) {
 
 		this.loggedIn = !!localStorage.getItem('id_token');
 
@@ -43,32 +48,61 @@ export class Search  {
 
 		this._callApi("Anonymous", "api/games/");
 
+this.apiService.get("api/countries/featured").subscribe(
+			response => this.getCountries(response.text()),
+			error => this.response = error.text
+		);
+
+			this.subscription = this.activatedRoute.params.subscribe(
+			(param: any) => {
+				let id = param['id'];
+				this.searchKeyword = id;
+				this.keyword = id;
+			this.apiService.get("api/games/").subscribe(
+			response => this.showGamesKeyword(response.text()),
+			error => this.response = error.text
+		);
+
+			});
 
 
 
 
 	}
 
+	showGamesKeyword(data){
+		let Data = data;
+		let jsonData = JSON.parse(Data);
+		let games = jsonData.data;
+
+		
+
+		let gamesFilter = [];
+
+		for (let game of games) {
+			let home = game.home.name;
+			let away = game.away.name;
+			if (home.toLowerCase().includes(this.keyword.toLowerCase()) || away.toLowerCase().includes(this.keyword.toLowerCase())) {
+				gamesFilter.push(game);
+			}
+		}
+
+		this.games = gamesFilter;
+	}
+
+
+getCountries(data){
+
+	let Data = data;
+		let jsonData = JSON.parse(Data);
+		this.featuredCountries = jsonData.data;
+
+}
 
 
 	
 
 
-	// ngAfterViewInit() {
-
-	// 	$(".filterSearch").on('keyup', function (e) {
-	// 		if (e.keyCode == 13) {
-	// 			let value = $(".filterSearch").val();
-	// 			this.keyword = value;
-
-
-	// 			console.log(this.keyword);
-
-	// 		}
-
-	// 	});
-
-	// }
 
 	filterKeyword() {
 
@@ -190,22 +224,22 @@ export class Search  {
 
 
 		switch (date) {
-			case "today": searchDate = new Date();
+			case "Vandaag": searchDate = new Date();
 			endDate = null;
 				break;
-			case "tomorrow": searchDate = new Date();
+			case "Morgen": searchDate = new Date();
 				searchDate.setDate(searchDate.getDate() + 1);
 				break;
-			case "weekend": searchDate = this.getFriday();
+			case "Dit weekend": searchDate = this.getFriday();
 				endDate = this.getSunday();
 				break;
-			case "week": searchDate = this.getMonday();
+			case "Deze week": searchDate = this.getMonday();
 				endDate = this.getSunday();
 				break;
-			case "nextWeek": searchDate = this.getMondayNext();
+			case "Volgende week": searchDate = this.getMondayNext();
 				endDate = this.getSundayNext();
 				break;
-			case "month": let dateMonth = new Date();
+			case "Deze maand": let dateMonth = new Date();
 				searchDate = new Date(dateMonth.getFullYear(), dateMonth.getMonth(), 1);
 				endDate = new Date(dateMonth.getFullYear(), dateMonth.getMonth() + 1, 0);
 				break;
@@ -285,8 +319,10 @@ export class Search  {
 		let Data = data;
 		let jsonData = JSON.parse(Data);
 		this.games = jsonData.data;
-		this.gamesCopy = this.games;
 
+
+
+		this.gamesCopy = this.games;
 
 
 		console.log(this.games);

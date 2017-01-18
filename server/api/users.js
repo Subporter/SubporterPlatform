@@ -199,7 +199,7 @@ router.put("/users", authenticate, formParser, imageSaver, (req, res) => {
                             User.updateUser(user, req.body, (err) => {
                                 if (err) {
                                     res.json({
-                                        info: "Error during updating user",
+                                        info: "Error during updating user" + err,
                                         success: false,
                                         error: err.errmsg
                                     });

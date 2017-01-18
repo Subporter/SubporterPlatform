@@ -52,8 +52,8 @@ var Evenement = (function () {
         var Data = data;
         var jsonData = JSON.parse(Data);
         this.game = jsonData.data;
-        if (!this.game) {
-            this.router.navigateByUrl('../');
+        if (this.isEmpty(this.game)) {
+            this.router.navigateByUrl('/landing');
         }
         this.home = jsonData.data[0].game.home.name;
         this.away = jsonData.data[0].game.away.name;
@@ -64,14 +64,6 @@ var Evenement = (function () {
         this.test = jsonData.data[0].game.home;
         console.log(jsonData);
         this.lent = jsonData.count;
-        //  for(let i = 0; i<this.loans.length; i++){
-        // 	 if(this.loans.paid == true){
-        // 		 this.lent ++ ;
-        // 		 this.loans.splice(i,1);
-        // 	 }else{
-        // 		 this.lendable ++ ;
-        // 	 }
-        //  }
         var loansRaw = jsonData.data;
         this.getUserId(loansRaw);
     };
