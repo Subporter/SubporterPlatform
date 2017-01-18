@@ -5,7 +5,6 @@ import { JwtHelper } from 'angular2-jwt';
 import { contentHeaders } from '../../../common/Headers'
 import { ApiService} from '../../../services/ApiService';
 
-
 @Component({
     selector: 'login',
     template: `
@@ -111,9 +110,8 @@ export class Login {
                 console.log(response.json());
                 if (response.json().success === true) {
 
-                    var socket = io.connect();
-                    socket.emit("login", response.json().id)
-
+                    
+                    socketLogin(response.json().id);
 
 
                     this.apiService.get('api/users').subscribe(
@@ -122,7 +120,9 @@ export class Login {
                             var jsonrespons = response.json().data;
                             console.log(jsonrespons["favorites"]);
 
-                            socket.emit("addFav", jsonrespons["favorites"])
+                            socketFav(jsonrespons["favorites"]);
+
+                           
                         },
                         error => {
                             console.log(error.text());
