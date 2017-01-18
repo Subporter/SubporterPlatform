@@ -4,7 +4,7 @@ const mongoose = require('mongoose'),
 
 let Loan = mongoose.model('Loan', loanSchema, 'Loans');
 
-let populateSchema = [{
+const populateSchema = [{
     path: 'game',
     model: 'Game',
     populate: [{

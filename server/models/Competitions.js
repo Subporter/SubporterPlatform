@@ -4,7 +4,7 @@ const mongoose = require('mongoose'),
 
 let Competition = mongoose.model('Competition', competitionSchema, 'Competitions');
 
-let populateSchema = {
+const populateSchema = {
     path: 'country sport'
 };
 
@@ -42,7 +42,6 @@ Competition.getCompetitionsByCountry = (country, cb) => {
     Competition.find({
             country: country
         })
-
         .populate(populateSchema)
         .sort({
             sport: 1,

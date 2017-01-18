@@ -45,6 +45,9 @@ var Edit_2 = require("./components/admin/countries/edit/Edit");
 var Competitions_1 = require("./components/admin/competitions/list/Competitions");
 var Create_3 = require("./components/admin/competitions/create/Create");
 var Edit_3 = require("./components/admin/competitions/edit/Edit");
+var Teams_1 = require("./components/admin/teams/list/Teams");
+var Create_4 = require("./components/admin/teams/create/Create");
+var Edit_4 = require("./components/admin/teams/edit/Edit");
 var Routes_1 = require("./modules/Routes");
 var Subporter = (function () {
     function Subporter() {
@@ -82,6 +85,9 @@ Subporter = __decorate([
             Competitions_1.AdminCompetitions,
             Create_3.CompetitionsCreate,
             Edit_3.CompetitionsEdit,
+            Teams_1.AdminTeams,
+            Create_4.TeamsCreate,
+            Edit_4.TeamsEdit,
             angular2_materialize_1.MaterializeDirective
         ],
         imports: [

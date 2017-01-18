@@ -4,7 +4,7 @@ const mongoose = require('mongoose'),
 
 let Address = mongoose.model('Address', addressSchema, 'Addresses');
 
-let populateSchema = {
+const populateSchema = {
     path: 'country'
 };
 

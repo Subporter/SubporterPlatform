@@ -8,7 +8,7 @@ const users = require('./users'),
     games = require('./games'),
     loans = require('./loans');
 
-let apiController = (app) => {
+const apiController = (app) => {
     app.use('/api', addresses);
     app.use('/api', sports);
     app.use('/api', users);

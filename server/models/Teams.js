@@ -6,7 +6,7 @@ const mongoose = require('mongoose'),
 
 let Team = mongoose.model('Team', teamSchema, 'Teams');
 
-let populateSchema = [{
+const populateSchema = [{
     path: 'address',
     model: 'Address',
     populate: [{

@@ -4,7 +4,7 @@ const mongoose = require('mongoose'),
 
 let User = mongoose.model('User', userSchema, 'Users');
 
-let populateSchema = [{
+const populateSchema = [{
     path: 'address',
     model: 'Address',
     populate: [{
@@ -265,7 +265,7 @@ User.toggleSubscription = (user, subscription, cb) => {
 };
 
 /* Helper */
-Array.prototype.toggleAndSort = (value) => {
+Array.prototype.toggleAndSort = function(value) {
     let i = this.findIndex(item => item._id === value);
 
     if (i === -1) {
@@ -295,7 +295,6 @@ User.updateUser = (user, body, cb) => {
 
 User.updateCrucial = (user, body, cb) => {
     _.merge(user, body);
-    user.admin = false;
     user.save((err) => {
         if (err) {
             cb(err);

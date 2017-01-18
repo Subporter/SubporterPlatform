@@ -1,7 +1,7 @@
 const path = require('path'),
     authenticate = require('./authenticate');
 
-let routesController = (app) => {
+const routesController = (app) => {
     app.use('/', authenticate);
 
     app.get('*', (req, res) => {

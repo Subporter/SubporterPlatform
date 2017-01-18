@@ -12,6 +12,7 @@ import { ApiService } from '../../../../services/ApiService';
 export class CountriesEdit {
     id: Number;
     name: String = "";
+    featured: Boolean;
     sub: any;
 
     constructor(public router: Router, public route: ActivatedRoute, public apiService: ApiService) {
@@ -29,6 +30,7 @@ export class CountriesEdit {
                 let result = JSON.parse(response.text());
                 if (result.success) {
                     this.name = result.data.name;
+                    this.featured = result.data.featured;
                 } else {
                     this.router.navigate(['admin/countries']);
                 }
@@ -40,15 +42,18 @@ export class CountriesEdit {
     }
 
     edit(event) {
-        let name = this.name;
+        let name = this.name,
+            featured = this.featured;
 
         let body = JSON.stringify({
-            name
+            name,
+            featured
         });
 
         this.apiService.put(`api/countries/${this.id}`, body).subscribe(
             response => {
                 let result = JSON.parse(response.text());
+                console.log(result);
                 if (result.success) {
                     this.router.navigate(['admin/countries']);
                 } else {

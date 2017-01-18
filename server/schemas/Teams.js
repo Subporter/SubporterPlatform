@@ -2,23 +2,20 @@ const mongoose = require('mongoose'),
     mongooseHidden = require('mongoose-hidden')({
         defaultHidden: {
             __v: true,
-			created_at: true,
+            created_at: true,
             updated_at: true
         }
     }),
-    autoIncrement = require('mongoose-increment'),
-	Address = require('../models/Addresses'),
-    Subscription = require('../models/Subscriptions'),
-	Game = require('../models/Games');
+    autoIncrement = require('mongoose-increment');
 
-let regExp = /^[A-zÀ-ÿ0-9-\s]{2,100}$/;
+const regExp = /^[A-zÀ-ÿ0-9-\s]{2,100}$/;
 
-let teamSchema = new mongoose.Schema({
-	address: {
-		type: Number,
-		ref: 'Address',
-		required: true
-	},
+const teamSchema = new mongoose.Schema({
+    address: {
+        type: Number,
+        ref: 'Address',
+        required: true
+    },
     background: {
         type: String,
         required: true,
@@ -30,14 +27,14 @@ let teamSchema = new mongoose.Schema({
         required: true
     },
     logo: {
-		type: String,
-		required: true,
-		trim: true
-	},
+        type: String,
+        required: true,
+        trim: true
+    },
     name: {
         type: String,
         required: true,
-		trim: true,
+        trim: true,
         match: regExp
     },
     price: {
@@ -49,7 +46,7 @@ let teamSchema = new mongoose.Schema({
     stadion: {
         type: String,
         required: true,
-		trim: true,
+        trim: true,
         match: regExp
     }
 }, {
@@ -62,6 +59,10 @@ let teamSchema = new mongoose.Schema({
 
 
 teamSchema.pre('remove', function(next) {
+    const Address = require('../models/Addresses'),
+        Subscription = require('../models/Subscriptions'),
+        Game = require('../models/Games');
+
     let team = this;
     Address.deleteAddress(team.address, (err) => {
         if (err) {
@@ -85,8 +86,8 @@ teamSchema.pre('remove', function(next) {
 });
 
 teamSchema.plugin(autoIncrement, {
-	modelName: 'Team',
-	fieldName: '_id'
+    modelName: 'Team',
+    fieldName: '_id'
 });
 teamSchema.plugin(mongooseHidden);
 

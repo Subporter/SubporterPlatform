@@ -11,7 +11,8 @@ import { ApiService } from '../../../../services/ApiService';
 
 export class SportsEdit {
     id: Number;
-	name: String = "";
+    name: String = "";
+    featured: Boolean;
     sub: any;
 
     constructor(public router: Router, public route: ActivatedRoute, public apiService: ApiService) {
@@ -26,6 +27,7 @@ export class SportsEdit {
                     let result = JSON.parse(response.text());
                     if (result.success) {
                         this.name = result.data.name;
+                        this.featured = result.data.featured;
                     } else {
                         this.router.navigate(['admin/sports']);
                     }
@@ -38,10 +40,12 @@ export class SportsEdit {
     }
 
     edit(event) {
-        let name = this.name;
+        let name = this.name,
+            featured = this.featured;
 
         let body = JSON.stringify({
-            name
+            name,
+            featured
         });
 
         this.apiService.put(`api/sports/${this.id}`, body).subscribe(

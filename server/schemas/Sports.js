@@ -6,17 +6,21 @@ const mongoose = require('mongoose'),
             updated_at: true
         }
     }),
-    autoIncrement = require('mongoose-increment'),
-	Competition = require('../models/Competitions');
+    autoIncrement = require('mongoose-increment');
 
 let regExp = /^[A-zÀ-ÿ-\s]{2,100}$/;
 
 let sportSchema = new mongoose.Schema({
+    featured: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
     name: {
         type: String,
         required: true,
         unique: true,
-		trim: true,
+        trim: true,
         match: regExp
     }
 }, {
@@ -28,6 +32,8 @@ let sportSchema = new mongoose.Schema({
 });
 
 sportSchema.pre('remove', function(next) {
+    const Competition = require('../models/Competitions');
+
     let sport = this;
     Competition.deleteCompetitionsBySport(sport._id, (err) => {
         if (err) {
@@ -45,7 +51,7 @@ sportSchema.plugin(autoIncrement, {
 });
 
 sportSchema.index({
-	name: 1
+    name: 1
 }, {
     unique: true
 });

@@ -400,8 +400,8 @@ router.post("/users/update/password", authenticate, (req, res) => {
                         error: err.errmsg
                     });
                 } else if (user) {
-                    user.comparePassword(req.body.old_password, user.password, (err) => {
-                        if (err) {
+                    user.comparePassword(req.body.old_password, user.password, (err, isMatch) => {
+                        if (err || !isMatch) {
                             res.json({
                                 info: "Error during updating password, wrong old password",
                                 success: false

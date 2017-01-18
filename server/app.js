@@ -67,7 +67,7 @@ app.use((req, res, next) => {
 /* 401 error handler: unauthorized */
 
 app.use((err, req, res, next) => {
-    if (err.name === "UnauthorizedError") {
+    if (err.name === 'UnauthorizedError') {
         res.status = 401;
         res.json({
             message: err.name + ": " + err.message
@@ -77,7 +77,7 @@ app.use((err, req, res, next) => {
 
 /* Development error handler: stacktrace */
 
-if (app.get('env') === "development") {
+if (app.get('env') === 'development') {
     app.use((err, req, res, next) => {
         res.status(err.status || 500);
         res.render('error', {
@@ -100,10 +100,10 @@ app.use((err, req, res, next) => {
 /* UncaughtException */
 
 process.on('uncaughtException', (err) => {
-    if (app.get('env') !== "development") {
-        logger.errorLog.error("Error: ", err);
+    if (app.get('env') === 'production') {
+        logger.errorLogger.error("Error: ", err);
     } else {
-        console.error(err);
+        throw err;
     }
 });
 

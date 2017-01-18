@@ -17,7 +17,6 @@ var AdminSports = (function () {
     function AdminSports(apiService) {
         this.apiService = apiService;
         this.sports = [];
-        this.selectedSport = new Sports_1.Sport(0, "");
     }
     AdminSports.prototype.ngOnInit = function () {
         var _this = this;
@@ -28,7 +27,7 @@ var AdminSports = (function () {
                 var data = result.data;
                 if (data.length !== 0) {
                     data.forEach(function (i) {
-                        var sport = new Sports_1.Sport(i._id, i.name);
+                        var sport = new Sports_1.Sport(i._id, i.name, i.featured);
                         _this.sports.push(sport);
                     });
                 }

@@ -1,0 +1,85 @@
+<nav>
+	<div class="nav-wrapper">
+		<div class="col s8 offset-s2">
+			<a [routerLink]="['/admin']" class="breadcrumb">Admin</a>
+			<a [routerLink]="['/admin/teams']" class="breadcrumb">Teams</a>
+			<a [routerLink]="['/admin/teams/edit', id]" class="breadcrumb">Bewerken</a>
+		</div>
+	</div>
+</nav>
+
+<div class="container">
+	<div class="row">
+		<h2 class="header">Team bewerken: {{name}}</h2>
+	</div>
+	<div class="row">
+		<form materialize (submit)="edit($event)" enctype="multipart/form-data">
+			<div class="input-field">
+				<input [(ngModel)]="name" type="text" class="form-control" name="name" id="name" materialize="characterCounter" length="100" required pattern="[A-zÀ-ÿ0-9-\s]{2,100}">
+				<label for="name">Naam</label>
+			</div>
+			<div class="input-field">
+				<input [(ngModel)]="stadion" type="text" class="form-control" name="stadion" id="stadion" materialize="characterCounter" length="100" required pattern="[A-zÀ-ÿ0-9-\s]{2,100}">
+				<label for="name">Stadion</label>
+			</div>
+			<div class="input-field">
+				<input [(ngModel)]="street" type="text" class="form-control" name="street" id="street" materialize="characterCounter" length="100" required pattern="[A-zÀ-ÿ0-9-\s]{2,100}">
+				<label for="name">Straat</label>
+			</div>
+			<div class="input-field">
+				<input [(ngModel)]="number" type="text" class="form-control" name="number" id="number" required min="1" max="9999">
+				<label for="name">Nummer</label>
+			</div>
+			<div class="input-field">
+				<input [(ngModel)]="city" type="text" class="form-control" name="city" id="city" materialize="characterCounter" length="100" required pattern="[A-zÀ-ÿ0-9-\s]{2,100}">
+				<label for="name">Stad</label>
+			</div>
+			<div class="input-field">
+				<input [(ngModel)]="postal" type="text" class="form-control" name="postal" id="postal" required min="1" max="9999">
+				<label for="name">Postcode</label>
+			</div>
+			<div class="input-field">
+				<select [(ngModel)]="country" name="country" materialize="material_select" [materializeSelectOptions]="countries" (ngModelChange)="loadCompetitions()">
+                	<option value="" disabled selected>Land</option>
+                	<option *ngFor="let country of countries" [selected]="country._id === country" [value]="country._id">{{country.name}}</option>
+              	</select>
+				<label for="sport">Land</label>
+			</div>
+			<div class="input-field">
+				<input [(ngModel)]="price" type="text" class="form-control" name="price" id="price" required min="1" max="99">
+				<label for="name">Price</label>
+			</div>
+			<div class="input-field">
+				<select [(ngModel)]="competition" name="competition" materialize="material_select" [materializeSelectOptions]="competitions">
+                	<option value="" disabled selected>Competitie</option>
+                	<option *ngFor="let competition of competitions" [selected]="competition._id === competition" [value]="competition._id">{{competition.name}}</option>
+              	</select>
+				<label for="sport">Competitie</label>
+			</div>
+			<img materialize="materialbox" [attr.data-caption]="name" width="250" src="{{logoUrl}}">
+			<div class="input-field file-field">
+				<div class="btn">
+					<span>Logo</span>
+					<input (change)="selectLogo($event)" type="file" name="logo" id="logo">
+				</div>
+				<div class="file-path-wrapper">
+					<input [(ngModel)]="logoUrl" type="text" class="file-path validate" name="logoUrl" id="logoUrl">
+				</div>
+			</div>
+			<img materialize="materialbox" [attr.data-caption]="name" width="250" src="{{backgroundUrl}}">
+			<div class="input-field file-field">
+				<div class="btn">
+					<span>Achtergrond</span>
+					<input (change)="selectBackground($event)" type="file" name="background" id="background">
+				</div>
+				<div class="file-path-wrapper">
+					<input [(ngModel)]="backgroundUrl" type="text" class="file-path validate" name="backgroundUrl" id="backgroundUrl">
+				</div>
+			</div>
+			<button type="submit" class="btn btn-default">Opslaan</button>
+		</form>
+	</div>
+	<div class="row">
+		<a [routerLink]="['/admin/teams']">Terug</a>
+	</div>
+</div>

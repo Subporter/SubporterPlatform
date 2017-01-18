@@ -4,8 +4,8 @@ const mongoose = require('mongoose'),
     ExtractJwt = require('passport-jwt').ExtractJwt,
     User = mongoose.model('User');
 
-let passportConfig = function(passport) {
-    let options = {
+const passportConfig = (passport) => {
+    const options = {
         jwtFromRequest: ExtractJwt.fromAuthHeader(),
         secretOrKey: config.jwt_secret
     };

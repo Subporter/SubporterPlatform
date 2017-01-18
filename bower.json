@@ -3,10 +3,7 @@
     "description": "Subporter is a platform to rent subscriptions to go see football matches",
     "main": "./server/bin/www",
     "authors": [
-        "Alexander Leplae",
-        "Arno Vande Cappelle",
-        "Niels Bril",
-        "Simon Gemmel"
+        "Alexander Leplae", "Arno Vande Cappelle", "Niels Bril", "Simon Gemmel"
     ],
     "license": "ISC",
     "keywords": [
@@ -24,11 +21,7 @@
     ],
     "homepage": "https://github.com/Subporter/SubporterPlatform",
     "ignore": [
-        "**/.*",
-        "node_modules",
-        "bower_components",
-        "test",
-        "tests"
+        "**/.*", "node_modules", "bower_components", "test", "tests"
     ],
     "dependencies": {
         "materialize": "^0.97.8",

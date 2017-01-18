@@ -1,7 +1,7 @@
 const socketio = require('socket.io');
 
-let sockets = (() => {
-    let init = (server) => {
+const sockets = (() => {
+    const init = (server) => {
         let io = socketio.listen(server);
 
         io.sockets.on('connection', (socket) => {
