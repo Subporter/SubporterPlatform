@@ -1,14 +1,9 @@
 <subporter-header header1="Profiel" header2="" image="/img/search_bg.jpg"></subporter-header>
 
-
 <section>
-
 	<div class="container">
-
 		<div class="persoonlijk profiel">
-
 			<h2>Persoonlijke gegevens</h2>
-
 			<div class="row">
 				<form class="col s12" enctype='multipart/form-data' materialize (submit)="save($event)">
 					<div class="row">
@@ -21,8 +16,6 @@
 							<label for="last_name" id="namelbl">Naam</label>
 						</div>
 					</div>
-
-
 					<div class="row">
 						<div class="input-field col s6">
 							<input [(ngModel)]="email" required name="email" id="email" type="email" class="validate">
@@ -33,8 +26,6 @@
 							<label for="nummer" id="phonelbl">Telefoonnummer</label>
 						</div>
 					</div>
-
-
 					<div class="row">
 						<div class="input-field col s6">
 							<input [(ngModel)]="street" required name="street" id="street" type="text" class="validate">
@@ -45,7 +36,6 @@
 							<label for="huisnummer" id="numberlbl">Huisnummer</label>
 						</div>
 					</div>
-
 					<div class="row">
 						<div class="input-field col s6">
 							<input [(ngModel)]="city" name="city" required id="city" type="text" class="validate">
@@ -56,21 +46,19 @@
 							<label for="postcode" id="postallbl">Postcode</label>
 						</div>
 					</div>
-
 					<div class="row">
 						<div class="input-field col s6">
 							<select [(ngModel)]="country" id="country" name="country" materialize="material_select" [materializeSelectOptions]="selectOptions">
-                           	<option value="" disabled selected>Land</option>
+								<option value="" disabled selected>Land</option>
 
-  <option *ngFor="let option of selectOptions" [value]="option._id">{{option.name}}</option>
-</select>
+								<option *ngFor="let option of selectOptions" [value]="option._id">{{option.name}}</option>
+							</select>
 						</div>
 						<div class="input-field col s6">
 							<input [(ngModel)]="date_of_birth" required name="date_of_birth" id="date_of_birth" type="text" materialize="pickadate" [materializeParams]="[{selectMonths: true, selectYears:100, max: today}]">
 							<label for="datum" id="date_of_birthlbl">Geboortedatum</label>
 						</div>
 					</div>
-
 					<div class="row">
 						<div class="file-field input-field">
 							<div class="btn">
@@ -82,102 +70,91 @@
 							</div>
 						</div>
 					</div>
-
-
 					<input class="btn waves-effect waves-light " type="submit" value="Opslaan">
-
-
 				</form>
 			</div>
 			<div>
 				{{form1 | json}}
 			</div>
-
-      <h3>Wachtwoord wijzigen</h3>
+			<h3>Wachtwoord wijzigen</h3>
 			<div class="row">
 				<form class="col s12" (submit)="changePass($event)">
 
 					<div class="row">
 						<div class="input-field col s12">
-							<input id="password" [(ngModel)]="password_old" type="password" name="password_old" class="validate" required pattern="^\S{6,}$"
+							<input
+								id="password"
+								[(ngModel)]="password_old"
+								type="password"
+								name="password_old"
+								class="validate"
+								required
+								pattern="^\S{6,}$"
 								onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 6 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;">
 							<label for="password">Oud wachtwoord</label>
 						</div>
 					</div>
-
 					<div class="row">
 						<div class="input-field col s12">
-							<input [(ngModel)]="password" id="password" type="password" name="password" class="validate" required pattern="^\S{6,}$"
+							<input
+								[(ngModel)]="password"
+								id="password"
+								type="password"
+								name="password"
+								class="validate"
+								required
+								pattern="^\S{6,}$"
 								onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Een wachtwoord moet minimaal 6 karakters lang zijn' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;">
 							<label for="password">Nieuw wachtwoord</label>
 						</div>
 					</div>
-
-
 					<div class="row">
 						<div class="input-field col s12">
-							<input id="password" [(ngModel)]="password_two" type="password" name="password_two" class="validate" required pattern="^\S{6,}$"
-								onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');">
+							<input id="password" [(ngModel)]="password_two" type="password" name="password_two" class="validate" required pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');">
 							<label for="password">Bevestig nieuw wachtwoord</label>
 						</div>
 					</div>
 					<input class="btn waves-effect waves-light " type="submit" value="Wijzig wachtwoord">
-
-
 				</form>
-
 			</div>
-
-
 		</div>
-
 		<div class="abbos profiel">
-
 			<h2>Abonnementen</h2>
-
-
-<div class="row">
-			<form class="col s12" (submit)="updateAbbo($event)" enctype='multipart/form-data'>
-				<div class="row">
-					<div class="input-field col s6">
-						<input [(ngModel)]="plaats" name="plaats" required id="plaats" type="text" class="validate">
-						<label for="plaats" id="plaatslbl">Plaats</label>
-					</div>
-<div class="input-field col s6">
-					<select [(ngModel)]="team" id="team" name="team" materialize="material_select" [materializeSelectOptions]="selectOptions">
-                           	<option value="" disabled selected>Team</option>
-
-  <option *ngFor="let option of teamsRaw" [value]="option._id">{{option.name}}</option>
-</select>
-				</div>
-				
-				</div>
-
-        <div class="row">
-
-          	<div class="file-field input-field">
-						<div class="btn">
-							<span>Afbeelding</span>
-							<input type="file" required (change)="selectAbbo($event)" name="abbo" id="abbo">
+			<div class="row">
+				<form class="col s12" (submit)="updateAbbo($event)" enctype='multipart/form-data'>
+					<div class="row">
+						<div class="input-field col s6">
+							<input [(ngModel)]="plaats" name="plaats" required id="plaats" type="text" class="validate">
+							<label for="plaats" id="plaatslbl">Plaats</label>
 						</div>
-						<div class="file-path-wrapper">
-							<input class="file-path validate" type="text">
+						<div class="input-field col s6">
+							<select [(ngModel)]="team" id="team" name="team" materialize="material_select" [materializeSelectOptions]="selectOptions">
+								<option value="" disabled selected>Team</option>
+
+								<option *ngFor="let option of teamsRaw" [value]="option._id">{{option.name}}</option>
+							</select>
 						</div>
 					</div>
-
-        </div>
-
-
-				
-				<input class="btn waves-effect waves-light " type="submit" value="Upload abonnement">
-			</form>
-</div>
+					<div class="row">
+						<div class="file-field input-field">
+							<div class="btn">
+								<span>Afbeelding</span>
+								<input type="file" required (change)="selectAbbo($event)" name="abbo" id="abbo">
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text">
+							</div>
+						</div>
+					</div>
+					<input class="btn waves-effect waves-light " type="submit" value="Upload abonnement">
+				</form>
+			</div>
 		</div>
-
 		<div class="favos profiel">
-			<h2>Favorieten</h2> <button class="btn-floating btn-large waves-effect waves-light red" (click)="showAdd()"><i class="material-icons">add</i></button>
-
-
+			<h2>Favorieten</h2>
+			<button class="btn-floating btn-large waves-effect waves-light red" (click)="showAdd()">
+				<i class="material-icons">add</i>
+			</button>
 			<table *ngIf="showFavorites">
 				<thead>
 					<tr>
@@ -186,54 +163,42 @@
 						<th data-field="competitie">Competitie</th>
 					</tr>
 				</thead>
-
 				<tbody>
 					<tr *ngFor="let favorite of favorites">
 						<td>{{favorite.name}}</td>
 						<td>{{favorite.competition.country.name}}</td>
 						<td>{{favorite.competition.name}}</td>
-						<td><i class="material-icons" (click)="removeFavorite(favorite._id)">delete</i></td>
+						<td>
+							<i class="material-icons" (click)="removeFavorite(favorite._id)">delete</i>
+						</td>
 					</tr>
-
 				</tbody>
 			</table>
-
 			<div *ngIf="showNew">
-
 				<div class="input-field col s12">
 					<select id="select" materialize="material_select">
-      <option value="" disabled selected>Kies een team</option>
-      <option *ngFor="let team of teams" value="{{team._id}}">
-          {{team.name}}
-      </option>
-
-    </select>
+						<option value="" disabled selected>Kies een team</option>
+						<option *ngFor="let team of teams" value="{{team._id}}">
+							{{team.name}}
+						</option>
+					</select>
 				</div>
 				<button class="waves-effect waves-light btn" (click)="showFavoritesBack()">Ga terug</button>
-
 				<button class="waves-effect waves-light btn" (click)="updateFavorite()">Voeg toe</button>
-
 			</div>
-
-
 		</div>
-
-
 	</div>
-
-
-
 	<div id="modal1" class="modal " materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
 		<div class="modal-content">
 			<h4>Ben je zeker?</h4>
-			<p>Bent je zeker dat je deze favoriet wil verwijderen? </p>
+			<p>Bent je zeker dat je deze favoriet wil verwijderen?
+			</p>
 		</div>
 		<div class="modal-footer">
 			<a class="waves-effect waves-green btn-flat" (click)="closeModal1()">Ik heb me bedacht.</a>
 			<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="removeFavoriteReal()">Ik ben zeker!</a>
 		</div>
 	</div>
-
 	<div id="modal2" class="modal " materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions2">
 		<div class="modal-content">
 			<h4>Geslaagd!</h4>
@@ -243,33 +208,25 @@
 			<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="closeModal()">Sluiten</a>
 		</div>
 	</div>
-
-
 	<div id="modal3" class="modal " materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions3">
 		<div class="modal-content">
 			<h4>Nieuwe favoriet toevoegen</h4>
-
-
 			<div class="input-field col s12">
 				<select materialize="material_select">
-      <option value="" disabled selected>Kies een team</option>
-      <option *ngFor="let team of teams" value="team._id">
-          {{team.name}}
-      </option>
-
-    </select>
+					<option value="" disabled selected>Kies een team</option>
+					<option *ngFor="let team of teams" value="team._id">
+						{{team.name}}
+					</option>
+				</select>
 				<label>Materialize Select</label>
 			</div>
-
 		</div>
 		<div class="modal-footer">
 			<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="closeModal3()">Sluiten</a>
 			<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="addFavorite()">Toevoegen</a>
-
 		</div>
 	</div>
-
-  <div id="modal4" class="modal " materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions4">
+	<div id="modal4" class="modal " materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions4">
 		<div class="modal-content">
 			<h4>Geslaagd!</h4>
 			<p>Je hebt jouw profiel aangepast.</p>
@@ -278,8 +235,7 @@
 			<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="closeProfileModal()">Sluiten</a>
 		</div>
 	</div>
-
-  <div id="modal5" class="modal " materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions5">
+	<div id="modal5" class="modal " materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions5">
 		<div class="modal-content">
 			<h4>Geslaagd!</h4>
 			<p>Je hebt jouw wachtwoord aangepast.</p>
@@ -288,8 +244,7 @@
 			<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="closePasswordModal()">Sluiten</a>
 		</div>
 	</div>
-
-  <div id="modal6" class="modal " materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions6">
+	<div id="modal6" class="modal " materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions6">
 		<div class="modal-content">
 			<h4>Geslaagd!</h4>
 			<p>Je hebt jouw abonnement toegevoegd.</p>
@@ -298,5 +253,4 @@
 			<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="closeAbboModal()">Sluiten</a>
 		</div>
 	</div>
-
 </section>

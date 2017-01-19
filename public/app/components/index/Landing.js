@@ -11,16 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
-var angular2_jwt_1 = require("angular2-jwt");
 var $ = require("jquery");
 var ApiService_1 = require("../../services/ApiService");
 var Landing = (function () {
-    function Landing(router, http, authHttp, apiService) {
+    function Landing(router, http, apiService) {
         this.router = router;
         this.http = http;
-        this.authHttp = authHttp;
         this.apiService = apiService;
-        this.jwtHelper = new angular2_jwt_1.JwtHelper();
         this.gameNames = [];
         this.weekGames = [];
         this.showWeek = true;
@@ -42,11 +39,6 @@ var Landing = (function () {
         this.apiService.get("api/games/week/1").subscribe(function (response) { return _this.getWeeklyGames(response.text()); }, function (error) { return _this.response = error.text; });
         this.apiService.get("api/games/").subscribe(function (response) { return _this.showGames(response.text()); }, function (error) { return _this.response = error.text; });
         this.apiService.get("api/countries/").subscribe(function (response) { return _this.showCountries(response.text()); }, function (error) { return _this.response = error.text; });
-    };
-    Landing.prototype.useJwtHelper = function () {
-        var token = localStorage.getItem("id_token");
-        console.log("Token:", token);
-        console.log(this.jwtHelper.decodeToken(token), this.jwtHelper.getTokenExpirationDate(token), this.jwtHelper.isTokenExpired(token));
     };
     Landing.prototype.showCountries = function (data) {
         var Data = data;
@@ -79,7 +71,6 @@ var Landing = (function () {
         obj = obj + "}";
         obj = JSON.parse(obj);
         this.gameNames = obj;
-        console.log(obj);
     };
     Landing.prototype._callApi = function (type, url) {
         var _this = this;
@@ -100,12 +91,6 @@ var Landing = (function () {
         var Data = data;
         var jsonData = JSON.parse(Data);
         this.jsonDataData = jsonData.data;
-        this.displayCarousel();
-    };
-    Landing.prototype.displayCarousel = function () {
-    };
-    Landing.prototype.test = function () {
-        console.log("test");
     };
     Landing.prototype.goToTeamPage = function (id) {
         alert(id);
@@ -155,7 +140,7 @@ Landing = __decorate([
         templateUrl: './app/components/index/landing.view.html',
         styleUrls: ['../../css/landing.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService])
+    __metadata("design:paramtypes", [router_1.Router, http_1.Http, ApiService_1.ApiService])
 ], Landing);
 exports.Landing = Landing;
 //# sourceMappingURL=Landing.js.map

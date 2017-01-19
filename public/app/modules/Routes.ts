@@ -6,6 +6,7 @@ import { AdminGuard } from '../common/AdminGuard';
 
 import { Login } from '../components/auth/login/Login';
 import { Register } from '../components/auth/register/Register';
+import { NotFound } from '../components/common/404/404';
 import { Landing } from '../components/index/Landing';
 import { Search } from '../components/search/Search';
 import { Listing } from '../components/listing/Listing';
@@ -116,7 +117,7 @@ export const SubporterRoutes: Routes = [
         path: 'admin/teams/edit/:id', component: TeamsEdit, canActivate: [AdminGuard]
     },
     {
-        path: '404', component: Login
+        path: '404', component: NotFound
     },
     {
         path: '**', redirectTo: '/404'

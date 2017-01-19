@@ -11,20 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
-var angular2_jwt_1 = require("angular2-jwt");
 var ApiService_1 = require("../../services/ApiService");
 require("materialize-css");
 require("angular2-materialize");
 var $ = require("jquery");
 var Offer = (function () {
-    function Offer(router, http, authHttp, apiService) {
+    function Offer(router, http, apiService) {
         this.router = router;
         this.http = http;
-        this.authHttp = authHttp;
         this.apiService = apiService;
         this.modalActions = new core_1.EventEmitter();
         this.modalActions2 = new core_1.EventEmitter();
-        this.jwtHelper = new angular2_jwt_1.JwtHelper();
         this.show = true;
         this.gameNames = [];
         this.user = [];
@@ -53,18 +50,12 @@ var Offer = (function () {
         var jsonData = JSON.parse(Data);
         var user = jsonData.data;
         this.user = user;
-        console.log(user);
         if (!this.isEmpty(user.subscriptions)) {
             this._callApi("Anonymous", "api/games/");
         }
         else {
             this.show = false;
         }
-    };
-    Offer.prototype.useJwtHelper = function () {
-        var token = localStorage.getItem("id_token");
-        console.log("Token:", token);
-        console.log(this.jwtHelper.decodeToken(token), this.jwtHelper.getTokenExpirationDate(token), this.jwtHelper.isTokenExpired(token));
     };
     Offer.prototype._callApi = function (type, url) {
         var _this = this;
@@ -86,7 +77,6 @@ var Offer = (function () {
         obj = obj + "}";
         obj = JSON.parse(obj);
         this.gameNames = obj;
-        console.log(obj);
     };
     Offer.prototype.isEmpty = function (obj) {
         if (obj == null)
@@ -117,11 +107,9 @@ var Offer = (function () {
                     selectedGame = game_1;
                 }
             }
-            console.log(selectedGame);
             var user = this.user;
             var subscriptions = user.subscriptions;
             var counter = 0;
-            console.log(subscriptions);
             if (selectedGame) {
                 this.selectedGame = selectedGame;
                 this.selectedGameLoans = selectedGame.loans;
@@ -141,7 +129,6 @@ var Offer = (function () {
                             this.subscriptions[counter] = subscription;
                             this.sub = true;
                             counter++;
-                            console.log("adasdas");
                         }
                         else {
                             this.sub = true;
@@ -216,7 +203,7 @@ Offer = __decorate([
         templateUrl: './app/components/offer/offer.view.html',
         styleUrls: ['../../css/offer.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService])
+    __metadata("design:paramtypes", [router_1.Router, http_1.Http, ApiService_1.ApiService])
 ], Offer);
 exports.Offer = Offer;
 //# sourceMappingURL=Offer.js.map

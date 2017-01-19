@@ -11,17 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
-var angular2_jwt_1 = require("angular2-jwt");
 var ApiService_1 = require("../../services/ApiService");
 require("materialize-css");
 require("angular2-materialize");
 var common_1 = require("@angular/common");
 var core_2 = require("angular2-cookie/core");
 var Cart = (function () {
-    function Cart(router, http, authHttp, apiService, activatedRoute, _location, _cookieService) {
+    function Cart(router, http, apiService, activatedRoute, _location, _cookieService) {
         this.router = router;
         this.http = http;
-        this.authHttp = authHttp;
         this.apiService = apiService;
         this.activatedRoute = activatedRoute;
         this._location = _location;
@@ -30,7 +28,6 @@ var Cart = (function () {
         this.modalActions2 = new core_1.EventEmitter();
         this.modalActions3 = new core_1.EventEmitter();
         this.params = [];
-        this.jwtHelper = new angular2_jwt_1.JwtHelper();
         this.prices = 0;
         this.price = 0;
         this.loans = [];
@@ -60,7 +57,6 @@ var Cart = (function () {
         else {
             this.showCart();
         }
-        console.log(x);
     };
     Cart.prototype.logout = function () {
         localStorage.removeItem('id_token');
@@ -74,11 +70,6 @@ var Cart = (function () {
     };
     Cart.prototype.showEmpty = function () {
     };
-    Cart.prototype.useJwtHelper = function () {
-        var token = localStorage.getItem("id_token");
-        console.log("Token:", token);
-        console.log(this.jwtHelper.decodeToken(token), this.jwtHelper.getTokenExpirationDate(token), this.jwtHelper.isTokenExpired(token));
-    };
     Cart.prototype._callApi = function (type, url) {
         var _this = this;
         this.apiService.get(url).subscribe(function (response) { return _this.getLoan(response.text()); }, function (error) { return _this.response = error.text; });
@@ -90,8 +81,6 @@ var Cart = (function () {
         this.loans[this.counter] = this.loan;
         this.price += (this.loan.game.home.price * 0.1);
         this.prices += (this.loan.game.home.price);
-        console.log(this.loan);
-        console.log(this.loans);
         this.counter++;
     };
     Cart.prototype.back = function () {
@@ -146,7 +135,7 @@ Cart = __decorate([
         templateUrl: './app/components/cart/cart.view.html',
         styleUrls: ['../../css/cart.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService, router_1.ActivatedRoute, common_1.Location, core_2.CookieService])
+    __metadata("design:paramtypes", [router_1.Router, http_1.Http, ApiService_1.ApiService, router_1.ActivatedRoute, common_1.Location, core_2.CookieService])
 ], Cart);
 exports.Cart = Cart;
 //# sourceMappingURL=Cart.js.map

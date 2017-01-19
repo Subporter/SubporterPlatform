@@ -20,13 +20,8 @@
 
 			<div *ngIf="show2" class="abonnement article">
 				<div *ngIf="!isEmpty(subscriptions)">
-
 					<h2>2. Abonnement</h2>
-
-					<span class="bold">Selecteer een abonnement: </span>
-
-
-
+					<span class="bold">Selecteer een abonnement:</span>
 					<table class="responsive-table highlight">
 						<thead>
 							<tr>
@@ -35,43 +30,32 @@
 								<th data-field="plaats">Plaats</th>
 
 							</tr>
-
 						</thead>
-
 						<tbody>
 							<tr *ngFor="let subscription of subscriptions" class="pointer" (click)="showBeve(subscription._id)">
-								<td>{{user.firstname}} {{user.name}}</td>
+								<td>{{user.firstname}}
+									{{user.name}}</td>
 								<td>{{subscription.team.name}}
 								</td>
 								<td>{{subscription.place}}</td>
-
 							</tr>
-
 						</tbody>
-
 					</table>
-
-
-
 					<button class="btn waves-effect waves-light" (click)="showWeds()">Vorige</button>
-
 				</div>
 			</div>
 			<div *ngIf="show2">
 				<div *ngIf="isEmpty(subscriptions)">
-
-					<h2> Geen abonnementen beschikbaar </h2>
-					<p>Al jouw abonnementen zijn al uitgeleend of staan als uitgeleend geregistreerd. Selecteer een andere wedstrijd of probeer
-						het opnieuw!</p>
+					<h2>
+						Geen abonnementen beschikbaar
+					</h2>
+					<p>Al jouw abonnementen zijn al uitgeleend of staan als uitgeleend geregistreerd. Selecteer een andere wedstrijd of probeer het opnieuw!</p>
 					<button class="btn waves-effect waves-light" (click)="showWeds()">Vorige</button>
-
 				</div>
 			</div>
-
 			<div *ngIf="show3" class="bevestiging article">
 				<h2>3. Bevestiging</h2>
 				<span>Aangeboden wedstrijd:</span>
-
 				<table class="responsive-table">
 					<thead>
 						<tr>
@@ -80,53 +64,42 @@
 							<th data-field="plaats">Plaats</th>
 						</tr>
 					</thead>
-
 					<tbody>
 						<tr>
-							<td>{{user.firstname}} {{user.name}}</td>
-							<td><span class="bold">{{teamHome}} - {{teamAway}}</span>
-								<br/> {{gameDate}}
+							<td>{{user.firstname}}
+								{{user.name}}</td>
+							<td>
+								<span class="bold">{{teamHome}}
+									-
+									{{teamAway}}</span>
+								<br/>
+								{{gameDate}}
 							</td>
 							<td>{{place}}</td>
 						</tr>
-
 					</tbody>
 				</table>
-
 				<button class="btn waves-effect waves-light" (click)="showAbbo2()">Vorige</button>
-
 				<button class="btn waves-effect waves-light" (click)="openModal()">Bevestig</button>
-
-
 			</div>
-
-
 		</div>
 		<div *ngIf="!show">
 			<h2>Fout</h2>
-
 			<p>Het aanbieden van abonnementen is enkel beschikbaar voor ingelogd gebruikers. Log je eerst in of registreer!</p>
-      <p>Indien je wel bent ingelogd, zorg er dan eerst voor dat je jouw abonnement hebt geregistreerd bij de profielpagina.</p>
-
+			<p>Indien je wel bent ingelogd, zorg er dan eerst voor dat je jouw abonnement hebt geregistreerd bij de profielpagina.</p>
 			<a class="waves-effect waves-light btn" [routerLink]="['/login']">Login</a>
 		</div>
-
-
 	</div>
-
 	<div id="modal1" class="modal " materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
 		<div class="modal-content">
 			<h4>Ben je zeker?</h4>
-			<p>Bent je zeker dat je dit abonnement wil aanbieden? Vanaf dat jouw abonnement gehuurd wordt, zal je deze wedstrijd niet
-				meer kunnen bijwonen. Je kan dit niet meer terugdraaien!</p>
+			<p>Bent je zeker dat je dit abonnement wil aanbieden? Vanaf dat jouw abonnement gehuurd wordt, zal je deze wedstrijd niet meer kunnen bijwonen. Je kan dit niet meer terugdraaien!</p>
 		</div>
 		<div class="modal-footer">
 			<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Ik heb me bedacht.</a>
 			<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="offerSubscription()">Ik ben zeker!</a>
 		</div>
 	</div>
-
-
 	<div id="modal2" class="modal " materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions2">
 		<div class="modal-content">
 			<h4>Geslaagd!</h4>
@@ -136,5 +109,4 @@
 			<a class="modal-action modal-close waves-effect waves-green btn-flat" [routerLink]="['/']">Sluiten</a>
 		</div>
 	</div>
-
 </section>

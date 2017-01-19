@@ -11,21 +11,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
-var angular2_jwt_1 = require("angular2-jwt");
 var ApiService_1 = require("../../services/ApiService");
 require("materialize-css");
 require("angular2-materialize");
 var common_1 = require("@angular/common");
 var $ = require("jquery");
 var Search = (function () {
-    function Search(router, http, authHttp, apiService, activatedRoute, _location) {
+    function Search(router, http, apiService, activatedRoute, _location) {
         this.router = router;
         this.http = http;
-        this.authHttp = authHttp;
         this.apiService = apiService;
         this.activatedRoute = activatedRoute;
         this._location = _location;
-        this.jwtHelper = new angular2_jwt_1.JwtHelper();
         this.featuredCountries = [];
         this.loggedIn = false;
         this.loggedIn = !!localStorage.getItem('id_token');
@@ -36,8 +33,8 @@ var Search = (function () {
         this.apiService.get("api/countries/featured").subscribe(function (response) { return _this.getCountries(response.text()); }, function (error) { return _this.response = error.text; });
         this.subscription = this.activatedRoute.params.subscribe(function (param) {
             var id = param['id'];
-            _this.searchKeyword = id;
-            _this.keyword = id;
+            _this.searchKeyword = id || "";
+            _this.keyword = id || "";
             _this.apiService.get("api/games/").subscribe(function (response) { return _this.showGamesKeyword(response.text()); }, function (error) { return _this.response = error.text; });
         });
     };
@@ -102,7 +99,6 @@ var Search = (function () {
         this.apiService.get(url).subscribe(function (response) { return _this.showCountry(response.text()); }, function (error) { return _this.response = error.text; });
     };
     Search.prototype.showCountry = function (data) {
-        console.log(data);
         var Data = data;
         var jsonData = JSON.parse(Data);
         var country = jsonData.data;
@@ -182,11 +178,6 @@ var Search = (function () {
         this.date = "";
         this.games = this.gamesCopy;
     };
-    Search.prototype.useJwtHelper = function () {
-        var token = localStorage.getItem("id_token");
-        console.log("Token:", token);
-        console.log(this.jwtHelper.decodeToken(token), this.jwtHelper.getTokenExpirationDate(token), this.jwtHelper.isTokenExpired(token));
-    };
     Search.prototype._callApi = function (type, url) {
         var _this = this;
         this.apiService.get(url).subscribe(function (response) { return _this.getGames(response.text()); }, function (error) { return _this.response = error.text; });
@@ -196,7 +187,6 @@ var Search = (function () {
         var jsonData = JSON.parse(Data);
         this.games = jsonData.data;
         this.gamesCopy = this.games;
-        console.log(this.games);
     };
     Search.prototype.isEmpty = function (obj) {
         if (obj == null)
@@ -266,7 +256,7 @@ Search = __decorate([
         templateUrl: './app/components/search/search.view.html',
         styleUrls: ['../../css/search.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService, router_1.ActivatedRoute, common_1.Location])
+    __metadata("design:paramtypes", [router_1.Router, http_1.Http, ApiService_1.ApiService, router_1.ActivatedRoute, common_1.Location])
 ], Search);
 exports.Search = Search;
 //# sourceMappingURL=Search.js.map

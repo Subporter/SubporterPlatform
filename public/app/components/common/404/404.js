@@ -17,7 +17,7 @@ var NotFound = (function () {
 NotFound = __decorate([
     core_1.Component({
         selector: 'subporter_404',
-        templateUrl: './app/components/index/404.view.html',
+        template: "\n\t<div class=\"container\">\n\t\t<h1>404 Not found</h1>\n\t</div>\n\t",
         styleUrls: ['../../css/css/404.css']
     }),
     __metadata("design:paramtypes", [])

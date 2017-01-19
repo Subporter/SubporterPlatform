@@ -17,6 +17,7 @@ var angular2_materialize_1 = require("angular2-materialize");
 var App_1 = require("./components/App");
 var Footer_1 = require("./components/common/footer/Footer");
 var Header_1 = require("./components/common/header/Header");
+var _404_1 = require("./components/common/404/404");
 var Header_2 = require("./components/admin/header/Header");
 var Register_1 = require("./components/auth/register/Register");
 var Login_1 = require("./components/auth/login/Login");
@@ -64,6 +65,7 @@ Subporter = __decorate([
             Header_2.HeaderAdmin,
             Register_1.Register,
             Login_1.Login,
+            _404_1.NotFound,
             Landing_1.Landing,
             Search_1.Search,
             Offer_1.Offer,

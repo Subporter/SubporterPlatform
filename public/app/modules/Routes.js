@@ -3,6 +3,7 @@ var router_1 = require("@angular/router");
 var AdminGuard_1 = require("../common/AdminGuard");
 var Login_1 = require("../components/auth/login/Login");
 var Register_1 = require("../components/auth/register/Register");
+var _404_1 = require("../components/common/404/404");
 var Landing_1 = require("../components/index/Landing");
 var Search_1 = require("../components/search/Search");
 var Listing_1 = require("../components/listing/Listing");
@@ -112,7 +113,7 @@ exports.SubporterRoutes = [
         path: 'admin/teams/edit/:id', component: Edit_4.TeamsEdit, canActivate: [AdminGuard_1.AdminGuard]
     },
     {
-        path: '404', component: Login_1.Login
+        path: '404', component: _404_1.NotFound
     },
     {
         path: '**', redirectTo: '/404'

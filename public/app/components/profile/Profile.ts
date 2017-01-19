@@ -1,16 +1,11 @@
 import { Component, Input, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
-import { AuthHttp, JwtHelper } from 'angular2-jwt';
 import { contentHeaders } from '../../common/Headers'
-import { Footer } from "../common/footer/Footer";
-import { Header } from "../common/header/Header";
 import { ApiService } from '../../services/ApiService';
-import "materialize-css";
-import "angular2-materialize";
+import 'materialize-css';
+import 'angular2-materialize';
 import { MaterializeAction, MaterializeDirective } from 'angular2-materialize';
-
-
 
 @Component({
     selector: 'profile',
@@ -19,20 +14,14 @@ import { MaterializeAction, MaterializeDirective } from 'angular2-materialize';
 })
 
 export class Profile {
-
     modalActions = new EventEmitter<string | MaterializeAction>();
     modalActions2 = new EventEmitter<string | MaterializeAction>();
     modalActions3 = new EventEmitter<string | MaterializeAction>();
     modalActions4 = new EventEmitter<string | MaterializeAction>();
     modalActions5 = new EventEmitter<string | MaterializeAction>();
     modalActions6 = new EventEmitter<string | MaterializeAction>();
-
-
-    jwt: String;
-    decodedJwt: String;
     response: String;
     api: String;
-    jwtHelper: JwtHelper = new JwtHelper();
     games: JSON;
     form1: any;
     favorites: JSON;
@@ -57,30 +46,19 @@ export class Profile {
     password: String;
     password_old: String;
     password_two: String;
-    plaats:String;
-    team:String
+    plaats: String;
+    team: String
     teamsRaw = [];
-    abbo:File;
+    abbo: File;
 
     private loggedIn = false;
 
-
-    constructor(public router: Router, public http: Http, public authHttp: AuthHttp, public apiService: ApiService) {
-
+    constructor(public router: Router, public http: Http, public apiService: ApiService) {
         this.loggedIn = !!localStorage.getItem('id_token');
-
-
     }
-
-
-
-
 
     save(event) {
         let birthdate = new Date(this.date_of_birth);
-        console.log(birthdate);
-
-
 
         let body = {
             name: this.name,
@@ -97,14 +75,10 @@ export class Profile {
             national_registry_number: "96.05.05-342.01"
         };
 
-
-        console.log(body);
-
-
         this.apiService.putWithFiles("api/users", body, (data) => {
             if (data) {
-    this.showProfileModal();               
-            } 
+                this.showProfileModal();
+            }
         });
     }
 
@@ -114,63 +88,46 @@ export class Profile {
             new_password: this.password
         };
 
-         this.apiService.post("api/users/update/password" , body).subscribe(
-            response =>     this.showPasswordModal(),
+        this.apiService.post("api/users/update/password", body).subscribe(
+            response => this.showPasswordModal(),
             error => this.response = error.text
         );
-
-
     }
-
 
     updateAbbo(event) {
         let body = {
             place: this.plaats,
             subscription: this.abbo,
-            team:this.team
+            team: this.team
         };
 
         this.apiService.postWithFiles("api/subscriptions", body, (data) => {
             if (data) {
                 this.showAbboModel();
-            } 
+            }
         });
-
-
     }
 
-
-
     ngOnInit() {
-
         if (!this.loggedIn) {
             this.router.navigateByUrl('/');
         }
 
         this._callApi("Anonymous", "api/users");
 
-
-
-
         this.apiService.get("api/countries").subscribe(
             response => this.getCountries(response.text()),
             error => this.response = error.text
         );
 
-
         this.apiService.get("api/teams").subscribe(
             response => this.showTeams(response.text()),
             error => this.response = error.text
         );
-
-
-
-
-
     }
 
-    showTeams(data){
-  let Data = data;
+    showTeams(data) {
+        let Data = data;
         let jsonData = JSON.parse(Data);
         this.teamsRaw = jsonData.data;
     }
@@ -179,37 +136,6 @@ export class Profile {
         let Data = data;
         let jsonData = JSON.parse(Data);
         this.selectOptions = jsonData.data;
-    }
-
-
-
-
-
-    useJwtHelper() {
-        let token = localStorage.getItem("id_token");
-        console.log("Token:", token);
-
-        console.log(
-            this.jwtHelper.decodeToken(token),
-            this.jwtHelper.getTokenExpirationDate(token),
-            this.jwtHelper.isTokenExpired(token)
-        )
-    }
-
-
-
-
-
-
-    _callApi(type, url) {
-        this.apiService.get(url).subscribe(
-            response => this.getUser(response.text()),
-            error => this.response = error.text
-        );
-
-
-
-
     }
 
     getUser(data) {
@@ -223,8 +149,6 @@ export class Profile {
         }
 
         this.getTeams();
-
-        console.log(this.user);
 
         this.name = this.user.name;
         this.firstname = this.user.firstname;
@@ -246,14 +170,11 @@ export class Profile {
             document.getElementById("numberlbl").classList.add("active");
             document.getElementById("citylbl").classList.add("active");
             document.getElementById("postallbl").classList.add("active");
-
-
         }
 
         if ("phone" in this.user) {
             this.phone = this.user.phone;
             document.getElementById("phonelbl").classList.add("active");
-
         }
 
         if ("date_of_birth" in this.user) {
@@ -261,33 +182,20 @@ export class Profile {
                 "July", "August", "September", "October", "November", "December"
             ];
 
-
             let date = new Date(this.user.date_of_birth);
             let day = date.getDate(), month = date.getMonth(), year = date.getFullYear();
             this.date_of_birth = day + " " + monthNames[month] + ", " + year;
             document.getElementById("date_of_birthlbl").classList.add("active");
-
         }
 
         if ("avatar" in this.user) {
             this.avatar = this.user.avatar;
-
         }
-
-
-
-
-
     }
 
     removeFavorite(id) {
-
         this.modalActions.emit({ action: "modal", params: ['open'] });
-
-
         this.favoriteId = id;
-
-
     }
 
     removeFavoriteReal() {
@@ -295,47 +203,38 @@ export class Profile {
             response => this.showSuccess(),
             error => this.response = error.text
         );
-
     }
 
     showSuccess() {
         this.modalActions2.emit({ action: "modal", params: ['open'] });
-
     }
 
     showProfileModal() {
         this.modalActions4.emit({ action: "modal", params: ['open'] });
-
     }
 
     showPasswordModal() {
         this.modalActions5.emit({ action: "modal", params: ['open'] });
-
     }
 
     showAbboModel() {
         this.modalActions6.emit({ action: "modal", params: ['open'] });
-
     }
 
-    closeProfileModal(){
-                this.modalActions4.emit({ action: "modal", params: ['close'] });
-
+    closeProfileModal() {
+        this.modalActions4.emit({ action: "modal", params: ['close'] });
     }
 
-    closePasswordModal(){
+    closePasswordModal() {
         this.modalActions5.emit({ action: "modal", params: ['close'] });
-
     }
 
-    closeAbboModal(){
-                this.modalActions6.emit({ action: "modal", params: ['close'] });
-
+    closeAbboModal() {
+        this.modalActions6.emit({ action: "modal", params: ['close'] });
     }
 
     closeModal1() {
         this.modalActions.emit({ action: "modal", params: ['close'] });
-
     }
 
     closeModal() {
@@ -345,37 +244,29 @@ export class Profile {
 
     closeModal3() {
         this.modalActions3.emit({ action: "modal", params: ['close'] });
-
     }
 
     showAdd() {
-
-
-
         this.showFavorites = false;
         this.showNew = true;
-
-
-
     }
 
     showFavoritesBack() {
-
         this._callApi("Anonymous", "api/users");
-
-
-
         this.showFavorites = true;
         this.showNew = false;
     }
 
+    _callApi(type, url) {
+        this.apiService.get(url).subscribe(
+            response => this.getUser(response.text()),
+            error => this.response = error.text
+        );
+    }
+
     getTeams() {
-
         let counter = 0
-
         let teamsRaw = this.teamsRaw;
-
-        console.log(this.teamsRaw);
 
         for (let team of teamsRaw) {
             let success = true;
@@ -383,7 +274,6 @@ export class Profile {
                 if (team._id == favorite._id) {
                     success = false;
                 }
-
             }
             if (success === true) {
                 this.teams[counter] = team;
@@ -391,18 +281,11 @@ export class Profile {
             }
 
         }
-
-        console.log(this.teams);
-
-
-
     }
 
     updateFavorite() {
         let select = document.getElementById('select');
         select = select.options[select.selectedIndex].value;
-
-        console.log(select);
 
         let apiString = "api/teams/favorite/" + select;
 
@@ -410,11 +293,9 @@ export class Profile {
             response => this.showFavoritesBack(),
             error => console.log(error.text)
         );
-
     }
 
     isEmpty(obj) {
-
         // null and undefined are "empty"
         if (obj == null) return true;
 
@@ -438,7 +319,6 @@ export class Profile {
         return true;
     }
 
-
     selectAvatar(event) {
         let input = event.target;
         if (input && input.files[0]) {
@@ -446,16 +326,10 @@ export class Profile {
         }
     }
 
-
     selectAbbo(event) {
         let input = event.target;
         if (input && input.files[0]) {
             this.abbo = input.files[0];
         }
     }
-
-
-
-
 }
-

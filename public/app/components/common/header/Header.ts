@@ -1,43 +1,42 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
-
 import { Auth } from '../../../services/Auth';
 import { ApiService } from '../../../services/ApiService';
 
 @Component({
     selector: 'subporter-header',
     template: `
-   <header class="header" [ngStyle]="{ 'background-image':  'url('+image+')' }">
-	<nav>
-   <div class="nav-wrapper">
-			<a [routerLink]="['/']" class="brand-logo">Subporter</a>
-			<a materialize="sideNav" href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li> <a [routerLink]="['/search']">Zoeken</a></li>
-				<li *ngIf="isAdmin"><a [routerLink]="['/admin']">Admin</a></li>
-				<li *ngIf="loggedIn"><a [routerLink]="['/cart']">Winkelwagen</a></li>
-				<li *ngIf="!loggedIn"><a [routerLink]="['/login']">Login</a></li>
-				<li *ngIf="loggedIn"><a [routerLink]="['/profile']">Profiel</a></li>
-				<li *ngIf="loggedIn"><a (click)="logout()">Logout</a></li>
-				<li><a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a></li>
-			</ul>
-			<ul class="side-nav" id="slide-out">
-				<li> <a [routerLink]="['/search']">Zoeken</a></li>
-				<li *ngIf="isAdmin"><a [routerLink]="['/admin']">Admin</a></li>
-				<li *ngIf="loggedIn"><a [routerLink]="['/cart']">Winkelwagen</a></li>
-				<li *ngIf="!loggedIn"><a [routerLink]="['/login']">Login</a></li>
-				<li *ngIf="loggedIn"><a [routerLink]="['/profile']">Profiel</a></li>
-				<li *ngIf="loggedIn"><a (click)="logout()">Logout</a></li>
-				<li><a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a></li>
-			</ul>
+	<header class="header" [ngStyle]="{ 'background-image':  'url('+image+')' }">
+		<nav>
+	   <div class="nav-wrapper">
+				<a [routerLink]="['/']" class="brand-logo">Subporter</a>
+				<a materialize="sideNav" href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+					<li> <a [routerLink]="['/search']">Zoeken</a></li>
+					<li *ngIf="isAdmin"><a [routerLink]="['/admin']">Admin</a></li>
+					<li *ngIf="loggedIn"><a [routerLink]="['/cart']">Winkelwagen</a></li>
+					<li *ngIf="!loggedIn"><a [routerLink]="['/login']">Login</a></li>
+					<li *ngIf="loggedIn"><a [routerLink]="['/profile']">Profiel</a></li>
+					<li *ngIf="loggedIn"><a (click)="logout()">Logout</a></li>
+					<li><a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a></li>
+				</ul>
+				<ul class="side-nav" id="slide-out">
+					<li> <a [routerLink]="['/search']">Zoeken</a></li>
+					<li *ngIf="isAdmin"><a [routerLink]="['/admin']">Admin</a></li>
+					<li *ngIf="loggedIn"><a [routerLink]="['/cart']">Winkelwagen</a></li>
+					<li *ngIf="!loggedIn"><a [routerLink]="['/login']">Login</a></li>
+					<li *ngIf="loggedIn"><a [routerLink]="['/profile']">Profiel</a></li>
+					<li *ngIf="loggedIn"><a (click)="logout()">Logout</a></li>
+					<li><a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a></li>
+				</ul>
+			</div>
+	  </nav>
+		<div class="container">
+			<h1>{{title}}</h1>
+			<h2>{{subtitle}}</h2>
 		</div>
-  </nav>
-	<div class="container">
-		<h1>{{title}}</h1>
-		<h2>{{subtitle}}</h2>
-	</div>
-</header>
+	</header>
 	`,
     styles: ['.header .container{ text-align: center;} .header .container h1{color: #fff;font-weight: 600; font-size:3em;} .header .container h2{color:#fff;font-size:2em;} .header{background-size: cover; height: 300px;}nav{background: none; -webkit-box-shadow: none; -moz-box-shadow: none;	box-shadow: none;}.brand-logo{margin-left: 10px;}']
 })

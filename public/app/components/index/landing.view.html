@@ -1,312 +1,147 @@
 <div class="section " id="section0">
-
 	<nav>
-   <div class="nav-wrapper">
+		<div class="nav-wrapper">
 			<a [routerLink]="['/']" class="brand-logo">Subporter</a>
-			<a materialize="sideNav" href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+			<a materialize="sideNav" href="#" data-activates="slide-out" class="button-collapse">
+				<i class="material-icons">menu</i>
+			</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li> <a [routerLink]="['/search']">Zoeken</a></li>
-				<li *ngIf="isAdmin"><a [routerLink]="['/admin']">Admin</a></li>
-				<li *ngIf="isLoggedIn"><a [routerLink]="['/cart']">Winkelwagen</a></li>
-				<li *ngIf="!isLoggedIn"><a [routerLink]="['/login']">Login</a></li>
-				<li *ngIf="isLoggedIn"><a [routerLink]="['/profile']">Profiel</a></li>
-				<li *ngIf="isLoggedIn"><a (click)="logout()">Logout</a></li>
-				<li><a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a></li>
+				<li>
+					<a [routerLink]="['/search']">Zoeken</a>
+				</li>
+				<li *ngIf="isAdmin">
+					<a [routerLink]="['/admin']">Admin</a>
+				</li>
+				<li *ngIf="isLoggedIn">
+					<a [routerLink]="['/cart']">Winkelwagen</a>
+				</li>
+				<li *ngIf="!isLoggedIn">
+					<a [routerLink]="['/login']">Login</a>
+				</li>
+				<li *ngIf="isLoggedIn">
+					<a [routerLink]="['/profile']">Profiel</a>
+				</li>
+				<li *ngIf="isLoggedIn">
+					<a (click)="logout()">Logout</a>
+				</li>
+				<li>
+					<a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a>
+				</li>
 			</ul>
 			<ul class="side-nav" id="slide-out">
-				<li> <a [routerLink]="['/search']">Zoeken</a></li>
-				<li *ngIf="isAdmin"><a [routerLink]="['/admin']">Admin</a></li>
-				<li *ngIf="isLoggedIn"><a [routerLink]="['/cart']">Winkelwagen</a></li>
-				<li *ngIf="!isLoggedIn"><a [routerLink]="['/login']">Login</a></li>
-				<li *ngIf="isLoggedIn"><a [routerLink]="['/profile']">Profiel</a></li>
-				<li *ngIf="isLoggedIn"><a (click)="logout()">Logout</a></li>
-				<li><a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a></li>
+				<li>
+					<a [routerLink]="['/search']">Zoeken</a>
+				</li>
+				<li *ngIf="isAdmin">
+					<a [routerLink]="['/admin']">Admin</a>
+				</li>
+				<li *ngIf="isLoggedIn">
+					<a [routerLink]="['/cart']">Winkelwagen</a>
+				</li>
+				<li *ngIf="!isLoggedIn">
+					<a [routerLink]="['/login']">Login</a>
+				</li>
+				<li *ngIf="isLoggedIn">
+					<a [routerLink]="['/profile']">Profiel</a>
+				</li>
+				<li *ngIf="isLoggedIn">
+					<a (click)="logout()">Logout</a>
+				</li>
+				<li>
+					<a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a>
+				</li>
 			</ul>
 		</div>
-  </nav>
-
-
-            <div class="container landingContainer " >
-
-
-             <h1>100% legaal voetbalabonnementen huren en verhuren</h1>
-
-            <form>
-            <div class="input-field">
-               <input type="search" id="autocomplete-input search" class="autocomplete"  materialize="autocomplete" [materializeParams]="[{'data': gameNames}]" placeholder="Zoek naar wedstrijden en teams">
-
-          <label for="search"><i class="material-icons prefix">search</i></label>
-
-
-
-    <button class="btn waves-effect waves-light"  (click)="search()"> ZOEKEN </button>
-
-
-
-     </div>
-
-    </form>
-
-      <button class="btn-none" (click)="scrollToDiv()"><i class="fa fa-angle-down fa-5x" aria-hidden="true"></i></button>
-
-             </div>
-
-
-
-
-            </div>
-            <div class="section fp-auto-height" data-anchor="section2" id="section1">
-
-
-<!--<div class="test" >
-             <div class="carousel-class">
-
-
-<div>
-               <div *ngFor="let team of jsonDataData"  >
-            <img src="{{team.logo}}" alt="{{team.name}}" id="{{team._id}}" (click)="goToTeamPage(this.id);">
-
-    </div>
-
-    </div>-->
-<!--
-<div><img src="../../img/gent.png"></div>
-<div><img src="../../img/oostemde.png"></div>
-
-<div><img src="../../img/genk.png"></div>
-
-<div><img src="../../img/gent.png"></div>
-<div><img src="../../img/oostemde.png"></div>
-<div><img src="../../img/genk.png"></div>
-<div><img src="../../img/gent.png"></div>
-<div><img src="../../img/oostemde.png"></div>
-<div><img src="../../img/genk.png"></div>
-<div><img src="../../img/gent.png"></div>
-<div><img src="../../img/oostemde.png"></div>
-<div><img src="../../img/genk.png"></div>
-<div><img src="../../img/gent.png"></div>
-<div><img src="../../img/oostemde.png"></div>
-<div><img src="../../img/genk.png"></div>
-<div><img src="../../img/gent.png"></div>
-<div><img src="../../img/oostemde.png"></div>
-<div><img src="../../img/genk.png"></div>
-<div><img src="../../img/gent.png"></div>
-<div><img src="../../img/oostemde.png"></div>
-<div><img src="../../img/genk.png"></div>-->
-
-<!--
+	</nav>
+	<div class="container landingContainer ">
+		<h1>100% legaal voetbalabonnementen huren en verhuren</h1>
+		<form>
+			<div class="input-field">
+				<input type="search" id="autocomplete-input search" class="autocomplete" materialize="autocomplete" [materializeParams]="[{'data': gameNames}]" placeholder="Zoek naar wedstrijden en teams">
+				<label for="search">
+					<i class="material-icons prefix">search</i>
+				</label>
+				<button class="btn waves-effect waves-light" (click)="search()">
+					ZOEKEN
+				</button>
+			</div>
+		</form>
+		<button class="btn-none" (click)="scrollToDiv()">
+			<i class="fa fa-angle-down fa-5x" aria-hidden="true"></i>
+		</button>
+	</div>
 </div>
-
-
-             </div>-->
-
-            <div class="container margintop">
-
-
-<h3 >Topwedstrijden</h3>
-
-<select  id="select"  materialize="material_select" (change)="onChange($event.target.value)" >
-      <option value="" disabled selected>Kies een land</option>
-      <option *ngFor="let country of countries" value="{{country._id}}">
-          {{country.name}}
-      </option>
-
-    </select>
-
-
-
-
-
-<div *ngIf="!isEmpty(featuredGames)" class="row">
-
-    <div *ngFor="let game of featuredGames" class="col s4">
-
-
-         <div class="card">
-            <div class="card-image">
-              <img src="{{game.banner}}">
-            </div>
-            <div class="card-content">
-            <h6>{{game.home.name}} - {{game.away.name}}</h6>
-              <p>{{game.date}}</p>
-            </div>
-            <div class="card-action">
-                <a  [routerLink]="['/evenement/',game._id]">Zoek abonnementen</a>
-            </div>
-          </div>
-
-
-    </div>
-
-
-  </div>
-
-
-<div *ngIf="isEmpty(featuredGames)" class="center-align">
-  <p>Er zijn geen topwedstrijden beschikbaar.</p>
+<div class="section fp-auto-height" data-anchor="section2" id="section1">
+	<div class="container margintop">
+		<h3>Topwedstrijden</h3>
+		<select id="select" materialize="material_select" (change)="onChange($event.target.value)">
+			<option value="" disabled selected>Kies een land</option>
+			<option *ngFor="let country of countries" value="{{country._id}}">
+				{{country.name}}
+			</option>
+		</select>
+		<div *ngIf="!isEmpty(featuredGames)" class="row">
+			<div *ngFor="let game of featuredGames" class="col s4">
+				<div class="card">
+					<div class="card-image">
+						<img src="{{game.banner}}">
+					</div>
+					<div class="card-content">
+						<h6>{{game.home.name}}
+							-
+							{{game.away.name}}</h6>
+						<p>{{game.date}}</p>
+					</div>
+					<div class="card-action">
+						<a [routerLink]="['/evenement/',game._id]">Zoek abonnementen</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="isEmpty(featuredGames)" class="center-align">
+			<p>Er zijn geen topwedstrijden beschikbaar.</p>
+		</div>
+		<div class="center">
+			<a class="btn waves-effect waves-light center-align" [routerLink]="['/search']">
+				Ontdek meer wedstrijden
+			</a>
+		</div>
+	</div>
 </div>
-
-
-
-    <div class="center">
-    <a class="btn waves-effect waves-light center-align" [routerLink]="['/search']"> Ontdek meer wedstrijden </a>
-    </div>
-
-    </div>
-            </div>
-            <div class="section  fp-auto-height" id="section3"  data-anchor="section3">
-
-<div class="container">
-
-<h3>Wedstrijden deze week</h3>
-
-<select id="select2"  materialize="material_select" (change)="onChange2($event.target.value)" >
-      <option value="" disabled selected>Kies een land</option>
-      <option *ngFor="let country of countries" value="{{country._id}}">
-          {{country.name}}
-      </option>
-
-    </select>
-
-
-<div *ngIf="!isEmpty(weekGames)" class="row">
-
-  <div class="col s6">
-    
-       <ul class="collection">
-    <li *ngFor="let game of weekGames" class="collection-item" (click)="goToEvenement(game._id)">
-
-       <span class="title">{{game.home.name}} - {{game.away.name}}</span>
-      <p>{{game.date}}<br>
-         {{game.home.stadion}}
-      </p>
-      <div class="secondary-content">
-      <i class="fa fa-ticket fa-2x " aria-hidden="true"></i>
-      <span>{{game.loans.size}}</span>
-      </div>
-    </li>
-       </ul>
+<div class="section  fp-auto-height" id="section3" data-anchor="section3">
+	<div class="container">
+		<h3>Wedstrijden deze week</h3>
+		<select id="select2" materialize="material_select" (change)="onChange2($event.target.value)">
+			<option value="" disabled selected>Kies een land</option>
+			<option *ngFor="let country of countries" value="{{country._id}}">
+				{{country.name}}
+			</option>
+		</select>
+		<div *ngIf="!isEmpty(weekGames)" class="row">
+			<div class="col s6">
+				<ul class="collection">
+					<li *ngFor="let game of weekGames" class="collection-item" (click)="goToEvenement(game._id)">
+						<span class="title">{{game.home.name}}
+							-
+							{{game.away.name}}</span>
+						<p>{{game.date}}<br>
+							{{game.home.stadion}}
+						</p>
+						<div class="secondary-content">
+							<i class="fa fa-ticket fa-2x " aria-hidden="true"></i>
+							<span>{{game.loans.size}}</span>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div *ngIf="isEmpty(weekGames)" class="center-align">
+			<p>Er zijn geen wedstrijden beschikbaar deze week.</p>
+		</div>
+		<div class="center">
+			<a class="btn waves-effect waves-light center-align" [routerLink]="['/search']">
+				Ontdek meer wedstrijden
+			</a>
+		</div>
+	</div>
 </div>
-
-
-
-  
-
-</div>
-<div *ngIf="isEmpty(weekGames)" class="center-align">
-  <p>Er zijn geen wedstrijden beschikbaar deze week.</p>
-</div>
-
-
-  <!--<div class="col s6">
-
-         <ul class="collection">
-    <li class="collection-item ">
-
-      <span class="title">Club Brugge kv - RSC Anderlecht</span>
-      <p>Zaterdag 24 december 2017<br>
-         Jan Breydelstadion, Brugge
-      </p>
-      <div class="secondary-content">
-      <i class="fa fa-ticket fa-2x " aria-hidden="true"></i>
-      <span>12</span>
-      </div>
-    </li>
-    <li class="collection-item ">
-      <span class="title">Club Brugge kv - RSC Anderlecht</span>
-      <p>Zaterdag 24 december 2017<br>
-         Jan Breydelstadion, Brugge
-      </p>
-   <div class="secondary-content">
-      <i class="fa fa-ticket fa-2x " aria-hidden="true"></i>
-      <span>12</span>
-      </div>
-    </li>
-    <li class="collection-item ">
-      <span class="title">Club Brugge kv - RSC Anderlecht</span>
-      <p>Zaterdag 24 december 2017<br>
-         Jan Breydelstadion, Brugge
-      </p>
-          <div class="secondary-content">
-      <i class="fa fa-ticket fa-2x " aria-hidden="true"></i>
-      <span>12</span>
-      </div>
-
-    </li>
-    <li class="collection-item ">
-      <span class="title">Club Brugge kv - RSC Anderlecht</span>
-      <p>Zaterdag 24 december 2017<br>
-         Jan Breydelstadion, Brugge
-      </p>
-       <div class="secondary-content">
-      <i class="fa fa-ticket fa-2x " aria-hidden="true"></i>
-      <span>12</span>
-      </div>
-    </li>
-  </ul>
-
-</div>-->
-
-<div class="center">
-    <a class="btn waves-effect waves-light center-align" [routerLink]="['/search']"> Ontdek meer wedstrijden </a>
-    </div>
-
-</div>
-
-
-
-</div>
-
-            <!--<div class="section fp-auto-height" data-anchor="section4" id="section4">
-
-
-<div class="container">
-
-<h3>Dit zeggen anderen over Subporter</h3>
-
-
-
-<ul class="collection">
-<div class="row">
-
-<div class="col s4">
-    <li class="collection-item avatar">
-      <i class="material-icons circle">folder</i>
-      <span class="title">Niels Bril</span>
-      <p>"Kheb weer 38 commits gedaan en 14934 lijnen code bijgevoegd in de afgelopen 3 minuten!"<br>
-
-      </p>
-    </li>
-    </div>
-    <div class="col s4">
-    <li class="collection-item avatar">
-      <i class="material-icons circle">folder</i>
-      <span class="title">Arno VDC</span>
-      <p>" Ik ben dj VDC, volg mij op facebook enzo. " <br>
-
-      </p>
-    </li>
-    </div>
-    <div class="col s4">
-    <li class="collection-item avatar">
-      <i class="material-icons circle">folder</i>
-      <span class="title">Swaglexander</span>
-      <p>"  #twaGank #yolo #dabnation #like4like "<br>
-
-      </p>
-    </li>
-    </div>
-   </div>
-
-  </ul>
-
-</div>
-
-            </div>-->
-            <!--<div class="section fp-auto-height" data-anchor="section5">-->
-
-
-
-
-
-            <!--</div>-->

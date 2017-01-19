@@ -33,12 +33,10 @@ var Register = (function () {
                 headers: Headers_1.contentHeaders
             })
                 .subscribe(function (response) {
-                console.log(response.json());
                 localStorage.setItem("id_token", response.json().token);
                 _this.router.navigate(['home']);
             }, function (error) {
                 alert(error.text());
-                console.error(error.text());
             });
         }
         else {

@@ -11,16 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
-var angular2_jwt_1 = require("angular2-jwt");
 var ApiService_1 = require("../../services/ApiService");
 var Evenement = (function () {
-    function Evenement(router, http, authHttp, apiService, activatedRoute) {
+    function Evenement(router, http, apiService, activatedRoute) {
         this.router = router;
         this.http = http;
-        this.authHttp = authHttp;
         this.apiService = apiService;
         this.activatedRoute = activatedRoute;
-        this.jwtHelper = new angular2_jwt_1.JwtHelper();
         this.loans = [];
         this.lent = 0;
         this.lendable = 0;
@@ -44,11 +41,6 @@ var Evenement = (function () {
     Evenement.prototype.ngOnDestroy = function () {
         this.subscription.unsubscribe();
     };
-    Evenement.prototype.useJwtHelper = function () {
-        var token = localStorage.getItem("id_token");
-        console.log("Token:", token);
-        console.log(this.jwtHelper.decodeToken(token), this.jwtHelper.getTokenExpirationDate(token), this.jwtHelper.isTokenExpired(token));
-    };
     Evenement.prototype._callApi = function (type, url) {
         var _this = this;
         this.apiService.get(url).subscribe(function (response) { return _this.getGames(response.text()); }, function (error) { return _this.goHome(); });
@@ -67,7 +59,6 @@ var Evenement = (function () {
         this.banner = jsonData.data[0].game.banner;
         this.price = jsonData.data[0].game.home.price;
         this.test = jsonData.data[0].game.home;
-        console.log(jsonData);
         this.lent = jsonData.count;
         var loansRaw = jsonData.data;
         if (this.loggedIn) {
@@ -93,8 +84,6 @@ var Evenement = (function () {
         var counter = 0;
         for (var _i = 0, loansRaw_1 = loansRaw; _i < loansRaw_1.length; _i++) {
             var loan = loansRaw_1[_i];
-            console.log(loan.lent_out_by._id);
-            console.log(this.loggedIn);
             if (loan.lent_out_by._id != userId) {
                 this.loans[counter] = loan;
                 counter++;
@@ -128,7 +117,7 @@ Evenement = __decorate([
         templateUrl: './app/components/evenement/evenement.view.html',
         styleUrls: ['../../css/evenement.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService, router_1.ActivatedRoute])
+    __metadata("design:paramtypes", [router_1.Router, http_1.Http, ApiService_1.ApiService, router_1.ActivatedRoute])
 ], Evenement);
 exports.Evenement = Evenement;
 //# sourceMappingURL=Evenement.js.map

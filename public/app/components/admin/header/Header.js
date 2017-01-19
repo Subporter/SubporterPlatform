@@ -21,7 +21,7 @@ var HeaderAdmin = (function () {
 HeaderAdmin = __decorate([
     core_1.Component({
         selector: 'subporter-header-admin',
-        template: "\n\n\n    <nav>\n    <div class=\"nav-wrapper\">\n      <a [routerLink]=\"['/']\" class=\"brand-logo\">Subporter</a>\n      <ul id=\"nav-mobile\" class=\"right hide-on-med-and-down\">\n        <li> <a  [routerLink]=\"['/search']\">Zoeken</a></li>\n        <li><a  [routerLink]=\"['/cart']\">Winkelwagen</a></li>\n\n        <li><a  [routerLink]=\"['/profile']\">Profiel</a></li>\n\n        <li><a  [routerLink]=\"['/admin']\">Admin</a></li>\n\n        <li><a class=\"waves-effect waves-light btn\" [routerLink]=\"['/offer']\" >Abonnement aanbieden</a></li>\n      </ul>\n    </div>\n  </nav>\n\n\n\n\n\t ",
+        template: "\n\t <nav>\n\t \t<div class=\"nav-wrapper\">\n\t \t\t<a [routerLink]=\"['/']\" class=\"brand-logo\">Subporter</a>\n\t \t\t<ul id=\"nav-mobile\" class=\"right hide-on-med-and-down\">\n\t \t\t\t<li>\n\t \t\t\t\t<a [routerLink]=\"['/search']\">Zoeken</a>\n\t \t\t\t</li>\n\t \t\t\t<li>\n\t \t\t\t\t<a [routerLink]=\"['/cart']\">Winkelwagen</a>\n\t \t\t\t</li>\n\n\t \t\t\t<li>\n\t \t\t\t\t<a [routerLink]=\"['/profile']\">Profiel</a>\n\t \t\t\t</li>\n\n\t \t\t\t<li>\n\t \t\t\t\t<a [routerLink]=\"['/admin']\">Admin</a>\n\t \t\t\t</li>\n\n\t \t\t\t<li>\n\t \t\t\t\t<a class=\"waves-effect waves-light btn\" [routerLink]=\"['/offer']\">Abonnement aanbieden</a>\n\t \t\t\t</li>\n\t \t\t</ul>\n\t \t</div>\n\t </nav>\n\t ",
         styleUrls: ['../../../css/headerAdmin.css']
     }),
     __metadata("design:paramtypes", [router_1.Router, http_1.Http])
