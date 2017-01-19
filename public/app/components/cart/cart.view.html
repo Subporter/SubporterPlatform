@@ -1,134 +1,132 @@
 <header>
-<nav>
-   <div class="nav-wrapper">
+	<nav>
+		<div class="nav-wrapper">
 			<a [routerLink]="['/']" class="brand-logo">Subporter</a>
-			<a materialize="sideNav" href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+			<a materialize="sideNav" href="#" data-activates="slide-out" class="button-collapse">
+				<i class="material-icons">menu</i>
+			</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li> <a [routerLink]="['/search']">Zoeken</a></li>
-				<li *ngIf="isAdmin"><a [routerLink]="['/admin']">Admin</a></li>
-				<li *ngIf="loggedIn"><a [routerLink]="['/cart']">Winkelwagen</a></li>
-				<li *ngIf="!loggedIn"><a [routerLink]="['/login']">Login</a></li>
-				<li *ngIf="loggedIn"><a [routerLink]="['/profile']">Profiel</a></li>
-				<li *ngIf="loggedIn"><a (click)="logout()">Logout</a></li>
-				<li><a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a></li>
+				<li>
+					<a [routerLink]="['/search']">Zoeken</a>
+				</li>
+				<li *ngIf="isAdmin">
+					<a [routerLink]="['/admin']">Admin</a>
+				</li>
+				<li *ngIf="loggedIn">
+					<a [routerLink]="['/cart']">Winkelwagen</a>
+				</li>
+				<li *ngIf="!loggedIn">
+					<a [routerLink]="['/login']">Login</a>
+				</li>
+				<li *ngIf="loggedIn">
+					<a [routerLink]="['/profile']">Profiel</a>
+				</li>
+				<li *ngIf="loggedIn">
+					<a (click)="logout()">Logout</a>
+				</li>
+				<li>
+					<a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a>
+				</li>
 			</ul>
 			<ul class="side-nav" id="slide-out">
-				<li> <a [routerLink]="['/search']">Zoeken</a></li>
-				<li *ngIf="isAdmin"><a [routerLink]="['/admin']">Admin</a></li>
-				<li *ngIf="loggedIn"><a [routerLink]="['/cart']">Winkelwagen</a></li>
-				<li *ngIf="!loggedIn"><a [routerLink]="['/login']">Login</a></li>
-				<li *ngIf="loggedIn"><a [routerLink]="['/profile']">Profiel</a></li>
-				<li *ngIf="loggedIn"><a (click)="logout()">Logout</a></li>
-				<li><a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a></li>
+				<li>
+					<a [routerLink]="['/search']">Zoeken</a>
+				</li>
+				<li *ngIf="isAdmin">
+					<a [routerLink]="['/admin']">Admin</a>
+				</li>
+				<li *ngIf="loggedIn">
+					<a [routerLink]="['/cart']">Winkelwagen</a>
+				</li>
+				<li *ngIf="!loggedIn">
+					<a [routerLink]="['/login']">Login</a>
+				</li>
+				<li *ngIf="loggedIn">
+					<a [routerLink]="['/profile']">Profiel</a>
+				</li>
+				<li *ngIf="loggedIn">
+					<a (click)="logout()">Logout</a>
+				</li>
+				<li>
+					<a class="waves-effect waves-light btn" [routerLink]="['/offer']">Abonnement aanbieden</a>
+				</li>
 			</ul>
 		</div>
-  </nav>
+	</nav>
 </header>
 <section id="section0">
-
-<div class="container">
-
-<div *ngIf="show" class="full">
-    <h1>Bestelling afronden</h1>
-
-    <div class="winkelwagen">
-        <h2>Winkelwagen</h2>
-         <table class="responsive-table">
-        <thead>
-             <tr>
-              <th data-field="verkoper">Verkoper</th>
-              <th data-field="name">Wedstrijd</th>
-              <th data-field="price">Prijs</th>
-
-          </tr>
-
-        </thead>
-
-           <tbody>
-          <tr  *ngFor="let loan of loans">
-            <td>{{loan.lent_out_by.firstname}} {{loan.lent_out_by.name}}</td>
-            <td><span class="bold">{{loan.game.home.name}} - {{loan.game.away.name}}</span>
-                <br/>
-                {{loan.game.date | date: 'medium'}}, {{loan.game.home.stadion}}
-            </td>
-            <td>€ {{loan.game.home.price}}</td>
-            <td>
-                 <i class="material-icons" (click)="removeCookie(loan._id)">delete</i>
-                </td>
-          </tr>
-
-           </tbody>
-           <tfoot>
-                <tr>
-                    <td rowspan="2"></td>
-                    <td colspan="2" class="rights">Servicekosten:</td>
-                    <td >€ {{price}}</td>
-
-                </tr>
-                <tr class="bold">
-                    <td colspan="2" class="rights">Totaal:</td>
-                    <td >€ {{price + prices}}</td>
-                </tr>
-
-           </tfoot>
-      </table>
-
-
-
-    </div>
-    <div class="winkelwagen ">
-        <button class="btn waves-effect waves-light modal-trigger" (click)="openModal()">Afrekenen</button>
-
-        <div id="modal1" class="modal " materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
-  <div class="modal-content">
-    <h4>Ben je zeker?</h4>
-    <p>Bent je zeker dat je dit abonnement wil aanschaffen? Je kan dit niet meer terugdraaien!</p>
-  </div>
-  <div class="modal-footer">
-    <a class="waves-effect waves-green btn-flat" (click)="closeModal()">Ik heb me bedacht.</a>
-    <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="pay()">Ik ben zeker!</a>
-  </div>
-</div>
-
-    </div>
-
-</div>
-<div *ngIf="!show" class="empty">
-
-
-
-  <h2>Winkelwagen is leeg</h2>
-
-  <p>Je hebt momenteel geen wedstrijden geselecteerd.</p>
-
-      <a class="waves-effect waves-light btn"  [routerLink]="['/search']">Zoek abonnementen</a>
-
-
-
-
-</div>
-
-</div>
-
-
-
-        <div id="modal2" class="modal " materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions2">
-  <div class="modal-content">
-    <h4>Geslaagd!</h4>
-    <p>Je bestelling is succesvol afgerond. Veel plezier bij de komende wedstrijd!</p>
-  </div>
-  <div class="modal-footer">
-    <!--<a class="waves-effect waves-green btn-flat" (click)="closeModal2()">Ik heb me bedacht.</a>-->
-    <a class="modal-action modal-close waves-effect waves-green btn-flat" [routerLink]="['/']">Sluiten</a>
-  </div>
-</div>
-
-
-
-
-
-
+	<div class="container">
+		<div *ngIf="show" class="full">
+			<h1>Bestelling afronden</h1>
+			<div class="winkelwagen">
+				<h2>Winkelwagen</h2>
+				<table class="responsive-table">
+					<thead>
+						<tr>
+							<th data-field="verkoper">Verkoper</th>
+							<th data-field="name">Wedstrijd</th>
+							<th data-field="price">Prijs</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let loan of loans">
+							<td>{{loan.lent_out_by.firstname}}
+								{{loan.lent_out_by.name}}</td>
+							<td>
+								<span class="bold">{{loan.game.home.name}}
+									-
+									{{loan.game.away.name}}</span>
+								<br/>
+								{{loan.game.date | date: 'medium'}},
+								{{loan.game.home.stadion}}
+							</td>
+							<td>€
+								{{loan.game.home.price}}</td>
+							<td>
+								<i class="material-icons" (click)="removeCookie(loan._id)">delete</i>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td rowspan="2"></td>
+							<td colspan="2" class="rights">Servicekosten:</td>
+							<td >€ {{price}}</td>
+						</tr>
+						<tr class="bold">
+							<td colspan="2" class="rights">Totaal:</td>
+							<td >€ {{price + prices}}</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<div class="winkelwagen ">
+				<button class="btn waves-effect waves-light modal-trigger" (click)="openModal()">Afrekenen</button>
+				<div id="modal1" class="modal " materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
+					<div class="modal-content">
+						<h4>Ben je zeker?</h4>
+						<p>Bent je zeker dat je dit abonnement wil aanschaffen? Je kan dit niet meer terugdraaien!</p>
+					</div>
+					<div class="modal-footer">
+						<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Ik heb me bedacht.</a>
+						<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="pay()">Ik ben zeker!</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="!show" class="empty">
+			<h2>Winkelwagen is leeg</h2>
+			<p>Je hebt momenteel geen wedstrijden geselecteerd.</p>
+			<a class="waves-effect waves-light btn" [routerLink]="['/search']">Zoek abonnementen</a>
+		</div>
+	</div>
+	<div id="modal2" class="modal " materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions2">
+		<div class="modal-content">
+			<h4>Geslaagd!</h4>
+			<p>Je bestelling is succesvol afgerond. Veel plezier bij de komende wedstrijd!</p>
+		</div>
+		<div class="modal-footer">
+			<a class="modal-action modal-close waves-effect waves-green btn-flat" [routerLink]="['/']">Sluiten</a>
+		</div>
+	</div>
 </section>
-
-
-

@@ -4,7 +4,7 @@ describe('modules', function() {
 
 		it("should be of type Sport", function() {
 			expect(sport).toBeTypeOf('Sport');
-		})
+		});
 
 		it("should contain an _id property", function () {
 			expect(sport).toHaveProperty('_id');
@@ -28,7 +28,7 @@ describe('modules', function() {
 
 		it("should be of type Team", function() {
 			expect(team).toBeTypeOf('Team');
-		})
+		});
 
 		it("should contain an _id property", function () {
 			expect(team).toHaveProperty('_id');

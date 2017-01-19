@@ -1,34 +1,28 @@
-<subporter-header title="{{home}} - {{away}}" subtitle="{{date | date: 'medium'}} - {{stadion}}" image="{{banner}}">
+<subporter-header title="{{home}} - {{away}}" subtitle="{{date | date: 'medium'}} - {{stadion}}" image="{{banner}}"></subporter-header>
 
-
-</subporter-header>
-
-    <button class="waves-effect waves-light btn" (click)="back();">Ga terug</button>
+<button class="waves-effect waves-light btn" (click)="back()">Ga terug</button>
 
 <section>
-<div class="container">
-
-<aside>
-
-<img class="circle" src="{{avatar}}">
-<p>{{firstname}} {{name}}</p>
-<span>{{city}}</span>
-
-</aside>
-<article>
-
-    <p> <span class="bold">Prijs: </span> €{{price}}</p>
-        <p> <span class="bold">Plaats: </span> {{place}}</p>
-
-
-<button class="waves-effect waves-light btn" (click)="huurAbbo()">Huur abonnement</button>
-
-</article>
-
-
-</div>
-
-<div id="modal" class="modal " materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
+	<div class="container">
+		<aside>
+			<img class="circle" src="{{avatar}}">
+			<p>{{firstname}} {{name}}
+			</p>
+			<span>{{city}}</span>
+		</aside>
+		<article>
+			<p>
+				<span class="bold">Prijs:</span>
+				€{{price}}
+			</p>
+			<p>
+				<span class="bold">Plaats:</span>
+				{{place}}
+			</p>
+			<button class="waves-effect waves-light btn" (click)="huurAbbo()">Huur abonnement</button>
+		</article>
+	</div>
+	<div id="modal" class="modal " materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
 		<div class="modal-content">
 			<h4>Niet ingelogd</h4>
 			<p>Je bent nog niet ingelogd. Gelieve eerst in te loggen.</p>
@@ -37,6 +31,4 @@
 			<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="closeModal()">Sluiten</a>
 		</div>
 	</div>
-
-
 </section>

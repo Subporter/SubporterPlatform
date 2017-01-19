@@ -102,7 +102,6 @@ var AdminCompetitions = (function () {
             this.competitions = this.competitionsList.filter(function (x) { return x.sport._id === _this.sport && x.country._id === _this.country; });
         }
         else if (this.sport) {
-            console.log(this.sport);
             this.competitions = this.competitionsList.filter(function (x) { return x.sport._id === _this.sport; });
         }
         else if (this.country) {

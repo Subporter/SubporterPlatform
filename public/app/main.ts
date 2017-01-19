@@ -6,5 +6,5 @@ import 'angular2-materialize';
 
 import { Subporter } from './app';
 
-//enableProdMode();
+enableProdMode();
 platformBrowserDynamic().bootstrapModule(Subporter);

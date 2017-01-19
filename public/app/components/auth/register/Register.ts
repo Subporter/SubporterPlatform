@@ -4,8 +4,8 @@ import { Http } from '@angular/http';
 import { contentHeaders } from '../../../common/Headers'
 
 @Component({
-	selector: 'register',
-	template: `
+    selector: 'register',
+    template: `
 	<div class="register container">
 		<div class="register-section">
 			<h1>Maak een account</h1>
@@ -56,54 +56,51 @@ import { contentHeaders } from '../../../common/Headers'
 })
 
 export class Register {
-	username: String;
-	email: String;
-	name: String;
-	firstname: String;
-	password: String;
-	confirmPassword: String;
+    username: String;
+    email: String;
+    name: String;
+    firstname: String;
+    password: String;
+    confirmPassword: String;
 
-	constructor(public router: Router, public http: Http) {
-	}
+    constructor(public router: Router, public http: Http) { }
 
-	register(event) {
-		event.preventDefault();
-		if (this.password === this.confirmPassword) {
-			let username = this.username,
-				email = this.email,
-				name = this.name,
-				firstname = this.firstname,
-				password = this.password;
+    register(event) {
+        event.preventDefault();
+        if (this.password === this.confirmPassword) {
+            let username = this.username,
+                email = this.email,
+                name = this.name,
+                firstname = this.firstname,
+                password = this.password;
 
-			let body = JSON.stringify({
-				username,
-				email,
-				name,
-				firstname,
-				password
-			});
+            let body = JSON.stringify({
+                username,
+                email,
+                name,
+                firstname,
+                password
+            });
 
-			this.http.post('/register', body, {
-				headers: contentHeaders
-			})
-				.subscribe(
-				response => {
-					console.log(response.json());
-					localStorage.setItem("id_token", response.json().token);
-					this.router.navigate(['home']);
-				},
-				error => {
-					alert(error.text())
-					console.error(error.text());
-				}
-			)
-		} else {
-			console.log("Passwords don't match");
-		}
-	}
+            this.http.post('/register', body, {
+                headers: contentHeaders
+            })
+                .subscribe(
+                response => {
+                    localStorage.setItem("id_token", response.json().token);
+                    this.router.navigate(['home']);
+                },
+                error => {
+                    alert(error.text())
+                }
+                )
+        } else {
+            console.log("Passwords don't match");
+        }
+    }
 
-	login(event) {
-		event.preventDefault();
-		this.router.navigate(['login']);
-	}
+    login(event) {
+        event.preventDefault();
+        this.router.navigate(['login']);
+    }
 }

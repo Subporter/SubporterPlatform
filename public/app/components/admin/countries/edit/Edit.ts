@@ -53,7 +53,6 @@ export class CountriesEdit {
         this.apiService.put(`api/countries/${this.id}`, body).subscribe(
             response => {
                 let result = JSON.parse(response.text());
-                console.log(result);
                 if (result.success) {
                     this.router.navigate(['admin/countries']);
                 } else {

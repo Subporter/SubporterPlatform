@@ -9,6 +9,7 @@ import { MaterializeDirective } from 'angular2-materialize';
 import { App } from './components/App';
 import { Footer } from './components/common/footer/Footer';
 import { Header } from './components/common/header/Header';
+import { NotFound } from './components/common/404/404';
 import { HeaderAdmin } from "./components/admin/header/Header";
 import { Register } from './components/auth/register/Register';
 import { Login } from './components/auth/login/Login';
@@ -53,6 +54,7 @@ import { Routing } from './modules/Routes';
         HeaderAdmin,
         Register,
         Login,
+        NotFound
         Landing,
         Search,
         Offer,

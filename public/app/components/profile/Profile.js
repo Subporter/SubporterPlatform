@@ -11,15 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
-var angular2_jwt_1 = require("angular2-jwt");
 var ApiService_1 = require("../../services/ApiService");
 require("materialize-css");
 require("angular2-materialize");
 var Profile = (function () {
-    function Profile(router, http, authHttp, apiService) {
+    function Profile(router, http, apiService) {
         this.router = router;
         this.http = http;
-        this.authHttp = authHttp;
         this.apiService = apiService;
         this.modalActions = new core_1.EventEmitter();
         this.modalActions2 = new core_1.EventEmitter();
@@ -27,7 +25,6 @@ var Profile = (function () {
         this.modalActions4 = new core_1.EventEmitter();
         this.modalActions5 = new core_1.EventEmitter();
         this.modalActions6 = new core_1.EventEmitter();
-        this.jwtHelper = new angular2_jwt_1.JwtHelper();
         this.showFavorites = false;
         this.showNew = false;
         this.teams = [];
@@ -41,7 +38,6 @@ var Profile = (function () {
     Profile.prototype.save = function (event) {
         var _this = this;
         var birthdate = new Date(this.date_of_birth);
-        console.log(birthdate);
         var body = {
             name: this.name,
             firstname: this.firstname,
@@ -56,7 +52,6 @@ var Profile = (function () {
             phone: this.phone,
             national_registry_number: "96.05.05-342.01"
         };
-        console.log(body);
         this.apiService.putWithFiles("api/users", body, function (data) {
             if (data) {
                 _this.showProfileModal();
@@ -103,15 +98,6 @@ var Profile = (function () {
         var jsonData = JSON.parse(Data);
         this.selectOptions = jsonData.data;
     };
-    Profile.prototype.useJwtHelper = function () {
-        var token = localStorage.getItem("id_token");
-        console.log("Token:", token);
-        console.log(this.jwtHelper.decodeToken(token), this.jwtHelper.getTokenExpirationDate(token), this.jwtHelper.isTokenExpired(token));
-    };
-    Profile.prototype._callApi = function (type, url) {
-        var _this = this;
-        this.apiService.get(url).subscribe(function (response) { return _this.getUser(response.text()); }, function (error) { return _this.response = error.text; });
-    };
     Profile.prototype.getUser = function (data) {
         var Data = data;
         var jsonData = JSON.parse(Data);
@@ -121,7 +107,6 @@ var Profile = (function () {
             this.showFavorites = true;
         }
         this.getTeams();
-        console.log(this.user);
         this.name = this.user.name;
         this.firstname = this.user.firstname;
         this.email = this.user.email;
@@ -204,10 +189,13 @@ var Profile = (function () {
         this.showFavorites = true;
         this.showNew = false;
     };
+    Profile.prototype._callApi = function (type, url) {
+        var _this = this;
+        this.apiService.get(url).subscribe(function (response) { return _this.getUser(response.text()); }, function (error) { return _this.response = error.text; });
+    };
     Profile.prototype.getTeams = function () {
         var counter = 0;
         var teamsRaw = this.teamsRaw;
-        console.log(this.teamsRaw);
         for (var _i = 0, teamsRaw_1 = teamsRaw; _i < teamsRaw_1.length; _i++) {
             var team = teamsRaw_1[_i];
             var success = true;
@@ -222,13 +210,11 @@ var Profile = (function () {
                 counter++;
             }
         }
-        console.log(this.teams);
     };
     Profile.prototype.updateFavorite = function () {
         var _this = this;
         var select = document.getElementById('select');
         select = select.options[select.selectedIndex].value;
-        console.log(select);
         var apiString = "api/teams/favorite/" + select;
         this.apiService.post(apiString, null).subscribe(function (response) { return _this.showFavoritesBack(); }, function (error) { return console.log(error.text); });
     };
@@ -267,7 +253,7 @@ Profile = __decorate([
         templateUrl: './app/components/profile/profile.view.html',
         styleUrls: ['../../css/profile.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router, http_1.Http, angular2_jwt_1.AuthHttp, ApiService_1.ApiService])
+    __metadata("design:paramtypes", [router_1.Router, http_1.Http, ApiService_1.ApiService])
 ], Profile);
 exports.Profile = Profile;
 //# sourceMappingURL=Profile.js.map

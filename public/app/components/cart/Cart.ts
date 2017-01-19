@@ -1,24 +1,13 @@
-
-
 import { Component, Input, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Http } from '@angular/http';
-import { AuthHttp, JwtHelper } from 'angular2-jwt';
-import { contentHeaders } from '../../common/headers'
-import { Footer } from "../common/footer/Footer";
-import { Header } from "../common/header/Header";
 import { ApiService } from '../../services/ApiService';
 import { Subscription } from 'rxjs';
-import "materialize-css";
-import "angular2-materialize";
+import 'materialize-css';
+import 'angular2-materialize';
 import { Location } from '@angular/common';
 import { CookieService } from 'angular2-cookie/core';
 import { MaterializeAction, MaterializeDirective } from 'angular2-materialize';
-
-
-
-
-
 
 @Component({
     selector: 'cart',
@@ -27,20 +16,12 @@ import { MaterializeAction, MaterializeDirective } from 'angular2-materialize';
 })
 
 export class Cart {
-
     modalActions = new EventEmitter<string | MaterializeAction>();
     modalActions2 = new EventEmitter<string | MaterializeAction>();
     modalActions3 = new EventEmitter<string | MaterializeAction>();
-
     params = []
-
-
-
-    jwt: String;
-    decodedJwt: String;
     response: String;
     api: String;
-    jwtHelper: JwtHelper = new JwtHelper();
     loan: JSON;
     home: String;
     away: String;
@@ -64,23 +45,14 @@ export class Cart {
     private subscription: Subscription;
     private isAdmin = false;
 
-
-    constructor(public router: Router, public http: Http, public authHttp: AuthHttp, public apiService: ApiService, private activatedRoute: ActivatedRoute, private _location: Location, private _cookieService: CookieService) {
-
+    constructor(public router: Router, public http: Http, public apiService: ApiService, private activatedRoute: ActivatedRoute, private _location: Location, private _cookieService: CookieService) {
         this.loggedIn = !!localStorage.getItem('id_token');
-
     }
 
-
-
     ngOnInit() {
-
-
-
         if (!this.loggedIn) {
             this.router.navigateByUrl('/');
         }
-
 
         this.apiService.get('check/admin').subscribe(
             response => {
@@ -101,15 +73,7 @@ export class Cart {
         } else {
             this.showCart();
         }
-
-
-
-
-        console.log(x);
-
     }
-
-
 
     logout() {
         localStorage.removeItem('id_token');
@@ -117,95 +81,36 @@ export class Cart {
     }
 
     showCart() {
-
-
-
-
         let cookie = this.cookie;
 
         for (var cook in cookie) {
-
             this._callApi("Anonymous", "api/loans/" + cook);
-
-
-
-
         }
-
-
-
-
-
     }
 
     showEmpty() {
 
-
-
     }
-
-
-
-
-
-    useJwtHelper() {
-        let token = localStorage.getItem("id_token");
-        console.log("Token:", token);
-
-        console.log(
-            this.jwtHelper.decodeToken(token),
-            this.jwtHelper.getTokenExpirationDate(token),
-            this.jwtHelper.isTokenExpired(token)
-        )
-    }
-
-
-
-
-
 
     _callApi(type, url) {
         this.apiService.get(url).subscribe(
             response => this.getLoan(response.text()),
             error => this.response = error.text
         );
-
     }
-
-
-
-
-
 
     getLoan(data) {
         let Data = data;
         let jsonData = JSON.parse(Data);
         this.loan = jsonData.data;
-
         this.loans[this.counter] = this.loan;
-        //  let date = new Date ( this.loans[this.counter].game.date);
-        //  console.log(date);
-        //  let fullDate = new Date( date.getDate()  + '/' + (date.getMonth()+1) + "/" + date.getFullYear());
-        //  fullDate.toLocaleString().substring(0,fullDate.toLocaleString().indexOf(' '));
-        //  console.log (fullDate);
-
-
         this.price += (this.loan.game.home.price * 0.1);
         this.prices += (this.loan.game.home.price);
-
-
-
-
-        console.log(this.loan);
-        console.log(this.loans);
-
         this.counter++;
-
     }
 
     back() {
         this._location.back();
-
     }
 
     removeCookie(cookie: number) {
@@ -213,9 +118,7 @@ export class Cart {
         location.reload();
     }
 
-
     isEmpty(obj) {
-
         // null and undefined are "empty"
         if (obj == null) return true;
 
@@ -239,56 +142,27 @@ export class Cart {
         return true;
     }
 
-
     pay() {
-
-
-
-
-
         for (let loan of this.loans) {
-
-
             this._cookieService.remove(loan._id);
-
-
             this.apiService.put("api/loans/lend/" + loan._id, null).subscribe(
                 response => this.paySuccess(response, loan),
                 error => this.response = error.text
             );
-
         }
 
-
-
         this.modalActions2.emit({ action: "modal", params: ['open'] });
-
-
-
     }
 
     paySuccess(response, loan) {
-
         console.log(response.text());
-       
     }
-
-
-
-
-
 
     openModal() {
         this.modalActions.emit({ action: "modal", params: ['open'] });
     }
+
     closeModal() {
         this.modalActions.emit({ action: "modal", params: ['close'] });
     }
-
-
-
-
-
-
-
 }

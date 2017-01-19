@@ -31,7 +31,6 @@ export class AdminCountries {
                             let country: Country = new Country(i._id, i.name, i.featured);
                             this.countries.push(country);
                         });
-                        console.log(this.countries);
                     }
                 } else {
                     Materialize.toast("Unable to load countries at this time", 2000);
@@ -61,5 +60,4 @@ export class AdminCountries {
             }
         )
     }
-
 }

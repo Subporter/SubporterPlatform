@@ -13,12 +13,11 @@
 		<link rel="stylesheet" href="/vendor/materialize/css/materialize.min.css">
 		<link rel="stylesheet" href="/vendor/material-icons/css/material-icons.min.css">
 		<link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
-		<link rel="stylesheet" href="/css/main.min.css">
+		<link rel="stylesheet" href="/css/main.css">
 
 		<!-- Scripts -->
 		<script src="/vendor/socket.io-client/socket.io.min.js"></script>
 		<script src="/vendor/jquery/jquery.min.js"></script>
-		<script src="/public/scripts.js"></script>
 
 		<!-- Angular / Polyfill(s) for older browsers -->
 		<script src="/lib/core-js/client/shim.min.js"></script>
@@ -28,7 +27,7 @@
 		<script src="/public/systemjs.config.js"></script>
 		<script>
 			System.defaultJSExtensions = true;
-			System.import('app').catch(function (err) {
+			System.import ('app').catch(function (err) {
 				console.error(err);
 			});
 		</script>
@@ -36,7 +35,7 @@
 
 	<body>
 		<subporter class="subporter">
-			<div class="preloader-wrapper big active">
+			<div class="preloader-wrapper big active loader">
 				<div class="spinner-layer">
 					<div class="circle-clipper left">
 						<div class="circle"></div>

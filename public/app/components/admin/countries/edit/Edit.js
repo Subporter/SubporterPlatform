@@ -50,7 +50,6 @@ var CountriesEdit = (function () {
         });
         this.apiService.put("api/countries/" + this.id, body).subscribe(function (response) {
             var result = JSON.parse(response.text());
-            console.log(result);
             if (result.success) {
                 _this.router.navigate(['admin/countries']);
             }

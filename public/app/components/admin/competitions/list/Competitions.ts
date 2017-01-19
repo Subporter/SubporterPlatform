@@ -110,7 +110,6 @@ export class AdminCompetitions {
         if (this.sport && this.country) {
             this.competitions = this.competitionsList.filter(x => x.sport._id === this.sport && x.country._id === this.country);
         } else if (this.sport) {
-            console.log(this.sport);
             this.competitions = this.competitionsList.filter(x => x.sport._id === this.sport);
         } else if (this.country) {
             this.competitions = this.competitionsList.filter(x => x.country._id === this.country);
