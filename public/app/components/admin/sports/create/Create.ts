@@ -13,9 +13,7 @@ export class SportsCreate {
     name: String = "";
     featured: Boolean = false;
 
-    constructor(public router: Router, public apiService: ApiService) {
-
-    }
+    constructor(public router: Router, public apiService: ApiService) { }
 
     create(event) {
         let name = this.name,

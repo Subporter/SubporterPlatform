@@ -30,7 +30,6 @@ var AdminCountries = (function () {
                         var country = new Countries_1.Country(i._id, i.name, i.featured);
                         _this.countries.push(country);
                     });
-                    console.log(_this.countries);
                 }
             }
             else {
